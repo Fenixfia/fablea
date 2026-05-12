@@ -3,114 +3,157 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FABLEA | Tonight’s Story</title>
+<title>FABLEA | La storia</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box}
+
 body{
-margin:0;
-font-family:Georgia,serif;
-background:radial-gradient(circle at top,#283763,#070912 75%);
 min-height:100vh;
-color:white;
+padding:24px;
+font-family:'Nunito',sans-serif;
+background:
+radial-gradient(circle at top left,#fff1d8 0%,transparent 30%),
+radial-gradient(circle at bottom right,#e7dcff 0%,transparent 34%),
+linear-gradient(135deg,#f8f1e8 0%,#ece4ea 45%,#d9ddea 100%);
+color:#332d35;
 display:flex;
 justify-content:center;
 align-items:center;
-padding:40px 18px;
-box-sizing:border-box;
 }
 
-.story{
-max-width:760px;
-background:rgba(255,255,255,.08);
-border:1px solid rgba(255,255,255,.18);
-border-radius:34px;
-padding:44px;
-box-shadow:0 30px 90px rgba(0,0,0,.38);
-backdrop-filter:blur(14px);
+.page{
+width:92%;
+max-width:860px;
+padding:52px 46px;
+border-radius:38px;
+background:rgba(255,250,245,.66);
+backdrop-filter:blur(16px);
+border:1px solid rgba(255,255,255,.55);
+box-shadow:0 24px 80px rgba(80,65,55,.15);
 }
 
 .badge{
-font-size:13px;
-letter-spacing:3px;
+text-align:center;
+font-size:12px;
+letter-spacing:5px;
 text-transform:uppercase;
-color:#d9d6ff;
+color:#9c8774;
 margin-bottom:18px;
 }
 
 h1{
-font-size:46px;
-line-height:1.12;
-font-weight:400;
-margin:0 0 26px;
+font-family:'Cormorant Garamond',serif;
+font-size:56px;
+line-height:1.05;
+text-align:center;
+font-weight:600;
+margin-bottom:26px;
 }
 
-p{
-font-size:21px;
-line-height:1.85;
-color:#e6e6ef;
+.illustration{
+height:180px;
+border-radius:30px;
+margin-bottom:30px;
+background:
+radial-gradient(circle at 50% 35%,#fff3c6 0%,transparent 20%),
+linear-gradient(135deg,#d9def6,#f8e3aa);
+box-shadow:inset 0 0 60px rgba(255,255,255,.45);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:54px;
 }
+
+.story{
+font-family:'Cormorant Garamond',serif;
+font-size:25px;
+line-height:1.75;
+color:#4a4349;
+}
+
+.story p{margin-bottom:22px}
 
 .actions{
 display:flex;
 gap:14px;
 flex-wrap:wrap;
+justify-content:center;
 margin-top:34px;
 }
 
-a,button{
-font-family:inherit;
-font-size:16px;
-color:white;
-text-decoration:none;
-padding:15px 24px;
+.button{
+display:inline-flex;
+justify-content:center;
+align-items:center;
+padding:15px 26px;
 border-radius:999px;
-border:1px solid rgba(255,255,255,.28);
-background:rgba(255,255,255,.10);
-cursor:pointer;
+background:linear-gradient(135deg,#f8e3aa,#e7c870);
+color:#332d35;
+font-size:16px;
+font-weight:700;
+text-decoration:none;
+box-shadow:0 14px 28px rgba(181,145,73,.16);
 }
 
-.soft{
-opacity:.75;
+.secondary{
+background:rgba(255,255,255,.52);
+box-shadow:none;
+color:#6d6668;
+border:1px solid rgba(80,65,55,.10);
 }
 
-@media(max-width:600px){
-.story{padding:30px 24px;}
-h1{font-size:36px;}
-p{font-size:18px;}
+@media(max-width:700px){
+.page{padding:40px 24px;border-radius:30px}
+h1{font-size:40px}
+.story{font-size:21px}
+.illustration{height:145px}
+.button{width:100%}
 }
 </style>
 </head>
 
 <body>
 
-<main class="story">
-<div class="badge">Tonight’s quiet tale</div>
+<main class="page">
+<div class="badge">La storia di stasera</div>
 
-<h1>Cesare and the Lantern Forest</h1>
+<h1>Cesare e la lanterna del bosco</h1>
 
+<div class="illustration">🌙 📖 ✨</div>
+
+<div class="story">
 <p>
-When the sky became blue and silver, Cesare found a little lantern waiting beside his bed.
-It was not too bright, not too loud, but warm enough to show the way.
+Quando la sera diventò morbida come una coperta, Cesare trovò una piccola lanterna vicino alla finestra.
+Non faceva una luce forte. Faceva una luce gentile.
 </p>
 
 <p>
-The lantern whispered, “Tonight, we do not need to run. We only need to wonder.”
-So Cesare followed its soft glow into a forest where every tree remembered a dream.
+La lanterna sembrò sussurrare: “Questa notte non dobbiamo correre. Dobbiamo solo immaginare.”
+Così Cesare la seguì piano, entrando in un bosco pieno di foglie azzurre e stelline dorate.
 </p>
 
 <p>
-There he met a tiny fox who was afraid of the dark. Cesare smiled, held the lantern gently,
-and together they discovered that the dark was not empty at all. It was full of stars waiting to be seen.
+Tra gli alberi incontrò una volpe piccola, che aveva un po’ paura del buio.
+Cesare le sorrise e sollevò la lanterna: insieme scoprirono che il buio non era vuoto.
+Era pieno di stelle che aspettavano solo di essere viste.
 </p>
 
 <p>
-And when the moon rose high above the trees, Cesare felt calm, brave, and ready to sleep.
-The lantern blinked once, like a goodnight kiss, and the forest became a dream.
+Quando la luna salì alta nel cielo, Cesare si sentì calmo e coraggioso.
+La lanterna brillò ancora una volta, come un bacio della buonanotte.
+E il bosco diventò sogno.
 </p>
+</div>
 
 <div class="actions">
-<a href="story.html">Create another story</a>
-<a class="soft" href="index.html">Back to FABLEA</a>
+<a class="button" href="/story.html">Crea un’altra storia</a>
+<a class="button secondary" href="/library.html">Vai alla libreria</a>
+<a class="button secondary" href="/index.html">Torna alla Home</a>
 </div>
 </main>
 
