@@ -3,21 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>FABLEA</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 body{
 min-height:100vh;
@@ -26,23 +19,12 @@ display:flex;
 justify-content:center;
 align-items:center;
 padding:24px;
-
 font-family:'Nunito',sans-serif;
-
 background:
 radial-gradient(circle at top left,#fff1d8 0%,transparent 30%),
 radial-gradient(circle at bottom right,#e7dcff 0%,transparent 34%),
 linear-gradient(135deg,#f8f1e8 0%,#ece4ea 45%,#d9ddea 100%);
-
 position:relative;
-}
-
-/* stelle */
-
-.stars{
-position:absolute;
-inset:0;
-overflow:hidden;
 }
 
 .star{
@@ -51,7 +33,7 @@ width:3px;
 height:3px;
 background:white;
 border-radius:50%;
-opacity:.5;
+opacity:.55;
 animation:twinkle 5s infinite alternate;
 }
 
@@ -61,67 +43,43 @@ animation:twinkle 5s infinite alternate;
 .star:nth-child(4){top:78%;left:16%}
 .star:nth-child(5){top:40%;left:88%}
 .star:nth-child(6){top:58%;left:10%}
-.star:nth-child(7){top:30%;left:48%}
-.star:nth-child(8){top:74%;left:62%}
 
 @keyframes twinkle{
 from{opacity:.25;transform:scale(.8)}
 to{opacity:.8;transform:scale(1.2)}
 }
 
-/* luna */
-
 .moon{
 position:absolute;
 top:70px;
 right:90px;
-
 width:110px;
 height:110px;
-
 border-radius:50%;
-
-background:
-radial-gradient(circle,#fff8dd,#ecd694);
-
-box-shadow:
-0 0 40px rgba(255,235,170,.35),
-0 0 100px rgba(255,235,170,.12);
-
+background:radial-gradient(circle,#fff8dd,#ecd694);
+box-shadow:0 0 40px rgba(255,235,170,.35);
 opacity:.75;
 }
-
-/* card */
 
 .card{
 position:relative;
 z-index:2;
-
 width:92%;
 max-width:760px;
-
-padding:58px 42px;
-
+padding:56px 38px;
 border-radius:38px;
-
 background:rgba(255,250,245,.58);
-
 backdrop-filter:blur(16px);
-
 border:1px solid rgba(255,255,255,.55);
-
-box-shadow:
-0 24px 80px rgba(80,65,55,.15);
-
+box-shadow:0 24px 80px rgba(80,65,55,.15);
 text-align:center;
-
 animation:float 6s ease-in-out infinite;
 }
 
 @keyframes float{
-0%{transform:translateY(0px)}
+0%{transform:translateY(0)}
 50%{transform:translateY(-6px)}
-100%{transform:translateY(0px)}
+100%{transform:translateY(0)}
 }
 
 .badge{
@@ -150,132 +108,98 @@ margin-bottom:18px;
 }
 
 .description{
-max-width:540px;
-margin:auto;
 font-size:18px;
 line-height:1.8;
 color:#6d6668;
-margin-bottom:40px;
+margin-bottom:36px;
 }
-
-/* bottone */
 
 .button{
 display:inline-flex;
 align-items:center;
 justify-content:center;
-
 padding:18px 42px;
-
 border-radius:999px;
-
-background:
-linear-gradient(135deg,#f8e3aa,#e7c870);
-
+background:linear-gradient(135deg,#f8e3aa,#e7c870);
 color:#332d35;
-
 font-size:18px;
 font-weight:700;
-
 text-decoration:none;
-
-box-shadow:
-0 14px 28px rgba(181,145,73,.18);
-
+box-shadow:0 14px 28px rgba(181,145,73,.18);
 transition:.35s;
 }
 
 .button:hover{
 transform:translateY(-3px) scale(1.02);
-box-shadow:
-0 20px 38px rgba(181,145,73,.24);
+}
+
+.menu{
+display:flex;
+justify-content:center;
+gap:18px;
+flex-wrap:wrap;
+margin-top:30px;
+}
+
+.menu a{
+font-size:15px;
+color:#8f8078;
+text-decoration:none;
 }
 
 .footer{
-margin-top:28px;
+margin-top:24px;
 font-size:14px;
 color:#8f8078;
 }
 
-/* responsive */
-
 @media(max-width:700px){
-
-.card{
-padding:46px 24px;
-border-radius:30px;
+.card{padding:44px 24px;border-radius:30px}
+h1{font-size:58px}
+.subtitle{font-size:28px}
+.description{font-size:16px}
+.button{width:100%}
+.moon{width:75px;height:75px;right:20px;top:30px}
+.menu{gap:14px}
 }
-
-h1{
-font-size:58px;
-}
-
-.subtitle{
-font-size:28px;
-}
-
-.description{
-font-size:16px;
-line-height:1.7;
-}
-
-.button{
-width:100%;
-}
-
-.moon{
-width:75px;
-height:75px;
-right:20px;
-top:30px;
-}
-
-}
-
 </style>
 </head>
 
 <body>
 
-<div class="stars">
 <div class="star"></div>
 <div class="star"></div>
 <div class="star"></div>
 <div class="star"></div>
 <div class="star"></div>
 <div class="star"></div>
-<div class="star"></div>
-<div class="star"></div>
-</div>
 
 <div class="moon"></div>
 
-<div class="card">
-
-<div class="badge">
-THE QUIET IMAGINATION PROJECT
-</div>
+<main class="card">
+<div class="badge">The quiet imagination project</div>
 
 <h1>FABLEA</h1>
 
-<div class="subtitle">
-Storie che accompagnano la sera.
-</div>
+<div class="subtitle">Storie che accompagnano la sera.</div>
 
 <div class="description">
-Meno schermo.  
+Meno schermo.<br>
 Più immaginazione.
 </div>
 
-<a class="button" href="/story.html">
-Inizia la storia di stasera
-</a>
+<a class="button" href="/story.html">Inizia la storia di stasera</a>
+
+<div class="menu">
+<a href="/profile.html">Profili</a>
+<a href="/library.html">Libreria</a>
+<a href="/about.html">Manifesto</a>
+</div>
 
 <div class="footer">
 Audio-first • Bassa stimolazione • Creato per la sera
 </div>
-
-</div>
+</main>
 
 </body>
 </html>
