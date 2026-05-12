@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FABLEA | Storia a scene</title>
+<title>FABLEA | Story</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -80,13 +80,6 @@ display:flex;
 align-items:center;
 justify-content:center;
 font-size:70px;
-animation:softFloat 6s ease-in-out infinite;
-}
-
-@keyframes softFloat{
-0%{transform:translateY(0)}
-50%{transform:translateY(-5px)}
-100%{transform:translateY(0)}
 }
 
 .scene h2{
@@ -105,40 +98,6 @@ color:#4d4550;
 margin-bottom:18px;
 }
 
-.keyword{
-background:linear-gradient(135deg,rgba(248,227,170,.7),rgba(231,220,255,.7));
-border-radius:12px;
-padding:0 6px;
-}
-
-.age-note{
-margin:0 auto 34px;
-max-width:720px;
-padding:18px 22px;
-border-radius:24px;
-background:rgba(255,255,255,.42);
-border:1px solid rgba(80,65,55,.08);
-text-align:center;
-font-size:15px;
-line-height:1.6;
-color:#7b706c;
-}
-
-.reader-5-7 .scene p{
-font-family:'Nunito',sans-serif;
-font-size:23px;
-line-height:1.9;
-letter-spacing:.2px;
-}
-
-.reader-5-7 .scene{
-padding:24px;
-}
-
-.reader-5-7 .scene h2{
-font-size:32px;
-}
-
 .meraviglia .scene p{
 font-family:'Nunito',sans-serif;
 font-size:28px;
@@ -152,9 +111,10 @@ height:260px;
 font-size:86px;
 }
 
-.teen .scene p{
-font-size:30px;
-line-height:1.88;
+.keyword{
+background:linear-gradient(135deg,rgba(248,227,170,.7),rgba(231,220,255,.7));
+border-radius:12px;
+padding:0 6px;
 }
 
 .choices{
@@ -216,7 +176,6 @@ h1{font-size:38px}
 .scene{padding:22px 18px}
 .scene h2{font-size:30px}
 .scene p{font-size:23px}
-.reader-5-7 .scene p{font-size:21px}
 .meraviglia .scene p{font-size:24px}
 .visual{height:175px;font-size:52px}
 .meraviglia .visual{height:220px;font-size:66px}
@@ -227,13 +186,15 @@ h1{font-size:38px}
 
 <body>
 
-<main class="card" id="card">
+<main class="card meraviglia">
 
-<div class="badge" id="badge">FABLEA story</div>
-<h1 id="title">La storia di oggi</h1>
-<div class="subtitle" id="subtitle">Una storia a scene, lenta e immersiva.</div>
+<div class="badge">2–4 anni • Meraviglia</div>
 
-<div class="age-note" id="ageNote"></div>
+<h1 id="title"></h1>
+
+<div class="subtitle">
+Una storia lenta e rassicurante per accompagnare immaginazione e calma.
+</div>
 
 <div id="scenes"></div>
 
@@ -243,68 +204,95 @@ h1{font-size:38px}
 <a class="button secondary" href="/story.html">Crea un’altra storia</a>
 <a class="button secondary" href="/profile.html">Cambia bambino</a>
 <a class="button secondary" href="/library.html">Libreria</a>
-<a class="button secondary" href="/index.html">Home</a>
 </div>
 
 <div class="footer">
-Scene lente • Immagini evocative • Partecipazione morbida
+Bassa stimolazione • Voce lenta • Immaginazione morbida
 </div>
 
 </main>
 
 <script>
-const saved = localStorage.getItem('fableaStoryData');
+const saved = JSON.parse(localStorage.getItem('fableaStoryData'));
 
-const data = saved ? JSON.parse(saved) : {
-name:'il piccolo protagonista',
-age:'5-7',
-experience:'Storia della sera',
-mood:'Tranquilla',
-theme:'Foresta magica',
-interests:[]
-};
-
-const name = data.name || 'il piccolo protagonista';
-const age = data.age || '5-7';
-const mood = data.mood || 'Tranquilla';
-const theme = data.theme || 'Foresta magica';
-const interests = data.interests || [];
+const name = saved?.name || 'piccolo esploratore';
+const theme = saved?.theme || '';
 
 let title = '';
-let badge = '';
-let subtitle = '';
-let ageNote = '';
 let scenes = [];
-
-function hasInterest(word){
-return interests.join(' ').toLowerCase().includes(word.toLowerCase()) || theme.toLowerCase().includes(word.toLowerCase());
-}
 
 function mark(text){
 return text
+.replaceAll('lupo','<span class="keyword">lupo</span>')
 .replaceAll('luna','<span class="keyword">luna</span>')
-.replaceAll('mappa','<span class="keyword">mappa</span>')
-.replaceAll('luce','<span class="keyword">luce</span>')
-.replaceAll('bosco','<span class="keyword">bosco</span>')
-.replaceAll('mare','<span class="keyword">mare</span>')
-.replaceAll('coraggio','<span class="keyword">coraggio</span>')
-.replaceAll('principessa','<span class="keyword">principessa</span>')
-.replaceAll('regno','<span class="keyword">regno</span>')
-.replaceAll('futuro','<span class="keyword">futuro</span>');
+.replaceAll('luce','<span class="keyword">luce</span>');
 }
 
-if(age === '2-4'){
+if(theme === 'Il lupo cattivo gentile'){
 
-document.getElementById('card').classList.add('meraviglia');
-
-badge = '2–4 anni • Meraviglia';
-title = name + ' e la piccola luce';
-subtitle = 'Una storia visiva, breve e rassicurante.';
-ageNote = 'Per i più piccoli: immagini grandi, parole semplici, ripetizione e ritmo molto lento.';
+title = `${name} e il lupo dal vocione`;
 
 scenes = [
+
 {
-icon: hasInterest('principesse') ? '👑 🌙 ✨' : '🌙 🧸 ✨',
+icon:'🌲 🌙 🐺',
+title:'Il rumore nel bosco',
+text:[
+`${name} sentì un rumore nel bosco.`,
+`“GROOOOAR...”`,
+`Era un grande lupo.`,
+`Con un grande vocione.`
+],
+choices:['Guarda il lupo', 'Respira piano']
+},
+
+{
+icon:'🐺 🥺 🌙',
+title:'Il lupo triste',
+text:[
+`Ma il lupo non voleva spaventare nessuno.`,
+`Aveva solo una voce troppo forte.`,
+`Il lupo disse:`,
+`“Io volevo solo dire buonasera...”`
+],
+choices:['Sorridi al lupo', 'Avvicinati piano']
+},
+
+{
+icon:'✨ 🐺 🤍',
+title:'La luce gentile',
+text:[
+`${name} prese una piccola luce.`,
+`La mise vicino al lupo.`,
+`Il lupo diventò calmo.`,
+`Molto calmo.`
+],
+choices:['Dai la luce', 'Tocca la stellina']
+},
+
+{
+icon:'🌙 💤 🐺',
+title:'Buonanotte lupo',
+text:[
+`Il lupo si sdraiò vicino alla luna.`,
+`Non sembrava più cattivo.`,
+`Sembrava solo stanco.`,
+`“Buonanotte piccolo cuore...”`,
+`disse piano piano.`
+],
+choices:['Buonanotte', 'Chiudi gli occhi']
+}
+
+];
+
+}else{
+
+title = `${name} e la piccola luce`;
+
+scenes = [
+
+{
+icon:'🌙 ✨ 🧸',
 title:'La luce',
 text:[
 `C’era una piccola luce vicino a ${name}.`,
@@ -313,18 +301,20 @@ text:[
 ],
 choices:['Guarda la luce', 'Respira piano']
 },
+
 {
-icon: hasInterest('principesse') ? '👑 ☁️' : '🧸 ☁️',
+icon:'☁️ 🧸 ⭐',
 title:'L’amico morbido',
 text:[
-hasInterest('principesse') ? `Arrivò una piccola principessa della luna.` : `Arrivò un orsetto morbido.`,
+`Arrivò un orsetto morbido.`,
 `Poi una stellina.`,
 `Poi una nuvola piccola.`
 ],
 choices:['Tocca la nuvola', 'Sorridi alla stellina']
 },
+
 {
-icon:'✨ 🤍 🌙',
+icon:'✨ 🌙 🤍',
 title:'La calma',
 text:[
 `Tutti camminavano piano.`,
@@ -334,225 +324,12 @@ text:[
 ],
 choices:['Chiudi gli occhi', 'Buonanotte']
 }
-];
 
-} else if(age === '5-7'){
-
-document.getElementById('card').classList.add('reader-5-7');
-
-badge = '5–7 anni • Esplorazione';
-ageNote = 'Per primi lettori: frasi brevi, blocchi ariosi, parole leggibili e scene visuali.';
-
-if(hasInterest('principesse')){
-
-title = name + ' e la principessa delle nuvole';
-subtitle = 'Una piccola avventura leggibile e luminosa.';
-
-scenes = [
-{
-icon:'☁️ 🚪 ✨',
-title:'La porta nel cielo',
-text:[
-`${name} vide una piccola porta nel cielo.`,
-`Dietro la porta c’era un regno di nuvole.`,
-`La porta brillava piano.`
-],
-choices:['Apri la porta', 'Guarda le nuvole']
-},
-{
-icon:'👑 ☁️ 🌟',
-title:'La principessa curiosa',
-text:[
-`Nel regno viveva una principessa gentile.`,
-`Non aspettava di essere salvata.`,
-`Voleva esplorare.`
-],
-choices:['Segui la principessa', 'Cerca una stella']
-},
-{
-icon:'👑 💛 ✨',
-title:'La corona di luce',
-text:[
-`Trovarono una corona fatta di luce.`,
-`La corona non serviva a comandare.`,
-`Serviva a ricordare il coraggio.`
-],
-choices:['Indossa la luce', 'Fai un passo']
-},
-{
-icon:'⭐ ☁️ 🛤️',
-title:'La strada scelta',
-text:[
-`La principessa indicò una stella.`,
-`“Ogni bambino può scegliere la propria strada.”`,
-`${name} sorrise.`
-],
-choices:['Scegli la stella', 'Torna piano']
-}
-];
-
-}else{
-
-title = name + ' e la mappa luminosa';
-subtitle = 'Una storia leggibile per esplorare senza fretta.';
-
-scenes = [
-{
-icon:'📖 🗺️ ✨',
-title:'La mappa',
-text:[
-`${name} trovò una mappa dentro un libro.`,
-`La mappa non era ferma.`,
-`Brillava piano.`
-],
-choices:['Apri la mappa', 'Guarda la luce']
-},
-{
-icon:'🌲 🦊 🌟',
-title:'Il bosco morbido',
-text:[
-`Il sentiero portava verso un bosco morbido.`,
-`Nel bosco viveva una volpe gentile.`,
-`La volpe disse: “Ogni passo piccolo è già un’avventura.”`
-],
-choices:['Segui la volpe', 'Ascolta il bosco']
-},
-{
-icon:'⭐ 🗺️ 💛',
-title:'La stella sulla mappa',
-text:[
-`Una stella cadde sulla mappa.`,
-`Non faceva rumore.`,
-`Faceva magia.`
-],
-choices:['Tocca la stella', 'Respira piano']
-},
-{
-icon:'🕯️ 🌙 ✨',
-title:'Il coraggio piccolo',
-text:[
-`${name} capì che il coraggio può essere piccolo.`,
-`Piccolo come una luce.`,
-`Grande come un sogno.`
-],
-choices:['Porta la luce', 'Continua il sogno']
-}
 ];
 
 }
 
-} else if(age === '8-10'){
-
-badge = '8–10 anni • Identità';
-title = name + ' e il ponte delle scelte';
-subtitle = 'Una storia su emozioni, coraggio e fiducia.';
-ageNote = 'Per 8–10 anni: più emozioni, più scelte interiori, più crescita personale.';
-
-scenes = [
-{
-icon: hasInterest('principesse') ? '👑 🌉 💛' : '🌉 💛 🌙',
-title:'Il ponte',
-text:[
-`Nel cuore di una città segreta, ${name} trovò un ponte sospeso tra due colline.`,
-hasInterest('principesse') ? `Sul ponte camminava una principessa senza corona.` : `Il ponte non era fatto di legno né di pietra.`,
-`Era fatto di scelte.`
-],
-choices:['Restare fermo', 'Fare un passo']
-},
-{
-icon:'🌊 🪞 💭',
-title:'Il fiume dei riflessi',
-text:[
-`Sotto il ponte scorreva un fiume calmo.`,
-`Ogni volta che ${name} guardava l’acqua, vedeva un riflesso diverso.`,
-`Una paura. Una domanda. Un desiderio.`
-],
-choices:['Dare un nome alla paura', 'Seguire il desiderio']
-},
-{
-icon:'💛 🛡️ ✨',
-title:'Le tre luci',
-text:[
-`Sul ponte apparvero tre luci.`,
-`La prima diceva: coraggio.`,
-`La seconda diceva: gentilezza.`,
-`La terza diceva: fiducia.`
-],
-choices:['Coraggio', 'Gentilezza', 'Fiducia']
-},
-{
-icon:'🌉 🌙 🛤️',
-title:'Dall’altra parte',
-text:[
-`${name} fece un passo verso la luce della fiducia.`,
-`Il ponte vibrò piano.`,
-`Dall’altra parte, la città segreta sembrava una parte di sé che finalmente aveva trovato una strada.`
-],
-choices:['Continuare', 'Portare la luce con sé']
-}
-];
-
-} else {
-
-document.getElementById('card').classList.add('teen');
-
-badge = '11–12 anni • Direzione';
-title = name + ' e l’atlante delle possibilità';
-subtitle = 'Un racconto più maturo su identità, scelte e futuro.';
-ageNote = 'Per 11–12 anni: linguaggio più adulto, meno fiaba, più identità, direzione e domande vere.';
-
-scenes = [
-{
-icon:'🌌 🪟',
-title:'Il cielo più grande',
-text:[
-`La sera in cui ${name} trovò l’atlante, il cielo sembrava più grande del solito.`,
-`Non più scuro.`,
-`Solo più profondo.`
-],
-choices:['Guardare fuori', 'Aprire il libro']
-},
-{
-icon:'📖 🧭',
-title:'L’atlante senza titolo',
-text:[
-`L’atlante era appoggiato su una scrivania chiara.`,
-`Non aveva titolo.`,
-`Solo una bussola disegnata in copertina e una frase sottile: “Non tutte le direzioni si vedono da fuori.”`
-],
-choices:['Seguire la bussola', 'Leggere la frase']
-},
-{
-icon:'🌌 🖋️ 🛤️',
-title:'Le possibilità',
-text:[
-`Le pagine non mostravano città o confini, ma possibilità.`,
-`Una pagina era fatta di coraggio.`,
-`Una di dubbi.`,
-`Una di errori utili.`,
-`Una di sogni ancora confusi.`
-],
-choices:['Coraggio', 'Dubbi', 'Sogni']
-},
-{
-icon:'🧭 ✨',
-title:'Avanti',
-text:[
-`Quelle pagine non dicevano cosa diventare.`,
-`Chiedevano soltanto: “Che cosa ti fa sentire vivo quando nessuno ti guarda?”`,
-`Quando ${name} chiuse il libro, la bussola non indicava nord.`,
-`Indicava avanti.`
-],
-choices:['Portare la domanda', 'Andare avanti']
-}
-];
-
-}
-
-document.getElementById('badge').innerText = badge;
 document.getElementById('title').innerText = title;
-document.getElementById('subtitle').innerText = subtitle;
-document.getElementById('ageNote').innerText = ageNote;
 
 document.getElementById('scenes').innerHTML = scenes.map(scene => `
 <section class="scene">
@@ -571,7 +348,7 @@ return scene.title + '. ' + scene.text.join(' ');
 
 localStorage.setItem('fableaCurrentStory', JSON.stringify({
 title:title,
-subtitle:subtitle,
+subtitle:'Una storia lenta e rassicurante',
 icon:scenes[0].icon,
 text:fullText
 }));
