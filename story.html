@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FABLEA | Crea una storia</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -29,9 +29,9 @@ width:92%;
 max-width:780px;
 padding:52px 42px;
 border-radius:38px;
-background:rgba(255,250,245,.66);
+background:rgba(255,250,245,.70);
 backdrop-filter:blur(16px);
-border:1px solid rgba(255,255,255,.55);
+border:1px solid rgba(255,255,255,.58);
 box-shadow:0 24px 80px rgba(80,65,55,.15);
 }
 
@@ -57,18 +57,52 @@ text-align:center;
 font-size:18px;
 line-height:1.7;
 color:#6d6668;
-margin-bottom:34px;
+margin-bottom:28px;
+}
+
+.selected-child{
+padding:22px;
+border-radius:28px;
+background:rgba(255,255,255,.50);
+border:1px solid rgba(80,65,55,.10);
+text-align:center;
+margin-bottom:30px;
+}
+
+.avatar{
+width:74px;
+height:74px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:36px;
+background:linear-gradient(135deg,#f8e3aa,#e7dcff);
+margin:0 auto 14px;
+}
+
+.child-name{
+font-family:'Cormorant Garamond',serif;
+font-size:34px;
+font-weight:600;
+}
+
+.child-meta{
+font-size:14px;
+font-weight:800;
+color:#9f8a76;
+margin-top:6px;
 }
 
 label{
 display:block;
 font-size:15px;
-font-weight:600;
+font-weight:700;
 color:#6d5f57;
 margin:18px 0 8px;
 }
 
-input,select{
+select{
 width:100%;
 height:58px;
 border-radius:18px;
@@ -90,7 +124,7 @@ border-radius:999px;
 background:linear-gradient(135deg,#f8e3aa,#e7c870);
 color:#332d35;
 font-size:18px;
-font-weight:700;
+font-weight:800;
 box-shadow:0 14px 28px rgba(181,145,73,.18);
 cursor:pointer;
 }
@@ -106,6 +140,41 @@ flex-wrap:wrap;
 
 .nav a{
 color:#8f8078;
+text-decoration:none;
+}
+
+.empty{
+text-align:center;
+padding:28px;
+border-radius:30px;
+background:rgba(255,255,255,.50);
+border:1px solid rgba(80,65,55,.10);
+}
+
+.empty h2{
+font-family:'Cormorant Garamond',serif;
+font-size:36px;
+font-weight:600;
+margin-bottom:12px;
+}
+
+.empty p{
+font-size:17px;
+line-height:1.7;
+color:#756c70;
+margin-bottom:22px;
+}
+
+.empty a{
+display:inline-flex;
+justify-content:center;
+align-items:center;
+padding:15px 26px;
+border-radius:999px;
+background:linear-gradient(135deg,#f8e3aa,#e7c870);
+color:#332d35;
+font-size:16px;
+font-weight:800;
 text-decoration:none;
 }
 
@@ -126,20 +195,12 @@ h1{font-size:38px}
 <h1>Che storia vuoi creare oggi?</h1>
 
 <div class="intro">
-Scegli la fascia evolutiva, il tono e il mondo narrativo.  
-FABLEA adatterà ritmo, parole e atmosfera all’età del bambino.
+FABLEA userà il profilo selezionato per adattare parole, ritmo, immagini e attività.
 </div>
 
-<label>Nome del bambino</label>
-<input id="childName" type="text" placeholder="Es. Cesare">
+<div id="childArea"></div>
 
-<label>Fascia evolutiva</label>
-<select id="childAge">
-<option value="2-4">2–4 anni • Meraviglia</option>
-<option value="5-7">5–7 anni • Esplorazione</option>
-<option value="8-10">8–10 anni • Identità</option>
-<option value="11-12">11–12 anni • Direzione</option>
-</select>
+<div id="storyForm" style="display:none;">
 
 <label>Tipo di esperienza</label>
 <select id="experienceType">
@@ -170,6 +231,8 @@ FABLEA adatterà ritmo, parole e atmosfera all’età del bambino.
 <option>Dinosauri gentili</option>
 <option>Spazio e pianeti</option>
 <option>Castelli e draghi buoni</option>
+<option>Principesse coraggiose</option>
+<option>Regni della luna</option>
 <option>Montagna e nuvole</option>
 <option>Città segreta</option>
 <option>Coraggio e calma</option>
@@ -177,30 +240,107 @@ FABLEA adatterà ritmo, parole e atmosfera all’età del bambino.
 
 <button onclick="createStory()">Crea la storia</button>
 
+</div>
+
 <div class="nav">
-<a href="/index.html">← Home</a>
-<a href="/profile.html">Profili</a>
+<a href="/profile.html">← Cambia bambino</a>
 <a href="/library.html">Libreria</a>
+<a href="/activity.html">Attività</a>
 <a href="/about.html">Manifesto</a>
+<a href="/index.html">Home</a>
 </div>
 
 </main>
 
 <script>
+function getProfiles(){
+return JSON.parse(localStorage.getItem('fableaChildProfiles') || '[]');
+}
+
+function getSelectedProfile(){
+const profiles = getProfiles();
+const selectedId = localStorage.getItem('fableaSelectedChildId');
+
+if(!profiles.length) return null;
+
+return profiles.find(profile => profile.id === selectedId) || profiles[0];
+}
+
+function ageLabel(value){
+if(value === '2-4') return '2–4 anni • Meraviglia';
+if(value === '5-7') return '5–7 anni • Esplorazione';
+if(value === '8-10') return '8–10 anni • Identità';
+if(value === '11-12') return '11–12 anni • Direzione';
+return 'Fascia FABLEA';
+}
+
+function avatarFor(age){
+if(age === '2-4') return '🌙';
+if(age === '5-7') return '🦊';
+if(age === '8-10') return '💛';
+if(age === '11-12') return '🧭';
+return '✨';
+}
+
+const profile = getSelectedProfile();
+const childArea = document.getElementById('childArea');
+const storyForm = document.getElementById('storyForm');
+
+if(!profile){
+
+childArea.innerHTML = `
+<div class="empty">
+<h2>Nessun bambino selezionato.</h2>
+<p>
+Crea prima un profilo bambino. Poi FABLEA potrà adattare storie, voce e attività.
+</p>
+<a href="/onboarding.html">Crea profilo bambino</a>
+</div>
+`;
+
+}else{
+
+localStorage.setItem('fableaSelectedChildId', profile.id);
+
+childArea.innerHTML = `
+<div class="selected-child">
+<div class="avatar">${avatarFor(profile.age)}</div>
+<div class="child-name">${profile.name}</div>
+<div class="child-meta">${ageLabel(profile.age)}</div>
+</div>
+`;
+
+storyForm.style.display = 'block';
+
+}
+
 function createStory(){
 
-const data={
-name:document.getElementById('childName').value.trim() || 'il piccolo protagonista',
-age:document.getElementById('childAge').value,
+if(!profile){
+window.location.href='/onboarding.html';
+return;
+}
+
+const preferredTheme = profile.interests && profile.interests.length
+? profile.interests[0]
+: document.getElementById('storyTheme').value;
+
+const selectedTheme = document.getElementById('storyTheme').value || preferredTheme;
+
+const data = {
+name:profile.name,
+age:profile.age,
 experience:document.getElementById('experienceType').value,
 mood:document.getElementById('childMood').value,
-theme:document.getElementById('storyTheme').value
+theme:selectedTheme,
+interests:profile.interests || [],
+support:profile.support || '',
+duration:profile.duration || ''
 };
 
-localStorage.setItem('fableaStoryData',JSON.stringify(data));
+localStorage.setItem('fableaStoryData', JSON.stringify(data));
 
 window.location.href='/story-result.html';
-
 }
 </script>
 
