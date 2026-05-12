@@ -60,7 +60,7 @@ margin-bottom:28px;
 }
 
 .visual{
-height:240px;
+height:245px;
 border-radius:36px;
 margin-bottom:28px;
 background:
@@ -91,7 +91,7 @@ margin-bottom:26px;
 
 .age-note{
 margin:0 auto 34px;
-max-width:680px;
+max-width:700px;
 padding:18px 22px;
 border-radius:24px;
 background:rgba(255,255,255,.42);
@@ -109,9 +109,7 @@ line-height:1.82;
 color:#4d4550;
 }
 
-.story p{
-margin-bottom:26px;
-}
+.story p{margin-bottom:26px}
 
 .keyword{
 background:linear-gradient(135deg,rgba(248,227,170,.7),rgba(231,220,255,.7));
@@ -134,15 +132,6 @@ background:rgba(255,255,255,.42);
 margin-bottom:18px;
 }
 
-.reader-5-7 h1{
-font-size:48px;
-}
-
-.reader-5-7 .visual{
-height:250px;
-font-size:78px;
-}
-
 .meraviglia .story{
 font-family:'Nunito',sans-serif;
 font-size:28px;
@@ -152,8 +141,8 @@ font-weight:600;
 }
 
 .meraviglia .visual{
-height:270px;
-font-size:82px;
+height:280px;
+font-size:86px;
 }
 
 .teen .story{
@@ -161,10 +150,6 @@ font-family:'Cormorant Garamond',serif;
 font-size:30px;
 line-height:1.86;
 color:#403943;
-}
-
-.teen h1{
-font-size:58px;
 }
 
 .actions{
@@ -209,7 +194,7 @@ h1{font-size:38px}
 .reader-5-7 .story{font-size:21px}
 .meraviglia .story{font-size:24px}
 .visual{height:180px;font-size:54px}
-.meraviglia .visual{height:220px;font-size:64px}
+.meraviglia .visual{height:230px;font-size:66px}
 .button{width:100%;text-align:center}
 }
 </style>
@@ -234,6 +219,7 @@ h1{font-size:38px}
 <a class="button" href="/story-player.html">Ascolta la voce narrante</a>
 <a class="button" href="/activity.html">Entra nella storia</a>
 <a class="button secondary" href="/story.html">Crea un’altra storia</a>
+<a class="button secondary" href="/profile.html">Cambia bambino</a>
 <a class="button secondary" href="/library.html">Libreria</a>
 <a class="button secondary" href="/index.html">Home</a>
 </div>
@@ -252,13 +238,15 @@ name:'il piccolo protagonista',
 age:'5-7',
 experience:'Storia della sera',
 mood:'Tranquilla',
-theme:'Foresta magica'
+theme:'Foresta magica',
+interests:[]
 };
 
 const name = data.name || 'il piccolo protagonista';
 const age = data.age || '5-7';
 const mood = data.mood || 'Tranquilla';
 const theme = data.theme || 'Foresta magica';
+const interests = data.interests || [];
 
 let title = '';
 let badge = '';
@@ -268,6 +256,10 @@ let sceneTitle = '';
 let ageNote = '';
 let paragraphs = [];
 
+function hasInterest(word){
+return interests.join(' ').toLowerCase().includes(word.toLowerCase()) || theme.toLowerCase().includes(word.toLowerCase());
+}
+
 function mark(text){
 return text
 .replaceAll('luna','<span class="keyword">luna</span>')
@@ -276,7 +268,8 @@ return text
 .replaceAll('bosco','<span class="keyword">bosco</span>')
 .replaceAll('mare','<span class="keyword">mare</span>')
 .replaceAll('coraggio','<span class="keyword">coraggio</span>')
-.replaceAll('scelta','<span class="keyword">scelta</span>')
+.replaceAll('principessa','<span class="keyword">principessa</span>')
+.replaceAll('regno','<span class="keyword">regno</span>')
 .replaceAll('futuro','<span class="keyword">futuro</span>');
 }
 
@@ -287,8 +280,8 @@ document.getElementById('card').classList.add('meraviglia');
 badge = '2–4 anni • Meraviglia';
 title = name + ' e la luce gentile';
 subtitle = 'Poche parole, grande immagine, voce morbida.';
-visual = '🌙 🧸 ✨';
-sceneTitle = 'Una luna morbida, un orsetto e una piccola luce.';
+visual = hasInterest('principesse') ? '👑 🌙 ✨' : '🌙 🧸 ✨';
+sceneTitle = hasInterest('principesse') ? 'Una piccola corona, la luna e una luce morbida.' : 'Una luna morbida, un orsetto e una piccola luce.';
 ageNote = 'Per i più piccoli FABLEA usa parole semplici, ripetizione, immagini grandi e ritmo rassicurante.';
 
 paragraphs = [
@@ -297,7 +290,7 @@ paragraphs = [
 `Brillava poco. Ma brillava bene.`,
 `${name} la guardò.`,
 `La luce sembrava dire: “Sono qui.”`,
-`Arrivò un orsetto morbido.`,
+hasInterest('principesse') ? `Arrivò una piccola principessa della luna.` : `Arrivò un orsetto morbido.`,
 `Poi una stellina.`,
 `Poi una nuvola piccola.`,
 `Tutti camminavano piano.`,
@@ -311,12 +304,33 @@ paragraphs = [
 document.getElementById('card').classList.add('reader-5-7');
 
 badge = '5–7 anni • Esplorazione';
+
+if(hasInterest('principesse')){
+title = name + ' e la principessa delle nuvole';
+subtitle = 'Frasi leggibili, magia gentile e una principessa che sceglie da sola.';
+visual = '👑 ☁️ ✨';
+sceneTitle = 'Una principessa curiosa cammina tra le nuvole.';
+paragraphs = [
+`${name} vide una piccola porta nel cielo.`,
+`Dietro la porta c’era un regno di nuvole.`,
+`Nel regno viveva una principessa gentile.`,
+`Non aspettava di essere salvata.`,
+`Voleva esplorare.`,
+`La principessa disse: “Vieni con me.”`,
+`${name} la seguì piano.`,
+`Trovarono una corona fatta di luce.`,
+`La corona non serviva a comandare.`,
+`Serviva a ricordare il coraggio.`,
+`La giornata era stata ${mood.toLowerCase()}, ma ora sembrava più leggera.`,
+`${name} sorrise.`,
+`La principessa indicò una stella.`,
+`“Ogni bambino può scegliere la propria strada.”`
+];
+}else{
 title = name + ' e la mappa luminosa';
-subtitle = 'Frasi più chiare, parole leggibili, piccole scene da immaginare.';
+subtitle = 'Frasi chiare, parole leggibili, piccole scene da immaginare.';
 visual = '🗺️ 🌟 🦊';
 sceneTitle = 'Una mappa che brilla e una volpe guida.';
-ageNote = 'Per chi inizia a leggere: frasi più brevi, blocchi ariosi, parole semplici e immagini di supporto.';
-
 paragraphs = [
 `${name} trovò una mappa dentro un libro.`,
 `La mappa non era ferma. Brillava piano.`,
@@ -333,19 +347,22 @@ paragraphs = [
 `Piccolo come una luce.`,
 `Grande come un sogno.`
 ];
+}
+
+ageNote = 'Per chi inizia a leggere: frasi più brevi, blocchi ariosi, parole semplici e immagini di supporto.';
 
 } else if(age === '8-10'){
 
 badge = '8–10 anni • Identità';
 title = name + ' e il ponte delle scelte';
 subtitle = 'Una storia su emozioni, coraggio e piccoli cambiamenti interiori.';
-visual = '🌉 💛 🌙';
-sceneTitle = 'Un ponte sospeso tra emozioni e decisioni.';
+visual = hasInterest('principesse') ? '👑 🌉 💛' : '🌉 💛 🌙';
+sceneTitle = hasInterest('principesse') ? 'Una principessa attraversa un ponte fatto di scelte.' : 'Un ponte sospeso tra emozioni e decisioni.';
 ageNote = 'Per 8–10 anni FABLEA lavora su identità, relazioni, autostima e riconoscimento delle emozioni.';
 
 paragraphs = [
 `Nel cuore di una città segreta, ${name} trovò un ponte sospeso tra due colline.`,
-`Il ponte non era fatto di legno né di pietra. Era fatto di scelte: alcune leggere, altre difficili, altre così piccole che quasi non sembravano importanti.`,
+hasInterest('principesse') ? `Sul ponte camminava una principessa senza corona. Diceva che una corona vera non pesa sulla testa, ma vive nelle scelte.` : `Il ponte non era fatto di legno né di pietra. Era fatto di scelte.`,
 `Sotto il ponte scorreva un fiume calmo. Ogni volta che ${name} guardava l’acqua, vedeva un riflesso diverso: una paura, una domanda, un desiderio.`,
 `Dopo una giornata ${mood.toLowerCase()}, restare fermo sembrava più facile. Ma una voce dal fiume disse: “Non devi sapere tutto. Devi solo ascoltare il passo che senti più vero.”`,
 `Sul ponte apparvero tre luci. La prima diceva: coraggio. La seconda diceva: gentilezza. La terza diceva: fiducia.`,
