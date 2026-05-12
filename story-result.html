@@ -26,7 +26,7 @@ color:#352f36;
 
 .card{
 width:92%;
-max-width:900px;
+max-width:920px;
 padding:58px 46px;
 border-radius:42px;
 background:rgba(255,251,247,.72);
@@ -60,17 +60,25 @@ margin-bottom:34px;
 }
 
 .illustration{
-height:170px;
-border-radius:32px;
+height:210px;
+border-radius:34px;
 margin-bottom:36px;
 background:
-radial-gradient(circle at 50% 35%,#fff3c6 0%,transparent 22%),
+radial-gradient(circle at 50% 34%,#fff6cf 0%,transparent 24%),
+radial-gradient(circle at 20% 80%,#f8d9b8 0%,transparent 22%),
 linear-gradient(135deg,#e7dcff,#f8e3aa);
-box-shadow:inset 0 0 60px rgba(255,255,255,.48);
+box-shadow:inset 0 0 70px rgba(255,255,255,.55);
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:52px;
+font-size:62px;
+animation:softFloat 6s ease-in-out infinite;
+}
+
+@keyframes softFloat{
+0%{transform:translateY(0)}
+50%{transform:translateY(-5px)}
+100%{transform:translateY(0)}
 }
 
 .story{
@@ -82,6 +90,30 @@ color:#4d4550;
 
 .story p{
 margin-bottom:26px;
+}
+
+.meraviglia .story{
+font-size:32px;
+line-height:1.72;
+text-align:center;
+}
+
+.meraviglia .illustration{
+height:260px;
+font-size:78px;
+}
+
+.age-note{
+margin:0 auto 34px;
+max-width:640px;
+padding:18px 22px;
+border-radius:24px;
+background:rgba(255,255,255,.42);
+border:1px solid rgba(80,65,55,.08);
+text-align:center;
+font-size:15px;
+line-height:1.6;
+color:#7b706c;
 }
 
 .actions{
@@ -123,7 +155,9 @@ color:#988a82;
 .card{padding:42px 24px;border-radius:30px}
 h1{font-size:40px}
 .story{font-size:24px}
-.illustration{height:140px}
+.meraviglia .story{font-size:27px}
+.illustration{height:155px;font-size:46px}
+.meraviglia .illustration{height:220px;font-size:64px}
 .button{width:100%;text-align:center}
 }
 </style>
@@ -131,7 +165,7 @@ h1{font-size:40px}
 
 <body>
 
-<main class="card">
+<main class="card" id="card">
 
 <div class="badge" id="badge">FABLEA story</div>
 
@@ -142,6 +176,8 @@ Una storia creata per accompagnare immaginazione e calma.
 </div>
 
 <div class="illustration" id="icon">🌙 📖 ✨</div>
+
+<div class="age-note" id="ageNote"></div>
 
 <section class="story" id="storyText"></section>
 
@@ -163,103 +199,103 @@ const saved = localStorage.getItem('fableaStoryData');
 
 const data = saved ? JSON.parse(saved) : {
 name:'il piccolo protagonista',
-age:'5 anni',
+age:'5-7',
 experience:'Storia della sera',
 mood:'Tranquilla',
 theme:'Foresta magica'
 };
 
 const name = data.name || 'il piccolo protagonista';
-const age = data.age || '5 anni';
+const age = data.age || '5-7';
 const experience = data.experience || 'Storia della sera';
 const mood = data.mood || 'Tranquilla';
 const theme = data.theme || 'Foresta magica';
 
 let title = '';
-let badge = experience;
+let badge = '';
 let subtitle = '';
-let icon = '🌙 📖 ✨';
+let icon = '';
+let ageNote = '';
 let paragraphs = [];
 
-if(experience === 'Avventura immaginativa'){
+if(age === '2-4'){
 
+document.getElementById('card').classList.add('meraviglia');
+
+badge = '2–4 anni • Meraviglia';
+title = name + ' e la piccola luce gentile';
+subtitle = 'Una storia breve, visiva e rassicurante.';
+icon = '🌙 🧸 ✨';
+ageNote = 'Per i più piccoli FABLEA usa parole semplici, immagini grandi, ritmo ripetitivo e una chiusura calma. Qui l’immagine e la voce contano più del testo.';
+
+paragraphs = [
+`C’era una piccola luce vicino a ${name}.`,
+`Faceva piano piano.`,
+`Brillava poco. Ma brillava bene.`,
+`${name} la guardò. La luce sembrava dire: “Sono qui.”`,
+`Arrivò un orsetto morbido. Poi una stellina. Poi una nuvola piccola.`,
+`Tutti camminavano piano.`,
+`Piano piano.`,
+`La luce fece un cerchio caldo.`,
+`${name} era al sicuro.`,
+`La stellina disse: “Buona notte, piccolo cuore.”`
+];
+
+} else if(age === '5-7'){
+
+badge = '5–7 anni • Esplorazione';
 title = name + ' e la mappa dei mondi nascosti';
-subtitle = 'Un’avventura morbida per esplorare senza fretta.';
-icon = '🗺️ ✨ 🐉';
+subtitle = 'Un’avventura gentile per esplorare senza fretta.';
+icon = '🗺️ ✨ 🦊';
+ageNote = 'Per questa fascia FABLEA aggiunge avventura, piccoli misteri e personaggi guida, mantenendo sempre un ritmo morbido.';
 
 paragraphs = [
-`Quel pomeriggio, mentre il cielo cambiava colore lentamente, ${name} trovò una piccola mappa piegata dentro un libro. Non era una mappa normale: le strade si muovevano piano, come fili dorati disegnati dalla fantasia.`,
-`In un angolo c’era scritto: “Non porta lontano chi corre più veloce. Porta lontano chi sa guardare meglio.” ${name} sorrise e appoggiò un dito sul primo sentiero.`,
-`Subito comparve un mondo fatto di ${theme.toLowerCase()}. C’erano ponti sottili, luci sospese e una porta minuscola che sembrava aspettare proprio ${name}.`,
-`Dietro la porta viveva un custode gentile: non era grande, non faceva paura, ma conosceva tutte le domande che i bambini tengono in tasca senza dirle.`,
-`“Oggi la tua giornata è stata ${mood.toLowerCase()},” disse il custode. “Allora ti regalo una cosa speciale: un passo coraggioso, ma piccolo abbastanza da non spaventarti.”`,
-`${name} fece quel passo. Il mondo non cambiò tutto insieme. Cambiò piano: una luce qui, una stella là, un rumore lontano che diventava musica.`,
-`Quando la mappa tornò a essere silenziosa, ${name} capì che le avventure più belle non servono per scappare via. Servono per scoprire un pezzetto nuovo di sé.`
+`Quel giorno ${name} trovò una piccola mappa piegata dentro un libro. Non era una mappa normale: le strade si muovevano piano, come fili dorati disegnati dalla fantasia.`,
+`In un angolo c’era scritto: “Non porta lontano chi corre più veloce. Porta lontano chi sa guardare meglio.”`,
+`${name} appoggiò un dito sul primo sentiero e subito comparve un mondo fatto di ${theme.toLowerCase()}. C’erano luci sospese, ponti morbidi e una porta minuscola che sembrava aspettare proprio lì.`,
+`Dietro la porta viveva una volpe con una sciarpa color miele. Conosceva tutti i rumori del bosco e tutti i silenzi della sera.`,
+`“Oggi la tua giornata è stata ${mood.toLowerCase()},” disse la volpe. “Allora scegliamo un passo piccolo. Un passo coraggioso, ma non troppo grande.”`,
+`${name} fece quel passo. Una foglia si illuminò. Poi un’altra. Poi tutto il sentiero iniziò a brillare come se qualcuno avesse acceso le stelle una alla volta.`,
+`La volpe sorrise. “Vedi? Le avventure non servono sempre per andare lontano. A volte servono per scoprire che dentro di te c’è già una luce.”`,
+`Quando la mappa tornò silenziosa, ${name} la richiuse piano. Ma una stellina rimase tra le dita, piccola e calda, pronta per la prossima avventura.`
 ];
 
-} else if(experience === 'Storia sulle emozioni'){
+} else if(age === '8-10'){
 
-title = name + ' e il barattolo delle emozioni';
-subtitle = 'Una storia delicata per dare forma a quello che si sente dentro.';
-icon = '💛 🌧️ 🌈';
-
-paragraphs = [
-`Quel giorno ${name} sentiva qualcosa dentro, ma non sapeva bene che nome avesse. Forse era stanchezza, forse era gioia, forse era una piccola nuvola rimasta lì dopo una giornata ${mood.toLowerCase()}.`,
-`Sul tavolo apparve un barattolo trasparente con un tappo dorato. Dentro non c’era nulla, eppure sembrava aspettare.`,
-`Una voce gentile disse: “Le emozioni non vanno mandate via. Vanno ascoltate piano, come si ascolta una conchiglia.”`,
-`${name} aprì il barattolo e vide uscire una lucina gialla. Era la felicità. Poi una goccia azzurra: era un pensiero un po’ triste. Poi una scintilla rossa: era energia che non sapeva dove andare.`,
-`Ogni emozione aveva un colore, una forma e un suono leggero. Nessuna era sbagliata. Nessuna era troppo grande se veniva guardata con calma.`,
-`Allora ${name} mise nel barattolo anche un piccolo respiro. Il barattolo brillò piano e le emozioni iniziarono a girare come stelle lente.`,
-`Da quel momento ${name} capì una cosa importante: dentro di noi possono vivere tanti colori insieme. E quando li ascoltiamo, diventano meno rumorosi.`
-];
-
-} else if(experience === 'Storia educativa soft'){
-
-title = name + ' e il segreto gentile della natura';
-subtitle = 'Una piccola scoperta per imparare con meraviglia.';
-icon = '🌱 🐝 ☀️';
+badge = '8–10 anni • Identità';
+title = name + ' e il ponte delle scelte';
+subtitle = 'Una storia su emozioni, coraggio e piccoli cambiamenti interiori.';
+icon = '🌉 💛 🌙';
+ageNote = 'Per 8–10 anni FABLEA lavora su identità, decisioni, relazioni, autostima e riconoscimento delle emozioni.';
 
 paragraphs = [
-`Una mattina luminosa, ${name} seguì una farfalla fino a un piccolo prato nascosto. L’erba era morbida, l’aria profumava di sole e tutto sembrava parlare a voce bassa.`,
-`Su un fiore giallo c’era un’ape molto indaffarata. Non sembrava avere tempo, ma quando vide ${name} si fermò un istante.`,
-`“Sai cosa faccio?” chiese l’ape. “Porto piccoli doni da un fiore all’altro. Così la natura può continuare a crescere.”`,
-`${name} osservò meglio. Ogni cosa nel prato aveva un compito: la terra custodiva, il sole scaldava, l’acqua aiutava, il vento spostava semi leggerissimi.`,
-`Anche le cose piccole facevano qualcosa di importante. Una formica trasportava una briciola. Una foglia faceva ombra. Una goccia scendeva piano verso una radice.`,
-`“Imparare,” disse la farfalla, “non vuol dire riempire la testa. Vuol dire accorgersi di più cose.”`,
-`Quando ${name} tornò a casa, il mondo sembrava lo stesso. Ma non lo era più davvero: adesso ogni fiore, ogni insetto e ogni nuvola aveva una storia da raccontare.`
-];
-
-} else if(experience === 'Mini racconto rilassante'){
-
-title = name + ' e il respiro della luna';
-subtitle = 'Un piccolo racconto per rallentare e ritrovare calma.';
-icon = '🌙 🫧 🤍';
-
-paragraphs = [
-`La stanza era tranquilla. Fuori, la luce diventava morbida. ${name} si accorse che anche il silenzio poteva avere un suono leggero.`,
-`Sul davanzale comparve una piccola luna tonda, grande come una mela. Non parlava subito. Prima respirava.`,
-`Inspirava piano, ed era come se il mondo diventasse più largo. Espirava piano, ed era come se ogni pensiero trovasse un posto dove riposare.`,
-`${name} provò a seguirla: un respiro dentro, lento. Un respiro fuori, ancora più lento.`,
-`La giornata ${mood.toLowerCase()} iniziò a sciogliersi un pochino. Non sparì di colpo. Si ammorbidì, come neve sotto una coperta calda.`,
-`La luna sorrise appena. “Non devi sistemare tutto adesso,” sembrava dire. “Puoi solo stare qui, un momento alla volta.”`,
-`E così ${name} rimase con quel respiro gentile, finché anche i pensieri più veloci impararono ad andare piano.`
+`Nel cuore di una città segreta, dove le case avevano finestre illuminate anche di giorno, ${name} trovò un ponte sospeso tra due colline.`,
+`Il ponte non era fatto di legno né di pietra. Era fatto di scelte: alcune leggere, altre più difficili, altre ancora così piccole che quasi non sembravano importanti.`,
+`Sotto il ponte scorreva un fiume calmo. Ogni volta che ${name} guardava l’acqua, vedeva un riflesso diverso: una paura, una domanda, un desiderio, un pensiero rimasto lì dopo una giornata ${mood.toLowerCase()}.`,
+`All’inizio ${name} non sapeva quale passo fare. Restare fermo sembrava più sicuro. Ma una voce dal fiume disse: “Non devi sapere tutto. Devi solo ascoltare il passo che senti più vero.”`,
+`Sul ponte apparvero tre luci. La prima diceva: coraggio. La seconda diceva: gentilezza. La terza diceva: fiducia.`,
+`${name} capì che scegliere non vuol dire non avere paura. Vuol dire portare con sé la paura senza lasciarle tenere il timone.`,
+`Fece un passo verso la luce della fiducia. Il ponte vibrò piano, come se fosse felice di essere attraversato.`,
+`Quando arrivò dall’altra parte, la città segreta non sembrava più così lontana. Sembrava un posto già conosciuto, come una parte di sé che finalmente aveva trovato una strada.`
 ];
 
 } else {
 
-title = name + ' e la lanterna del bosco';
-subtitle = 'Una storia calma per accompagnare la sera.';
-icon = '🌙 📖 ✨';
+badge = '11–12 anni • Direzione';
+title = name + ' e l’atlante dei futuri possibili';
+subtitle = 'Un racconto più profondo, quasi cinematografico, su sogni e direzione.';
+icon = '🌌 🧭 📖';
+ageNote = 'Per 11–12 anni FABLEA diventa più profonda: meno infantile, più simbolica, con temi di identità, futuro e direzione personale.';
 
 paragraphs = [
-`Quando la sera diventò morbida come una coperta, ${name} trovò una piccola lanterna vicino alla finestra. Non faceva una luce forte. Faceva una luce gentile.`,
-`La lanterna sembrò sussurrare: “Questa notte non dobbiamo correre. Dobbiamo solo immaginare.” Così ${name} la seguì piano, entrando in un sentiero fatto di luce calda.`,
-`Il sentiero portava verso una ${theme.toLowerCase()}. Ogni passo faceva nascere una stellina nell’aria, e ogni stellina sembrava dire: va tutto bene.`,
-`Tra gli alberi incontrò una volpe piccola, con la coda soffice e gli occhi grandi. La volpe aveva un po’ paura del buio, anche se cercava di non dirlo.`,
-`${name} si sedette accanto a lei e sollevò la lanterna. “Forse il buio non è vuoto,” disse piano. “Forse aspetta solo che qualcuno lo guardi con gentilezza.”`,
-`Allora il bosco cambiò. Non diventò più luminoso: diventò più amico. Le ombre restarono lì, ma smisero di sembrare grandi.`,
-`Quando la luna salì alta nel cielo, la volpe appoggiò il muso sulle zampe e ${name} sentì la calma arrivare piano, come una coperta sulle spalle.`,
-`La lanterna brillò un’ultima volta. Poi il bosco diventò sogno, e il sogno diventò buonanotte.`
+`La sera in cui ${name} trovò l’atlante, il cielo sembrava più grande del solito. Non più scuro. Solo più profondo, come se contenesse strade che nessuno aveva ancora nominato.`,
+`L’atlante era appoggiato su una scrivania di legno chiaro. Non aveva titolo. Solo una bussola disegnata in copertina e una frase sottile: “Non tutte le direzioni si vedono da fuori.”`,
+`${name} lo aprì. Le pagine non mostravano Paesi o città, ma possibilità: una pagina era fatta di coraggio, una di dubbi, una di errori utili, una di sogni ancora confusi.`,
+`Dopo una giornata ${mood.toLowerCase()}, quelle pagine sembravano parlare senza giudicare. Non dicevano cosa diventare. Chiedevano soltanto: “Che cosa ti fa sentire vivo quando nessuno ti guarda?”`,
+`${name} seguì una linea d’inchiostro blu che attraversava un mondo di ${theme.toLowerCase()}. Lì incontrò una figura con un mantello di stelle, non vecchia e non giovane, come se fosse fatta di domande.`,
+`“La direzione non è una risposta immediata,” disse la figura. “È una serie di piccoli segnali che impari a riconoscere.”`,
+`Allora ${name} guardò l’atlante con più calma. Vide che anche le pagine incerte avevano valore. Anche gli spazi bianchi non erano vuoti: erano luoghi dove qualcosa poteva ancora nascere.`,
+`Quando chiuse il libro, la bussola sulla copertina brillò appena. Non indicava nord. Indicava avanti.`
 ];
 
 }
@@ -268,6 +304,7 @@ document.getElementById('badge').innerText = badge;
 document.getElementById('title').innerText = title;
 document.getElementById('subtitle').innerText = subtitle;
 document.getElementById('icon').innerText = icon;
+document.getElementById('ageNote').innerText = ageNote;
 document.getElementById('storyText').innerHTML = paragraphs.map(p => `<p>${p}</p>`).join('');
 
 localStorage.setItem('fableaCurrentStory', JSON.stringify({
