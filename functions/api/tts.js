@@ -1,58 +1,339 @@
-export async function onRequestPost(context) {
-  try {
-    const { request, env } = context;
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FABLEA | Onboarding</title>
 
-    const body = await request.json();
-    const text = body.text || "";
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    if (!text.trim()) {
-      return new Response("Missing text", { status: 400 });
-    }
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
 
-    const apiKey = env.ELEVENLABS_API_KEY;
-    const voiceId = env.ELEVENLABS_VOICE_ID;
-
-    if (!apiKey || !voiceId) {
-      return new Response("Missing ElevenLabs configuration", { status: 500 });
-    }
-
-    const response = await fetch(
-      `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
-      {
-        method: "POST",
-        headers: {
-          "Accept": "audio/mpeg",
-          "Content-Type": "application/json",
-          "xi-api-key": apiKey
-        },
-        body: JSON.stringify({
-          text,
-          model_id: "eleven_multilingual_v2",
-          voice_settings: {
-            stability: 0.42,
-            similarity_boost: 0.82,
-            style: 0.22,
-            use_speaker_boost: true
-          }
-        })
-      }
-    );
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      return new Response(errorText, { status: response.status });
-    }
-
-    const audioBuffer = await response.arrayBuffer();
-
-    return new Response(audioBuffer, {
-      headers: {
-        "Content-Type": "audio/mpeg",
-        "Cache-Control": "no-store"
-      }
-    });
-
-  } catch (error) {
-    return new Response(error.message || "Server error", { status: 500 });
-  }
+body{
+min-height:100vh;
+padding:24px;
+font-family:'Nunito',sans-serif;
+background:
+radial-gradient(circle at top left,#fff1d8 0%,transparent 30%),
+radial-gradient(circle at bottom right,#e7dcff 0%,transparent 34%),
+linear-gradient(135deg,#f8f1e8 0%,#ece4ea 45%,#d9ddea 100%);
+display:flex;
+justify-content:center;
+align-items:center;
+color:#352f36;
 }
+
+.card{
+width:92%;
+max-width:860px;
+padding:52px 42px;
+border-radius:42px;
+background:rgba(255,251,247,.76);
+backdrop-filter:blur(14px);
+border:1px solid rgba(255,255,255,.6);
+box-shadow:0 24px 80px rgba(70,60,50,.12);
+}
+
+.badge{
+text-align:center;
+font-size:12px;
+letter-spacing:5px;
+text-transform:uppercase;
+color:#9f8a76;
+margin-bottom:18px;
+}
+
+h1{
+font-family:'Cormorant Garamond',serif;
+font-size:54px;
+font-weight:600;
+text-align:center;
+margin-bottom:14px;
+}
+
+.intro{
+text-align:center;
+font-size:18px;
+line-height:1.7;
+color:#756c70;
+margin-bottom:34px;
+}
+
+label{
+display:block;
+font-size:15px;
+font-weight:800;
+color:#6d5f57;
+margin:18px 0 8px;
+}
+
+input,select{
+width:100%;
+height:58px;
+border-radius:18px;
+border:1px solid rgba(80,65,55,.14);
+background:rgba(255,255,255,.72);
+padding:0 18px;
+font-size:17px;
+font-family:'Nunito',sans-serif;
+color:#332d35;
+outline:none;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+margin-top:12px;
+}
+
+.choice{
+padding:16px 12px;
+border-radius:22px;
+background:rgba(255,255,255,.52);
+border:1px solid rgba(80,65,55,.10);
+text-align:center;
+font-size:15px;
+font-weight:800;
+cursor:pointer;
+transition:.25s;
+}
+
+.choice.active{
+background:linear-gradient(135deg,#f8e3aa,#e7c870);
+box-shadow:0 12px 26px rgba(231,200,112,.20);
+}
+
+.button{
+width:100%;
+height:64px;
+margin-top:32px;
+border:0;
+border-radius:999px;
+background:linear-gradient(135deg,#f8e3aa,#e7c870);
+color:#322d34;
+font-size:18px;
+font-weight:900;
+cursor:pointer;
+box-shadow:0 12px 30px rgba(231,200,112,.25);
+}
+
+.saved{
+margin-top:28px;
+padding:22px;
+border-radius:28px;
+background:rgba(255,255,255,.42);
+border:1px solid rgba(80,65,55,.08);
+}
+
+.saved h2{
+font-family:'Cormorant Garamond',serif;
+font-size:32px;
+font-weight:600;
+margin-bottom:14px;
+}
+
+.profile-list{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.profile-pill{
+padding:10px 14px;
+border-radius:999px;
+background:rgba(255,250,245,.78);
+border:1px solid rgba(80,65,55,.08);
+font-size:14px;
+font-weight:800;
+color:#6b6467;
+}
+
+.note{
+margin-top:24px;
+padding:18px;
+border-radius:24px;
+background:rgba(255,255,255,.42);
+font-size:15px;
+line-height:1.6;
+color:#7b706c;
+text-align:center;
+}
+
+.nav{
+display:flex;
+justify-content:center;
+gap:18px;
+flex-wrap:wrap;
+margin-top:24px;
+font-size:15px;
+}
+
+.nav a{
+color:#8f8078;
+text-decoration:none;
+}
+
+@media(max-width:700px){
+.card{padding:40px 22px;border-radius:30px}
+h1{font-size:40px}
+.grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+
+<body>
+
+<main class="card">
+
+<div class="badge">Onboarding genitore</div>
+
+<h1>Crea il suo piccolo mondo.</h1>
+
+<div class="intro">
+Aggiungi uno o più bambini. FABLEA userà ogni profilo per adattare storie, immagini, voce, ritmo e attività.
+</div>
+
+<label>Nome del bambino</label>
+<input id="childName" type="text" placeholder="Es. Cesare">
+
+<label>Fascia evolutiva</label>
+<select id="childAge">
+<option value="2-4">2–4 anni • Meraviglia</option>
+<option value="5-7">5–7 anni • Esplorazione</option>
+<option value="8-10">8–10 anni • Identità</option>
+<option value="11-12">11–12 anni • Direzione</option>
+</select>
+
+<label>Cosa ama di più?</label>
+<div class="grid" id="interests">
+<div class="choice">🌙 Luna</div>
+<div class="choice">🦊 Animali</div>
+<div class="choice">🌊 Mare</div>
+<div class="choice">🦖 Dinosauri</div>
+<div class="choice">🚀 Spazio</div>
+<div class="choice">✨ Magia</div>
+<div class="choice">👑 Principesse</div>
+<div class="choice">🐺 Lupo gentile</div>
+<div class="choice">👐 Manualità</div>
+</div>
+
+<label>Che tipo di supporto vuoi da FABLEA?</label>
+<select id="support">
+<option>Calmare la sera</option>
+<option>Accendere l’immaginazione</option>
+<option>Aiutare con le emozioni</option>
+<option>Stimolare curiosità</option>
+<option>Favorire piccoli rituali</option>
+</select>
+
+<label>Durata ideale delle storie</label>
+<select id="duration">
+<option>Breve • 2–4 minuti</option>
+<option>Media • 5–8 minuti</option>
+<option>Lunga • 8–12 minuti</option>
+</select>
+
+<button class="button" onclick="saveProfile()">Salva profilo bambino</button>
+
+<div class="saved">
+<h2>Profili già creati</h2>
+<div class="profile-list" id="savedProfiles"></div>
+</div>
+
+<div class="note">
+Per ora i dati restano salvati solo su questo dispositivo.  
+Nessun account reale, nessun pagamento, nessun dato inviato a server.
+</div>
+
+<div class="nav">
+<a href="/index.html">Home</a>
+<a href="/profile.html">Profili</a>
+<a href="/story.html">Crea storia</a>
+<a href="/library.html">Libreria</a>
+</div>
+
+</main>
+
+<script>
+let selectedInterests = [];
+
+document.querySelectorAll('.choice').forEach(choice=>{
+choice.addEventListener('click',()=>{
+choice.classList.toggle('active');
+
+const value = choice.innerText;
+
+if(selectedInterests.includes(value)){
+selectedInterests = selectedInterests.filter(item => item !== value);
+}else{
+selectedInterests.push(value);
+}
+});
+});
+
+function getProfiles(){
+return JSON.parse(localStorage.getItem('fableaChildProfiles') || '[]');
+}
+
+function saveProfiles(profiles){
+localStorage.setItem('fableaChildProfiles', JSON.stringify(profiles));
+}
+
+function ageLabel(value){
+if(value === '2-4') return 'Meraviglia';
+if(value === '5-7') return 'Esplorazione';
+if(value === '8-10') return 'Identità';
+if(value === '11-12') return 'Direzione';
+return 'FABLEA';
+}
+
+function renderProfiles(){
+const container = document.getElementById('savedProfiles');
+const profiles = getProfiles();
+
+if(!profiles.length){
+container.innerHTML = '<span class="profile-pill">Nessun profilo ancora</span>';
+return;
+}
+
+container.innerHTML = profiles.map(profile =>
+`<span class="profile-pill">${profile.name} • ${ageLabel(profile.age)}</span>`
+).join('');
+}
+
+function saveProfile(){
+
+const name = document.getElementById('childName').value.trim();
+
+if(!name){
+alert('Inserisci il nome del bambino.');
+return;
+}
+
+const profile = {
+id: Date.now().toString(),
+name:name,
+age:document.getElementById('childAge').value,
+interests:selectedInterests,
+support:document.getElementById('support').value,
+duration:document.getElementById('duration').value,
+createdAt:new Date().toISOString()
+};
+
+const profiles = getProfiles();
+profiles.push(profile);
+
+saveProfiles(profiles);
+
+localStorage.setItem('fableaSelectedChildId', profile.id);
+
+window.location.href = '/profile.html';
+}
+
+renderProfiles();
+</script>
+
+</body>
+</html>
