@@ -226,6 +226,7 @@ FABLEA userà il profilo selezionato per adattare parole, ritmo, immagini e atti
 <label>Che mondo vuoi esplorare?</label>
 <select id="storyTheme">
 <option>Foresta magica</option>
+<option>Il lupo cattivo gentile</option>
 <option>Mare e stelle</option>
 <option>Animali parlanti</option>
 <option>Dinosauri gentili</option>
@@ -321,11 +322,7 @@ window.location.href='/onboarding.html';
 return;
 }
 
-const preferredTheme = profile.interests && profile.interests.length
-? profile.interests[0]
-: document.getElementById('storyTheme').value;
-
-const selectedTheme = document.getElementById('storyTheme').value || preferredTheme;
+const selectedTheme = document.getElementById('storyTheme').value;
 
 const data = {
 name:profile.name,
