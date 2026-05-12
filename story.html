@@ -3,31 +3,130 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FABLEA | Crea la storia</title>
+<title>FABLEA | Crea una storia</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:24px;font-family:'Nunito',sans-serif;background:radial-gradient(circle at top left,#fff1d8 0%,transparent 30%),radial-gradient(circle at bottom right,#e7dcff 0%,transparent 34%),linear-gradient(135deg,#f8f1e8 0%,#ece4ea 45%,#d9ddea 100%);color:#332d35}
-.card{width:92%;max-width:720px;padding:52px 42px;border-radius:38px;background:rgba(255,250,245,.62);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.55);box-shadow:0 24px 80px rgba(80,65,55,.15)}
-.badge{text-align:center;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#9c8774;margin-bottom:18px}
-h1{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:600;text-align:center;margin-bottom:14px}
-.intro{text-align:center;font-size:18px;line-height:1.7;color:#6d6668;margin-bottom:34px}
-label{display:block;font-size:15px;font-weight:600;color:#6d5f57;margin:18px 0 8px}
-input,select{width:100%;height:58px;border-radius:18px;border:1px solid rgba(80,65,55,.14);background:rgba(255,255,255,.68);padding:0 18px;font-size:17px;font-family:'Nunito',sans-serif;color:#332d35;outline:none}
-button{width:100%;height:64px;margin-top:30px;border:0;border-radius:999px;background:linear-gradient(135deg,#f8e3aa,#e7c870);color:#332d35;font-size:18px;font-weight:700;box-shadow:0 14px 28px rgba(181,145,73,.18);cursor:pointer}
-.nav{display:flex;justify-content:center;gap:18px;margin-top:24px;font-size:15px;flex-wrap:wrap}
-.nav a{color:#8f8078;text-decoration:none}
-@media(max-width:700px){.card{padding:42px 24px;border-radius:30px}h1{font-size:38px}.intro{font-size:16px}}
+
+body{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:24px;
+font-family:'Nunito',sans-serif;
+background:
+radial-gradient(circle at top left,#fff1d8 0%,transparent 30%),
+radial-gradient(circle at bottom right,#e7dcff 0%,transparent 34%),
+linear-gradient(135deg,#f8f1e8 0%,#ece4ea 45%,#d9ddea 100%);
+color:#332d35;
+}
+
+.card{
+width:92%;
+max-width:760px;
+padding:52px 42px;
+border-radius:38px;
+background:rgba(255,250,245,.66);
+backdrop-filter:blur(16px);
+border:1px solid rgba(255,255,255,.55);
+box-shadow:0 24px 80px rgba(80,65,55,.15);
+}
+
+.badge{
+text-align:center;
+font-size:12px;
+letter-spacing:5px;
+text-transform:uppercase;
+color:#9c8774;
+margin-bottom:18px;
+}
+
+h1{
+font-family:'Cormorant Garamond',serif;
+font-size:48px;
+font-weight:600;
+text-align:center;
+margin-bottom:14px;
+}
+
+.intro{
+text-align:center;
+font-size:18px;
+line-height:1.7;
+color:#6d6668;
+margin-bottom:34px;
+}
+
+label{
+display:block;
+font-size:15px;
+font-weight:600;
+color:#6d5f57;
+margin:18px 0 8px;
+}
+
+input,select{
+width:100%;
+height:58px;
+border-radius:18px;
+border:1px solid rgba(80,65,55,.14);
+background:rgba(255,255,255,.70);
+padding:0 18px;
+font-size:17px;
+font-family:'Nunito',sans-serif;
+color:#332d35;
+outline:none;
+}
+
+button{
+width:100%;
+height:64px;
+margin-top:30px;
+border:0;
+border-radius:999px;
+background:linear-gradient(135deg,#f8e3aa,#e7c870);
+color:#332d35;
+font-size:18px;
+font-weight:700;
+box-shadow:0 14px 28px rgba(181,145,73,.18);
+cursor:pointer;
+}
+
+.nav{
+display:flex;
+justify-content:center;
+gap:18px;
+margin-top:24px;
+font-size:15px;
+flex-wrap:wrap;
+}
+
+.nav a{
+color:#8f8078;
+text-decoration:none;
+}
+
+@media(max-width:700px){
+.card{padding:42px 24px;border-radius:30px}
+h1{font-size:38px}
+.intro{font-size:16px}
+}
 </style>
 </head>
+
 <body>
 
 <main class="card">
-<div class="badge">La storia di stasera</div>
-<h1>Chi sarà il piccolo protagonista?</h1>
+
+<div class="badge">Crea con FABLEA</div>
+
+<h1>Che storia vuoi creare oggi?</h1>
 
 <div class="intro">
-Bastano poche informazioni. FABLEA creerà una storia calma, personale e adatta alla sera.
+FABLEA può accompagnare la sera, accendere l’immaginazione o aiutare il bambino a esplorare emozioni, curiosità e piccoli mondi interiori.
 </div>
 
 <label>Nome del bambino</label>
@@ -42,6 +141,19 @@ Bastano poche informazioni. FABLEA creerà una storia calma, personale e adatta 
 <option>6 anni</option>
 <option>7 anni</option>
 <option>8 anni</option>
+<option>9 anni</option>
+<option>10 anni</option>
+<option>11 anni</option>
+<option>12 anni</option>
+</select>
+
+<label>Tipo di esperienza</label>
+<select id="experienceType">
+<option>Storia della sera</option>
+<option>Avventura immaginativa</option>
+<option>Storia sulle emozioni</option>
+<option>Storia educativa soft</option>
+<option>Mini racconto rilassante</option>
 </select>
 
 <label>Com’è stata la giornata?</label>
@@ -52,19 +164,24 @@ Bastano poche informazioni. FABLEA creerà una storia calma, personale e adatta 
 <option>Un po’ difficile</option>
 <option>Piena di energia</option>
 <option>Ha avuto paura di qualcosa</option>
+<option>Curiosa</option>
+<option>Un po’ arrabbiata</option>
 </select>
 
-<label>Che tipo di storia vuoi?</label>
+<label>Che mondo vuoi esplorare?</label>
 <select id="storyTheme">
-<option>Avventura dolce</option>
-<option>Favola della buonanotte</option>
 <option>Foresta magica</option>
 <option>Mare e stelle</option>
 <option>Animali parlanti</option>
+<option>Dinosauri gentili</option>
+<option>Spazio e pianeti</option>
+<option>Castelli e draghi buoni</option>
+<option>Montagna e nuvole</option>
+<option>Città segreta</option>
 <option>Coraggio e calma</option>
 </select>
 
-<button onclick="createStory()">Crea la storia di stasera</button>
+<button onclick="createStory()">Crea la storia</button>
 
 <div class="nav">
 <a href="/index.html">← Home</a>
@@ -72,18 +189,24 @@ Bastano poche informazioni. FABLEA creerà una storia calma, personale e adatta 
 <a href="/library.html">Libreria</a>
 <a href="/about.html">Manifesto</a>
 </div>
+
 </main>
 
 <script>
 function createStory(){
+
 const data={
 name:document.getElementById('childName').value.trim() || 'il piccolo protagonista',
 age:document.getElementById('childAge').value,
+experience:document.getElementById('experienceType').value,
 mood:document.getElementById('childMood').value,
 theme:document.getElementById('storyTheme').value
 };
+
 localStorage.setItem('fableaStoryData',JSON.stringify(data));
+
 window.location.href='/story-result.html';
+
 }
 </script>
 
