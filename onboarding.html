@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FABLEA | Crea il profilo</title>
+<title>FABLEA | Crea profilo</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -26,7 +26,7 @@ color:#352f36;
 
 .card{
 width:92%;
-max-width:820px;
+max-width:860px;
 padding:52px 42px;
 border-radius:42px;
 background:rgba(255,251,247,.74);
@@ -119,6 +119,65 @@ cursor:pointer;
 box-shadow:0 12px 30px rgba(231,200,112,.25);
 }
 
+.secondary-button{
+display:flex;
+justify-content:center;
+align-items:center;
+width:100%;
+height:58px;
+margin-top:14px;
+border-radius:999px;
+background:rgba(255,255,255,.55);
+border:1px solid rgba(80,65,55,.10);
+color:#6b6467;
+font-size:16px;
+font-weight:800;
+text-decoration:none;
+cursor:pointer;
+}
+
+.saved{
+margin-top:28px;
+padding:22px;
+border-radius:28px;
+background:rgba(255,255,255,.42);
+border:1px solid rgba(80,65,55,.08);
+}
+
+.saved h2{
+font-family:'Cormorant Garamond',serif;
+font-size:32px;
+font-weight:600;
+margin-bottom:14px;
+}
+
+.profile-list{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.profile-pill{
+padding:10px 14px;
+border-radius:999px;
+background:rgba(255,250,245,.78);
+border:1px solid rgba(80,65,55,.08);
+font-size:14px;
+font-weight:800;
+color:#6b6467;
+}
+
+.note{
+margin-top:24px;
+padding:18px;
+border-radius:24px;
+background:rgba(255,255,255,.42);
+font-size:15px;
+line-height:1.6;
+color:#7b706c;
+text-align:center;
+}
+
 .nav{
 display:flex;
 justify-content:center;
@@ -131,17 +190,6 @@ font-size:15px;
 .nav a{
 color:#8f8078;
 text-decoration:none;
-}
-
-.note{
-margin-top:24px;
-padding:18px;
-border-radius:24px;
-background:rgba(255,255,255,.42);
-font-size:15px;
-line-height:1.6;
-color:#7b706c;
-text-align:center;
 }
 
 @media(max-width:700px){
@@ -161,7 +209,7 @@ h1{font-size:38px}
 <h1>Crea il suo piccolo mondo.</h1>
 
 <div class="intro">
-Il genitore inserisce pochi dettagli. FABLEA userà queste informazioni per creare storie più adatte, calme e personali.
+Aggiungi uno o più bambini. Poi FABLEA userà il profilo scelto per adattare storie, immagini, voce e attività.
 </div>
 
 <label>Nome del bambino</label>
@@ -183,6 +231,9 @@ Il genitore inserisce pochi dettagli. FABLEA userà queste informazioni per crea
 <div class="choice">🦖 Dinosauri</div>
 <div class="choice">🚀 Spazio</div>
 <div class="choice">✨ Magia</div>
+<div class="choice">👑 Principesse</div>
+<div class="choice">🐉 Draghi buoni</div>
+<div class="choice">👐 Manualità</div>
 </div>
 
 <label>Che tipo di supporto vuoi da FABLEA?</label>
@@ -201,11 +252,17 @@ Il genitore inserisce pochi dettagli. FABLEA userà queste informazioni per crea
 <option>Lunga • 8–12 minuti</option>
 </select>
 
-<button class="button" onclick="saveProfile()">Salva profilo e crea una storia</button>
+<button class="button" onclick="saveProfile()">Salva profilo bambino</button>
+
+<a class="secondary-button" href="/profile.html">Vai ai profili</a>
+
+<div class="saved">
+<h2>Profili salvati</h2>
+<div class="profile-list" id="savedProfiles"></div>
+</div>
 
 <div class="note">
-Dati salvati solo su questo dispositivo per il prototipo.  
-Nessun account reale, nessun pagamento, nessun dato inviato a server.
+Dati salvati solo su questo dispositivo per il prototipo. Nessun account reale, nessun pagamento, nessun dato inviato a server.
 </div>
 
 <div class="nav">
@@ -222,9 +279,7 @@ let selectedInterests = [];
 document.querySelectorAll('.choice').forEach(choice=>{
 choice.addEventListener('click',()=>{
 choice.classList.toggle('active');
-
 const value = choice.innerText;
-
 if(selectedInterests.includes(value)){
 selectedInterests = selectedInterests.filter(item => item !== value);
 }else{
@@ -233,29 +288,72 @@ selectedInterests.push(value);
 });
 });
 
+function getProfiles(){
+return JSON.parse(localStorage.getItem('fableaChildProfiles') || '[]');
+}
+
+function saveProfiles(profiles){
+localStorage.setItem('fableaChildProfiles', JSON.stringify(profiles));
+}
+
+function renderProfiles(){
+const container = document.getElementById('savedProfiles');
+const profiles = getProfiles();
+
+if(!profiles.length){
+container.innerHTML = '<span class="profile-pill">Nessun profilo ancora</span>';
+return;
+}
+
+container.innerHTML = profiles.map(profile =>
+`<span class="profile-pill">${profile.name} • ${ageLabel(profile.age)}</span>`
+).join('');
+}
+
+function ageLabel(value){
+if(value === '2-4') return 'Meraviglia';
+if(value === '5-7') return 'Esplorazione';
+if(value === '8-10') return 'Identità';
+if(value === '11-12') return 'Direzione';
+return 'FABLEA';
+}
+
 function saveProfile(){
 
+const name = document.getElementById('childName').value.trim();
+
+if(!name){
+alert('Inserisci il nome del bambino.');
+return;
+}
+
 const profile = {
-name:document.getElementById('childName').value.trim() || 'il piccolo protagonista',
+id: Date.now().toString(),
+name:name,
 age:document.getElementById('childAge').value,
 interests:selectedInterests,
 support:document.getElementById('support').value,
 duration:document.getElementById('duration').value
 };
 
-localStorage.setItem('fableaChildProfile', JSON.stringify(profile));
+const profiles = getProfiles();
 
-localStorage.setItem('fableaStoryData', JSON.stringify({
-name:profile.name,
-age:profile.age,
-experience:profile.support.includes('emozioni') ? 'Storia sulle emozioni' : 'Storia della sera',
-mood:'Tranquilla',
-theme:profile.interests[0] || 'Foresta magica'
-}));
+profiles.push(profile);
 
-window.location.href='/story.html';
+saveProfiles(profiles);
 
+localStorage.setItem('fableaSelectedChildId', profile.id);
+
+document.getElementById('childName').value = '';
+selectedInterests = [];
+document.querySelectorAll('.choice').forEach(choice=>choice.classList.remove('active'));
+
+renderProfiles();
+
+window.location.href='/profile.html';
 }
+
+renderProfiles();
 </script>
 
 </body>
