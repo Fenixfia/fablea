@@ -3,21 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>FABLEA</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 body{
 min-height:100vh;
@@ -25,188 +18,135 @@ display:flex;
 justify-content:center;
 align-items:center;
 overflow:hidden;
-
-background:
-radial-gradient(circle at top,#32406d 0%,#1d2747 35%,#12182d 70%,#0b1020 100%);
-
+padding:24px;
 font-family:'Nunito',sans-serif;
+background:
+radial-gradient(circle at top left,#fff1d8 0%,transparent 30%),
+radial-gradient(circle at bottom right,#e7dcff 0%,transparent 32%),
+linear-gradient(135deg,#f7efe4 0%,#e8e0ea 45%,#d8dce8 100%);
 position:relative;
 }
 
 .stars{
 position:absolute;
-width:100%;
-height:100%;
+inset:0;
 background-image:
-radial-gradient(2px 2px at 20% 30%,rgba(255,255,255,.7),transparent),
-radial-gradient(2px 2px at 70% 20%,rgba(255,255,255,.6),transparent),
-radial-gradient(1px 1px at 40% 70%,rgba(255,255,255,.5),transparent),
-radial-gradient(2px 2px at 80% 60%,rgba(255,255,255,.7),transparent),
-radial-gradient(1px 1px at 10% 80%,rgba(255,255,255,.6),transparent),
-radial-gradient(2px 2px at 55% 45%,rgba(255,255,255,.5),transparent);
-
-animation:twinkle 6s infinite alternate;
-opacity:.7;
+radial-gradient(2px 2px at 18% 28%,rgba(255,255,255,.75),transparent),
+radial-gradient(2px 2px at 72% 22%,rgba(255,255,255,.6),transparent),
+radial-gradient(1px 1px at 42% 72%,rgba(255,255,255,.55),transparent),
+radial-gradient(2px 2px at 82% 62%,rgba(255,255,255,.7),transparent),
+radial-gradient(1px 1px at 12% 82%,rgba(255,255,255,.65),transparent);
+opacity:.55;
+animation:twinkle 7s infinite alternate;
 }
 
 @keyframes twinkle{
-from{opacity:.45}
-to{opacity:.9}
+from{opacity:.35}
+to{opacity:.75}
 }
 
 .moon{
 position:absolute;
-top:80px;
-right:120px;
-width:140px;
-height:140px;
+top:70px;
+right:90px;
+width:118px;
+height:118px;
 border-radius:50%;
-background:radial-gradient(circle,#fff7d6,#f6e6a6);
-box-shadow:
-0 0 50px rgba(255,240,180,.45),
-0 0 120px rgba(255,240,180,.18);
-opacity:.9;
+background:radial-gradient(circle,#fff6d2,#ecd58c);
+box-shadow:0 0 48px rgba(255,235,170,.45);
+opacity:.72;
 }
 
 .card{
 position:relative;
 z-index:2;
-
-width:90%;
-max-width:760px;
-
-padding:70px 50px;
-
+width:92%;
+max-width:820px;
+padding:56px 48px;
 border-radius:38px;
-
-background:rgba(255,255,255,.06);
-
-backdrop-filter:blur(14px);
-
-border:1px solid rgba(255,255,255,.08);
-
-box-shadow:
-0 20px 80px rgba(0,0,0,.35);
-
+background:rgba(255,250,244,.62);
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,.55);
+box-shadow:0 28px 80px rgba(92,75,68,.18);
 text-align:center;
 }
 
 .badge{
 font-size:12px;
-letter-spacing:6px;
+letter-spacing:5px;
 text-transform:uppercase;
-color:#d5c8a8;
-margin-bottom:22px;
+color:#9a8170;
+margin-bottom:18px;
 }
 
 h1{
 font-family:'Cormorant Garamond',serif;
-font-size:92px;
+font-size:84px;
 font-weight:600;
 letter-spacing:4px;
-color:#fff8ea;
-margin-bottom:22px;
+color:#342f38;
+margin-bottom:18px;
 }
 
 .subtitle{
 font-family:'Cormorant Garamond',serif;
-font-size:30px;
-line-height:1.45;
-color:#f1eadb;
-margin-bottom:26px;
+font-size:31px;
+line-height:1.35;
+color:#4c4350;
+margin-bottom:24px;
 }
 
 .description{
 max-width:620px;
-margin:auto;
-font-size:19px;
-line-height:1.9;
-color:rgba(255,255,255,.78);
-margin-bottom:42px;
+margin:0 auto 38px;
+font-size:18px;
+line-height:1.85;
+color:#625d60;
 }
 
 .button{
 display:inline-flex;
 align-items:center;
 justify-content:center;
-
-padding:18px 42px;
-
+padding:17px 42px;
 border-radius:999px;
-
-background:
-linear-gradient(135deg,#f7e7b8,#e6c97f);
-
-color:#2f2a32;
-
+background:linear-gradient(135deg,#f6df9d,#e7c873);
+color:#312b34;
 text-decoration:none;
-
-font-size:19px;
-font-weight:600;
-
-box-shadow:
-0 12px 30px rgba(246,218,140,.22);
-
+font-size:18px;
+font-weight:700;
+box-shadow:0 14px 30px rgba(171,135,58,.20);
 transition:.3s;
 }
 
 .button:hover{
-transform:translateY(-3px) scale(1.02);
+transform:translateY(-3px);
 }
 
 .footer{
-margin-top:34px;
-font-size:15px;
-color:rgba(255,255,255,.58);
-letter-spacing:.5px;
+margin-top:30px;
+font-size:14px;
+color:#8d7d75;
 }
 
 @media(max-width:700px){
-
-.card{
-padding:50px 26px;
+.card{padding:44px 24px;border-radius:30px}
+h1{font-size:58px}
+.subtitle{font-size:23px}
+.description{font-size:16px}
+.button{width:100%}
+.moon{width:78px;height:78px;top:38px;right:24px}
 }
-
-h1{
-font-size:62px;
-}
-
-.subtitle{
-font-size:22px;
-}
-
-.description{
-font-size:16px;
-line-height:1.7;
-}
-
-.button{
-width:100%;
-}
-
-.moon{
-width:90px;
-height:90px;
-top:40px;
-right:30px;
-}
-
-}
-
 </style>
 </head>
 
 <body>
 
 <div class="stars"></div>
-
 <div class="moon"></div>
 
-<div class="card">
-
-<div class="badge">
-THE QUIET IMAGINATION PROJECT
-</div>
+<main class="card">
+<div class="badge">The quiet imagination project</div>
 
 <h1>FABLEA</h1>
 
@@ -215,19 +155,16 @@ Storie che accompagnano la sera e accendono l’immaginazione.
 </div>
 
 <div class="description">
-FABLEA crea storie della buonanotte personalizzate per bambini.  
+FABLEA crea storie della buonanotte personalizzate per bambini.
 Un piccolo rituale serale pensato per calmare la mente, ridurre lo schermo e lasciare spazio alla fantasia.
 </div>
 
-<a class="button" href="/story.html">
-Inizia la storia di stasera
-</a>
+<a class="button" href="/story.html">Inizia la storia di stasera</a>
 
 <div class="footer">
 Audio-first • Bassa stimolazione • Creato per la sera
 </div>
-
-</div>
+</main>
 
 </body>
 </html>
