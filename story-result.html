@@ -3,101 +3,186 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FABLEA | La storia</title>
+<title>FABLEA | Storia</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{min-height:100vh;padding:24px;font-family:'Nunito',sans-serif;background:radial-gradient(circle at top left,#fff1d8 0%,transparent 30%),radial-gradient(circle at bottom right,#e7dcff 0%,transparent 34%),linear-gradient(135deg,#f8f1e8 0%,#ece4ea 45%,#d9ddea 100%);color:#332d35;display:flex;justify-content:center;align-items:center}
-.page{width:92%;max-width:860px;padding:52px 46px;border-radius:38px;background:rgba(255,250,245,.66);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.55);box-shadow:0 24px 80px rgba(80,65,55,.15)}
-.badge{text-align:center;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#9c8774;margin-bottom:18px}
-h1{font-family:'Cormorant Garamond',serif;font-size:54px;line-height:1.08;text-align:center;font-weight:600;margin-bottom:24px}
-.illustration{height:170px;border-radius:30px;margin-bottom:30px;background:radial-gradient(circle at 50% 35%,#fff3c6 0%,transparent 20%),linear-gradient(135deg,#d9def6,#f8e3aa);box-shadow:inset 0 0 60px rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;font-size:50px}
-.story{font-family:'Cormorant Garamond',serif;font-size:25px;line-height:1.75;color:#4a4349}
-.story p{margin-bottom:22px}
-.actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:34px}
-.button{display:inline-flex;justify-content:center;align-items:center;padding:15px 26px;border-radius:999px;background:linear-gradient(135deg,#f8e3aa,#e7c870);color:#332d35;font-size:16px;font-weight:700;text-decoration:none;box-shadow:0 14px 28px rgba(181,145,73,.16)}
-.secondary{background:rgba(255,255,255,.52);box-shadow:none;color:#6d6668;border:1px solid rgba(80,65,55,.10)}
-@media(max-width:700px){.page{padding:40px 24px;border-radius:30px}h1{font-size:38px}.story{font-size:21px}.illustration{height:140px}.button{width:100%}}
+
+body{
+min-height:100vh;
+padding:24px;
+font-family:'Nunito',sans-serif;
+background:
+radial-gradient(circle at top left,#fff1d8 0%,transparent 30%),
+radial-gradient(circle at bottom right,#e7dcff 0%,transparent 34%),
+linear-gradient(135deg,#f8f1e8 0%,#ece4ea 45%,#d9ddea 100%);
+display:flex;
+justify-content:center;
+align-items:center;
+color:#352f36;
+}
+
+.card{
+width:92%;
+max-width:820px;
+padding:58px 46px;
+border-radius:42px;
+background:rgba(255,251,247,.72);
+backdrop-filter:blur(14px);
+border:1px solid rgba(255,255,255,.6);
+box-shadow:0 24px 80px rgba(70,60,50,.12);
+}
+
+.badge{
+text-align:center;
+font-size:12px;
+letter-spacing:5px;
+text-transform:uppercase;
+color:#9f8a76;
+margin-bottom:22px;
+}
+
+h1{
+font-family:'Cormorant Garamond',serif;
+font-size:56px;
+font-weight:600;
+text-align:center;
+margin-bottom:12px;
+}
+
+.subtitle{
+text-align:center;
+font-size:18px;
+color:#756c70;
+margin-bottom:42px;
+}
+
+.story{
+font-family:'Cormorant Garamond',serif;
+font-size:31px;
+line-height:1.8;
+color:#4d4550;
+}
+
+.story p{
+margin-bottom:26px;
+}
+
+.actions{
+margin-top:42px;
+display:flex;
+gap:16px;
+justify-content:center;
+flex-wrap:wrap;
+}
+
+.button{
+padding:15px 28px;
+border-radius:999px;
+border:0;
+cursor:pointer;
+text-decoration:none;
+font-size:16px;
+font-weight:700;
+background:linear-gradient(135deg,#f8e3aa,#e7c870);
+color:#322d34;
+box-shadow:0 12px 30px rgba(231,200,112,.25);
+}
+
+.secondary{
+background:rgba(255,255,255,.55);
+border:1px solid rgba(80,65,55,.10);
+color:#6b6467;
+box-shadow:none;
+}
+
+.footer{
+margin-top:34px;
+text-align:center;
+font-size:14px;
+color:#988a82;
+}
+
+@media(max-width:700px){
+
+.card{
+padding:42px 24px;
+border-radius:30px;
+}
+
+h1{
+font-size:40px;
+}
+
+.story{
+font-size:24px;
+}
+
+.button{
+width:100%;
+text-align:center;
+}
+
+}
 </style>
 </head>
 
 <body>
 
-<main class="page">
-<div class="badge">La storia di stasera</div>
-<h1 id="title">La lanterna del bosco</h1>
+<main class="card">
 
-<div class="illustration" id="icon">🌙 📖 ✨</div>
+<div class="badge">FABLEA bedtime story</div>
 
-<div class="story" id="storyText"></div>
+<h1>Il piccolo faro sul mare</h1>
+
+<div class="subtitle">
+Una storia calma per accompagnare la sera.
+</div>
+
+<section class="story">
+
+<p>
+Quella sera Cesare guardava il mare dalla finestra della sua stanza.  
+Le onde si muovevano piano, come se stessero sussurrando qualcosa alla notte.
+</p>
+
+<p>
+In lontananza, sopra una piccola scogliera, viveva un vecchio faro dorato che si accendeva solo quando qualcuno aveva bisogno di ritrovare la strada.
+</p>
+
+<p>
+“Questa notte la luce aspetta te”, disse una piccola voce nel vento.
+</p>
+
+<p>
+Cesare sorrise piano, prese la sua coperta e immaginò di camminare sulla spiaggia sotto una luna morbida e silenziosa.
+</p>
+
+</section>
 
 <div class="actions">
-<a class="button" href="/story.html">Crea un’altra storia</a>
-<a class="button secondary" href="/library.html">Vai alla libreria</a>
-<a class="button secondary" href="/profile.html">Profili</a>
-<a class="button secondary" href="/index.html">Home</a>
+
+<a class="button" href="/story-player.html">
+Ascolta la voce narrante
+</a>
+
+<a class="button secondary" href="/library.html">
+Libreria
+</a>
+
+<a class="button secondary" href="/index.html">
+Home
+</a>
+
 </div>
+
+<div class="footer">
+Lettura lenta • Voce morbida • Nessuna iperstimolazione
+</div>
+
 </main>
-
-<script>
-const saved = localStorage.getItem('fableaStoryData');
-const data = saved ? JSON.parse(saved) : {
-name:'il piccolo protagonista',
-age:'5 anni',
-mood:'Tranquilla',
-theme:'Foresta magica'
-};
-
-const name = data.name || 'il piccolo protagonista';
-const theme = data.theme || 'Foresta magica';
-const mood = data.mood || 'Tranquilla';
-
-let title = '';
-let icon = '🌙 📖 ✨';
-let paragraphs = [];
-
-if(theme === 'Mare e stelle'){
-title = name + ' e il mare pieno di stelle';
-icon = '🌊 ⭐ 🌙';
-paragraphs = [
-`Quando la sera diventò silenziosa, ${name} trovò una piccola conchiglia vicino alla finestra. Dentro non c’era rumore: c’era il respiro lento del mare.`,
-`La conchiglia sussurrò: “Questa notte non dobbiamo correre. Dobbiamo solo ascoltare.” Così ${name} chiuse gli occhi e arrivò su una spiaggia morbida, dove le onde brillavano come stelline.`,
-`Ogni onda portava un pensiero gentile. Una diceva calma, una diceva coraggio, una diceva sogno. ${name} le raccolse tutte nel cuore.`,
-`Quando la luna si specchiò sull’acqua, ${name} sentì che anche la giornata più ${mood.toLowerCase()} poteva diventare leggera. E il mare, piano piano, diventò nanna.`
-];
-} else if(theme === 'Animali parlanti'){
-title = name + ' e il piccolo cerchio degli animali';
-icon = '🦊 🐻 🐰';
-paragraphs = [
-`Nel punto più quieto della sera, ${name} sentì bussare piano piano: toc, toc. Davanti alla porta c’erano una volpe, un orsetto e un coniglio con una coperta piena di stelle.`,
-`“Siamo venuti per una storia tranquilla,” disse la volpe. “Una storia che non faccia rumore, ma faccia compagnia.”`,
-`${name} si sedette con loro in cerchio. Ognuno raccontò una piccola cosa bella della giornata, anche se la giornata era stata ${mood.toLowerCase()}.`,
-`Alla fine, gli animali chiusero gli occhi. ${name} capì che le storie più dolci non finiscono davvero: restano vicine, come amici addormentati.`
-];
-} else if(theme === 'Coraggio e calma'){
-title = name + ' e il coraggio gentile';
-icon = '🕯️ 🌙 🛡️';
-paragraphs = [
-`Quella sera ${name} trovò una piccola luce sul comodino. Non era una luce forte. Era una luce paziente, di quelle che aspettano senza fare fretta.`,
-`“Il coraggio non deve urlare,” disse la luce. “A volte basta respirare piano e fare un passo piccolo.”`,
-`${name} fece quel passo ed entrò in un sentiero morbido, dove ogni foglia sapeva dire: va tutto bene.`,
-`Quando il sentiero arrivò sotto la luna, ${name} sentì la calma tornare piano. Il coraggio era lì: piccolo, caldo e vicino al cuore.`
-];
-} else {
-title = name + ' e la lanterna del bosco';
-icon = '🌙 📖 ✨';
-paragraphs = [
-`Quando la sera diventò morbida come una coperta, ${name} trovò una piccola lanterna vicino alla finestra. Non faceva una luce forte. Faceva una luce gentile.`,
-`La lanterna sembrò sussurrare: “Questa notte non dobbiamo correre. Dobbiamo solo immaginare.” Così ${name} la seguì piano, entrando in un bosco pieno di foglie azzurre e stelline dorate.`,
-`Tra gli alberi incontrò una volpe piccola, che aveva un po’ paura del buio. ${name} le sorrise e sollevò la lanterna: insieme scoprirono che il buio non era vuoto.`,
-`Era pieno di stelle che aspettavano solo di essere viste. E quando la luna salì alta nel cielo, ${name} si sentì calmo, al sicuro e pronto a sognare.`
-];
-}
-
-document.getElementById('title').innerText = title;
-document.getElementById('icon').innerText = icon;
-document.getElementById('storyText').innerHTML = paragraphs.map(p => `<p>${p}</p>`).join('');
-</script>
 
 </body>
 </html>
