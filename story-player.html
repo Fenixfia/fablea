@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FABLEA | Narratrice</title>
+<title>FABLEA | Mary racconta</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -169,7 +169,7 @@ h1{font-size:40px}
 <h1 id="storyTitle">La storia della sera</h1>
 
 <div class="subtitle">
-Una voce calda accompagna il bambino lentamente dentro il suo piccolo mondo FABLEA.
+Mary racconta la storia con una voce calda, lenta e naturale.
 </div>
 
 <div class="player">
@@ -222,6 +222,7 @@ document.getElementById('previewText').innerText = text;
 document.getElementById('storyIcon').innerText = icon;
 
 const audio = document.getElementById('audioPlayer');
+let currentAudioUrl = null;
 
 async function generateAndPlay(){
 
@@ -236,13 +237,19 @@ body:JSON.stringify({ text:text })
 });
 
 if(!response.ok){
-throw new Error('Errore generazione audio');
+const errorText = await response.text();
+throw new Error(errorText || 'Errore generazione audio');
 }
 
 const blob = await response.blob();
-const audioUrl = URL.createObjectURL(blob);
 
-audio.src = audioUrl;
+if(currentAudioUrl){
+URL.revokeObjectURL(currentAudioUrl);
+}
+
+currentAudioUrl = URL.createObjectURL(blob);
+
+audio.src = currentAudioUrl;
 await audio.play();
 
 document.getElementById('status').innerText = 'Mary sta raccontando la storia...';
@@ -250,10 +257,9 @@ document.getElementById('status').innerText = 'Mary sta raccontando la storia...
 }catch(error){
 
 document.getElementById('status').innerText =
-'Audio dinamico non disponibile. Uso audio demo.';
+'Audio Mary non disponibile. Controlla API key, Voice ID o deploy Vercel.';
 
-audio.src = '/audio/lupo.mp3';
-audio.play();
+console.error(error);
 
 }
 
