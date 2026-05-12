@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FABLEA | Libreria</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+min-height:100vh;
+padding:24px;
+font-family:'Nunito',sans-serif;
+background:
+radial-gradient(circle at top left,#fff1d8 0%,transparent 30%),
+radial-gradient(circle at bottom right,#e7dcff 0%,transparent 34%),
+linear-gradient(135deg,#f8f1e8 0%,#ece4ea 45%,#d9ddea 100%);
+color:#332d35;
+}
+
+.page{
+max-width:1050px;
+margin:auto;
+padding:48px;
+border-radius:38px;
+background:rgba(255,250,245,.62);
+backdrop-filter:blur(16px);
+border:1px solid rgba(255,255,255,.55);
+box-shadow:0 24px 80px rgba(80,65,55,.15);
+}
+
+.badge{
+text-align:center;
+font-size:12px;
+letter-spacing:5px;
+text-transform:uppercase;
+color:#9c8774;
+margin-bottom:16px;
+}
+
+h1{
+font-family:'Cormorant Garamond',serif;
+font-size:58px;
+text-align:center;
+font-weight:600;
+margin-bottom:14px;
+}
+
+.intro{
+text-align:center;
+font-size:18px;
+line-height:1.7;
+color:#6d6668;
+max-width:620px;
+margin:0 auto 36px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
+.story-card{
+padding:26px;
+border-radius:28px;
+background:rgba(255,255,255,.52);
+border:1px solid rgba(80,65,55,.10);
+min-height:230px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
+
+.icon{
+font-size:42px;
+margin-bottom:18px;
+}
+
+.story-card h2{
+font-family:'Cormorant Garamond',serif;
+font-size:30px;
+font-weight:600;
+margin-bottom:10px;
+}
+
+.story-card p{
+font-size:15px;
+line-height:1.65;
+color:#6d6668;
+}
+
+.tag{
+display:inline-block;
+margin-top:18px;
+font-size:13px;
+color:#9c8774;
+}
+
+.actions{
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+justify-content:center;
+margin-top:36px;
+}
+
+.button{
+display:inline-flex;
+justify-content:center;
+align-items:center;
+padding:15px 26px;
+border-radius:999px;
+background:linear-gradient(135deg,#f8e3aa,#e7c870);
+color:#332d35;
+font-size:16px;
+font-weight:700;
+text-decoration:none;
+box-shadow:0 14px 28px rgba(181,145,73,.16);
+}
+
+.secondary{
+background:rgba(255,255,255,.52);
+box-shadow:none;
+color:#6d6668;
+border:1px solid rgba(80,65,55,.10);
+}
+
+@media(max-width:850px){
+.page{padding:38px 24px;border-radius:30px}
+.grid{grid-template-columns:1fr}
+h1{font-size:44px}
+.button{width:100%}
+}
+</style>
+</head>
+
+<body>
+
+<main class="page">
+
+<div class="badge">Libreria FABLEA</div>
+
+<h1>Le storie della sera</h1>
+
+<div class="intro">
+Qui vivranno le storie create per ogni bambino: piccole avventure da riascoltare, rileggere e conservare come un diario di immaginazione.
+</div>
+
+<div class="grid">
+
+<div class="story-card">
+<div>
+<div class="icon">🌙</div>
+<h2>La lanterna del bosco</h2>
+<p>Una storia dolce sul buio, il coraggio e le stelle nascoste nelle cose che sembrano spaventose.</p>
+</div>
+<div class="tag">Calma • Coraggio • Buonanotte</div>
+</div>
+
+<div class="story-card">
+<div>
+<div class="icon">🐋</div>
+<h2>La balena tra le nuvole</h2>
+<p>Un viaggio lento nel cielo per imparare ad ascoltare il silenzio e respirare piano.</p>
+</div>
+<div class="tag">Sogno • Respiro • Meraviglia</div>
+</div>
+
+<div class="story-card">
+<div>
+<div class="icon">🦊</div>
+<h2>La volpe che cercava la luna</h2>
+<p>Una piccola avventura su amicizia, pazienza e desideri che brillano anche da lontano.</p>
+</div>
+<div class="tag">Amicizia • Pazienza • Luna</div>
+</div>
+
+</div>
+
+<div class="actions">
+<a class="button" href="/story.html">Crea una nuova storia</a>
+<a class="button secondary" href="/about.html">Leggi il manifesto</a>
+<a class="button secondary" href="/index.html">Torna alla Home</a>
+</div>
+
+</main>
+
+</body>
+</html>
