@@ -3,129 +3,176 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FABLEA | Story</title>
+<title>FABLEA | Crea la storia</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box}
+
 body{
-margin:0;
-font-family: Georgia, serif;
-background:radial-gradient(circle at top,#27345c,#080a12 75%);
 min-height:100vh;
 display:flex;
-align-items:center;
 justify-content:center;
-color:white;
+align-items:center;
+padding:24px;
+font-family:'Nunito',sans-serif;
+background:
+radial-gradient(circle at top left,#fff1d8 0%,transparent 30%),
+radial-gradient(circle at bottom right,#e7dcff 0%,transparent 34%),
+linear-gradient(135deg,#f8f1e8 0%,#ece4ea 45%,#d9ddea 100%);
+color:#332d35;
 }
 
 .card{
-width:90%;
-max-width:520px;
-padding:36px 28px;
-border-radius:30px;
-background:rgba(255,255,255,0.08);
-border:1px solid rgba(255,255,255,0.18);
-backdrop-filter:blur(14px);
-box-shadow:0 30px 80px rgba(0,0,0,.35);
+width:92%;
+max-width:720px;
+padding:52px 42px;
+border-radius:38px;
+background:rgba(255,250,245,.62);
+backdrop-filter:blur(16px);
+border:1px solid rgba(255,255,255,.55);
+box-shadow:0 24px 80px rgba(80,65,55,.15);
+}
+
+.badge{
+text-align:center;
+font-size:12px;
+letter-spacing:5px;
+text-transform:uppercase;
+color:#9c8774;
+margin-bottom:18px;
 }
 
 h1{
-font-size:34px;
-line-height:1.2;
-margin:0 0 16px;
-font-weight:400;
+font-family:'Cormorant Garamond',serif;
+font-size:48px;
+font-weight:600;
+text-align:center;
+margin-bottom:14px;
 }
 
-p{
-color:#d7d9e6;
-font-size:17px;
-line-height:1.6;
-margin-bottom:28px;
+.intro{
+text-align:center;
+font-size:18px;
+line-height:1.7;
+color:#6d6668;
+margin-bottom:34px;
 }
 
 label{
 display:block;
-margin:18px 0 8px;
 font-size:15px;
-color:#e9e4d5;
+font-weight:600;
+color:#6d5f57;
+margin:18px 0 8px;
 }
 
 input,select{
 width:100%;
-box-sizing:border-box;
-padding:16px;
+height:58px;
 border-radius:18px;
-border:1px solid rgba(255,255,255,.18);
-background:rgba(255,255,255,.10);
-color:white;
-font-size:16px;
+border:1px solid rgba(80,65,55,.14);
+background:rgba(255,255,255,.68);
+padding:0 18px;
+font-size:17px;
+font-family:'Nunito',sans-serif;
+color:#332d35;
 outline:none;
 }
 
-option{
-color:#111;
-}
-
-button{
-margin-top:28px;
+.button{
+display:flex;
+justify-content:center;
+align-items:center;
 width:100%;
-padding:17px;
+height:64px;
+margin-top:30px;
 border-radius:999px;
-border:1px solid rgba(255,255,255,.35);
-background:rgba(255,255,255,.16);
-color:white;
-font-size:17px;
-cursor:pointer;
+background:linear-gradient(135deg,#f8e3aa,#e7c870);
+color:#332d35;
+font-size:18px;
+font-weight:700;
+text-decoration:none;
+box-shadow:0 14px 28px rgba(181,145,73,.18);
 }
 
-.back{
-display:block;
-margin-top:22px;
-text-align:center;
-color:#cfd5ff;
+.nav{
+display:flex;
+justify-content:center;
+gap:18px;
+margin-top:24px;
+font-size:15px;
+}
+
+.nav a{
+color:#8f8078;
 text-decoration:none;
-font-size:14px;
+}
+
+@media(max-width:700px){
+.card{padding:42px 24px;border-radius:30px}
+h1{font-size:38px}
+.intro{font-size:16px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-<h1>Who is tonight’s little adventurer?</h1>
+<main class="card">
+<div class="badge">La storia di stasera</div>
 
-<p>
-Tell FABLEA just a little about the child.
-The story will begin softly, like a whisper before sleep.
-</p>
+<h1>Chi sarà il piccolo protagonista?</h1>
 
-<label>Child’s name</label>
-<input type="text" placeholder="Cesare">
-
-<label>Age</label>
-<select>
-<option>2 years old</option>
-<option>3 years old</option>
-<option>4 years old</option>
-<option>5 years old</option>
-<option>6 years old</option>
-<option>7 years old</option>
-<option>8 years old</option>
-</select>
-
-<label>How was today?</label>
-<select>
-<option>Calm</option>
-<option>Happy</option>
-<option>Tired</option>
-<option>Brave</option>
-<option>A little scared</option>
-<option>Full of energy</option>
-</select>
-
-<button>Create tonight’s story</button>
-
-<a class="back" href="index.html">← Back to FABLEA</a>
+<div class="intro">
+Bastano poche informazioni. FABLEA userà questi dettagli per creare una storia calma, personale e adatta alla sera.
 </div>
+
+<label>Nome del bambino</label>
+<input type="text" placeholder="Es. Cesare">
+
+<label>Età</label>
+<select>
+<option>2 anni</option>
+<option>3 anni</option>
+<option>4 anni</option>
+<option>5 anni</option>
+<option>6 anni</option>
+<option>7 anni</option>
+<option>8 anni</option>
+</select>
+
+<label>Com’è stata la giornata?</label>
+<select>
+<option>Tranquilla</option>
+<option>Felice</option>
+<option>Stancante</option>
+<option>Un po’ difficile</option>
+<option>Piena di energia</option>
+<option>Ha avuto paura di qualcosa</option>
+</select>
+
+<label>Che tipo di storia vuoi?</label>
+<select>
+<option>Avventura dolce</option>
+<option>Favola della buonanotte</option>
+<option>Foresta magica</option>
+<option>Mare e stelle</option>
+<option>Animali parlanti</option>
+<option>Coraggio e calma</option>
+</select>
+
+<a class="button" href="/story-result.html">Crea la storia di stasera</a>
+
+<div class="nav">
+<a href="/index.html">← Home</a>
+<a href="/library.html">Libreria storie</a>
+<a href="/about.html">Manifesto</a>
+</div>
+</main>
 
 </body>
 </html>
