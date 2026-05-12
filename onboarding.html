@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FABLEA | Crea profilo</title>
+<title>FABLEA | Onboarding</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -29,7 +29,7 @@ width:92%;
 max-width:860px;
 padding:52px 42px;
 border-radius:42px;
-background:rgba(255,251,247,.74);
+background:rgba(255,251,247,.76);
 backdrop-filter:blur(14px);
 border:1px solid rgba(255,255,255,.6);
 box-shadow:0 24px 80px rgba(70,60,50,.12);
@@ -46,7 +46,7 @@ margin-bottom:18px;
 
 h1{
 font-family:'Cormorant Garamond',serif;
-font-size:52px;
+font-size:54px;
 font-weight:600;
 text-align:center;
 margin-bottom:14px;
@@ -63,7 +63,7 @@ margin-bottom:34px;
 label{
 display:block;
 font-size:15px;
-font-weight:700;
+font-weight:800;
 color:#6d5f57;
 margin:18px 0 8px;
 }
@@ -73,7 +73,7 @@ width:100%;
 height:58px;
 border-radius:18px;
 border:1px solid rgba(80,65,55,.14);
-background:rgba(255,255,255,.70);
+background:rgba(255,255,255,.72);
 padding:0 18px;
 font-size:17px;
 font-family:'Nunito',sans-serif;
@@ -95,7 +95,7 @@ background:rgba(255,255,255,.52);
 border:1px solid rgba(80,65,55,.10);
 text-align:center;
 font-size:15px;
-font-weight:700;
+font-weight:800;
 cursor:pointer;
 transition:.25s;
 }
@@ -114,26 +114,9 @@ border-radius:999px;
 background:linear-gradient(135deg,#f8e3aa,#e7c870);
 color:#322d34;
 font-size:18px;
-font-weight:800;
+font-weight:900;
 cursor:pointer;
 box-shadow:0 12px 30px rgba(231,200,112,.25);
-}
-
-.secondary-button{
-display:flex;
-justify-content:center;
-align-items:center;
-width:100%;
-height:58px;
-margin-top:14px;
-border-radius:999px;
-background:rgba(255,255,255,.55);
-border:1px solid rgba(80,65,55,.10);
-color:#6b6467;
-font-size:16px;
-font-weight:800;
-text-decoration:none;
-cursor:pointer;
 }
 
 .saved{
@@ -194,7 +177,7 @@ text-decoration:none;
 
 @media(max-width:700px){
 .card{padding:40px 22px;border-radius:30px}
-h1{font-size:38px}
+h1{font-size:40px}
 .grid{grid-template-columns:1fr 1fr}
 }
 </style>
@@ -204,12 +187,12 @@ h1{font-size:38px}
 
 <main class="card">
 
-<div class="badge">Profilo bambino</div>
+<div class="badge">Onboarding genitore</div>
 
 <h1>Crea il suo piccolo mondo.</h1>
 
 <div class="intro">
-Aggiungi uno o più bambini. Poi FABLEA userà il profilo scelto per adattare storie, immagini, voce e attività.
+Aggiungi uno o più bambini. FABLEA userà ogni profilo per adattare storie, immagini, voce, ritmo e attività.
 </div>
 
 <label>Nome del bambino</label>
@@ -232,7 +215,7 @@ Aggiungi uno o più bambini. Poi FABLEA userà il profilo scelto per adattare st
 <div class="choice">🚀 Spazio</div>
 <div class="choice">✨ Magia</div>
 <div class="choice">👑 Principesse</div>
-<div class="choice">🐉 Draghi buoni</div>
+<div class="choice">🐺 Lupo gentile</div>
 <div class="choice">👐 Manualità</div>
 </div>
 
@@ -254,21 +237,21 @@ Aggiungi uno o più bambini. Poi FABLEA userà il profilo scelto per adattare st
 
 <button class="button" onclick="saveProfile()">Salva profilo bambino</button>
 
-<a class="secondary-button" href="/profile.html">Vai ai profili</a>
-
 <div class="saved">
-<h2>Profili salvati</h2>
+<h2>Profili già creati</h2>
 <div class="profile-list" id="savedProfiles"></div>
 </div>
 
 <div class="note">
-Dati salvati solo su questo dispositivo per il prototipo. Nessun account reale, nessun pagamento, nessun dato inviato a server.
+Per ora i dati restano salvati solo su questo dispositivo.  
+Nessun account reale, nessun pagamento, nessun dato inviato a server.
 </div>
 
 <div class="nav">
 <a href="/index.html">Home</a>
 <a href="/profile.html">Profili</a>
 <a href="/story.html">Crea storia</a>
+<a href="/library.html">Libreria</a>
 </div>
 
 </main>
@@ -279,7 +262,9 @@ let selectedInterests = [];
 document.querySelectorAll('.choice').forEach(choice=>{
 choice.addEventListener('click',()=>{
 choice.classList.toggle('active');
+
 const value = choice.innerText;
+
 if(selectedInterests.includes(value)){
 selectedInterests = selectedInterests.filter(item => item !== value);
 }else{
@@ -296,6 +281,14 @@ function saveProfiles(profiles){
 localStorage.setItem('fableaChildProfiles', JSON.stringify(profiles));
 }
 
+function ageLabel(value){
+if(value === '2-4') return 'Meraviglia';
+if(value === '5-7') return 'Esplorazione';
+if(value === '8-10') return 'Identità';
+if(value === '11-12') return 'Direzione';
+return 'FABLEA';
+}
+
 function renderProfiles(){
 const container = document.getElementById('savedProfiles');
 const profiles = getProfiles();
@@ -308,14 +301,6 @@ return;
 container.innerHTML = profiles.map(profile =>
 `<span class="profile-pill">${profile.name} • ${ageLabel(profile.age)}</span>`
 ).join('');
-}
-
-function ageLabel(value){
-if(value === '2-4') return 'Meraviglia';
-if(value === '5-7') return 'Esplorazione';
-if(value === '8-10') return 'Identità';
-if(value === '11-12') return 'Direzione';
-return 'FABLEA';
 }
 
 function saveProfile(){
@@ -333,24 +318,18 @@ name:name,
 age:document.getElementById('childAge').value,
 interests:selectedInterests,
 support:document.getElementById('support').value,
-duration:document.getElementById('duration').value
+duration:document.getElementById('duration').value,
+createdAt:new Date().toISOString()
 };
 
 const profiles = getProfiles();
-
 profiles.push(profile);
 
 saveProfiles(profiles);
 
 localStorage.setItem('fableaSelectedChildId', profile.id);
 
-document.getElementById('childName').value = '';
-selectedInterests = [];
-document.querySelectorAll('.choice').forEach(choice=>choice.classList.remove('active'));
-
-renderProfiles();
-
-window.location.href='/profile.html';
+window.location.href = '/profile.html';
 }
 
 renderProfiles();
