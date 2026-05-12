@@ -182,6 +182,7 @@ width:100%;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -207,6 +208,10 @@ Quella sera Cesare guardava il mare dalla finestra della sua stanza.
 Le onde si muovevano piano, come se stessero sussurrando qualcosa alla notte.
 
 In lontananza, sopra una piccola scogliera, viveva un vecchio faro dorato che si accendeva solo quando qualcuno aveva bisogno di ritrovare la strada.
+
+“Questa notte la luce aspetta te”, disse una piccola voce nel vento.
+
+Cesare sorrise piano, prese la sua coperta e immaginò di camminare sulla spiaggia sotto una luna morbida e silenziosa.
 
 </div>
 
@@ -250,11 +255,26 @@ speech = new SpeechSynthesisUtterance(text);
 
 speech.lang = 'it-IT';
 
-speech.rate = 0.82;
+speech.rate = 0.72;
 
-speech.pitch = 1;
+speech.pitch = 0.92;
 
 speech.volume = 1;
+
+const voices = window.speechSynthesis.getVoices();
+
+const preferredVoice = voices.find(voice =>
+voice.lang.includes('it') &&
+(
+voice.name.toLowerCase().includes('elsa') ||
+voice.name.toLowerCase().includes('alice') ||
+voice.name.toLowerCase().includes('female')
+)
+);
+
+if(preferredVoice){
+speech.voice = preferredVoice;
+}
 
 window.speechSynthesis.speak(speech);
 
@@ -265,6 +285,8 @@ function stopStory(){
 window.speechSynthesis.cancel();
 
 }
+
+window.speechSynthesis.onvoiceschanged = () => {};
 
 </script>
 
