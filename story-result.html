@@ -26,7 +26,7 @@ color:#352f36;
 
 .card{
 width:92%;
-max-width:820px;
+max-width:900px;
 padding:58px 46px;
 border-radius:42px;
 background:rgba(255,251,247,.72);
@@ -41,7 +41,7 @@ font-size:12px;
 letter-spacing:5px;
 text-transform:uppercase;
 color:#9f8a76;
-margin-bottom:22px;
+margin-bottom:20px;
 }
 
 h1{
@@ -54,15 +54,29 @@ margin-bottom:12px;
 
 .subtitle{
 text-align:center;
-font-size:18px;
+font-size:17px;
 color:#756c70;
-margin-bottom:42px;
+margin-bottom:34px;
+}
+
+.illustration{
+height:170px;
+border-radius:32px;
+margin-bottom:36px;
+background:
+radial-gradient(circle at 50% 35%,#fff3c6 0%,transparent 22%),
+linear-gradient(135deg,#e7dcff,#f8e3aa);
+box-shadow:inset 0 0 60px rgba(255,255,255,.48);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:52px;
 }
 
 .story{
 font-family:'Cormorant Garamond',serif;
-font-size:31px;
-line-height:1.8;
+font-size:29px;
+line-height:1.82;
 color:#4d4550;
 }
 
@@ -106,25 +120,11 @@ color:#988a82;
 }
 
 @media(max-width:700px){
-
-.card{
-padding:42px 24px;
-border-radius:30px;
-}
-
-h1{
-font-size:40px;
-}
-
-.story{
-font-size:24px;
-}
-
-.button{
-width:100%;
-text-align:center;
-}
-
+.card{padding:42px 24px;border-radius:30px}
+h1{font-size:40px}
+.story{font-size:24px}
+.illustration{height:140px}
+.button{width:100%;text-align:center}
 }
 </style>
 </head>
@@ -133,56 +133,150 @@ text-align:center;
 
 <main class="card">
 
-<div class="badge">FABLEA bedtime story</div>
+<div class="badge" id="badge">FABLEA story</div>
 
-<h1>Il piccolo faro sul mare</h1>
+<h1 id="title">La storia di oggi</h1>
 
-<div class="subtitle">
-Una storia calma per accompagnare la sera.
+<div class="subtitle" id="subtitle">
+Una storia creata per accompagnare immaginazione e calma.
 </div>
 
-<section class="story">
+<div class="illustration" id="icon">🌙 📖 ✨</div>
 
-<p>
-Quella sera Cesare guardava il mare dalla finestra della sua stanza.  
-Le onde si muovevano piano, come se stessero sussurrando qualcosa alla notte.
-</p>
-
-<p>
-In lontananza, sopra una piccola scogliera, viveva un vecchio faro dorato che si accendeva solo quando qualcuno aveva bisogno di ritrovare la strada.
-</p>
-
-<p>
-“Questa notte la luce aspetta te”, disse una piccola voce nel vento.
-</p>
-
-<p>
-Cesare sorrise piano, prese la sua coperta e immaginò di camminare sulla spiaggia sotto una luna morbida e silenziosa.
-</p>
-
-</section>
+<section class="story" id="storyText"></section>
 
 <div class="actions">
-
-<a class="button" href="/story-player.html">
-Ascolta la voce narrante
-</a>
-
-<a class="button secondary" href="/library.html">
-Libreria
-</a>
-
-<a class="button secondary" href="/index.html">
-Home
-</a>
-
+<a class="button" href="/story-player.html">Ascolta la voce narrante</a>
+<a class="button secondary" href="/story.html">Crea un’altra storia</a>
+<a class="button secondary" href="/library.html">Libreria</a>
+<a class="button secondary" href="/index.html">Home</a>
 </div>
 
 <div class="footer">
-Lettura lenta • Voce morbida • Nessuna iperstimolazione
+Ritmo lento • Immaginazione • Bassa stimolazione
 </div>
 
 </main>
+
+<script>
+const saved = localStorage.getItem('fableaStoryData');
+
+const data = saved ? JSON.parse(saved) : {
+name:'il piccolo protagonista',
+age:'5 anni',
+experience:'Storia della sera',
+mood:'Tranquilla',
+theme:'Foresta magica'
+};
+
+const name = data.name || 'il piccolo protagonista';
+const age = data.age || '5 anni';
+const experience = data.experience || 'Storia della sera';
+const mood = data.mood || 'Tranquilla';
+const theme = data.theme || 'Foresta magica';
+
+let title = '';
+let badge = experience;
+let subtitle = '';
+let icon = '🌙 📖 ✨';
+let paragraphs = [];
+
+if(experience === 'Avventura immaginativa'){
+
+title = name + ' e la mappa dei mondi nascosti';
+subtitle = 'Un’avventura morbida per esplorare senza fretta.';
+icon = '🗺️ ✨ 🐉';
+
+paragraphs = [
+`Quel pomeriggio, mentre il cielo cambiava colore lentamente, ${name} trovò una piccola mappa piegata dentro un libro. Non era una mappa normale: le strade si muovevano piano, come fili dorati disegnati dalla fantasia.`,
+`In un angolo c’era scritto: “Non porta lontano chi corre più veloce. Porta lontano chi sa guardare meglio.” ${name} sorrise e appoggiò un dito sul primo sentiero.`,
+`Subito comparve un mondo fatto di ${theme.toLowerCase()}. C’erano ponti sottili, luci sospese e una porta minuscola che sembrava aspettare proprio ${name}.`,
+`Dietro la porta viveva un custode gentile: non era grande, non faceva paura, ma conosceva tutte le domande che i bambini tengono in tasca senza dirle.`,
+`“Oggi la tua giornata è stata ${mood.toLowerCase()},” disse il custode. “Allora ti regalo una cosa speciale: un passo coraggioso, ma piccolo abbastanza da non spaventarti.”`,
+`${name} fece quel passo. Il mondo non cambiò tutto insieme. Cambiò piano: una luce qui, una stella là, un rumore lontano che diventava musica.`,
+`Quando la mappa tornò a essere silenziosa, ${name} capì che le avventure più belle non servono per scappare via. Servono per scoprire un pezzetto nuovo di sé.`
+];
+
+} else if(experience === 'Storia sulle emozioni'){
+
+title = name + ' e il barattolo delle emozioni';
+subtitle = 'Una storia delicata per dare forma a quello che si sente dentro.';
+icon = '💛 🌧️ 🌈';
+
+paragraphs = [
+`Quel giorno ${name} sentiva qualcosa dentro, ma non sapeva bene che nome avesse. Forse era stanchezza, forse era gioia, forse era una piccola nuvola rimasta lì dopo una giornata ${mood.toLowerCase()}.`,
+`Sul tavolo apparve un barattolo trasparente con un tappo dorato. Dentro non c’era nulla, eppure sembrava aspettare.`,
+`Una voce gentile disse: “Le emozioni non vanno mandate via. Vanno ascoltate piano, come si ascolta una conchiglia.”`,
+`${name} aprì il barattolo e vide uscire una lucina gialla. Era la felicità. Poi una goccia azzurra: era un pensiero un po’ triste. Poi una scintilla rossa: era energia che non sapeva dove andare.`,
+`Ogni emozione aveva un colore, una forma e un suono leggero. Nessuna era sbagliata. Nessuna era troppo grande se veniva guardata con calma.`,
+`Allora ${name} mise nel barattolo anche un piccolo respiro. Il barattolo brillò piano e le emozioni iniziarono a girare come stelle lente.`,
+`Da quel momento ${name} capì una cosa importante: dentro di noi possono vivere tanti colori insieme. E quando li ascoltiamo, diventano meno rumorosi.`
+];
+
+} else if(experience === 'Storia educativa soft'){
+
+title = name + ' e il segreto gentile della natura';
+subtitle = 'Una piccola scoperta per imparare con meraviglia.';
+icon = '🌱 🐝 ☀️';
+
+paragraphs = [
+`Una mattina luminosa, ${name} seguì una farfalla fino a un piccolo prato nascosto. L’erba era morbida, l’aria profumava di sole e tutto sembrava parlare a voce bassa.`,
+`Su un fiore giallo c’era un’ape molto indaffarata. Non sembrava avere tempo, ma quando vide ${name} si fermò un istante.`,
+`“Sai cosa faccio?” chiese l’ape. “Porto piccoli doni da un fiore all’altro. Così la natura può continuare a crescere.”`,
+`${name} osservò meglio. Ogni cosa nel prato aveva un compito: la terra custodiva, il sole scaldava, l’acqua aiutava, il vento spostava semi leggerissimi.`,
+`Anche le cose piccole facevano qualcosa di importante. Una formica trasportava una briciola. Una foglia faceva ombra. Una goccia scendeva piano verso una radice.`,
+`“Imparare,” disse la farfalla, “non vuol dire riempire la testa. Vuol dire accorgersi di più cose.”`,
+`Quando ${name} tornò a casa, il mondo sembrava lo stesso. Ma non lo era più davvero: adesso ogni fiore, ogni insetto e ogni nuvola aveva una storia da raccontare.`
+];
+
+} else if(experience === 'Mini racconto rilassante'){
+
+title = name + ' e il respiro della luna';
+subtitle = 'Un piccolo racconto per rallentare e ritrovare calma.';
+icon = '🌙 🫧 🤍';
+
+paragraphs = [
+`La stanza era tranquilla. Fuori, la luce diventava morbida. ${name} si accorse che anche il silenzio poteva avere un suono leggero.`,
+`Sul davanzale comparve una piccola luna tonda, grande come una mela. Non parlava subito. Prima respirava.`,
+`Inspirava piano, ed era come se il mondo diventasse più largo. Espirava piano, ed era come se ogni pensiero trovasse un posto dove riposare.`,
+`${name} provò a seguirla: un respiro dentro, lento. Un respiro fuori, ancora più lento.`,
+`La giornata ${mood.toLowerCase()} iniziò a sciogliersi un pochino. Non sparì di colpo. Si ammorbidì, come neve sotto una coperta calda.`,
+`La luna sorrise appena. “Non devi sistemare tutto adesso,” sembrava dire. “Puoi solo stare qui, un momento alla volta.”`,
+`E così ${name} rimase con quel respiro gentile, finché anche i pensieri più veloci impararono ad andare piano.`
+];
+
+} else {
+
+title = name + ' e la lanterna del bosco';
+subtitle = 'Una storia calma per accompagnare la sera.';
+icon = '🌙 📖 ✨';
+
+paragraphs = [
+`Quando la sera diventò morbida come una coperta, ${name} trovò una piccola lanterna vicino alla finestra. Non faceva una luce forte. Faceva una luce gentile.`,
+`La lanterna sembrò sussurrare: “Questa notte non dobbiamo correre. Dobbiamo solo immaginare.” Così ${name} la seguì piano, entrando in un sentiero fatto di luce calda.`,
+`Il sentiero portava verso una ${theme.toLowerCase()}. Ogni passo faceva nascere una stellina nell’aria, e ogni stellina sembrava dire: va tutto bene.`,
+`Tra gli alberi incontrò una volpe piccola, con la coda soffice e gli occhi grandi. La volpe aveva un po’ paura del buio, anche se cercava di non dirlo.`,
+`${name} si sedette accanto a lei e sollevò la lanterna. “Forse il buio non è vuoto,” disse piano. “Forse aspetta solo che qualcuno lo guardi con gentilezza.”`,
+`Allora il bosco cambiò. Non diventò più luminoso: diventò più amico. Le ombre restarono lì, ma smisero di sembrare grandi.`,
+`Quando la luna salì alta nel cielo, la volpe appoggiò il muso sulle zampe e ${name} sentì la calma arrivare piano, come una coperta sulle spalle.`,
+`La lanterna brillò un’ultima volta. Poi il bosco diventò sogno, e il sogno diventò buonanotte.`
+];
+
+}
+
+document.getElementById('badge').innerText = badge;
+document.getElementById('title').innerText = title;
+document.getElementById('subtitle').innerText = subtitle;
+document.getElementById('icon').innerText = icon;
+document.getElementById('storyText').innerHTML = paragraphs.map(p => `<p>${p}</p>`).join('');
+
+localStorage.setItem('fableaCurrentStory', JSON.stringify({
+title:title,
+subtitle:subtitle,
+icon:icon,
+text:paragraphs.join('\n\n')
+}));
+</script>
 
 </body>
 </html>
