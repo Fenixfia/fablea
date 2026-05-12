@@ -3,7 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>FABLEA</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 
@@ -18,117 +24,151 @@ min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-padding:24px;
-font-family:Georgia,serif;
+overflow:hidden;
 
 background:
-radial-gradient(circle at top left,#fff2d9 0%,transparent 28%),
-radial-gradient(circle at bottom right,#d9def6 0%,transparent 30%),
-linear-gradient(135deg,#f5efe6,#ece8df 55%,#d9deea);
+radial-gradient(circle at top,#32406d 0%,#1d2747 35%,#12182d 70%,#0b1020 100%);
 
-color:#2f2a32;
+font-family:'Nunito',sans-serif;
+position:relative;
+}
+
+.stars{
+position:absolute;
+width:100%;
+height:100%;
+background-image:
+radial-gradient(2px 2px at 20% 30%,rgba(255,255,255,.7),transparent),
+radial-gradient(2px 2px at 70% 20%,rgba(255,255,255,.6),transparent),
+radial-gradient(1px 1px at 40% 70%,rgba(255,255,255,.5),transparent),
+radial-gradient(2px 2px at 80% 60%,rgba(255,255,255,.7),transparent),
+radial-gradient(1px 1px at 10% 80%,rgba(255,255,255,.6),transparent),
+radial-gradient(2px 2px at 55% 45%,rgba(255,255,255,.5),transparent);
+
+animation:twinkle 6s infinite alternate;
+opacity:.7;
+}
+
+@keyframes twinkle{
+from{opacity:.45}
+to{opacity:.9}
+}
+
+.moon{
+position:absolute;
+top:80px;
+right:120px;
+width:140px;
+height:140px;
+border-radius:50%;
+background:radial-gradient(circle,#fff7d6,#f6e6a6);
+box-shadow:
+0 0 50px rgba(255,240,180,.45),
+0 0 120px rgba(255,240,180,.18);
+opacity:.9;
 }
 
 .card{
-width:100%;
-max-width:1200px;
+position:relative;
+z-index:2;
 
-background:rgba(255,250,242,.76);
+width:90%;
+max-width:760px;
 
-border:1px solid rgba(80,60,40,.08);
+padding:70px 50px;
 
-border-radius:42px;
+border-radius:38px;
 
-padding:70px 60px;
+background:rgba(255,255,255,.06);
 
-backdrop-filter:blur(12px);
+backdrop-filter:blur(14px);
+
+border:1px solid rgba(255,255,255,.08);
 
 box-shadow:
-0 25px 80px rgba(70,55,35,.14);
+0 20px 80px rgba(0,0,0,.35);
+
+text-align:center;
 }
 
 .badge{
-text-align:center;
-font-size:14px;
-letter-spacing:7px;
+font-size:12px;
+letter-spacing:6px;
 text-transform:uppercase;
-color:#8b7765;
-margin-bottom:28px;
+color:#d5c8a8;
+margin-bottom:22px;
 }
 
 h1{
-text-align:center;
-font-size:110px;
-font-weight:500;
+font-family:'Cormorant Garamond',serif;
+font-size:92px;
+font-weight:600;
 letter-spacing:4px;
-margin-bottom:36px;
+color:#fff8ea;
+margin-bottom:22px;
 }
 
 .subtitle{
-max-width:980px;
-margin:auto;
-text-align:center;
-font-size:34px;
+font-family:'Cormorant Garamond',serif;
+font-size:30px;
 line-height:1.45;
-color:#3d3740;
-margin-bottom:34px;
+color:#f1eadb;
+margin-bottom:26px;
 }
 
 .description{
-max-width:980px;
+max-width:620px;
 margin:auto;
-text-align:center;
-font-size:25px;
+font-size:19px;
 line-height:1.9;
-color:#6a6159;
-margin-bottom:56px;
+color:rgba(255,255,255,.78);
+margin-bottom:42px;
 }
 
 .button{
-display:flex;
-justify-content:center;
+display:inline-flex;
 align-items:center;
+justify-content:center;
 
-width:100%;
-height:84px;
+padding:18px 42px;
 
 border-radius:999px;
 
-background:#313f67;
+background:
+linear-gradient(135deg,#f7e7b8,#e6c97f);
+
+color:#2f2a32;
 
 text-decoration:none;
-color:white;
 
-font-size:34px;
-
-transition:.3s;
+font-size:19px;
+font-weight:600;
 
 box-shadow:
-0 18px 35px rgba(49,63,103,.18);
+0 12px 30px rgba(246,218,140,.22);
+
+transition:.3s;
 }
 
 .button:hover{
-transform:translateY(-2px);
-background:#3d4d7b;
+transform:translateY(-3px) scale(1.02);
 }
 
 .footer{
-margin-top:44px;
-text-align:center;
-font-size:18px;
-color:#8b7765;
-line-height:1.8;
+margin-top:34px;
+font-size:15px;
+color:rgba(255,255,255,.58);
+letter-spacing:.5px;
 }
 
-@media(max-width:900px){
+@media(max-width:700px){
 
 .card{
-padding:42px 24px;
-border-radius:30px;
+padding:50px 26px;
 }
 
 h1{
-font-size:64px;
+font-size:62px;
 }
 
 .subtitle{
@@ -136,17 +176,19 @@ font-size:22px;
 }
 
 .description{
-font-size:18px;
+font-size:16px;
 line-height:1.7;
 }
 
 .button{
-height:68px;
-font-size:24px;
+width:100%;
 }
 
-.footer{
-font-size:15px;
+.moon{
+width:90px;
+height:90px;
+top:40px;
+right:30px;
 }
 
 }
@@ -155,6 +197,10 @@ font-size:15px;
 </head>
 
 <body>
+
+<div class="stars"></div>
+
+<div class="moon"></div>
 
 <div class="card">
 
