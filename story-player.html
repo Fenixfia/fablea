@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FABLEA | Mary racconta</title>
+<title>FABLEA | Voce narrante</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -25,7 +25,7 @@ color:white;
 .wrap{
 max-width:780px;
 margin:0 auto;
-padding:34px 0 60px;
+padding:34px 0 70px;
 }
 
 .card{
@@ -82,6 +82,7 @@ border:1px solid rgba(255,255,255,.08);
 
 .status{
 font-size:15px;
+line-height:1.5;
 color:#d8c7a4;
 margin-bottom:18px;
 }
@@ -169,19 +170,19 @@ h1{font-size:40px}
 <h1 id="storyTitle">La storia della sera</h1>
 
 <div class="subtitle">
-Mary racconta la storia con una voce calda, lenta e naturale.
+Una voce calda, lenta e naturale accompagna il bambino nel suo piccolo mondo FABLEA.
 </div>
 
 <div class="player">
 
 <div class="status" id="status">
-Pronto per generare la voce di Mary
+Pronto per generare la voce narrante.
 </div>
 
 <audio id="audioPlayer" controls></audio>
 
 <div class="controls">
-<button class="button" onclick="generateAndPlay()">Genera voce Mary</button>
+<button class="button" onclick="generateNarration()">Genera voce narrante</button>
 <button class="button secondary" onclick="pauseAudio()">Pausa</button>
 <button class="button secondary" onclick="restartAudio()">Ricomincia</button>
 </div>
@@ -190,7 +191,7 @@ Pronto per generare la voce di Mary
 
 <div class="story">
 <h2 id="previewTitle">La storia</h2>
-<p id="previewText">Caricamento storia...</p>
+<p id="storyText">Caricamento storia...</p>
 </div>
 
 <div class="controls">
@@ -218,27 +219,36 @@ const icon = story.icon || '🌙';
 
 document.getElementById('storyTitle').innerText = title;
 document.getElementById('previewTitle').innerText = title;
-document.getElementById('previewText').innerText = text;
+document.getElementById('storyText').innerText = text;
 document.getElementById('storyIcon').innerText = icon;
 
 const audio = document.getElementById('audioPlayer');
 let currentAudioUrl = null;
 
-async function generateAndPlay(){
+async function generateNarration(){
 
-document.getElementById('status').innerText = 'Mary sta preparando la voce...';
+const status = document.getElementById('status');
+const button = document.querySelector('.button');
+
+status.innerText = 'La voce narrante sta preparando la storia...';
+button.disabled = true;
+button.innerText = 'Preparazione...';
 
 try{
 
 const response = await fetch('/api/tts', {
 method:'POST',
-headers:{'Content-Type':'application/json'},
-body:JSON.stringify({ text:text })
+headers:{
+'Content-Type':'application/json'
+},
+body:JSON.stringify({
+text:document.getElementById('storyText').innerText
+})
 });
 
 if(!response.ok){
 const errorText = await response.text();
-throw new Error(errorText || 'Errore generazione audio');
+throw new Error(errorText || 'Errore nella generazione audio');
 }
 
 const blob = await response.blob();
@@ -250,16 +260,21 @@ URL.revokeObjectURL(currentAudioUrl);
 currentAudioUrl = URL.createObjectURL(blob);
 
 audio.src = currentAudioUrl;
+
 await audio.play();
 
-document.getElementById('status').innerText = 'Mary sta raccontando la storia...';
+status.innerText = 'La voce narrante sta raccontando la storia...';
 
 }catch(error){
 
-document.getElementById('status').innerText =
-'Audio Mary non disponibile. Controlla API key, Voice ID o deploy Vercel.';
-
 console.error(error);
+
+status.innerText = 'Audio non disponibile. Controlla API, deploy o crediti ElevenLabs.';
+
+}finally{
+
+button.disabled = false;
+button.innerText = 'Genera voce narrante';
 
 }
 
@@ -271,6 +286,11 @@ document.getElementById('status').innerText = 'Favola in pausa.';
 }
 
 function restartAudio(){
+if(!audio.src){
+document.getElementById('status').innerText = 'Genera prima la voce narrante.';
+return;
+}
+
 audio.currentTime = 0;
 audio.play();
 document.getElementById('status').innerText = 'La storia ricomincia lentamente...';
