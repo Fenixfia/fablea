@@ -1,10 +1,16 @@
 export default async function handler(req, res) {
+
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({
+      error: 'Method not allowed'
+    });
   }
 
   try {
-    const response = await fetch(
+
+    const text = req.body.text || "Ciao Cesare";
+
+    const eleven = await fetch(
       `https://api.elevenlabs.io/v1/text-to-speech/${process.env.ELEVENLABS_VOICE_ID}`,
       {
         method: 'POST',
@@ -13,8 +19,8 @@ export default async function handler(req, res) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          text: req.body.text || "Ciao Cesare, benvenuto in Fablea.",
-          model_id: "eleven_multilingual_v2",
+          text,
+          model_id: 'eleven_multilingual_v2',
           voice_settings: {
             stability: 0.6,
             similarity_boost: 0.8
@@ -23,14 +29,28 @@ export default async function handler(req, res) {
       }
     );
 
-    const audio = await response.arrayBuffer();
+    if (!eleven.ok) {
+
+      const errorText = await eleven.text();
+
+      return res.status(500).json({
+        error: errorText
+      });
+
+    }
+
+    const audioBuffer = await eleven.arrayBuffer();
 
     res.setHeader('Content-Type', 'audio/mpeg');
-    res.send(Buffer.from(audio));
+
+    return res.send(Buffer.from(audioBuffer));
 
   } catch (err) {
-    res.status(500).json({
+
+    return res.status(500).json({
       error: err.message
     });
+
   }
+
 }
