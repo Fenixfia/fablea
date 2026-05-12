@@ -8,31 +8,47 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 body{
 min-height:100vh;
 padding:24px;
 font-family:'Nunito',sans-serif;
+
 background:
 radial-gradient(circle at top left,#fff1d8 0%,transparent 30%),
 radial-gradient(circle at bottom right,#e7dcff 0%,transparent 34%),
 linear-gradient(135deg,#f8f1e8 0%,#ece4ea 45%,#d9ddea 100%);
-color:#332d35;
+
 display:flex;
 justify-content:center;
 align-items:center;
+
+color:#352f36;
 }
 
 .player{
 width:92%;
 max-width:760px;
-padding:54px 42px;
+
+padding:56px 42px;
+
 border-radius:40px;
+
 background:rgba(255,250,245,.66);
+
 backdrop-filter:blur(16px);
+
 border:1px solid rgba(255,255,255,.55);
-box-shadow:0 24px 80px rgba(80,65,55,.15);
+
+box-shadow:
+0 24px 80px rgba(80,65,55,.15);
+
 text-align:center;
 }
 
@@ -46,77 +62,125 @@ margin-bottom:18px;
 
 h1{
 font-family:'Cormorant Garamond',serif;
-font-size:54px;
+font-size:56px;
 font-weight:600;
-margin-bottom:18px;
+margin-bottom:20px;
 }
 
 .moon{
 width:150px;
 height:150px;
-margin:26px auto;
+
+margin:28px auto;
+
 border-radius:50%;
-background:radial-gradient(circle,#fff7d8,#e8cf82);
-box-shadow:0 0 55px rgba(232,207,130,.35);
+
+background:
+radial-gradient(circle,#fff7d8,#e8cf82);
+
+box-shadow:
+0 0 55px rgba(232,207,130,.35);
+
 display:flex;
 align-items:center;
 justify-content:center;
+
 font-size:54px;
+
 animation:breath 4s ease-in-out infinite;
 }
 
 @keyframes breath{
+
 0%{transform:scale(1)}
 50%{transform:scale(1.05)}
 100%{transform:scale(1)}
+
 }
 
 .text{
 font-family:'Cormorant Garamond',serif;
-font-size:27px;
-line-height:1.6;
+font-size:28px;
+line-height:1.7;
 color:#4d4452;
-margin:26px auto 34px;
-max-width:600px;
+
+max-width:620px;
+
+margin:24px auto 36px;
 }
 
 .controls{
 display:flex;
-justify-content:center;
 gap:16px;
+justify-content:center;
 flex-wrap:wrap;
 }
 
 .button{
-padding:15px 26px;
+padding:15px 28px;
+
 border-radius:999px;
-background:linear-gradient(135deg,#f8e3aa,#e7c870);
-color:#332d35;
+
+border:0;
+
+cursor:pointer;
+
 font-size:16px;
 font-weight:700;
-text-decoration:none;
-border:0;
-cursor:pointer;
+
+background:
+linear-gradient(135deg,#f8e3aa,#e7c870);
+
+color:#322d34;
+
+box-shadow:
+0 12px 30px rgba(231,200,112,.25);
+
+transition:.3s;
+}
+
+.button:hover{
+transform:translateY(-2px);
 }
 
 .secondary{
-background:rgba(255,255,255,.52);
-color:#6d6668;
+background:rgba(255,255,255,.55);
 border:1px solid rgba(80,65,55,.10);
+color:#6b6467;
+box-shadow:none;
+text-decoration:none;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
-.note{
-margin-top:26px;
+.footer{
+margin-top:32px;
 font-size:14px;
-color:#8f8078;
+color:#988a82;
 }
 
 @media(max-width:700px){
-.player{padding:42px 24px;border-radius:30px}
-h1{font-size:38px}
-.text{font-size:23px}
-.button{width:100%}
+
+.player{
+padding:42px 24px;
+border-radius:30px;
 }
+
+h1{
+font-size:40px;
+}
+
+.text{
+font-size:23px;
+}
+
+.button{
+width:100%;
+}
+
+}
+
 </style>
 </head>
 
@@ -124,28 +188,85 @@ h1{font-size:38px}
 
 <main class="player">
 
-<div class="badge">Modalità nanna</div>
+<div class="badge">
+Modalità nanna
+</div>
 
-<h1>Ascolta la storia</h1>
+<h1>
+Ascolta la storia
+</h1>
 
-<div class="moon">🌙</div>
+<div class="moon">
+🌙
+</div>
 
-<div class="text">
-La voce narrante accompagnerà la storia con calma, lasciando spazio all’immaginazione.
+<div class="text" id="storyText">
+
+Quella sera Cesare guardava il mare dalla finestra della sua stanza.
+
+Le onde si muovevano piano, come se stessero sussurrando qualcosa alla notte.
+
+In lontananza, sopra una piccola scogliera, viveva un vecchio faro dorato che si accendeva solo quando qualcuno aveva bisogno di ritrovare la strada.
+
 </div>
 
 <div class="controls">
-<button class="button" onclick="alert('Qui inseriremo la voce narrante FABLEA')">▶ Ascolta</button>
-<a class="button secondary" href="/story-result.html">Leggi la storia</a>
-<a class="button secondary" href="/library.html">Libreria</a>
-<a class="button secondary" href="/index.html">Home</a>
+
+<button class="button" onclick="playStory()">
+▶ Ascolta
+</button>
+
+<button class="button secondary" onclick="stopStory()">
+■ Ferma
+</button>
+
+<a class="button secondary" href="/story-result.html">
+Leggi la storia
+</a>
+
+<a class="button secondary" href="/library.html">
+Libreria
+</a>
+
 </div>
 
-<div class="note">
-Audio-first • Ritmo lento • Esperienza serale
+<div class="footer">
+Voce lenta • Ritmo morbido • Esperienza serale
 </div>
 
 </main>
+
+<script>
+
+let speech;
+
+function playStory(){
+
+stopStory();
+
+const text = document.getElementById('storyText').innerText;
+
+speech = new SpeechSynthesisUtterance(text);
+
+speech.lang = 'it-IT';
+
+speech.rate = 0.82;
+
+speech.pitch = 1;
+
+speech.volume = 1;
+
+window.speechSynthesis.speak(speech);
+
+}
+
+function stopStory(){
+
+window.speechSynthesis.cancel();
+
+}
+
+</script>
 
 </body>
 </html>
