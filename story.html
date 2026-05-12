@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FABLEA | Story</title>
+
+<style>
+body{
+margin:0;
+font-family: Georgia, serif;
+background:radial-gradient(circle at top,#27345c,#080a12 75%);
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+}
+
+.card{
+width:90%;
+max-width:520px;
+padding:36px 28px;
+border-radius:30px;
+background:rgba(255,255,255,0.08);
+border:1px solid rgba(255,255,255,0.18);
+backdrop-filter:blur(14px);
+box-shadow:0 30px 80px rgba(0,0,0,.35);
+}
+
+h1{
+font-size:34px;
+line-height:1.2;
+margin:0 0 16px;
+font-weight:400;
+}
+
+p{
+color:#d7d9e6;
+font-size:17px;
+line-height:1.6;
+margin-bottom:28px;
+}
+
+label{
+display:block;
+margin:18px 0 8px;
+font-size:15px;
+color:#e9e4d5;
+}
+
+input,select{
+width:100%;
+box-sizing:border-box;
+padding:16px;
+border-radius:18px;
+border:1px solid rgba(255,255,255,.18);
+background:rgba(255,255,255,.10);
+color:white;
+font-size:16px;
+outline:none;
+}
+
+option{
+color:#111;
+}
+
+button{
+margin-top:28px;
+width:100%;
+padding:17px;
+border-radius:999px;
+border:1px solid rgba(255,255,255,.35);
+background:rgba(255,255,255,.16);
+color:white;
+font-size:17px;
+cursor:pointer;
+}
+
+.back{
+display:block;
+margin-top:22px;
+text-align:center;
+color:#cfd5ff;
+text-decoration:none;
+font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h1>Who is tonight’s little adventurer?</h1>
+
+<p>
+Tell FABLEA just a little about the child.
+The story will begin softly, like a whisper before sleep.
+</p>
+
+<label>Child’s name</label>
+<input type="text" placeholder="Cesare">
+
+<label>Age</label>
+<select>
+<option>2 years old</option>
+<option>3 years old</option>
+<option>4 years old</option>
+<option>5 years old</option>
+<option>6 years old</option>
+<option>7 years old</option>
+<option>8 years old</option>
+</select>
+
+<label>How was today?</label>
+<select>
+<option>Calm</option>
+<option>Happy</option>
+<option>Tired</option>
+<option>Brave</option>
+<option>A little scared</option>
+<option>Full of energy</option>
+</select>
+
+<button>Create tonight’s story</button>
+
+<a class="back" href="index.html">← Back to FABLEA</a>
+</div>
+
+</body>
+</html>
