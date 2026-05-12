@@ -5,9 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FABLEA | Profili</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -20,18 +18,18 @@ background:
 radial-gradient(circle at top left,#fff1d8 0%,transparent 30%),
 radial-gradient(circle at bottom right,#e7dcff 0%,transparent 34%),
 linear-gradient(135deg,#f8f1e8 0%,#ece4ea 45%,#d9ddea 100%);
-color:#332d35;
+color:#352f36;
 }
 
 .page{
 max-width:1050px;
 margin:auto;
-padding:48px;
-border-radius:38px;
-background:rgba(255,250,245,.64);
-backdrop-filter:blur(16px);
-border:1px solid rgba(255,255,255,.55);
-box-shadow:0 24px 80px rgba(80,65,55,.15);
+padding:52px 44px;
+border-radius:42px;
+background:rgba(255,251,247,.74);
+backdrop-filter:blur(14px);
+border:1px solid rgba(255,255,255,.6);
+box-shadow:0 24px 80px rgba(70,60,50,.12);
 }
 
 .badge{
@@ -39,8 +37,8 @@ text-align:center;
 font-size:12px;
 letter-spacing:5px;
 text-transform:uppercase;
-color:#9c8774;
-margin-bottom:16px;
+color:#9f8a76;
+margin-bottom:18px;
 }
 
 h1{
@@ -55,64 +53,117 @@ margin-bottom:14px;
 text-align:center;
 font-size:18px;
 line-height:1.7;
-color:#6d6668;
-max-width:650px;
-margin:0 auto 36px;
+color:#756c70;
+max-width:700px;
+margin:0 auto 38px;
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:22px;
-}
-
-.child{
-padding:30px;
-border-radius:30px;
-background:rgba(255,255,255,.52);
+.profile-card{
+max-width:760px;
+margin:0 auto;
+padding:34px;
+border-radius:34px;
+background:rgba(255,255,255,.50);
 border:1px solid rgba(80,65,55,.10);
+box-shadow:0 16px 38px rgba(80,65,55,.08);
 }
 
 .avatar{
-width:74px;
-height:74px;
+width:92px;
+height:92px;
 border-radius:50%;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:38px;
+font-size:44px;
 background:linear-gradient(135deg,#f8e3aa,#e7dcff);
-margin-bottom:18px;
+margin:0 auto 20px;
 }
 
-.child h2{
+.profile-name{
 font-family:'Cormorant Garamond',serif;
-font-size:36px;
+font-size:44px;
 font-weight:600;
+text-align:center;
 margin-bottom:8px;
 }
 
-.child p{
+.profile-age{
+text-align:center;
 font-size:16px;
-line-height:1.65;
-color:#6d6668;
-margin-bottom:16px;
+color:#8f8078;
+margin-bottom:26px;
+}
+
+.details{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:16px;
+margin-top:24px;
+}
+
+.detail{
+padding:20px;
+border-radius:24px;
+background:rgba(255,250,245,.64);
+border:1px solid rgba(80,65,55,.08);
+}
+
+.detail strong{
+display:block;
+font-size:14px;
+color:#9f8a76;
+margin-bottom:8px;
+text-transform:uppercase;
+letter-spacing:1.5px;
+}
+
+.detail span{
+font-size:17px;
+line-height:1.5;
+color:#4d4550;
 }
 
 .tags{
 display:flex;
 flex-wrap:wrap;
-gap:8px;
-margin-top:16px;
+gap:10px;
+justify-content:center;
+margin-top:22px;
 }
 
 .tag{
-font-size:13px;
-padding:8px 12px;
+padding:10px 14px;
 border-radius:999px;
 background:rgba(255,250,245,.72);
-color:#8f8078;
 border:1px solid rgba(80,65,55,.08);
+color:#7b706c;
+font-size:14px;
+font-weight:700;
+}
+
+.empty{
+text-align:center;
+padding:38px 28px;
+border-radius:34px;
+background:rgba(255,255,255,.50);
+border:1px solid rgba(80,65,55,.10);
+max-width:760px;
+margin:0 auto;
+}
+
+.empty h2{
+font-family:'Cormorant Garamond',serif;
+font-size:38px;
+font-weight:600;
+margin-bottom:14px;
+}
+
+.empty p{
+font-size:17px;
+line-height:1.7;
+color:#756c70;
+margin-bottom:24px;
 }
 
 .actions{
@@ -132,22 +183,25 @@ border-radius:999px;
 background:linear-gradient(135deg,#f8e3aa,#e7c870);
 color:#332d35;
 font-size:16px;
-font-weight:700;
+font-weight:800;
 text-decoration:none;
 box-shadow:0 14px 28px rgba(181,145,73,.16);
+border:0;
+cursor:pointer;
 }
 
 .secondary{
-background:rgba(255,255,255,.52);
+background:rgba(255,255,255,.55);
 box-shadow:none;
-color:#6d6668;
+color:#6b6467;
 border:1px solid rgba(80,65,55,.10);
 }
 
-@media(max-width:850px){
-.page{padding:38px 24px;border-radius:30px}
-.grid{grid-template-columns:1fr}
-h1{font-size:44px}
+@media(max-width:760px){
+.page{padding:40px 22px;border-radius:30px}
+h1{font-size:42px}
+.details{grid-template-columns:1fr}
+.profile-card{padding:28px 20px}
 .button{width:100%}
 }
 </style>
@@ -159,52 +213,105 @@ h1{font-size:44px}
 
 <div class="badge">Profili bambino</div>
 
-<h1>Ogni storia nasce da chi ascolta.</h1>
+<h1>Il suo piccolo mondo FABLEA.</h1>
 
 <div class="intro">
-In futuro FABLEA potrà ricordare età, gusti, paure, passioni e piccoli rituali di ogni bambino, creando storie sempre più personali e delicate.
+Qui vive il profilo narrativo del bambino: età, interessi, ritmo e piccoli dettagli che aiutano FABLEA a creare storie più personali.
 </div>
 
-<div class="grid">
-
-<div class="child">
-<div class="avatar">🦁</div>
-<h2>Cesare</h2>
-<p>
-Profilo demo per storie più avventurose, curiose e piene di coraggio gentile.
-</p>
-<div class="tags">
-<span class="tag">Avventura</span>
-<span class="tag">Dinosauri</span>
-<span class="tag">Coraggio</span>
-<span class="tag">Foreste magiche</span>
-</div>
-</div>
-
-<div class="child">
-<div class="avatar">🌸</div>
-<h2>Lavinia</h2>
-<p>
-Profilo demo per storie morbide, musicali e ricche di meraviglia visiva.
-</p>
-<div class="tags">
-<span class="tag">Animali</span>
-<span class="tag">Nanna</span>
-<span class="tag">Luna</span>
-<span class="tag">Colori soft</span>
-</div>
-</div>
-
-</div>
+<div id="profileArea"></div>
 
 <div class="actions">
 <a class="button" href="/story.html">Crea una storia</a>
+<a class="button secondary" href="/onboarding.html">Crea / modifica profilo</a>
 <a class="button secondary" href="/library.html">Libreria</a>
-<a class="button secondary" href="/about.html">Manifesto</a>
 <a class="button secondary" href="/index.html">Home</a>
 </div>
 
 </main>
+
+<script>
+const saved = localStorage.getItem('fableaChildProfile');
+const area = document.getElementById('profileArea');
+
+function ageLabel(value){
+if(value === '2-4') return '2–4 anni • Meraviglia';
+if(value === '5-7') return '5–7 anni • Esplorazione';
+if(value === '8-10') return '8–10 anni • Identità';
+if(value === '11-12') return '11–12 anni • Direzione';
+return 'Fascia non definita';
+}
+
+function avatarFor(age){
+if(age === '2-4') return '🌙';
+if(age === '5-7') return '🦊';
+if(age === '8-10') return '💛';
+if(age === '11-12') return '🧭';
+return '✨';
+}
+
+if(saved){
+
+const profile = JSON.parse(saved);
+
+const interests = profile.interests && profile.interests.length
+? profile.interests.map(item => `<span class="tag">${item}</span>`).join('')
+: `<span class="tag">✨ Immaginazione</span>`;
+
+area.innerHTML = `
+<div class="profile-card">
+
+<div class="avatar">${avatarFor(profile.age)}</div>
+
+<div class="profile-name">${profile.name}</div>
+
+<div class="profile-age">${ageLabel(profile.age)}</div>
+
+<div class="tags">
+${interests}
+</div>
+
+<div class="details">
+
+<div class="detail">
+<strong>Supporto</strong>
+<span>${profile.support || 'Calmare la sera'}</span>
+</div>
+
+<div class="detail">
+<strong>Durata ideale</strong>
+<span>${profile.duration || 'Breve • 2–4 minuti'}</span>
+</div>
+
+<div class="detail">
+<strong>Esperienza</strong>
+<span>Storie audio-first, lente e personalizzate.</span>
+</div>
+
+<div class="detail">
+<strong>Ritmo</strong>
+<span>Bassa stimolazione, immagini morbide, partecipazione leggera.</span>
+</div>
+
+</div>
+
+</div>
+`;
+
+}else{
+
+area.innerHTML = `
+<div class="empty">
+<h2>Nessun profilo creato.</h2>
+<p>
+Crea il primo piccolo mondo FABLEA inserendo nome, fascia evolutiva, interessi e rituale preferito.
+</p>
+<a class="button" href="/onboarding.html">Crea profilo bambino</a>
+</div>
+`;
+
+}
+</script>
 
 </body>
 </html>
