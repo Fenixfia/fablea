@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FABLEA | Storia</title>
+<title>FABLEA | Storia a scene</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -26,12 +26,12 @@ color:#352f36;
 
 .card{
 width:92%;
-max-width:960px;
-padding:56px 46px;
+max-width:980px;
+padding:54px 44px;
 border-radius:42px;
-background:rgba(255,251,247,.74);
+background:rgba(255,251,247,.76);
 backdrop-filter:blur(14px);
-border:1px solid rgba(255,255,255,.6);
+border:1px solid rgba(255,255,255,.62);
 box-shadow:0 24px 80px rgba(70,60,50,.12);
 }
 
@@ -41,15 +41,15 @@ font-size:12px;
 letter-spacing:5px;
 text-transform:uppercase;
 color:#9f8a76;
-margin-bottom:18px;
+margin-bottom:16px;
 }
 
 h1{
 font-family:'Cormorant Garamond',serif;
-font-size:56px;
+font-size:58px;
 font-weight:600;
 text-align:center;
-margin-bottom:12px;
+margin-bottom:10px;
 }
 
 .subtitle{
@@ -59,10 +59,18 @@ color:#756c70;
 margin-bottom:28px;
 }
 
+.scene{
+margin:28px 0;
+padding:28px;
+border-radius:34px;
+background:rgba(255,255,255,.44);
+border:1px solid rgba(80,65,55,.08);
+}
+
 .visual{
-height:245px;
-border-radius:36px;
-margin-bottom:28px;
+height:220px;
+border-radius:30px;
+margin-bottom:22px;
 background:
 radial-gradient(circle at 50% 35%,#fff6cf 0%,transparent 24%),
 radial-gradient(circle at 20% 80%,#f8d9b8 0%,transparent 22%),
@@ -71,7 +79,7 @@ box-shadow:inset 0 0 70px rgba(255,255,255,.55);
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:72px;
+font-size:70px;
 animation:softFloat 6s ease-in-out infinite;
 }
 
@@ -81,17 +89,31 @@ animation:softFloat 6s ease-in-out infinite;
 100%{transform:translateY(0)}
 }
 
-.scene-title{
-text-align:center;
-font-size:15px;
-color:#8d7f78;
-margin-top:-12px;
-margin-bottom:26px;
+.scene h2{
+font-family:'Cormorant Garamond',serif;
+font-size:36px;
+font-weight:600;
+margin-bottom:14px;
+color:#403943;
+}
+
+.scene p{
+font-family:'Cormorant Garamond',serif;
+font-size:28px;
+line-height:1.8;
+color:#4d4550;
+margin-bottom:18px;
+}
+
+.keyword{
+background:linear-gradient(135deg,rgba(248,227,170,.7),rgba(231,220,255,.7));
+border-radius:12px;
+padding:0 6px;
 }
 
 .age-note{
 margin:0 auto 34px;
-max-width:700px;
+max-width:720px;
 padding:18px 22px;
 border-radius:24px;
 background:rgba(255,255,255,.42);
@@ -102,54 +124,55 @@ line-height:1.6;
 color:#7b706c;
 }
 
-.story{
-font-family:'Cormorant Garamond',serif;
-font-size:29px;
-line-height:1.82;
-color:#4d4550;
-}
-
-.story p{margin-bottom:26px}
-
-.keyword{
-background:linear-gradient(135deg,rgba(248,227,170,.7),rgba(231,220,255,.7));
-border-radius:12px;
-padding:0 6px;
-}
-
-.reader-5-7 .story{
+.reader-5-7 .scene p{
 font-family:'Nunito',sans-serif;
-font-size:24px;
+font-size:23px;
 line-height:1.9;
 letter-spacing:.2px;
-color:#3e3940;
 }
 
-.reader-5-7 .story p{
-padding:18px 20px;
-border-radius:22px;
-background:rgba(255,255,255,.42);
-margin-bottom:18px;
+.reader-5-7 .scene{
+padding:24px;
 }
 
-.meraviglia .story{
+.reader-5-7 .scene h2{
+font-size:32px;
+}
+
+.meraviglia .scene p{
 font-family:'Nunito',sans-serif;
 font-size:28px;
-line-height:1.75;
+line-height:1.72;
 text-align:center;
-font-weight:600;
+font-weight:700;
 }
 
 .meraviglia .visual{
-height:280px;
+height:260px;
 font-size:86px;
 }
 
-.teen .story{
-font-family:'Cormorant Garamond',serif;
+.teen .scene p{
 font-size:30px;
-line-height:1.86;
-color:#403943;
+line-height:1.88;
+}
+
+.choices{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+justify-content:center;
+margin-top:22px;
+}
+
+.choice{
+padding:14px 18px;
+border-radius:999px;
+background:rgba(255,250,245,.76);
+border:1px solid rgba(80,65,55,.10);
+font-size:15px;
+font-weight:800;
+color:#6b6467;
 }
 
 .actions{
@@ -167,7 +190,7 @@ border:0;
 cursor:pointer;
 text-decoration:none;
 font-size:16px;
-font-weight:700;
+font-weight:800;
 background:linear-gradient(135deg,#f8e3aa,#e7c870);
 color:#322d34;
 box-shadow:0 12px 30px rgba(231,200,112,.25);
@@ -188,13 +211,15 @@ color:#988a82;
 }
 
 @media(max-width:700px){
-.card{padding:40px 22px;border-radius:30px}
+.card{padding:38px 20px;border-radius:30px}
 h1{font-size:38px}
-.story{font-size:23px}
-.reader-5-7 .story{font-size:21px}
-.meraviglia .story{font-size:24px}
-.visual{height:180px;font-size:54px}
-.meraviglia .visual{height:230px;font-size:66px}
+.scene{padding:22px 18px}
+.scene h2{font-size:30px}
+.scene p{font-size:23px}
+.reader-5-7 .scene p{font-size:21px}
+.meraviglia .scene p{font-size:24px}
+.visual{height:175px;font-size:52px}
+.meraviglia .visual{height:220px;font-size:66px}
 .button{width:100%;text-align:center}
 }
 </style>
@@ -206,14 +231,11 @@ h1{font-size:38px}
 
 <div class="badge" id="badge">FABLEA story</div>
 <h1 id="title">La storia di oggi</h1>
-<div class="subtitle" id="subtitle">Una storia creata per accompagnare immaginazione e calma.</div>
-
-<div class="visual" id="visual">🌙 📖 ✨</div>
-<div class="scene-title" id="sceneTitle">Immagine evocativa della storia</div>
+<div class="subtitle" id="subtitle">Una storia a scene, lenta e immersiva.</div>
 
 <div class="age-note" id="ageNote"></div>
 
-<section class="story" id="storyText"></section>
+<div id="scenes"></div>
 
 <div class="actions">
 <a class="button" href="/story-player.html">Ascolta la voce narrante</a>
@@ -225,7 +247,7 @@ h1{font-size:38px}
 </div>
 
 <div class="footer">
-Ritmo lento • Immaginazione • Bassa stimolazione
+Scene lente • Immagini evocative • Partecipazione morbida
 </div>
 
 </main>
@@ -251,10 +273,8 @@ const interests = data.interests || [];
 let title = '';
 let badge = '';
 let subtitle = '';
-let visual = '';
-let sceneTitle = '';
 let ageNote = '';
-let paragraphs = [];
+let scenes = [];
 
 function hasInterest(word){
 return interests.join(' ').toLowerCase().includes(word.toLowerCase()) || theme.toLowerCase().includes(word.toLowerCase());
@@ -278,25 +298,42 @@ if(age === '2-4'){
 document.getElementById('card').classList.add('meraviglia');
 
 badge = '2–4 anni • Meraviglia';
-title = name + ' e la luce gentile';
-subtitle = 'Poche parole, grande immagine, voce morbida.';
-visual = hasInterest('principesse') ? '👑 🌙 ✨' : '🌙 🧸 ✨';
-sceneTitle = hasInterest('principesse') ? 'Una piccola corona, la luna e una luce morbida.' : 'Una luna morbida, un orsetto e una piccola luce.';
-ageNote = 'Per i più piccoli FABLEA usa parole semplici, ripetizione, immagini grandi e ritmo rassicurante.';
+title = name + ' e la piccola luce';
+subtitle = 'Una storia visiva, breve e rassicurante.';
+ageNote = 'Per i più piccoli: immagini grandi, parole semplici, ripetizione e ritmo molto lento.';
 
-paragraphs = [
+scenes = [
+{
+icon: hasInterest('principesse') ? '👑 🌙 ✨' : '🌙 🧸 ✨',
+title:'La luce',
+text:[
 `C’era una piccola luce vicino a ${name}.`,
 `Faceva piano piano.`,
-`Brillava poco. Ma brillava bene.`,
-`${name} la guardò.`,
-`La luce sembrava dire: “Sono qui.”`,
+`Brillava poco. Ma brillava bene.`
+],
+choices:['Guarda la luce', 'Respira piano']
+},
+{
+icon: hasInterest('principesse') ? '👑 ☁️' : '🧸 ☁️',
+title:'L’amico morbido',
+text:[
 hasInterest('principesse') ? `Arrivò una piccola principessa della luna.` : `Arrivò un orsetto morbido.`,
 `Poi una stellina.`,
-`Poi una nuvola piccola.`,
+`Poi una nuvola piccola.`
+],
+choices:['Tocca la nuvola', 'Sorridi alla stellina']
+},
+{
+icon:'✨ 🤍 🌙',
+title:'La calma',
+text:[
 `Tutti camminavano piano.`,
 `Piano piano.`,
 `${name} era al sicuro.`,
 `La stellina disse: “Buona notte, piccolo cuore.”`
+],
+choices:['Chiudi gli occhi', 'Buonanotte']
+}
 ];
 
 } else if(age === '5-7'){
@@ -304,71 +341,155 @@ hasInterest('principesse') ? `Arrivò una piccola principessa della luna.` : `Ar
 document.getElementById('card').classList.add('reader-5-7');
 
 badge = '5–7 anni • Esplorazione';
+ageNote = 'Per primi lettori: frasi brevi, blocchi ariosi, parole leggibili e scene visuali.';
 
 if(hasInterest('principesse')){
+
 title = name + ' e la principessa delle nuvole';
-subtitle = 'Frasi leggibili, magia gentile e una principessa che sceglie da sola.';
-visual = '👑 ☁️ ✨';
-sceneTitle = 'Una principessa curiosa cammina tra le nuvole.';
-paragraphs = [
+subtitle = 'Una piccola avventura leggibile e luminosa.';
+
+scenes = [
+{
+icon:'☁️ 🚪 ✨',
+title:'La porta nel cielo',
+text:[
 `${name} vide una piccola porta nel cielo.`,
 `Dietro la porta c’era un regno di nuvole.`,
+`La porta brillava piano.`
+],
+choices:['Apri la porta', 'Guarda le nuvole']
+},
+{
+icon:'👑 ☁️ 🌟',
+title:'La principessa curiosa',
+text:[
 `Nel regno viveva una principessa gentile.`,
 `Non aspettava di essere salvata.`,
-`Voleva esplorare.`,
-`La principessa disse: “Vieni con me.”`,
-`${name} la seguì piano.`,
+`Voleva esplorare.`
+],
+choices:['Segui la principessa', 'Cerca una stella']
+},
+{
+icon:'👑 💛 ✨',
+title:'La corona di luce',
+text:[
 `Trovarono una corona fatta di luce.`,
 `La corona non serviva a comandare.`,
-`Serviva a ricordare il coraggio.`,
-`La giornata era stata ${mood.toLowerCase()}, ma ora sembrava più leggera.`,
-`${name} sorrise.`,
+`Serviva a ricordare il coraggio.`
+],
+choices:['Indossa la luce', 'Fai un passo']
+},
+{
+icon:'⭐ ☁️ 🛤️',
+title:'La strada scelta',
+text:[
 `La principessa indicò una stella.`,
-`“Ogni bambino può scegliere la propria strada.”`
+`“Ogni bambino può scegliere la propria strada.”`,
+`${name} sorrise.`
+],
+choices:['Scegli la stella', 'Torna piano']
+}
 ];
+
 }else{
+
 title = name + ' e la mappa luminosa';
-subtitle = 'Frasi chiare, parole leggibili, piccole scene da immaginare.';
-visual = '🗺️ 🌟 🦊';
-sceneTitle = 'Una mappa che brilla e una volpe guida.';
-paragraphs = [
+subtitle = 'Una storia leggibile per esplorare senza fretta.';
+
+scenes = [
+{
+icon:'📖 🗺️ ✨',
+title:'La mappa',
+text:[
 `${name} trovò una mappa dentro un libro.`,
-`La mappa non era ferma. Brillava piano.`,
-`Sul primo sentiero c’era una piccola luce.`,
-`${name} la seguì senza correre.`,
+`La mappa non era ferma.`,
+`Brillava piano.`
+],
+choices:['Apri la mappa', 'Guarda la luce']
+},
+{
+icon:'🌲 🦊 🌟',
+title:'Il bosco morbido',
+text:[
 `Il sentiero portava verso un bosco morbido.`,
 `Nel bosco viveva una volpe gentile.`,
-`La volpe disse: “Ogni passo piccolo è già un’avventura.”`,
-`${name} sorrise.`,
-`La giornata era stata ${mood.toLowerCase()}, ma ora tutto sembrava più leggero.`,
+`La volpe disse: “Ogni passo piccolo è già un’avventura.”`
+],
+choices:['Segui la volpe', 'Ascolta il bosco']
+},
+{
+icon:'⭐ 🗺️ 💛',
+title:'La stella sulla mappa',
+text:[
 `Una stella cadde sulla mappa.`,
-`Non faceva rumore. Faceva magia.`,
+`Non faceva rumore.`,
+`Faceva magia.`
+],
+choices:['Tocca la stella', 'Respira piano']
+},
+{
+icon:'🕯️ 🌙 ✨',
+title:'Il coraggio piccolo',
+text:[
 `${name} capì che il coraggio può essere piccolo.`,
 `Piccolo come una luce.`,
 `Grande come un sogno.`
-];
+],
+choices:['Porta la luce', 'Continua il sogno']
 }
+];
 
-ageNote = 'Per chi inizia a leggere: frasi più brevi, blocchi ariosi, parole semplici e immagini di supporto.';
+}
 
 } else if(age === '8-10'){
 
 badge = '8–10 anni • Identità';
 title = name + ' e il ponte delle scelte';
-subtitle = 'Una storia su emozioni, coraggio e piccoli cambiamenti interiori.';
-visual = hasInterest('principesse') ? '👑 🌉 💛' : '🌉 💛 🌙';
-sceneTitle = hasInterest('principesse') ? 'Una principessa attraversa un ponte fatto di scelte.' : 'Un ponte sospeso tra emozioni e decisioni.';
-ageNote = 'Per 8–10 anni FABLEA lavora su identità, relazioni, autostima e riconoscimento delle emozioni.';
+subtitle = 'Una storia su emozioni, coraggio e fiducia.';
+ageNote = 'Per 8–10 anni: più emozioni, più scelte interiori, più crescita personale.';
 
-paragraphs = [
+scenes = [
+{
+icon: hasInterest('principesse') ? '👑 🌉 💛' : '🌉 💛 🌙',
+title:'Il ponte',
+text:[
 `Nel cuore di una città segreta, ${name} trovò un ponte sospeso tra due colline.`,
-hasInterest('principesse') ? `Sul ponte camminava una principessa senza corona. Diceva che una corona vera non pesa sulla testa, ma vive nelle scelte.` : `Il ponte non era fatto di legno né di pietra. Era fatto di scelte.`,
-`Sotto il ponte scorreva un fiume calmo. Ogni volta che ${name} guardava l’acqua, vedeva un riflesso diverso: una paura, una domanda, un desiderio.`,
-`Dopo una giornata ${mood.toLowerCase()}, restare fermo sembrava più facile. Ma una voce dal fiume disse: “Non devi sapere tutto. Devi solo ascoltare il passo che senti più vero.”`,
-`Sul ponte apparvero tre luci. La prima diceva: coraggio. La seconda diceva: gentilezza. La terza diceva: fiducia.`,
-`${name} capì che scegliere non vuol dire non avere paura. Vuol dire portare con sé la paura senza lasciarle tenere il timone.`,
-`Fece un passo verso la luce della fiducia. Il ponte vibrò piano, come se fosse felice di essere attraversato.`,
-`Quando arrivò dall’altra parte, la città segreta non sembrava più così lontana. Sembrava una parte di sé che finalmente aveva trovato una strada.`
+hasInterest('principesse') ? `Sul ponte camminava una principessa senza corona.` : `Il ponte non era fatto di legno né di pietra.`,
+`Era fatto di scelte.`
+],
+choices:['Restare fermo', 'Fare un passo']
+},
+{
+icon:'🌊 🪞 💭',
+title:'Il fiume dei riflessi',
+text:[
+`Sotto il ponte scorreva un fiume calmo.`,
+`Ogni volta che ${name} guardava l’acqua, vedeva un riflesso diverso.`,
+`Una paura. Una domanda. Un desiderio.`
+],
+choices:['Dare un nome alla paura', 'Seguire il desiderio']
+},
+{
+icon:'💛 🛡️ ✨',
+title:'Le tre luci',
+text:[
+`Sul ponte apparvero tre luci.`,
+`La prima diceva: coraggio.`,
+`La seconda diceva: gentilezza.`,
+`La terza diceva: fiducia.`
+],
+choices:['Coraggio', 'Gentilezza', 'Fiducia']
+},
+{
+icon:'🌉 🌙 🛤️',
+title:'Dall’altra parte',
+text:[
+`${name} fece un passo verso la luce della fiducia.`,
+`Il ponte vibrò piano.`,
+`Dall’altra parte, la città segreta sembrava una parte di sé che finalmente aveva trovato una strada.`
+],
+choices:['Continuare', 'Portare la luce con sé']
+}
 ];
 
 } else {
@@ -378,19 +499,52 @@ document.getElementById('card').classList.add('teen');
 badge = '11–12 anni • Direzione';
 title = name + ' e l’atlante delle possibilità';
 subtitle = 'Un racconto più maturo su identità, scelte e futuro.';
-visual = '🌌 🧭 📖';
-sceneTitle = 'Un atlante, una bussola e una strada ancora da scegliere.';
-ageNote = 'Per 11–12 anni FABLEA usa un linguaggio più adulto: meno fiaba, più racconto simbolico, identità e direzione.';
+ageNote = 'Per 11–12 anni: linguaggio più adulto, meno fiaba, più identità, direzione e domande vere.';
 
-paragraphs = [
-`La sera in cui ${name} trovò l’atlante, il cielo sembrava più grande del solito. Non più scuro. Solo più profondo.`,
-`L’atlante era appoggiato su una scrivania chiara. Non aveva titolo. Solo una bussola disegnata in copertina e una frase sottile: “Non tutte le direzioni si vedono da fuori.”`,
-`${name} lo aprì. Le pagine non mostravano città o confini, ma possibilità: una pagina era fatta di coraggio, una di dubbi, una di errori utili, una di sogni ancora confusi.`,
-`Dopo una giornata ${mood.toLowerCase()}, quelle pagine sembravano parlare senza giudicare. Non dicevano cosa diventare. Chiedevano soltanto: “Che cosa ti fa sentire vivo quando nessuno ti guarda?”`,
-`${name} seguì una linea d’inchiostro blu che attraversava un mondo di ${theme.toLowerCase()}. Lì incontrò una figura con un mantello scuro, come se fosse fatta di domande.`,
-`“La direzione non è una risposta immediata,” disse la figura. “È una serie di segnali che impari a riconoscere.”`,
-`Allora ${name} guardò l’atlante con più calma. Vide che anche le pagine incerte avevano valore. Anche gli spazi bianchi non erano vuoti: erano luoghi dove qualcosa poteva ancora nascere.`,
-`Quando chiuse il libro, la bussola sulla copertina brillò appena. Non indicava nord. Indicava avanti.`
+scenes = [
+{
+icon:'🌌 🪟',
+title:'Il cielo più grande',
+text:[
+`La sera in cui ${name} trovò l’atlante, il cielo sembrava più grande del solito.`,
+`Non più scuro.`,
+`Solo più profondo.`
+],
+choices:['Guardare fuori', 'Aprire il libro']
+},
+{
+icon:'📖 🧭',
+title:'L’atlante senza titolo',
+text:[
+`L’atlante era appoggiato su una scrivania chiara.`,
+`Non aveva titolo.`,
+`Solo una bussola disegnata in copertina e una frase sottile: “Non tutte le direzioni si vedono da fuori.”`
+],
+choices:['Seguire la bussola', 'Leggere la frase']
+},
+{
+icon:'🌌 🖋️ 🛤️',
+title:'Le possibilità',
+text:[
+`Le pagine non mostravano città o confini, ma possibilità.`,
+`Una pagina era fatta di coraggio.`,
+`Una di dubbi.`,
+`Una di errori utili.`,
+`Una di sogni ancora confusi.`
+],
+choices:['Coraggio', 'Dubbi', 'Sogni']
+},
+{
+icon:'🧭 ✨',
+title:'Avanti',
+text:[
+`Quelle pagine non dicevano cosa diventare.`,
+`Chiedevano soltanto: “Che cosa ti fa sentire vivo quando nessuno ti guarda?”`,
+`Quando ${name} chiuse il libro, la bussola non indicava nord.`,
+`Indicava avanti.`
+],
+choices:['Portare la domanda', 'Andare avanti']
+}
 ];
 
 }
@@ -398,16 +552,28 @@ paragraphs = [
 document.getElementById('badge').innerText = badge;
 document.getElementById('title').innerText = title;
 document.getElementById('subtitle').innerText = subtitle;
-document.getElementById('visual').innerText = visual;
-document.getElementById('sceneTitle').innerText = sceneTitle;
 document.getElementById('ageNote').innerText = ageNote;
-document.getElementById('storyText').innerHTML = paragraphs.map(p => `<p>${mark(p)}</p>`).join('');
+
+document.getElementById('scenes').innerHTML = scenes.map(scene => `
+<section class="scene">
+<div class="visual">${scene.icon}</div>
+<h2>${scene.title}</h2>
+${scene.text.map(p => `<p>${mark(p)}</p>`).join('')}
+<div class="choices">
+${scene.choices.map(choice => `<span class="choice">${choice}</span>`).join('')}
+</div>
+</section>
+`).join('');
+
+const fullText = scenes.map(scene => {
+return scene.title + '. ' + scene.text.join(' ');
+}).join('\n\n');
 
 localStorage.setItem('fableaCurrentStory', JSON.stringify({
 title:title,
 subtitle:subtitle,
-icon:visual,
-text:paragraphs.join('\n\n')
+icon:scenes[0].icon,
+text:fullText
 }));
 </script>
 
