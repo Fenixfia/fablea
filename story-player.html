@@ -3,77 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FABLEA | Voce narrante</title>
+<title>FABLEA | Narratrice</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 body{
 min-height:100vh;
-overflow:hidden;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:24px;
+overflow-y:auto;
+padding:28px 20px;
 font-family:'Nunito',sans-serif;
 background:
-radial-gradient(circle at top,#fff1c9 0%,transparent 22%),
+radial-gradient(circle at top,#fff1c9 0%,transparent 24%),
 radial-gradient(circle at bottom,#d9cfff 0%,transparent 30%),
 linear-gradient(180deg,#17141f 0%,#211d2d 45%,#121018 100%);
 color:white;
-position:relative;
 }
 
-.bg-glow{
-position:absolute;
-width:420px;
-height:420px;
-border-radius:50%;
-background:radial-gradient(circle,rgba(255,231,170,.26),transparent 70%);
-filter:blur(10px);
-animation:pulse 8s infinite ease-in-out;
-}
-
-@keyframes pulse{
-0%{transform:scale(1);opacity:.45}
-50%{transform:scale(1.08);opacity:.7}
-100%{transform:scale(1);opacity:.45}
-}
-
-.star{
-position:absolute;
-width:3px;
-height:3px;
-background:white;
-border-radius:50%;
-opacity:.5;
-animation:twinkle 4s infinite alternate;
-}
-
-.star:nth-child(1){top:10%;left:20%}
-.star:nth-child(2){top:22%;left:70%}
-.star:nth-child(3){top:70%;left:82%}
-.star:nth-child(4){top:78%;left:16%}
-.star:nth-child(5){top:46%;left:88%}
-.star:nth-child(6){top:60%;left:10%}
-
-@keyframes twinkle{
-from{opacity:.2;transform:scale(.8)}
-to{opacity:.8;transform:scale(1.2)}
+.wrap{
+max-width:780px;
+margin:0 auto;
+padding:34px 0 60px;
 }
 
 .card{
-position:relative;
-z-index:2;
-width:92%;
-max-width:760px;
-padding:56px 36px;
+width:100%;
+padding:52px 34px;
 border-radius:40px;
 background:rgba(255,255,255,.08);
 backdrop-filter:blur(18px);
@@ -92,7 +49,7 @@ margin-bottom:18px;
 
 .icon{
 font-size:82px;
-margin-bottom:18px;
+margin-bottom:20px;
 animation:float 5s infinite ease-in-out;
 }
 
@@ -104,16 +61,16 @@ animation:float 5s infinite ease-in-out;
 
 h1{
 font-family:'Cormorant Garamond',serif;
-font-size:56px;
+font-size:54px;
 font-weight:600;
-margin-bottom:12px;
+margin-bottom:14px;
 }
 
 .subtitle{
 font-size:18px;
-line-height:1.7;
+line-height:1.8;
 color:rgba(255,255,255,.72);
-margin-bottom:34px;
+margin-bottom:30px;
 }
 
 .player{
@@ -121,7 +78,6 @@ padding:28px;
 border-radius:30px;
 background:rgba(255,255,255,.06);
 border:1px solid rgba(255,255,255,.08);
-margin-bottom:28px;
 }
 
 .status{
@@ -130,31 +86,9 @@ color:#d8c7a4;
 margin-bottom:18px;
 }
 
-.wave{
-display:flex;
-justify-content:center;
-align-items:flex-end;
-gap:6px;
-height:60px;
-margin-bottom:22px;
-}
-
-.bar{
-width:8px;
-border-radius:999px;
-background:linear-gradient(180deg,#fff0b6,#d7b96d);
-animation:wave 1.2s infinite ease-in-out;
-}
-
-.bar:nth-child(1){height:18px;animation-delay:.1s}
-.bar:nth-child(2){height:34px;animation-delay:.3s}
-.bar:nth-child(3){height:54px;animation-delay:.5s}
-.bar:nth-child(4){height:26px;animation-delay:.2s}
-.bar:nth-child(5){height:42px;animation-delay:.4s}
-
-@keyframes wave{
-0%,100%{transform:scaleY(.7)}
-50%{transform:scaleY(1.2)}
+audio{
+width:100%;
+margin:18px 0 8px;
 }
 
 .controls{
@@ -162,6 +96,7 @@ display:flex;
 gap:14px;
 justify-content:center;
 flex-wrap:wrap;
+margin-top:22px;
 }
 
 .button{
@@ -174,6 +109,7 @@ font-weight:800;
 background:linear-gradient(135deg,#f8e3aa,#e7c870);
 color:#2c2532;
 box-shadow:0 10px 24px rgba(231,200,112,.25);
+text-decoration:none;
 }
 
 .secondary{
@@ -183,73 +119,46 @@ color:white;
 box-shadow:none;
 }
 
-.story-preview{
-margin-top:26px;
+.story{
+margin-top:30px;
 padding:24px;
 border-radius:28px;
 background:rgba(255,255,255,.05);
 border:1px solid rgba(255,255,255,.08);
 text-align:left;
-max-height:240px;
-overflow:auto;
 }
 
-.story-preview h2{
+.story h2{
 font-family:'Cormorant Garamond',serif;
 font-size:34px;
 margin-bottom:14px;
 }
 
-.story-preview p{
+.story p{
 font-size:17px;
 line-height:1.8;
-color:rgba(255,255,255,.75);
+color:rgba(255,255,255,.72);
 white-space:pre-line;
 }
 
 .footer{
-margin-top:26px;
+margin-top:24px;
 font-size:14px;
 color:rgba(255,255,255,.45);
 }
 
 @media(max-width:700px){
-
-.card{
-padding:42px 22px;
-border-radius:30px;
-}
-
-h1{
-font-size:40px;
-}
-
-.icon{
-font-size:64px;
-}
-
-.button{
-width:100%;
-}
-
-.story-preview{
-max-height:200px;
-}
-
+.card{padding:38px 20px;border-radius:30px}
+h1{font-size:40px}
+.icon{font-size:66px}
+.button{width:100%}
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg-glow"></div>
-
-<div class="star"></div>
-<div class="star"></div>
-<div class="star"></div>
-<div class="star"></div>
-<div class="star"></div>
-<div class="star"></div>
+<div class="wrap">
 
 <main class="card">
 
@@ -257,72 +166,54 @@ max-height:200px;
 
 <div class="icon" id="storyIcon">🌙</div>
 
-<h1 id="storyTitle">FABLEA</h1>
+<h1 id="storyTitle">La storia della sera</h1>
 
 <div class="subtitle">
-Una voce lenta, calda e rassicurante pensata per accompagnare il bambino nel suo piccolo rituale serale.
+Una voce calda accompagna il bambino lentamente dentro il suo piccolo mondo FABLEA.
 </div>
 
 <div class="player">
 
 <div class="status" id="status">
-Pronto per iniziare la narrazione
+Pronto per generare la voce di Mary
 </div>
 
-<div class="wave">
-<div class="bar"></div>
-<div class="bar"></div>
-<div class="bar"></div>
-<div class="bar"></div>
-<div class="bar"></div>
+<audio id="audioPlayer" controls></audio>
+
+<div class="controls">
+<button class="button" onclick="generateAndPlay()">Genera voce Mary</button>
+<button class="button secondary" onclick="pauseAudio()">Pausa</button>
+<button class="button secondary" onclick="restartAudio()">Ricomincia</button>
+</div>
+
+</div>
+
+<div class="story">
+<h2 id="previewTitle">La storia</h2>
+<p id="previewText">Caricamento storia...</p>
 </div>
 
 <div class="controls">
-<button class="button" onclick="startNarration()">
-Ascolta la storia
-</button>
-
-<button class="button secondary" onclick="pauseNarration()">
-Pausa
-</button>
-
-<button class="button secondary" onclick="stopNarration()">
-Ferma
-</button>
-</div>
-
-</div>
-
-<div class="story-preview">
-<h2 id="previewTitle"></h2>
-<p id="previewText"></p>
-</div>
-
-<div class="controls" style="margin-top:26px;">
-<a class="button secondary" href="/story-result.html">
-Torna alla storia
-</a>
-
-<a class="button secondary" href="/activity.html">
-Entra nella storia
-</a>
-
-<a class="button secondary" href="/library.html">
-Libreria
-</a>
+<a class="button secondary" href="/story-result.html">Torna alla storia</a>
+<a class="button secondary" href="/activity.html">Entra nella storia</a>
+<a class="button secondary" href="/story.html">Nuova storia</a>
+<a class="button secondary" href="/profile.html">Cambia bambino</a>
+<a class="button secondary" href="/index.html">Home</a>
 </div>
 
 <div class="footer">
-Voce lenta • Pausa naturale • Esperienza low stimulation
+Index → Onboarding → Profile → Story → Result → Player
 </div>
 
 </main>
 
+</div>
+
 <script>
 const story = JSON.parse(localStorage.getItem('fableaCurrentStory') || '{}');
 
-const title = story.title || 'La storia di oggi';
-const text = story.text || 'Nessuna storia disponibile.';
+const title = story.title || 'La storia della sera';
+const text = story.text || 'Nessuna storia disponibile. Torna indietro e crea una storia.';
 const icon = story.icon || '🌙';
 
 document.getElementById('storyTitle').innerText = title;
@@ -330,83 +221,57 @@ document.getElementById('previewTitle').innerText = title;
 document.getElementById('previewText').innerText = text;
 document.getElementById('storyIcon').innerText = icon;
 
-let utterance;
-let paused = false;
+const audio = document.getElementById('audioPlayer');
 
-function getBestVoice(){
+async function generateAndPlay(){
 
-const voices = speechSynthesis.getVoices();
+document.getElementById('status').innerText = 'Mary sta preparando la voce...';
 
-const preferred =
-voices.find(v => v.name.includes('Siri Female')) ||
-voices.find(v => v.name.includes('Google italiano')) ||
-voices.find(v => v.name.includes('Alice')) ||
-voices.find(v => v.lang.includes('it'));
+try{
 
-return preferred;
+const response = await fetch('/api/tts', {
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({ text:text })
+});
+
+if(!response.ok){
+throw new Error('Errore generazione audio');
 }
 
-function startNarration(){
+const blob = await response.blob();
+const audioUrl = URL.createObjectURL(blob);
 
-speechSynthesis.cancel();
+audio.src = audioUrl;
+await audio.play();
 
-utterance = new SpeechSynthesisUtterance(text);
+document.getElementById('status').innerText = 'Mary sta raccontando la storia...';
 
-utterance.lang = 'it-IT';
-
-const voice = getBestVoice();
-
-if(voice){
-utterance.voice = voice;
-}
-
-utterance.rate = 0.82;
-utterance.pitch = 1.02;
-utterance.volume = 1;
-
-utterance.onstart = () => {
-document.getElementById('status').innerText =
-'La narratrice sta accompagnando la storia...';
-};
-
-utterance.onend = () => {
-document.getElementById('status').innerText =
-'La storia è terminata dolcemente.';
-};
-
-speechSynthesis.speak(utterance);
-
-paused = false;
-}
-
-function pauseNarration(){
-
-if(speechSynthesis.speaking && !paused){
-speechSynthesis.pause();
-paused = true;
+}catch(error){
 
 document.getElementById('status').innerText =
-'Narratrice in pausa.';
-}else if(paused){
-speechSynthesis.resume();
-paused = false;
+'Audio dinamico non disponibile. Uso audio demo.';
 
-document.getElementById('status').innerText =
-'La narratrice continua la storia...';
-}
+audio.src = '/audio/lupo.mp3';
+audio.play();
 
 }
 
-function stopNarration(){
-
-speechSynthesis.cancel();
-
-document.getElementById('status').innerText =
-'Narratrice fermata.';
 }
 
-speechSynthesis.onvoiceschanged = () => {
-speechSynthesis.getVoices();
+function pauseAudio(){
+audio.pause();
+document.getElementById('status').innerText = 'Favola in pausa.';
+}
+
+function restartAudio(){
+audio.currentTime = 0;
+audio.play();
+document.getElementById('status').innerText = 'La storia ricomincia lentamente...';
+}
+
+audio.onended = function(){
+document.getElementById('status').innerText = 'La storia è terminata dolcemente.';
 };
 </script>
 
