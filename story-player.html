@@ -8,47 +8,31 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 body{
 min-height:100vh;
 padding:24px;
 font-family:'Nunito',sans-serif;
-
 background:
 radial-gradient(circle at top left,#fff1d8 0%,transparent 30%),
 radial-gradient(circle at bottom right,#e7dcff 0%,transparent 34%),
 linear-gradient(135deg,#f8f1e8 0%,#ece4ea 45%,#d9ddea 100%);
-
 display:flex;
 justify-content:center;
 align-items:center;
-
 color:#352f36;
 }
 
 .player{
 width:92%;
-max-width:760px;
-
+max-width:780px;
 padding:56px 42px;
-
 border-radius:40px;
-
 background:rgba(255,250,245,.66);
-
 backdrop-filter:blur(16px);
-
 border:1px solid rgba(255,255,255,.55);
-
-box-shadow:
-0 24px 80px rgba(80,65,55,.15);
-
+box-shadow:0 24px 80px rgba(80,65,55,.15);
 text-align:center;
 }
 
@@ -62,51 +46,46 @@ margin-bottom:18px;
 
 h1{
 font-family:'Cormorant Garamond',serif;
-font-size:56px;
+font-size:52px;
 font-weight:600;
-margin-bottom:20px;
+margin-bottom:12px;
+}
+
+.subtitle{
+font-size:16px;
+line-height:1.6;
+color:#756c70;
+margin-bottom:22px;
 }
 
 .moon{
 width:150px;
 height:150px;
-
-margin:28px auto;
-
+margin:26px auto;
 border-radius:50%;
-
-background:
-radial-gradient(circle,#fff7d8,#e8cf82);
-
-box-shadow:
-0 0 55px rgba(232,207,130,.35);
-
+background:radial-gradient(circle,#fff7d8,#e8cf82);
+box-shadow:0 0 55px rgba(232,207,130,.35);
 display:flex;
 align-items:center;
 justify-content:center;
-
 font-size:54px;
-
 animation:breath 4s ease-in-out infinite;
 }
 
 @keyframes breath{
-
 0%{transform:scale(1)}
 50%{transform:scale(1.05)}
 100%{transform:scale(1)}
-
 }
 
 .text{
 font-family:'Cormorant Garamond',serif;
-font-size:28px;
+font-size:25px;
 line-height:1.7;
 color:#4d4452;
-
-max-width:620px;
-
-margin:24px auto 36px;
+max-width:640px;
+margin:24px auto 34px;
+white-space:pre-line;
 }
 
 .controls{
@@ -118,25 +97,19 @@ flex-wrap:wrap;
 
 .button{
 padding:15px 28px;
-
 border-radius:999px;
-
 border:0;
-
 cursor:pointer;
-
 font-size:16px;
 font-weight:700;
-
-background:
-linear-gradient(135deg,#f8e3aa,#e7c870);
-
+background:linear-gradient(135deg,#f8e3aa,#e7c870);
 color:#322d34;
-
-box-shadow:
-0 12px 30px rgba(231,200,112,.25);
-
+box-shadow:0 12px 30px rgba(231,200,112,.25);
 transition:.3s;
+text-decoration:none;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
 .button:hover{
@@ -148,10 +121,6 @@ background:rgba(255,255,255,.55);
 border:1px solid rgba(80,65,55,.10);
 color:#6b6467;
 box-shadow:none;
-text-decoration:none;
-display:flex;
-align-items:center;
-justify-content:center;
 }
 
 .footer{
@@ -161,133 +130,122 @@ color:#988a82;
 }
 
 @media(max-width:700px){
-
-.player{
-padding:42px 24px;
-border-radius:30px;
+.player{padding:42px 24px;border-radius:30px}
+h1{font-size:38px}
+.text{font-size:22px}
+.button{width:100%}
 }
-
-h1{
-font-size:40px;
-}
-
-.text{
-font-size:23px;
-}
-
-.button{
-width:100%;
-}
-
-}
-
 </style>
-
 </head>
 
 <body>
 
 <main class="player">
 
-<div class="badge">
-Modalità nanna
+<div class="badge">Modalità ascolto</div>
+
+<h1 id="storyTitle">Ascolta la storia</h1>
+
+<div class="subtitle" id="storySubtitle">
+Voce lenta, ritmo morbido, immaginazione accesa.
 </div>
 
-<h1>
-Ascolta la storia
-</h1>
-
-<div class="moon">
-🌙
-</div>
+<div class="moon" id="storyIcon">🌙</div>
 
 <div class="text" id="storyText">
-
-Quella sera Cesare guardava il mare dalla finestra della sua stanza.
-
-Le onde si muovevano piano, come se stessero sussurrando qualcosa alla notte.
-
-In lontananza, sopra una piccola scogliera, viveva un vecchio faro dorato che si accendeva solo quando qualcuno aveva bisogno di ritrovare la strada.
-
-“Questa notte la luce aspetta te”, disse una piccola voce nel vento.
-
-Cesare sorrise piano, prese la sua coperta e immaginò di camminare sulla spiaggia sotto una luna morbida e silenziosa.
-
+La storia verrà letta qui.
 </div>
 
 <div class="controls">
-
-<button class="button" onclick="playStory()">
-▶ Ascolta
-</button>
-
-<button class="button secondary" onclick="stopStory()">
-■ Ferma
-</button>
-
-<a class="button secondary" href="/story-result.html">
-Leggi la storia
-</a>
-
-<a class="button secondary" href="/library.html">
-Libreria
-</a>
-
+<button class="button" onclick="playStory()">▶ Ascolta</button>
+<button class="button secondary" onclick="pauseStory()">⏸ Pausa</button>
+<button class="button secondary" onclick="stopStory()">■ Ferma</button>
+<a class="button secondary" href="/story-result.html">Leggi</a>
+<a class="button secondary" href="/story.html">Nuova storia</a>
+<a class="button secondary" href="/library.html">Libreria</a>
 </div>
 
 <div class="footer">
-Voce lenta • Ritmo morbido • Esperienza serale
+Audio-first • Bassa stimolazione • Ritmo FABLEA
 </div>
 
 </main>
 
 <script>
-
 let speech;
+let isPaused = false;
+
+const savedStory = localStorage.getItem('fableaCurrentStory');
+
+const story = savedStory ? JSON.parse(savedStory) : {
+title:'Ascolta la storia',
+subtitle:'Una storia calma per accompagnare immaginazione e presenza.',
+icon:'🌙',
+text:'Crea prima una storia con FABLEA. Poi torna qui per ascoltarla con una voce lenta e morbida.'
+};
+
+document.getElementById('storyTitle').innerText = story.title;
+document.getElementById('storySubtitle').innerText = story.subtitle;
+document.getElementById('storyIcon').innerText = story.icon;
+document.getElementById('storyText').innerText = story.text;
+
+function getPreferredVoice(){
+const voices = window.speechSynthesis.getVoices();
+
+return voices.find(v =>
+v.lang.toLowerCase().includes('it') &&
+(
+v.name.toLowerCase().includes('elsa') ||
+v.name.toLowerCase().includes('alice') ||
+v.name.toLowerCase().includes('female') ||
+v.name.toLowerCase().includes('paola') ||
+v.name.toLowerCase().includes('italiana')
+)
+) || voices.find(v => v.lang.toLowerCase().includes('it')) || null;
+}
 
 function playStory(){
 
+if(isPaused){
+window.speechSynthesis.resume();
+isPaused = false;
+return;
+}
+
 stopStory();
 
-const text = document.getElementById('storyText').innerText;
+const fullText = story.title + '. ' + story.subtitle + '. ' + story.text;
 
-speech = new SpeechSynthesisUtterance(text);
-
+speech = new SpeechSynthesisUtterance(fullText);
 speech.lang = 'it-IT';
-
 speech.rate = 0.72;
-
 speech.pitch = 0.92;
-
 speech.volume = 1;
 
-const voices = window.speechSynthesis.getVoices();
-
-const preferredVoice = voices.find(voice =>
-voice.lang.includes('it') &&
-(
-voice.name.toLowerCase().includes('elsa') ||
-voice.name.toLowerCase().includes('alice') ||
-voice.name.toLowerCase().includes('female')
-)
-);
+const preferredVoice = getPreferredVoice();
 
 if(preferredVoice){
 speech.voice = preferredVoice;
 }
 
 window.speechSynthesis.speak(speech);
+}
 
+function pauseStory(){
+if(window.speechSynthesis.speaking){
+window.speechSynthesis.pause();
+isPaused = true;
+}
 }
 
 function stopStory(){
-
 window.speechSynthesis.cancel();
-
+isPaused = false;
 }
 
-window.speechSynthesis.onvoiceschanged = () => {};
-
+window.speechSynthesis.onvoiceschanged = function(){
+getPreferredVoice();
+};
 </script>
 
 </body>
