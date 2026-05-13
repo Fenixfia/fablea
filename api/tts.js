@@ -1,21 +1,30 @@
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
-
   try {
-    const { text } = req.body;
+    const apiKey = process.env.ELEVENLABS_API_KEY;
+    const voiceId = process.env.ELEVENLABS_VOICE_ID;
 
-    if (!text) {
-      return res.status(400).json({
-        error: "Missing text"
+    if (req.method === "GET") {
+      return res.status(200).json({
+        ok: true,
+        apiKeyPresent: Boolean(apiKey),
+        voiceIdPresent: Boolean(voiceId),
+        message: "FABLEA TTS attivo. Usa POST per generare audio."
       });
     }
 
-    const voiceId = process.env.ELEVENLABS_VOICE_ID;
-    const apiKey = process.env.ELEVENLABS_API_KEY;
+    if (req.method !== "POST") {
+      return res.status(405).json({ error: "Method not allowed" });
+    }
 
-    const response = await fetch(
+    if (!apiKey || !voiceId) {
+      return res.status(500).json({
+        error: "Missing ElevenLabs configuration"
+      });
+    }
+
+    const text = req.body?.text || "Benvenuto in FABLEA.";
+
+    const eleven = await fetch(
       `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
       {
         method: "POST",
@@ -25,34 +34,38 @@ export default async function handler(req, res) {
           "xi-api-key": apiKey
         },
         body: JSON.stringify({
-          text,
+          text: text.slice(0, 2600),
           model_id: "eleven_multilingual_v2",
           voice_settings: {
-            stability: 0.5,
-            similarity_boost: 0.75
+            stability: 0.55,
+            similarity_boost: 0.82,
+            style: 0.18,
+            use_speaker_boost: true
           }
         })
       }
     );
 
-    if (!response.ok) {
-      const errorText = await response.text();
-
-      return res.status(response.status).json({
+    if (!eleven.ok) {
+      const details = await eleven.text();
+      return res.status(500).json({
         error: "ElevenLabs error",
-        details: errorText
+        status: eleven.status,
+        details
       });
     }
 
-    const audioBuffer = await response.arrayBuffer();
+    const audioBuffer = Buffer.from(await eleven.arrayBuffer());
 
     res.setHeader("Content-Type", "audio/mpeg");
+    res.setHeader("Cache-Control", "no-store");
 
-    return res.status(200).send(Buffer.from(audioBuffer));
+    return res.status(200).send(audioBuffer);
 
   } catch (error) {
     return res.status(500).json({
-      error: error.message
+      error: "Server error",
+      message: error.message
     });
   }
 }
