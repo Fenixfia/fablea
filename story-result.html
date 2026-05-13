@@ -3,26 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FABLEA | Storia pronta</title>
+<title>FABLEA | Libro vivo</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 
 body{
 min-height:100vh;
-padding:24px;
 font-family:'Nunito',sans-serif;
 background:#151120;
 color:#fff;
+padding:22px;
 }
 
-.page{
-max-width:1220px;
+.stage{
+max-width:1240px;
 margin:0 auto;
-padding:42px;
+min-height:calc(100vh - 44px);
 border-radius:44px;
+padding:34px;
 position:relative;
 overflow:hidden;
 background:
@@ -34,7 +35,7 @@ border:1px solid rgba(255,255,255,.14);
 box-shadow:0 28px 90px rgba(0,0,0,.42);
 }
 
-.page:before{
+.stage:before{
 content:"";
 position:absolute;
 inset:0;
@@ -43,7 +44,7 @@ radial-gradient(circle,rgba(255,255,255,.70) 0 1px,transparent 1.5px),
 radial-gradient(circle,rgba(255,211,126,.70) 0 1px,transparent 1.7px);
 background-size:120px 120px,170px 170px;
 background-position:20px 30px,80px 70px;
-opacity:.18;
+opacity:.16;
 pointer-events:none;
 }
 
@@ -55,7 +56,7 @@ justify-content:space-between;
 align-items:center;
 gap:14px;
 flex-wrap:wrap;
-margin-bottom:36px;
+margin-bottom:28px;
 }
 
 .back{
@@ -84,35 +85,21 @@ text-align:center;
 position:relative;
 z-index:2;
 text-align:center;
-margin-bottom:34px;
+margin-bottom:26px;
 }
 
-.visual{
-font-size:92px;
-margin-bottom:18px;
-animation:float 6s ease-in-out infinite;
-}
-
-@keyframes float{
-0%{transform:translateY(0)}
-50%{transform:translateY(-8px)}
-100%{transform:translateY(0)}
-}
-
-h1{
+.hero h1{
 font-family:'Cormorant Garamond',serif;
-font-size:78px;
+font-size:66px;
 line-height:1;
 font-weight:600;
-margin-bottom:14px;
+margin-bottom:10px;
 }
 
 .subtitle{
-font-size:18px;
-line-height:1.7;
+font-size:17px;
+line-height:1.6;
 color:rgba(255,255,255,.72);
-max-width:760px;
-margin:0 auto;
 }
 
 .child-pill{
@@ -125,81 +112,21 @@ font-weight:900;
 margin-left:8px;
 }
 
-.preview{
+.book{
 position:relative;
 z-index:2;
 display:grid;
-grid-template-columns:1fr 1.05fr;
+grid-template-columns:1.05fr 1fr;
 gap:28px;
-padding:34px;
-border-radius:38px;
+padding:28px;
+border-radius:40px;
 background:rgba(255,255,255,.10);
 border:1px solid rgba(255,255,255,.14);
 box-shadow:0 18px 50px rgba(0,0,0,.22);
-margin-top:30px;
-}
-
-.story-copy{
-padding:20px 8px;
-}
-
-.kicker{
-font-size:12px;
-letter-spacing:5px;
-text-transform:uppercase;
-color:#e8d2a5;
-margin-bottom:20px;
-}
-
-.preview h2{
-font-family:'Cormorant Garamond',serif;
-font-size:50px;
-line-height:1.05;
-font-weight:600;
-color:#f8df9b;
-margin-bottom:14px;
-}
-
-.meta{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-margin-bottom:24px;
-}
-
-.meta span{
-padding:8px 12px;
-border-radius:999px;
-background:rgba(255,255,255,.10);
-border:1px solid rgba(255,255,255,.10);
-font-size:13px;
-font-weight:900;
-color:#ecd8b0;
-}
-
-.story-copy p{
-font-family:'Cormorant Garamond',serif;
-font-size:24px;
-line-height:1.78;
-color:rgba(255,255,255,.88);
-margin-bottom:16px;
-}
-
-.read-more{
-display:inline-flex;
-margin-top:6px;
-padding:10px 15px;
-border-radius:999px;
-background:rgba(255,255,255,.10);
-border:1px solid rgba(255,255,255,.12);
-color:rgba(255,255,255,.82);
-font-size:13px;
-font-weight:900;
-text-decoration:none;
 }
 
 .illustration{
-min-height:430px;
+min-height:520px;
 border-radius:34px;
 border:1px solid rgba(255,255,255,.16);
 box-shadow:inset 0 0 70px rgba(255,255,255,.08),0 20px 46px rgba(0,0,0,.24);
@@ -243,13 +170,6 @@ radial-gradient(circle at 35% 80%,rgba(75,178,214,.34),transparent 30%),
 linear-gradient(180deg,#111c35 0%,#12384d 100%);
 }
 
-.illustration.castle{
-background:
-radial-gradient(circle at 50% 20%,rgba(255,220,150,.36),transparent 22%),
-radial-gradient(circle at 35% 80%,rgba(180,160,255,.30),transparent 30%),
-linear-gradient(180deg,#1b1631 0%,#382a54 100%);
-}
-
 .illustration.bridge{
 background:
 radial-gradient(circle at 50% 20%,rgba(255,220,150,.34),transparent 22%),
@@ -267,68 +187,105 @@ linear-gradient(180deg,#08091a 0%,#161743 100%);
 .scene-art{
 position:relative;
 z-index:2;
-font-size:118px;
+font-size:128px;
 text-align:center;
 filter:drop-shadow(0 16px 30px rgba(0,0,0,.22));
 animation:float 7s ease-in-out infinite;
 }
 
-.ritual{
-position:relative;
-z-index:2;
-margin-top:28px;
-padding:26px 32px;
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-8px)}
+100%{transform:translateY(0)}
+}
+
+.page-card{
+min-height:520px;
 border-radius:34px;
-background:rgba(255,255,255,.11);
-border:1px solid rgba(255,255,255,.13);
-display:grid;
-grid-template-columns:auto 1fr auto;
-gap:18px;
-align-items:center;
-}
-
-.ritual-icon{
-width:70px;
-height:70px;
-border-radius:50%;
+background:rgba(255,255,255,.12);
+border:1px solid rgba(255,255,255,.14);
+padding:34px;
 display:flex;
-align-items:center;
-justify-content:center;
-font-size:34px;
-background:rgba(255,255,255,.10);
-border:1px solid rgba(255,255,255,.13);
+flex-direction:column;
+justify-content:space-between;
 }
 
-.ritual h3{
-font-size:18px;
-font-weight:900;
-margin-bottom:5px;
+.kicker{
+font-size:12px;
+letter-spacing:5px;
+text-transform:uppercase;
+color:#e8d2a5;
+margin-bottom:16px;
 }
 
-.ritual p{
-font-size:14px;
-line-height:1.55;
-color:rgba(255,255,255,.68);
+.story-title{
+font-family:'Cormorant Garamond',serif;
+font-size:48px;
+line-height:1.05;
+font-weight:600;
+color:#f8df9b;
+margin-bottom:14px;
 }
 
-.ritual-badge{
-padding:12px 18px;
+.meta{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:24px;
+}
+
+.meta span{
+padding:8px 12px;
 border-radius:999px;
 background:rgba(255,255,255,.10);
-border:1px solid rgba(255,255,255,.12);
-color:#f5d78d;
-font-size:14px;
+border:1px solid rgba(255,255,255,.10);
+font-size:13px;
 font-weight:900;
-white-space:nowrap;
+color:#ecd8b0;
 }
 
-.actions{
-position:relative;
-z-index:2;
-margin-top:32px;
+.text{
+font-family:'Cormorant Garamond',serif;
+font-size:31px;
+line-height:1.62;
+color:rgba(255,255,255,.90);
+min-height:220px;
+transition:.28s ease;
+}
+
+.text.fade{
+opacity:.12;
+transform:translateY(4px);
+}
+
+.counter{
+margin-top:20px;
+font-size:14px;
+color:rgba(255,255,255,.58);
+font-weight:900;
+}
+
+.progress{
+height:7px;
+width:100%;
+border-radius:999px;
+background:rgba(255,255,255,.12);
+overflow:hidden;
+margin-top:12px;
+}
+
+.progress-fill{
+height:100%;
+width:0%;
+background:linear-gradient(135deg,#f8e3aa,#e7c870);
+transition:.25s ease;
+}
+
+.controls{
+margin-top:24px;
 display:grid;
-grid-template-columns:1.2fr 1fr 1fr 1fr 1fr;
-gap:14px;
+grid-template-columns:1fr 1fr;
+gap:12px;
 }
 
 .button{
@@ -336,15 +293,16 @@ display:flex;
 align-items:center;
 justify-content:center;
 gap:10px;
-padding:18px;
-border-radius:24px;
+padding:15px 18px;
+border-radius:22px;
 border:1px solid rgba(255,255,255,.13);
 text-decoration:none;
 font-size:15px;
 font-weight:900;
 background:rgba(255,255,255,.10);
 color:#fff;
-min-height:74px;
+cursor:pointer;
+min-height:58px;
 }
 
 .button.primary{
@@ -354,33 +312,124 @@ border:0;
 box-shadow:0 14px 30px rgba(231,200,112,.25);
 }
 
-.button span{
-font-size:28px;
+.button:disabled{
+opacity:.45;
+cursor:not-allowed;
+}
+
+.audio-zone{
+position:relative;
+z-index:2;
+margin-top:22px;
+padding:20px;
+border-radius:30px;
+background:rgba(255,255,255,.10);
+border:1px solid rgba(255,255,255,.13);
+display:grid;
+grid-template-columns:1fr auto;
+gap:14px;
+align-items:center;
+}
+
+.audio-status{
+font-size:14px;
+line-height:1.5;
+color:#e8d2a5;
+}
+
+.audio-buttons{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+justify-content:flex-end;
+}
+
+.small-btn{
+padding:12px 16px;
+border-radius:999px;
+border:1px solid rgba(255,255,255,.13);
+background:rgba(255,255,255,.10);
+color:#fff;
+font-weight:900;
+cursor:pointer;
+}
+
+.small-btn.primary{
+background:linear-gradient(135deg,#f8e3aa,#e7c870);
+color:#302738;
+border:0;
+}
+
+audio{
+display:none;
+}
+
+.ritual{
+display:none;
+position:relative;
+z-index:3;
+margin-top:22px;
+padding:28px;
+border-radius:34px;
+background:linear-gradient(135deg,rgba(255,248,225,.18),rgba(255,255,255,.10));
+border:1px solid rgba(231,200,112,.28);
+text-align:center;
+}
+
+.ritual h2{
+font-family:'Cormorant Garamond',serif;
+font-size:42px;
+font-weight:600;
+margin-bottom:10px;
+}
+
+.ritual p{
+font-size:16px;
+line-height:1.65;
+color:rgba(255,255,255,.72);
+max-width:720px;
+margin:0 auto 20px;
+}
+
+.ritual-options{
+display:flex;
+gap:12px;
+justify-content:center;
+flex-wrap:wrap;
+}
+
+.footer-actions{
+position:relative;
+z-index:2;
+margin-top:22px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
 }
 
 .footer{
 position:relative;
 z-index:2;
-margin-top:30px;
+margin-top:24px;
 text-align:center;
 font-size:14px;
-letter-spacing:1.5px;
-color:rgba(255,255,255,.56);
+letter-spacing:1.4px;
+color:rgba(255,255,255,.55);
 }
 
-@media(max-width:900px){
-body{padding:16px}
-.page{padding:28px 18px;border-radius:32px}
-h1{font-size:46px}
-.visual{font-size:66px}
-.preview{grid-template-columns:1fr;padding:22px;border-radius:30px}
-.preview h2{font-size:36px}
-.story-copy p{font-size:22px}
-.illustration{min-height:320px}
-.scene-art{font-size:86px}
-.ritual{grid-template-columns:1fr;text-align:center}
-.ritual-icon{margin:0 auto}
-.actions{grid-template-columns:1fr}
+@media(max-width:920px){
+body{padding:14px}
+.stage{padding:24px 16px;border-radius:32px}
+.hero h1{font-size:42px}
+.book{grid-template-columns:1fr;padding:18px;border-radius:30px}
+.illustration{min-height:260px}
+.scene-art{font-size:84px}
+.page-card{min-height:auto;padding:24px}
+.story-title{font-size:36px}
+.text{font-size:25px;min-height:180px}
+.controls,.footer-actions{grid-template-columns:1fr}
+.audio-zone{grid-template-columns:1fr}
+.audio-buttons{justify-content:center}
 .top{justify-content:center}
 .badge{width:100%;order:-1}
 }
@@ -389,26 +438,31 @@ h1{font-size:46px}
 
 <body>
 
-<main class="page">
+<main class="stage">
 
 <div class="top">
 <a class="back" href="/story.html">← Modifica esperienza</a>
-<div class="badge">Voce narrante</div>
+<div class="badge">Libro vivo FABLEA</div>
 <a class="back" href="/child-hub.html">⌂ Mondo bambino</a>
 </div>
 
 <section class="hero">
-<div class="visual" id="heroIcon">🌙 ✨ 🧸</div>
-<h1>La storia è pronta.</h1>
+<h1 id="mainTitle">La storia è pronta.</h1>
 <div class="subtitle">
-Un nuovo racconto FABLEA è stato creato con cura per <span class="child-pill" id="childName">Cesare</span>
+Leggi, sfoglia o ascolta la voce narrante. <span class="child-pill" id="childName">Cesare</span>
 </div>
 </section>
 
-<section class="preview">
-<div class="story-copy">
-<div class="kicker">Anteprima narrativa</div>
-<h2 id="storyTitle">Cesare e la piccola luce</h2>
+<section class="book">
+
+<div class="illustration" id="illustration">
+<div class="scene-art" id="sceneArt">🌙 ✨ 🧸</div>
+</div>
+
+<div class="page-card">
+<div>
+<div class="kicker">Pagina della storia</div>
+<h2 class="story-title" id="storyTitle">Cesare e la piccola luce</h2>
 
 <div class="meta">
 <span id="ageMeta">2–4 anni</span>
@@ -416,37 +470,55 @@ Un nuovo racconto FABLEA è stato creato con cura per <span class="child-pill" i
 <span id="worldMeta">Mondo FABLEA</span>
 </div>
 
-<div id="storyText"></div>
+<div class="text" id="pageText">La storia sta arrivando...</div>
 
-<a class="read-more" href="/story-player.html">Leggi altro nella voce narrante →</a>
+<div class="counter" id="counter">Pagina 1 di 1</div>
+<div class="progress"><div class="progress-fill" id="progressFill"></div></div>
 </div>
 
-<div class="illustration" id="illustration">
-<div class="scene-art" id="sceneArt">🌙 ✨ 🧸</div>
+<div class="controls">
+<button class="button" id="prevBtn">← Pagina prima</button>
+<button class="button primary" id="nextBtn">Pagina dopo →</button>
 </div>
+</div>
+
 </section>
 
-<section class="ritual">
-<div class="ritual-icon">♡</div>
-<div>
-<h3>Questa storia include un rituale finale</h3>
-<p>
-Al termine, il bambino potrà compiere un gesto simbolico che lascerà una traccia luminosa nel suo mondo FABLEA.
+<section class="audio-zone">
+<div class="audio-status" id="audioStatus">
+Voce opzionale: puoi leggere da solo o avviare la narrazione automatica.
+</div>
+
+<div class="audio-buttons">
+<button class="small-btn primary" id="voiceBtn">▶ Ascolta e sfoglia</button>
+<button class="small-btn" id="pauseBtn">Pausa</button>
+<button class="small-btn" id="restartBtn">Ricomincia</button>
+</div>
+
+<audio id="storyAudio"></audio>
+</section>
+
+<section class="ritual" id="ritualBox">
+<h2>Prima di chiudere il mondo...</h2>
+<p id="ritualText">
+Scegli quale luce lasciare accesa per domani. FABLEA la ricorderà nel mondo del bambino.
 </p>
+<div class="ritual-options">
+<button class="button primary" onclick="saveRitual('⭐ Stella luminosa')">⭐ Stella luminosa</button>
+<button class="button" onclick="saveRitual('🕯️ Lanterna gentile')">🕯️ Lanterna gentile</button>
+<button class="button" onclick="saveRitual('🌙 Luna silenziosa')">🌙 Luna silenziosa</button>
 </div>
-<div class="ritual-badge">✨ Rituale, oggetti e memoria</div>
 </section>
 
-<div class="actions">
-<a class="button primary" href="/story-player.html"><span>▶</span> Ascolta la storia</a>
-<a class="button" href="/manualita.html"><span>🖐🏻</span> Crea con le mani</a>
-<a class="button" href="/story.html"><span>＋</span> Nuova esperienza</a>
-<a class="button" href="/child-hub.html"><span>🪐</span> Torna al mondo</a>
-<a class="button" href="/library.html"><span>📖</span> Vai alla libreria</a>
+<div class="footer-actions">
+<a class="button" href="/manualita.html">🖐🏻 Crea con le mani</a>
+<a class="button" href="/story.html">＋ Nuova esperienza</a>
+<a class="button" href="/child-hub.html">🪐 Torna al mondo</a>
+<a class="button" href="/library.html">📖 Libreria</a>
 </div>
 
 <div class="footer">
-FABLEA • ogni storia è unica • ogni voce è cura • ogni gesto lascia traccia ✨
+FABLEA • puoi leggere • puoi ascoltare • puoi immaginare con calma ✨
 </div>
 
 </main>
@@ -485,14 +557,6 @@ story('{{name}} e la piccola luce','Una storia visiva, breve e rassicurante.','�
 'Tutti si sedettero vicino a {{name}}. Nessuno aveva fretta. Il mondo sembrava più lento, più chiaro, più gentile.',
 'La stellina fece un giro nel cielo e lasciò una scia dorata. L’orsetto sorrise. La nuvola si appoggiò vicino alla luna.',
 '{{name}} guardò quella piccola compagnia luminosa e sentì che tutto era al sicuro.'
-]),
-story('{{name}} e la balena luminosa','Una balena gentile illumina il mare calmo.','🐋 🌊 ✨','ocean','🐋 🌊 ✨',['balena','mare','acqua'],[
-'Nel mare calmo di FABLEA viveva una balena che brillava piano.',
-'{{name}} la vide salire vicino alla riva. La balena aprì un occhio grande e gentile.',
-'“Vuoi vedere dove dormono le stelle cadute?” chiese la balena.',
-'{{name}} la seguì fino a una grotta d’acqua chiara.',
-'Dentro, tante stelline riposavano come piccole lanterne.',
-'La balena ne regalò una a {{name}}: “Quando hai bisogno di calma, ascolta il mare dentro questa luce.”'
 ])
 ],
 '5-7': [
@@ -505,15 +569,6 @@ story('{{name}} e la mappa luminosa','Una storia di esplorazione, piccoli passi 
 'Quando {{name}} la toccò, apparve un nuovo sentiero. Era sottile, luminoso e sembrava aspettare proprio quel momento.',
 'Alla fine del sentiero c’era una lanterna. La volpe la consegnò a {{name}}: “Il coraggio non deve essere grande. A volte basta che sia acceso.”',
 'Quando il libro si richiuse, la mappa rimase luminosa. Una nuova stella brillava sulla pagina, pronta per il prossimo viaggio.'
-]),
-story('{{name}} e la principessa delle nuvole','Una storia luminosa su coraggio, gentilezza ed esplorazione.','👑 ☁️ ✨','sky','👑 ☁️ ✨',['principessa','nuvole','castello'],[
-'Un pomeriggio, {{name}} vide una piccola porta nel cielo, fatta di nuvole, fili dorati e luce morbida.',
-'Dietro si vedeva un regno alto, silenzioso, pieno di scale leggere e terrazze sospese.',
-'{{name}} entrò piano e incontrò una principessa con scarpe comode, una mappa in mano e una corona storta.',
-'“Non sto aspettando di essere salvata,” disse la principessa. “Sto cercando la stella che tiene insieme il regno delle nuvole.”',
-'Camminarono tra ponti soffici e torri leggere. Ogni nuvola aveva un suono diverso.',
-'Trovarono una corona luminosa. Ma non serviva a comandare: serviva a ricordare il coraggio gentile.',
-'{{name}} toccò la corona e vide una stella nascosta aprire un nuovo sentiero.'
 ]),
 story('{{name}} e il treno delle stelle','Un treno lento porta il bambino tra stazioni del cielo.','🚂 ⭐ 🌌','space','🚂 ⭐ 🌌',['treno','stelle','spazio'],[
 'La notte in cui il cielo sembrava vicino, {{name}} sentì un fischio dolce dietro la finestra.',
@@ -550,34 +605,25 @@ story('{{name}} e l’atlante delle possibilità','Un racconto più maturo su id
 function scoreStory(st){
 const haystack = (theme + ' ' + experience + ' ' + interests.join(' ')).toLowerCase();
 let score = 0;
-
 st.keywords.forEach(k=>{
 if(haystack.includes(k.toLowerCase())) score += 3;
 });
-
-if(haystack.includes('principesse') && st.title.toLowerCase().includes('principessa')) score += 6;
 if(haystack.includes('lupo') && st.title.toLowerCase().includes('lupo')) score += 6;
-if(haystack.includes('mare') && st.art === 'ocean') score += 5;
 if(haystack.includes('spazio') && st.art === 'space') score += 5;
-if(haystack.includes('dinosauri') && st.keywords.includes('dinosauri')) score += 5;
-
 return score;
 }
 
 function pickStory(){
 const list = STORIES[age] || STORIES['5-7'];
 const scored = list.map(item=>({item,score:scoreStory(item)})).sort((a,b)=>b.score-a.score);
-
 if(scored[0].score > 0) return scored[0].item;
 
 const key = `${name}-${age}-${theme}-${experience}`;
 let hash = 0;
-
 for(let i=0;i<key.length;i++){
 hash = ((hash << 5) - hash) + key.charCodeAt(i);
 hash |= 0;
 }
-
 return list[Math.abs(hash) % list.length];
 }
 
@@ -597,23 +643,14 @@ if(age === '11-12') return 'Direzione';
 return 'Mondo narrativo';
 }
 
-const selected = pickStory();
+let selected = pickStory();
+let title = selected.title.replaceAll('{{name}}', name);
+let paragraphs = personalize(selected.paragraphs);
+let currentPage = 0;
+let autoTimer = null;
+let audioUrl = null;
 
-const title = selected.title.replaceAll('{{name}}', name);
-const subtitle = selected.subtitle;
-const paragraphs = personalize(selected.paragraphs);
 const fullText = paragraphs.join('\n\n');
-
-document.getElementById('childName').innerText = name;
-document.getElementById('heroIcon').innerText = selected.icon;
-document.getElementById('storyTitle').innerText = title;
-document.getElementById('ageMeta').innerText = ageText();
-document.getElementById('moodMeta').innerText = moodText();
-document.getElementById('worldMeta').innerText = theme || 'Mondo FABLEA';
-document.getElementById('sceneArt').innerText = selected.scene;
-document.getElementById('illustration').className = 'illustration ' + selected.art;
-
-document.getElementById('storyText').innerHTML = paragraphs.slice(0,3).map(p=>`<p>${p}</p>`).join('');
 
 const storyObject = {
 id: Date.now().toString(),
@@ -622,7 +659,7 @@ age:age,
 theme:theme,
 experience:experience,
 title:title,
-subtitle:subtitle,
+subtitle:selected.subtitle,
 icon:selected.icon,
 art:selected.art,
 scene:selected.scene,
@@ -634,10 +671,194 @@ localStorage.setItem('fableaCurrentStory', JSON.stringify(storyObject));
 
 const savedStories = JSON.parse(localStorage.getItem('fableaSavedStories') || '[]');
 const exists = savedStories.some(item => item.title === storyObject.title && item.child === storyObject.child && item.theme === storyObject.theme);
-
 if(!exists){
 savedStories.push(storyObject);
 localStorage.setItem('fableaSavedStories', JSON.stringify(savedStories.slice(-80)));
+}
+
+function renderPage(){
+const pageText = document.getElementById('pageText');
+pageText.classList.add('fade');
+
+setTimeout(()=>{
+pageText.innerText = paragraphs[currentPage];
+pageText.classList.remove('fade');
+
+document.getElementById('counter').innerText = `Pagina ${currentPage + 1} di ${paragraphs.length}`;
+document.getElementById('progressFill').style.width = `${((currentPage + 1) / paragraphs.length) * 100}%`;
+
+document.getElementById('prevBtn').disabled = currentPage === 0;
+document.getElementById('nextBtn').innerText = currentPage === paragraphs.length - 1 ? 'Rituale finale ✨' : 'Pagina dopo →';
+
+if(currentPage === paragraphs.length - 1){
+document.getElementById('ritualBox').style.display = 'block';
+}
+},180);
+}
+
+function nextPage(){
+if(currentPage < paragraphs.length - 1){
+currentPage++;
+renderPage();
+}else{
+document.getElementById('ritualBox').scrollIntoView({behavior:'smooth',block:'center'});
+}
+}
+
+function prevPage(){
+if(currentPage > 0){
+currentPage--;
+renderPage();
+}
+}
+
+document.getElementById('childName').innerText = name;
+document.getElementById('storyTitle').innerText = title;
+document.getElementById('ageMeta').innerText = ageText();
+document.getElementById('moodMeta').innerText = moodText();
+document.getElementById('worldMeta').innerText = theme || 'Mondo FABLEA';
+document.getElementById('sceneArt').innerText = selected.scene;
+document.getElementById('illustration').className = 'illustration ' + selected.art;
+
+document.getElementById('prevBtn').onclick = prevPage;
+document.getElementById('nextBtn').onclick = nextPage;
+
+renderPage();
+
+const audio = document.getElementById('storyAudio');
+const voiceBtn = document.getElementById('voiceBtn');
+const pauseBtn = document.getElementById('pauseBtn');
+const restartBtn = document.getElementById('restartBtn');
+const audioStatus = document.getElementById('audioStatus');
+
+voiceBtn.onclick = async function(){
+try{
+voiceBtn.disabled = true;
+voiceBtn.innerText = 'Genero voce...';
+audioStatus.innerText = 'Sto creando la voce narrante. Puoi continuare a leggere mentre preparo l’audio.';
+
+const response = await fetch('/api/tts',{
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({text:fullText})
+});
+
+if(!response.ok){
+const err = await response.text();
+throw new Error(err);
+}
+
+const blob = await response.blob();
+
+if(audioUrl){
+URL.revokeObjectURL(audioUrl);
+}
+
+audioUrl = URL.createObjectURL(blob);
+audio.src = audioUrl;
+
+currentPage = 0;
+renderPage();
+
+await audio.play();
+
+voiceBtn.innerText = 'Voce attiva';
+audioStatus.innerText = 'La voce sta narrando. Le pagine avanzano automaticamente.';
+
+startAutoFlip();
+
+}catch(e){
+audioStatus.innerText = 'Errore audio: ' + e.message;
+voiceBtn.innerText = 'Riprova voce';
+}finally{
+voiceBtn.disabled = false;
+}
+};
+
+pauseBtn.onclick = function(){
+if(!audio.src){
+audioStatus.innerText = 'Prima avvia la voce narrante.';
+return;
+}
+
+if(audio.paused){
+audio.play();
+pauseBtn.innerText = 'Pausa';
+startAutoFlip();
+}else{
+audio.pause();
+pauseBtn.innerText = 'Riprendi';
+stopAutoFlip();
+}
+};
+
+restartBtn.onclick = function(){
+stopAutoFlip();
+currentPage = 0;
+renderPage();
+
+if(audio.src){
+audio.currentTime = 0;
+audio.play();
+startAutoFlip();
+}
+};
+
+function startAutoFlip(){
+stopAutoFlip();
+
+const total = Math.max(audio.duration || paragraphs.length * 12, paragraphs.length * 8);
+const interval = Math.max(5000, (total * 1000) / paragraphs.length);
+
+autoTimer = setInterval(()=>{
+if(currentPage < paragraphs.length - 1){
+currentPage++;
+renderPage();
+}else{
+stopAutoFlip();
+}
+},interval);
+}
+
+function stopAutoFlip(){
+if(autoTimer){
+clearInterval(autoTimer);
+autoTimer = null;
+}
+}
+
+audio.addEventListener('ended',()=>{
+stopAutoFlip();
+currentPage = paragraphs.length - 1;
+renderPage();
+document.getElementById('ritualBox').style.display = 'block';
+audioStatus.innerText = 'La storia è finita. Ora puoi lasciare una piccola luce nel mondo FABLEA.';
+});
+
+function saveRitual(treasure){
+const child = name;
+const state = JSON.parse(localStorage.getItem("fableaWorldState") || "{}");
+
+if(!state[child]){
+state[child] = {treasures:[],rituals:[],lastStory:null,updatedAt:null};
+}
+
+if(!state[child].treasures.includes(treasure)){
+state[child].treasures.push(treasure);
+}
+
+state[child].rituals.push({
+treasure:treasure,
+story:title,
+date:new Date().toLocaleDateString("it-IT")
+});
+
+state[child].lastStory = title;
+state[child].updatedAt = new Date().toISOString();
+
+localStorage.setItem("fableaWorldState", JSON.stringify(state));
+
+document.getElementById('ritualText').innerText = 'La luce è stata lasciata accesa. Domani il mondo la ricorderà.';
 }
 </script>
 
