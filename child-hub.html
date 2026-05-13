@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FABLEA | Mondo bambino</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+min-height:100vh;
+padding:28px;
+font-family:'Nunito',sans-serif;
+background:
+radial-gradient(circle at top left,#fff1d8 0%,transparent 30%),
+radial-gradient(circle at bottom right,#e7dcff 0%,transparent 34%),
+linear-gradient(135deg,#f8f1e8 0%,#ece4ea 45%,#d9ddea 100%);
+color:#352f36;
+}
+
+.page{
+max-width:1120px;
+margin:0 auto;
+padding:54px 44px;
+border-radius:44px;
+background:rgba(255,251,247,.78);
+backdrop-filter:blur(16px);
+border:1px solid rgba(255,255,255,.62);
+box-shadow:0 24px 80px rgba(70,60,50,.12);
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:18px;
+margin-bottom:40px;
+flex-wrap:wrap;
+}
+
+.back{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:13px 18px;
+border-radius:999px;
+background:rgba(255,255,255,.58);
+border:1px solid rgba(80,65,55,.10);
+color:#6b6467;
+font-size:15px;
+font-weight:900;
+text-decoration:none;
+}
+
+.badge{
+font-size:12px;
+letter-spacing:5px;
+text-transform:uppercase;
+color:#9f8a76;
+}
+
+.hero{
+display:grid;
+grid-template-columns:1fr 1.3fr;
+gap:36px;
+align-items:center;
+margin-bottom:42px;
+}
+
+.avatar-card{
+padding:36px;
+border-radius:40px;
+background:linear-gradient(135deg,rgba(255,248,225,.78),rgba(255,255,255,.56));
+border:1px solid rgba(231,200,112,.45);
+box-shadow:0 20px 52px rgba(231,200,112,.18);
+text-align:center;
+}
+
+.avatar{
+width:130px;
+height:130px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:66px;
+background:linear-gradient(135deg,#f8e3aa,#e7dcff);
+margin:0 auto 22px;
+}
+
+.avatar-card h2{
+font-family:'Cormorant Garamond',serif;
+font-size:48px;
+line-height:1.05;
+font-weight:600;
+text-transform:capitalize;
+margin-bottom:10px;
+}
+
+.meta{
+font-size:15px;
+font-weight:900;
+color:#9f8a76;
+}
+
+.hero-copy h1{
+font-family:'Cormorant Garamond',serif;
+font-size:64px;
+line-height:1.05;
+font-weight:600;
+margin-bottom:18px;
+}
+
+.hero-copy p{
+font-size:19px;
+line-height:1.75;
+color:#756c70;
+max-width:680px;
+}
+
+.tags{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-top:24px;
+}
+
+.tag{
+font-size:14px;
+padding:10px 14px;
+border-radius:999px;
+background:rgba(255,250,245,.78);
+color:#8f8078;
+border:1px solid rgba(80,65,55,.08);
+font-weight:900;
+}
+
+.section-title{
+font-family:'Cormorant Garamond',serif;
+font-size:42px;
+font-weight:600;
+margin:34px 0 20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+}
+
+.experience{
+padding:30px;
+border-radius:34px;
+background:rgba(255,255,255,.56);
+border:1px solid rgba(80,65,55,.10);
+box-shadow:0 14px 36px rgba(80,65,55,.07);
+text-decoration:none;
+color:#352f36;
+transition:.25s;
+}
+
+.experience:hover{
+transform:translateY(-3px);
+box-shadow:0 18px 44px rgba(80,65,55,.12);
+}
+
+.experience-icon{
+font-size:42px;
+margin-bottom:16px;
+}
+
+.experience h3{
+font-family:'Cormorant Garamond',serif;
+font-size:34px;
+font-weight:600;
+margin-bottom:10px;
+}
+
+.experience p{
+font-size:16px;
+line-height:1.65;
+color:#756c70;
+}
+
+.primary{
+background:linear-gradient(135deg,rgba(255,248,225,.86),rgba(255,255,255,.62));
+border:1px solid rgba(231,200,112,.46);
+}
+
+.memory{
+margin-top:22px;
+padding:26px;
+border-radius:32px;
+background:rgba(255,255,255,.48);
+border:1px solid rgba(80,65,55,.08);
+}
+
+.memory h3{
+font-family:'Cormorant Garamond',serif;
+font-size:34px;
+font-weight:600;
+margin-bottom:10px;
+}
+
+.memory p{
+font-size:16px;
+line-height:1.65;
+color:#756c70;
+}
+
+.actions{
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+justify-content:center;
+margin-top:42px;
+}
+
+.button{
+display:inline-flex;
+justify-content:center;
+align-items:center;
+padding:16px 30px;
+border-radius:999px;
+background:linear-gradient(135deg,#f8e3aa,#e7c870);
+color:#332d35;
+font-size:17px;
+font-weight:900;
+text-decoration:none;
+box-shadow:0 14px 28px rgba(181,145,73,.16);
+border:0;
+cursor:pointer;
+}
+
+.secondary{
+background:rgba(255,255,255,.58);
+box-shadow:none;
+color:#6b6467;
+border:1px solid rgba(80,65,55,.10);
+}
+
+.empty{
+text-align:center;
+padding:50px 28px;
+border-radius:38px;
+background:rgba(255,255,255,.56);
+border:1px solid rgba(80,65,55,.10);
+}
+
+.empty h1{
+font-family:'Cormorant Garamond',serif;
+font-size:52px;
+font-weight:600;
+margin-bottom:16px;
+}
+
+.empty p{
+font-size:18px;
+line-height:1.7;
+color:#756c70;
+margin-bottom:28px;
+}
+
+.footer{
+margin-top:34px;
+text-align:center;
+font-size:14px;
+color:#9a8b82;
+}
+
+@media(max-width:850px){
+body{padding:18px}
+.page{padding:40px 22px;border-radius:32px}
+.hero{grid-template-columns:1fr}
+.hero-copy h1{font-size:44px;text-align:center}
+.hero-copy p{text-align:center;font-size:17px}
+.grid{grid-template-columns:1fr}
+.button{width:100%}
+.top{justify-content:center}
+.badge{text-align:center}
+}
+</style>
+</head>
+
+<body>
+
+<main class="page" id="page">
+
+<div id="content"></div>
+
+</main>
+
+<script>
+function getProfiles(){
+return JSON.parse(localStorage.getItem('fableaChildProfiles') || '[]');
+}
+
+function getSelectedProfile(){
+const profiles = getProfiles();
+const selectedId = localStorage.getItem('fableaSelectedChildId');
+
+if(!profiles.length) return null;
+
+return profiles.find(profile => profile.id === selectedId) || profiles[0];
+}
+
+function ageLabel(value){
+if(value === '2-4') return '2–4 anni • Meraviglia';
+if(value === '5-7') return '5–7 anni • Esplorazione';
+if(value === '8-10') return '8–10 anni • Identità';
+if(value === '11-12') return '11–12 anni • Direzione';
+return 'Fascia FABLEA';
+}
+
+function avatarFor(age){
+if(age === '2-4') return '🌙';
+if(age === '5-7') return '🦊';
+if(age === '8-10') return '💛';
+if(age === '11-12') return '🧭';
+return '✨';
+}
+
+function toneFor(profile){
+if(profile.age === '2-4') return 'immagini grandi, parole semplici e piccole esperienze guidate.';
+if(profile.age === '5-7') return 'avventure leggibili, scelte chiare e mondi da esplorare.';
+if(profile.age === '8-10') return 'storie emotive, missioni creative e crescita personale.';
+if(profile.age === '11-12') return 'racconti più maturi, identità, scelte e direzione.';
+return 'storie personalizzate e immaginazione.';
+}
+
+function interestsText(profile){
+if(profile.interests && profile.interests.length){
+return profile.interests.join(', ');
+}
+return 'immaginazione, scoperta e meraviglia';
+}
+
+function startExperience(type){
+const profile = getSelectedProfile();
+
+if(!profile){
+window.location.href = '/onboarding.html';
+return;
+}
+
+localStorage.setItem('fableaSelectedChildId', profile.id);
+
+const baseTheme = profile.interests && profile.interests.length
+? profile.interests[0].replace(/[^\p{L}\p{N}\s]/gu,'').trim()
+: 'Foresta magica';
+
+let data = {
+name:profile.name,
+age:profile.age,
+experience:type,
+mood:'Curiosa',
+theme:baseTheme || 'Foresta magica',
+interests:profile.interests || [],
+support:profile.support || '',
+duration:profile.duration || ''
+};
+
+if(type === 'Momento relax'){
+data.mood = 'Tranquilla';
+data.theme = 'Luna e calma';
+}
+
+if(type === 'Missione creativa'){
+data.mood = 'Piena di energia';
+data.theme = 'Manualità e fantasia';
+}
+
+if(type === 'Scoperta del giorno'){
+data.mood = 'Curiosa';
+data.theme = 'Mondo da scoprire';
+}
+
+localStorage.setItem('fableaStoryData', JSON.stringify(data));
+
+window.location.href = '/story.html';
+}
+
+function render(){
+const profile = getSelectedProfile();
+const content = document.getElementById('content');
+
+if(!profile){
+content.innerHTML = `
+<div class="empty">
+<h1>Nessun esploratore selezionato.</h1>
+<p>
+Crea o scegli un profilo bambino per entrare nel mondo FABLEA.
+</p>
+<a class="button" href="/onboarding.html">Scegli profilo</a>
+</div>
+`;
+return;
+}
+
+localStorage.setItem('fableaSelectedChildId', profile.id);
+
+const tags = profile.interests && profile.interests.length
+? profile.interests.map(item => `<span class="tag">${item}</span>`).join('')
+: `<span class="tag">✨ Immaginazione</span>`;
+
+content.innerHTML = `
+<div class="top">
+<a class="back" href="/onboarding.html">← Cambia esploratore</a>
+<div class="badge">Mondo personale FABLEA</div>
+<a class="back" href="/index.html">Home</a>
+</div>
+
+<section class="hero">
+<div class="avatar-card">
+<div class="avatar">${avatarFor(profile.age)}</div>
+<h2>${profile.name}</h2>
+<div class="meta">${ageLabel(profile.age)}</div>
+</div>
+
+<div class="hero-copy">
+<h1>Il mondo di ${profile.name}</h1>
+<p>
+Qui FABLEA accompagna ${profile.name} durante la giornata con ${toneFor(profile)}
+Ogni esperienza parte dai suoi interessi: ${interestsText(profile)}.
+</p>
+<div class="tags">${tags}</div>
+</div>
+</section>
+
+<h2 class="section-title">Cosa facciamo oggi?</h2>
+
+<section class="grid">
+
+<a class="experience primary" href="/story.html">
+<div class="experience-icon">📖</div>
+<h3>Crea una storia</h3>
+<p>
+Scegli umore, mondo e tipo di esperienza. FABLEA costruisce una storia personalizzata.
+</p>
+</a>
+
+<a class="experience" href="#" onclick="startExperience('Momento relax'); return false;">
+<div class="experience-icon">🌙</div>
+<h3>Momento relax</h3>
+<p>
+Un’esperienza morbida per rallentare, respirare e ritrovare calma.
+</p>
+</a>
+
+<a class="experience" href="#" onclick="startExperience('Missione creativa'); return false;">
+<div class="experience-icon">👐</div>
+<h3>Missione creativa</h3>
+<p>
+Un piccolo gioco narrativo con oggetti semplici e fantasia da usare con le mani.
+</p>
+</a>
+
+<a class="experience" href="#" onclick="startExperience('Scoperta del giorno'); return false;">
+<div class="experience-icon">🧭</div>
+<h3>Scoperta del giorno</h3>
+<p>
+Una breve avventura per accendere curiosità, domande e immaginazione.
+</p>
+</a>
+
+</section>
+
+<div class="memory">
+<h3>Memoria del mondo</h3>
+<p>
+Per ora FABLEA ricorda interessi, fascia evolutiva e preferenze su questo dispositivo. In seguito potrà ricordare personaggi preferiti, storie iniziate, rituali e progressi creativi.
+</p>
+</div>
+
+<div class="actions">
+<a class="button" href="/story.html">Nuova esperienza</a>
+<a class="button secondary" href="/library.html">Libreria</a>
+<a class="button secondary" href="/activity.html">Attività</a>
+</div>
+
+<div class="footer">
+Un piccolo universo personale, non solo una favola della sera.
+</div>
+`;
+}
+
+render();
+</script>
+
+</body>
+</html>
