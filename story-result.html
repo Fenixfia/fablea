@@ -14,25 +14,38 @@ body{
 min-height:100vh;
 padding:24px;
 font-family:'Nunito',sans-serif;
-background:
-radial-gradient(circle at top left,#fff1d8 0%,transparent 30%),
-radial-gradient(circle at bottom right,#e7dcff 0%,transparent 34%),
-linear-gradient(135deg,#f8f1e8 0%,#ece4ea 45%,#d9ddea 100%);
-color:#352f36;
+background:#161220;
+color:#fff;
 }
 
 .page{
-max-width:1040px;
+max-width:1180px;
 margin:0 auto;
-padding:52px 44px;
+padding:42px;
 border-radius:44px;
-background:rgba(255,251,247,.82);
-backdrop-filter:blur(16px);
-border:1px solid rgba(255,255,255,.62);
-box-shadow:0 24px 80px rgba(70,60,50,.12);
+background:
+radial-gradient(circle at top,#6f617f 0%,transparent 34%),
+linear-gradient(180deg,#302941 0%,#211c31 52%,#15121f 100%);
+border:1px solid rgba(255,255,255,.14);
+box-shadow:0 28px 90px rgba(0,0,0,.42);
+position:relative;
+overflow:hidden;
+}
+
+.page:before{
+content:"";
+position:absolute;
+inset:0;
+background:
+radial-gradient(circle at 15% 25%,rgba(255,226,160,.18),transparent 20%),
+radial-gradient(circle at 82% 28%,rgba(201,182,255,.16),transparent 26%),
+radial-gradient(circle at 50% 100%,rgba(255,226,160,.10),transparent 30%);
+pointer-events:none;
 }
 
 .top{
+position:relative;
+z-index:2;
 display:flex;
 justify-content:space-between;
 align-items:center;
@@ -45,11 +58,11 @@ margin-bottom:34px;
 display:inline-flex;
 align-items:center;
 justify-content:center;
-padding:12px 17px;
+padding:13px 20px;
 border-radius:999px;
-background:rgba(255,255,255,.60);
-border:1px solid rgba(80,65,55,.10);
-color:#6b6467;
+background:rgba(255,255,255,.12);
+border:1px solid rgba(255,255,255,.16);
+color:#fff;
 font-size:14px;
 font-weight:900;
 text-decoration:none;
@@ -57,151 +70,277 @@ text-decoration:none;
 
 .badge{
 font-size:12px;
-letter-spacing:5px;
+letter-spacing:6px;
 text-transform:uppercase;
-color:#9f8a76;
+color:#e8d2a5;
+text-align:center;
 }
 
 .hero{
+position:relative;
+z-index:2;
 text-align:center;
-margin-bottom:38px;
+margin-bottom:34px;
 }
 
 .visual{
-height:270px;
-border-radius:40px;
-margin-bottom:30px;
-background:
-radial-gradient(circle at 50% 35%,#fff6cf 0%,transparent 24%),
-radial-gradient(circle at 20% 80%,#f8d9b8 0%,transparent 22%),
-linear-gradient(135deg,#e7dcff,#f8e3aa);
-box-shadow:inset 0 0 80px rgba(255,255,255,.60);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:88px;
+font-size:90px;
+margin-bottom:18px;
 animation:float 6s ease-in-out infinite;
 }
 
 @keyframes float{
 0%{transform:translateY(0)}
-50%{transform:translateY(-7px)}
+50%{transform:translateY(-8px)}
 100%{transform:translateY(0)}
 }
 
 h1{
 font-family:'Cormorant Garamond',serif;
-font-size:68px;
-line-height:1.03;
+font-size:76px;
+line-height:1;
 font-weight:600;
-margin-bottom:16px;
+margin-bottom:14px;
 }
 
 .subtitle{
 font-size:18px;
-line-height:1.75;
-color:#756c70;
+line-height:1.7;
+color:rgba(255,255,255,.72);
 max-width:760px;
 margin:0 auto;
 }
 
+.child-pill{
+display:inline-flex;
+padding:7px 14px;
+border-radius:999px;
+background:#f5d78d;
+color:#352a35;
+font-weight:900;
+margin-left:8px;
+}
+
 .preview{
-margin-top:34px;
-padding:46px;
-border-radius:40px;
-background:rgba(255,255,255,.54);
-border:1px solid rgba(80,65,55,.08);
-box-shadow:0 18px 46px rgba(80,65,55,.08);
+position:relative;
+z-index:2;
+display:grid;
+grid-template-columns:1fr 1.05fr;
+gap:28px;
+padding:34px;
+border-radius:38px;
+background:rgba(255,255,255,.10);
+border:1px solid rgba(255,255,255,.14);
+box-shadow:0 18px 50px rgba(0,0,0,.22);
+margin-top:30px;
+}
+
+.story-copy{
+padding:20px 8px;
+}
+
+.kicker{
+font-size:12px;
+letter-spacing:5px;
+text-transform:uppercase;
+color:#e8d2a5;
+margin-bottom:20px;
 }
 
 .preview h2{
 font-family:'Cormorant Garamond',serif;
-font-size:44px;
+font-size:48px;
+line-height:1.05;
 font-weight:600;
-margin-bottom:22px;
-color:#403943;
+color:#f8df9b;
+margin-bottom:14px;
 }
 
-.preview p{
+.meta{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:24px;
+}
+
+.meta span{
+padding:8px 12px;
+border-radius:999px;
+background:rgba(255,255,255,.10);
+border:1px solid rgba(255,255,255,.10);
+font-size:13px;
+font-weight:900;
+color:#ecd8b0;
+}
+
+.story-copy p{
 font-family:'Cormorant Garamond',serif;
-font-size:30px;
-line-height:1.86;
-color:#4d4550;
-margin-bottom:22px;
+font-size:24px;
+line-height:1.78;
+color:rgba(255,255,255,.88);
+margin-bottom:16px;
 }
 
-.hook{
-margin-top:28px;
-padding:28px;
-border-radius:32px;
-background:linear-gradient(135deg,rgba(255,248,225,.82),rgba(255,255,255,.62));
-border:1px solid rgba(231,200,112,.34);
+.read-more{
+display:inline-flex;
+margin-top:6px;
+padding:10px 15px;
+border-radius:999px;
+background:rgba(255,255,255,.10);
+border:1px solid rgba(255,255,255,.12);
+color:rgba(255,255,255,.82);
+font-size:13px;
+font-weight:900;
+text-decoration:none;
+}
+
+.illustration{
+min-height:410px;
+border-radius:34px;
+background:
+radial-gradient(circle at 50% 28%,rgba(255,226,160,.46),transparent 24%),
+radial-gradient(circle at 30% 84%,rgba(255,216,146,.28),transparent 26%),
+linear-gradient(180deg,#211b37 0%,#4d416b 100%);
+border:1px solid rgba(255,255,255,.16);
+box-shadow:inset 0 0 70px rgba(255,255,255,.08),0 20px 46px rgba(0,0,0,.24);
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+overflow:hidden;
+}
+
+.illustration:before{
+content:"";
+position:absolute;
+inset:0;
+background-image:
+radial-gradient(circle,rgba(255,255,255,.9) 0 1px,transparent 1.4px),
+radial-gradient(circle,rgba(255,215,135,.9) 0 1px,transparent 1.6px);
+background-size:86px 86px,132px 132px;
+background-position:10px 20px,42px 70px;
+opacity:.42;
+}
+
+.scene-art{
+position:relative;
+z-index:2;
+font-size:112px;
 text-align:center;
+filter:drop-shadow(0 16px 30px rgba(0,0,0,.22));
+animation:float 7s ease-in-out infinite;
 }
 
-.hook h3{
-font-family:'Cormorant Garamond',serif;
-font-size:36px;
-font-weight:600;
-margin-bottom:10px;
+.ritual{
+position:relative;
+z-index:2;
+margin-top:28px;
+padding:26px 32px;
+border-radius:34px;
+background:rgba(255,255,255,.11);
+border:1px solid rgba(255,255,255,.13);
+display:grid;
+grid-template-columns:auto 1fr auto;
+gap:18px;
+align-items:center;
 }
 
-.hook p{
-font-size:16px;
-line-height:1.7;
-color:#756c70;
+.ritual-icon{
+width:70px;
+height:70px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:34px;
+background:rgba(255,255,255,.10);
+border:1px solid rgba(255,255,255,.13);
+}
+
+.ritual h3{
+font-size:18px;
+font-weight:900;
+margin-bottom:5px;
+}
+
+.ritual p{
+font-size:14px;
+line-height:1.55;
+color:rgba(255,255,255,.68);
+}
+
+.ritual-badge{
+padding:12px 18px;
+border-radius:999px;
+background:rgba(255,255,255,.10);
+border:1px solid rgba(255,255,255,.12);
+color:#f5d78d;
+font-size:14px;
+font-weight:900;
+white-space:nowrap;
 }
 
 .actions{
-margin-top:42px;
-display:flex;
-gap:16px;
-justify-content:center;
-flex-wrap:wrap;
+position:relative;
+z-index:2;
+margin-top:32px;
+display:grid;
+grid-template-columns:1.2fr 1fr 1fr 1fr 1fr;
+gap:14px;
 }
 
 .button{
-display:inline-flex;
+display:flex;
 align-items:center;
 justify-content:center;
-padding:16px 30px;
-border-radius:999px;
-border:0;
-cursor:pointer;
+gap:10px;
+padding:18px 18px;
+border-radius:24px;
+border:1px solid rgba(255,255,255,.13);
 text-decoration:none;
-font-size:16px;
+font-size:15px;
 font-weight:900;
-background:linear-gradient(135deg,#f8e3aa,#e7c870);
-color:#322d34;
-box-shadow:0 12px 30px rgba(231,200,112,.25);
+background:rgba(255,255,255,.10);
+color:#fff;
+min-height:74px;
 }
 
-.secondary{
-background:rgba(255,255,255,.60);
-border:1px solid rgba(80,65,55,.10);
-color:#6b6467;
-box-shadow:none;
+.button.primary{
+background:linear-gradient(135deg,#f8e3aa,#e7c870);
+color:#302738;
+border:0;
+box-shadow:0 14px 30px rgba(231,200,112,.25);
+}
+
+.button span{
+font-size:28px;
 }
 
 .footer{
-margin-top:34px;
+position:relative;
+z-index:2;
+margin-top:30px;
 text-align:center;
 font-size:14px;
-color:#988a82;
+letter-spacing:1.5px;
+color:rgba(255,255,255,.56);
 }
 
-@media(max-width:700px){
-body{padding:18px}
-.page{padding:38px 20px;border-radius:32px}
+@media(max-width:900px){
+body{padding:16px}
+.page{padding:28px 18px;border-radius:32px}
+h1{font-size:46px}
+.visual{font-size:66px}
+.preview{grid-template-columns:1fr;padding:22px;border-radius:30px}
+.preview h2{font-size:36px}
+.story-copy p{font-size:22px}
+.illustration{min-height:300px}
+.scene-art{font-size:84px}
+.ritual{grid-template-columns:1fr;text-align:center}
+.ritual-icon{margin:0 auto}
+.actions{grid-template-columns:1fr}
 .top{justify-content:center}
-.badge{text-align:center}
-h1{font-size:42px}
-.subtitle{font-size:16px}
-.visual{height:210px;font-size:64px}
-.preview{padding:28px 22px}
-.preview h2{font-size:34px}
-.preview p{font-size:23px}
-.button{width:100%}
+.badge{width:100%;order:-1}
 }
 </style>
 </head>
@@ -212,40 +351,60 @@ h1{font-size:42px}
 
 <div class="top">
 <a class="back" href="/story.html">← Modifica esperienza</a>
-<div class="badge" id="badge">FABLEA Story</div>
-<a class="back" href="/child-hub.html">Mondo bambino</a>
+<div class="badge">Voce narrante</div>
+<a class="back" href="/child-hub.html">⌂ Mondo bambino</a>
 </div>
 
 <section class="hero">
-<div class="visual" id="heroIcon">✨</div>
-<h1 id="title">La storia è pronta</h1>
-<div class="subtitle" id="subtitle">
-Un nuovo racconto FABLEA è stato creato.
+<div class="visual" id="heroIcon">🌙 ✨ 🧸</div>
+<h1>La storia è pronta.</h1>
+<div class="subtitle">
+Un nuovo racconto FABLEA è stato creato con cura per <span class="child-pill" id="childName">Cesare</span>
 </div>
 </section>
 
 <section class="preview">
-<h2 id="storyHeading">Anteprima narrativa</h2>
+<div class="story-copy">
+<div class="kicker">Anteprima narrativa</div>
+<h2 id="storyTitle">Cesare e la piccola luce</h2>
+
+<div class="meta">
+<span id="ageMeta">2–4 anni</span>
+<span id="moodMeta">Meraviglia e calma</span>
+<span id="worldMeta">Mondo FABLEA</span>
+</div>
+
 <div id="storyText"></div>
 
-<div class="hook">
-<h3>Ora ascoltala con la voce narrante.</h3>
-<p>
-La storia completa vive nel player cinematico: voce, ritmo lento, testo progressivo e rituale finale.
-</p>
+<a class="read-more" href="/story-player.html">Leggi altro nella voce narrante →</a>
+</div>
+
+<div class="illustration" id="illustration">
+<div class="scene-art" id="sceneArt">🌙 ✨ 🧸</div>
 </div>
 </section>
 
+<section class="ritual">
+<div class="ritual-icon">♡</div>
+<div>
+<h3>Questa storia include un rituale finale</h3>
+<p>
+Al termine, il bambino potrà lasciare una piccola traccia luminosa nel suo mondo FABLEA.
+</p>
+</div>
+<div class="ritual-badge">✨ Rituale, oggetti e memoria</div>
+</section>
+
 <div class="actions">
-<a class="button" href="/story-player.html">Ascolta la storia</a>
-<a class="button secondary" href="/manualita.html">Crea con le mani</a>
-<a class="button secondary" href="/story.html">Nuova esperienza</a>
-<a class="button secondary" href="/child-hub.html">Torna al mondo</a>
-<a class="button secondary" href="/library.html">Libreria</a>
+<a class="button primary" href="/story-player.html"><span>▶</span> Ascolta la storia</a>
+<a class="button" href="/manualita.html"><span>🖐🏻</span> Crea con le mani</a>
+<a class="button" href="/story.html"><span>＋</span> Nuova esperienza</a>
+<a class="button" href="/child-hub.html"><span>🪐</span> Torna al mondo</a>
+<a class="button" href="/library.html"><span>📖</span> Vai alla libreria</a>
 </div>
 
 <div class="footer">
-FABLEA • storia unica • voce narrante • rituale finale • mondo persistente
+FABLEA • ogni storia è unica • ogni voce è cura • ogni gesto lascia traccia ✨
 </div>
 
 </main>
@@ -260,186 +419,154 @@ const mood = saved.mood || 'Curiosa';
 const experience = saved.experience || 'Avventura immaginativa';
 const interests = saved.interests || [];
 
-let title = '';
-let subtitle = '';
-let badge = '';
-let heroIcon = '';
-let paragraphs = [];
-
-function lowerAll(){
-return (theme + ' ' + experience + ' ' + interests.join(' ')).toLowerCase();
+function story(title, subtitle, icon, keywords, paragraphs){
+return {title, subtitle, icon, keywords, paragraphs};
 }
 
-function includesWord(word){
-return lowerAll().includes(word.toLowerCase());
+function personalize(paragraphs){
+return paragraphs.map(p => p.replaceAll('{{name}}', name).replaceAll('{{mood}}', mood.toLowerCase()));
 }
 
-function buildStory(){
+const STORIES = {
+'2-4': [
+story('{{name}} e il lupo dal vocione','Una storia morbida dove la paura diventa gentilezza.','🌙 🐺 ✨',['lupo','paura','bosco'],[
+'Nel bosco morbido, quando la luna saliva piano, {{name}} sentì un rumore grande tra le foglie.',
+'“GROOOOAR...” fece una voce profonda. Le foglie tremarono un pochino, ma la luna restò ferma, tonda e gentile.',
+'Dietro un albero comparve un lupo grande, con occhi dolci e un vocione enorme. Il lupo abbassò le orecchie: non voleva spaventare nessuno.',
+'{{name}} trovò una piccola luce sotto una foglia. La mise vicino al lupo, senza correre e senza fare rumore.',
+'Il lupo respirò. Una volta. Poi un’altra. E finalmente disse piano: “Buonasera”.',
+'Da quella sera, il lupo non fu più cattivo. Fu il lupo dal vocione gentile, quello che imparava a parlare piano quando qualcuno aveva paura.',
+'Prima di andare via, {{name}} lasciò una stellina accesa nel bosco. Così il lupo avrebbe ricordato la voce morbida anche domani.'
+]),
+story('{{name}} e la piccola luce','Una storia visiva, breve e rassicurante.','🌙 ✨ 🧸',['luce','luna','calma'],[
+'Vicino a {{name}} comparve una piccola luce. Non correva, non faceva rumore, non chiedeva nulla.',
+'Brillava piano, come se sapesse aspettare. Accanto alla luce arrivò un orsetto morbido, poi una stellina, poi una nuvola piccola.',
+'Tutti si sedettero vicino a {{name}}. Nessuno aveva fretta. Il mondo sembrava più lento, più chiaro, più gentile.',
+'La stellina fece un giro nel cielo e lasciò una scia dorata. L’orsetto sorrise. La nuvola si appoggiò vicino alla luna.',
+'{{name}} guardò quella piccola compagnia luminosa e sentì che tutto era al sicuro.',
+'La luce rimase accesa ancora un pochino, solo per dire: “Sono qui. Puoi immaginare piano.”'
+])
+],
+'5-7': [
+story('{{name}} e la mappa luminosa','Una storia di esplorazione, piccoli passi e meraviglia.','📖 🗺️ ✨',['mappa','bosco','volpe'],[
+'{{name}} trovò un libro dimenticato sopra un tavolo. La copertina era liscia, calda e un po’ misteriosa.',
+'Quando lo aprì, non trovò solo parole. Dentro c’era una mappa che brillava piano, come se respirasse.',
+'Sulla mappa comparivano sentieri, alberi, piccole stelle e un bosco disegnato con linee dorate.',
+'Tra le radici del bosco comparve una volpe gentile. “Non bisogna correre per vivere un’avventura,” disse. “Basta fare un passo e ascoltare.”',
+'{{name}} seguì la volpe fino a una radura. Lì una stella cadde sulla mappa senza fare rumore.',
+'Quando {{name}} la toccò, apparve un nuovo sentiero. Era sottile, luminoso e sembrava aspettare proprio quel momento.',
+'Alla fine del sentiero c’era una lanterna. La volpe la consegnò a {{name}}: “Il coraggio non deve essere grande. A volte basta che sia acceso.”',
+'Quando il libro si richiuse, la mappa rimase luminosa. Una nuova stella brillava sulla pagina, pronta per il prossimo viaggio.'
+]),
+story('{{name}} e la principessa delle nuvole','Una storia luminosa su coraggio, gentilezza ed esplorazione.','👑 ☁️ ✨',['principessa','nuvole','castello'],[
+'Un pomeriggio, {{name}} vide una piccola porta nel cielo, fatta di nuvole, fili dorati e luce morbida.',
+'Dietro si vedeva un regno alto, silenzioso, pieno di scale leggere e terrazze sospese.',
+'{{name}} entrò piano e incontrò una principessa con scarpe comode, una mappa in mano e una corona storta.',
+'“Non sto aspettando di essere salvata,” disse la principessa. “Sto cercando la stella che tiene insieme il regno delle nuvole.”',
+'Camminarono tra ponti soffici e torri leggere. Ogni nuvola aveva un suono diverso.',
+'Trovarono una corona luminosa. Ma non serviva a comandare: serviva a ricordare il coraggio gentile.',
+'{{name}} toccò la corona e vide una stella nascosta aprire un nuovo sentiero.',
+'Quando il viaggio finì, la principessa salutò {{name}}: “Quando vuoi tornare, guarda una nuvola. Il regno non sparisce: si nasconde solo meglio.”'
+])
+],
+'8-10': [
+story('{{name}} e il ponte delle scelte','Una storia su emozioni, fiducia e piccoli cambiamenti interiori.','🌉 💛 🌙',['ponte','scelte','fiducia'],[
+'Nel cuore di una città segreta, {{name}} trovò un ponte sospeso tra due colline. Non era fatto di legno né di pietra.',
+'Era fatto di scelte. Ogni tavola brillava quando qualcuno diceva qualcosa di vero a se stesso.',
+'Sotto il ponte scorreva un fiume calmo. Nell’acqua si vedevano pensieri: una paura, una domanda, un desiderio.',
+'Dopo una giornata {{mood}}, quel fiume sembrava più vicino del solito. Non spaventava. Aspettava.',
+'Sul ponte comparvero tre luci: coraggio, gentilezza, fiducia.',
+'{{name}} capì che non doveva scegliere la luce più forte. Doveva scegliere quella più vera.',
+'Quando fece il primo passo, il ponte vibrò piano. Non perché fosse fragile, ma perché aveva riconosciuto una scelta sincera.',
+'Dall’altra parte non c’era un premio. C’era una città più chiara, più calma, più vicina.',
+'La paura non era sparita. Ma era diventata più piccola. E questo bastava per continuare.'
+])
+],
+'11-12': [
+story('{{name}} e l’atlante delle possibilità','Un racconto più maturo su identità, scelte e futuro.','🌌 🧭 📖',['atlante','futuro','direzione'],[
+'La sera in cui {{name}} trovò l’atlante, il cielo sembrava più grande del solito. Non più scuro. Solo più profondo.',
+'Sulla scrivania c’era un libro senza titolo. Aveva una bussola disegnata in copertina e una frase: “Non tutte le direzioni si vedono da fuori.”',
+'{{name}} aprì il libro. Le pagine non mostravano città, montagne o confini. Mostravano possibilità.',
+'Una pagina era fatta di coraggio. Una di dubbi. Una di errori utili. Una di sogni ancora confusi.',
+'Ogni pagina sembrava dire: puoi non sapere ancora, ma puoi iniziare a guardare.',
+'Al centro dell’atlante apparve una domanda: “Che cosa ti fa sentire vivo quando nessuno ti guarda?”',
+'{{name}} rimase in silenzio. Non perché non avesse una risposta, ma perché quella domanda meritava spazio.',
+'Quando chiuse il libro, la bussola non indicava nord. Indicava avanti.',
+'Non era una strada già pronta. Era un invito: osservare meglio, scegliere con calma, diventare senza fretta.'
+])
+]
+};
 
-if(age === '2-4'){
-badge = '2–4 anni • Meraviglia';
-
-if(includesWord('lupo')){
-title = `${name} e il lupo dal vocione`;
-subtitle = 'Una storia morbida dove la paura diventa gentilezza.';
-heroIcon = '🌙 🐺 ✨';
-
-paragraphs = [
-`Nel bosco morbido, quando la luce diventava piccola e la luna saliva piano, ${name} sentì un rumore grande tra le foglie.`,
-
-`“GROOOOAR...” fece una voce profonda. Le foglie tremarono un pochino, ma la luna rimase ferma, tonda e gentile.`,
-
-`Dietro un albero comparve un lupo. Era grande, aveva occhi dolci e un vocione enorme. Il lupo abbassò le orecchie, perché non voleva spaventare nessuno.`,
-
-`${name} lo guardò piano. Il lupo provò a parlare di nuovo, ma invece di dire “buonasera”, uscì ancora un piccolo ruggito.`,
-
-`Allora ${name} trovò una lucina sotto una foglia. Era calda, piccola e dorata. La mise vicino al lupo, senza fretta.`,
-
-`Il lupo guardò la luce. Respirò una volta. Poi un’altra. E finalmente disse, con una voce morbida: “Buonasera”.`,
-
-`Da quella sera, il lupo non fu più il lupo cattivo. Diventò il lupo dal vocione gentile, quello che imparava a parlare piano quando qualcuno aveva paura.`
-];
-return;
+function scoreStory(st){
+const haystack = (theme + ' ' + experience + ' ' + interests.join(' ')).toLowerCase();
+let score = 0;
+st.keywords.forEach(k => {
+if(haystack.includes(k.toLowerCase())) score += 3;
+});
+if(haystack.includes('principesse') && st.title.toLowerCase().includes('principessa')) score += 6;
+if(haystack.includes('lupo') && st.title.toLowerCase().includes('lupo')) score += 6;
+if(haystack.includes('mare') && st.keywords.includes('mare')) score += 4;
+if(haystack.includes('spazio') && (st.keywords.includes('spazio') || st.keywords.includes('stelle'))) score += 4;
+return score;
 }
 
-title = `${name} e la piccola luce`;
-subtitle = 'Una storia visiva, breve e rassicurante.';
-heroIcon = '🌙 ✨ 🧸';
+function pickStory(){
+const list = STORIES[age] || STORIES['5-7'];
+const scored = list.map((item,index)=>({item,index,score:scoreStory(item)})).sort((a,b)=>b.score-a.score);
+if(scored[0].score > 0) return scored[0].item;
 
-paragraphs = [
-`Vicino a ${name} comparve una piccola luce. Non correva, non faceva rumore, non chiedeva nulla.`,
-
-`Brillava piano, come se sapesse aspettare. Accanto alla luce arrivò un orsetto morbido, poi una stellina, poi una nuvola piccola.`,
-
-`Tutti si sedettero vicino a ${name}. Nessuno aveva fretta. Il mondo sembrava più lento, più chiaro, più gentile.`,
-
-`La stellina fece un giro nel cielo e lasciò una scia dorata. L’orsetto sorrise. La nuvola si appoggiò vicino alla luna.`,
-
-`${name} guardò quella piccola compagnia luminosa e sentì che tutto era al sicuro. Anche il silenzio sembrava buono.`,
-
-`La luce rimase accesa ancora un pochino, solo per dire: “Sono qui. Puoi immaginare piano.”`
-];
-return;
+const key = `${name}-${age}-${theme}-${experience}`;
+let hash = 0;
+for(let i=0;i<key.length;i++){
+hash = ((hash << 5) - hash) + key.charCodeAt(i);
+hash |= 0;
+}
+return list[Math.abs(hash) % list.length];
 }
 
-if(age === '5-7'){
-badge = '5–7 anni • Esplorazione';
-
-if(includesWord('principesse')){
-title = `${name} e la principessa delle nuvole`;
-subtitle = 'Una storia luminosa su coraggio, gentilezza ed esplorazione.';
-heroIcon = '👑 ☁️ ✨';
-
-paragraphs = [
-`Un pomeriggio, ${name} vide una piccola porta nel cielo. Non era una porta normale: era fatta di nuvole, fili dorati e luce morbida.`,
-
-`Quando il vento passava, la porta si apriva appena. Dietro si vedeva un regno alto, silenzioso, pieno di scale leggere e terrazze sospese.`,
-
-`${name} entrò piano e incontrò una principessa con scarpe comode, una mappa in mano e una corona storta sulla testa.`,
-
-`“Non sto aspettando di essere salvata,” disse la principessa. “Sto cercando la stella che tiene insieme il regno delle nuvole.”`,
-
-`Camminarono tra ponti soffici e torri leggere. Ogni nuvola aveva un suono diverso: una rideva, una cantava, una raccontava vecchie storie.`,
-
-`A un certo punto trovarono una corona luminosa. Ma la principessa spiegò che non serviva a comandare. Serviva a ricordare il coraggio gentile.`,
-
-`${name} toccò la corona e vide una stella nascosta aprire un nuovo sentiero. Non era il sentiero più grande, ma era quello giusto.`,
-
-`Quando il viaggio finì, la principessa salutò ${name} e disse: “Quando vuoi tornare, guarda una nuvola. Il regno non sparisce: si nasconde solo meglio.”`
-];
-return;
+function ageText(){
+if(age === '2-4') return '2–4 anni';
+if(age === '5-7') return '5–7 anni';
+if(age === '8-10') return '8–10 anni';
+if(age === '11-12') return '11–12 anni';
+return 'FABLEA';
 }
 
-title = `${name} e la mappa luminosa`;
-subtitle = 'Una storia di esplorazione, piccoli passi e meraviglia.';
-heroIcon = '📖 🗺️ ✨';
-
-paragraphs = [
-`${name} trovò un libro dimenticato sopra un tavolo. La copertina era liscia, calda e un po’ misteriosa.`,
-
-`Quando lo aprì, non trovò solo parole. Dentro c’era una mappa che brillava piano, come se respirasse.`,
-
-`Sulla mappa comparivano sentieri, alberi, piccole stelle e un bosco disegnato con linee dorate. Un puntino luminoso si muoveva lentamente.`,
-
-`Il puntino portò ${name} verso un bosco morbido, dove gli alberi non facevano paura e le foglie sembravano sussurrare.`,
-
-`Tra le radici comparve una volpe gentile. “Non bisogna correre per vivere un’avventura,” disse. “Basta fare un passo e ascoltare.”`,
-
-`${name} seguì la volpe fino a una piccola radura. Lì una stella cadde sulla mappa senza fare rumore.`,
-
-`Quando ${name} la toccò, apparve un nuovo sentiero. Era sottile, luminoso e sembrava aspettare proprio quel momento.`,
-
-`Alla fine del sentiero c’era una lanterna. La volpe la consegnò a ${name}: “Il coraggio non deve essere grande. A volte basta che sia acceso.”`,
-
-`Quando il libro si richiuse, la mappa rimase luminosa. Una nuova stella brillava sulla pagina, pronta per il prossimo viaggio.`
-];
-return;
+function moodText(){
+if(age === '2-4') return 'Meraviglia e calma';
+if(age === '5-7') return 'Esplorazione';
+if(age === '8-10') return 'Identità ed emozioni';
+if(age === '11-12') return 'Direzione';
+return 'Mondo narrativo';
 }
 
-if(age === '8-10'){
-badge = '8–10 anni • Identità';
-title = `${name} e il ponte delle scelte`;
-subtitle = 'Una storia su emozioni, fiducia e piccoli cambiamenti interiori.';
-heroIcon = '🌉 💛 🌙';
-
-paragraphs = [
-`Nel cuore di una città segreta, ${name} trovò un ponte sospeso tra due colline. Non era fatto di legno né di pietra.`,
-
-`Era fatto di scelte. Ogni tavola del ponte brillava quando qualcuno diceva qualcosa di vero a se stesso.`,
-
-`Sotto il ponte scorreva un fiume calmo. Nell’acqua non si vedevano solo nuvole, ma pensieri: una paura, una domanda, un desiderio.`,
-
-`Dopo una giornata ${mood.toLowerCase()}, quel fiume sembrava più vicino del solito. Non spaventava. Aspettava.`,
-
-`Sul ponte comparvero tre luci. La prima diceva coraggio. La seconda diceva gentilezza. La terza diceva fiducia.`,
-
-`${name} capì che non doveva scegliere la luce più forte. Doveva scegliere quella più vera.`,
-
-`Quando fece il primo passo, il ponte vibrò piano. Non perché fosse fragile, ma perché aveva riconosciuto una scelta sincera.`,
-
-`Dall’altra parte non c’era un premio. C’era una città più chiara, più calma, più vicina.`,
-
-`${name} guardò indietro. La paura non era sparita. Ma era diventata più piccola. E questo bastava per continuare.`
-];
-return;
+function sceneTheme(icon,title){
+const lower = (title + ' ' + theme + ' ' + interests.join(' ')).toLowerCase();
+if(lower.includes('mare') || lower.includes('balena') || lower.includes('onda')) return '🌊 🐚 ✨';
+if(lower.includes('lupo') || lower.includes('bosco') || lower.includes('volpe')) return '🌲 🐺 ✨';
+if(lower.includes('principessa') || lower.includes('nuvol')) return '👑 ☁️ ✨';
+if(lower.includes('ponte')) return '🌉 💛 🌙';
+if(lower.includes('atlante') || lower.includes('spazio') || lower.includes('stella')) return '🌌 🧭 ✨';
+return icon;
 }
 
-badge = '11–12 anni • Direzione';
-title = `${name} e l’atlante delle possibilità`;
-subtitle = 'Un racconto più maturo su identità, scelte e futuro.';
-heroIcon = '🌌 🧭 📖';
+const selected = pickStory();
 
-paragraphs = [
-`La sera in cui ${name} trovò l’atlante, il cielo sembrava più grande del solito. Non più scuro. Solo più profondo.`,
+const title = selected.title.replaceAll('{{name}}', name);
+const subtitle = selected.subtitle;
+const paragraphs = personalize(selected.paragraphs);
+const heroIcon = selected.icon;
+const sceneIcon = sceneTheme(heroIcon,title);
 
-`Sulla scrivania c’era un libro senza titolo. Aveva una bussola disegnata in copertina e una frase sottile: “Non tutte le direzioni si vedono da fuori.”`,
-
-`${name} aprì il libro. Le pagine non mostravano città, montagne o confini. Mostravano possibilità.`,
-
-`Una pagina era fatta di coraggio. Una di dubbi. Una di errori utili. Una di sogni ancora confusi.`,
-
-`Ogni pagina sembrava dire: puoi non sapere ancora, ma puoi iniziare a guardare.`,
-
-`Al centro dell’atlante apparve una domanda: “Che cosa ti fa sentire vivo quando nessuno ti guarda?”`,
-
-`${name} rimase in silenzio. Non perché non avesse una risposta, ma perché quella domanda meritava spazio.`,
-
-`Quando chiuse il libro, la bussola non indicava nord. Indicava avanti.`,
-
-`Non era una strada già pronta. Era un invito: osservare meglio, scegliere con calma, diventare senza fretta.`
-];
-}
-
-buildStory();
-
-document.getElementById('badge').innerText = badge;
-document.getElementById('title').innerText = title;
-document.getElementById('subtitle').innerText = subtitle;
+document.getElementById('childName').innerText = name;
 document.getElementById('heroIcon').innerText = heroIcon;
-document.getElementById('storyHeading').innerText = title;
+document.getElementById('storyTitle').innerText = title;
+document.getElementById('ageMeta').innerText = ageText();
+document.getElementById('moodMeta').innerText = moodText();
+document.getElementById('worldMeta').innerText = theme || 'Mondo FABLEA';
+document.getElementById('sceneArt').innerText = sceneIcon;
 
-const teaser = paragraphs.slice(0,3);
-document.getElementById('storyText').innerHTML = teaser.map(p => `<p>${p}</p>`).join('');
+document.getElementById('storyText').innerHTML = paragraphs.slice(0,3).map(p => `<p>${p}</p>`).join('');
 
 const fullText = paragraphs.join('\n\n');
 
@@ -459,11 +586,11 @@ date:new Date().toLocaleDateString('it-IT')
 localStorage.setItem('fableaCurrentStory', JSON.stringify(storyObject));
 
 const savedStories = JSON.parse(localStorage.getItem('fableaSavedStories') || '[]');
-const exists = savedStories.some(item => item.title === storyObject.title && item.child === storyObject.child && item.date === storyObject.date);
+const exists = savedStories.some(item => item.title === storyObject.title && item.child === storyObject.child && item.theme === storyObject.theme);
 
 if(!exists){
 savedStories.push(storyObject);
-localStorage.setItem('fableaSavedStories', JSON.stringify(savedStories.slice(-40)));
+localStorage.setItem('fableaSavedStories', JSON.stringify(savedStories.slice(-80)));
 }
 </script>
 
