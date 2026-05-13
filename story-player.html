@@ -10,11 +10,6 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 
-html,body{
-width:100%;
-min-height:100%;
-}
-
 body{
 min-height:100vh;
 overflow-y:auto;
@@ -55,13 +50,6 @@ margin-bottom:18px;
 .icon{
 font-size:82px;
 margin-bottom:20px;
-animation:float 5s infinite ease-in-out;
-}
-
-@keyframes float{
-0%{transform:translateY(0)}
-50%{transform:translateY(-6px)}
-100%{transform:translateY(0)}
 }
 
 h1{
@@ -91,6 +79,7 @@ font-size:16px;
 line-height:1.55;
 color:#d8c7a4;
 margin-bottom:18px;
+white-space:pre-line;
 }
 
 audio{
@@ -162,7 +151,6 @@ color:rgba(255,255,255,.45);
 
 @media(max-width:700px){
 body{padding:18px 12px}
-.wrap{padding:20px 0 60px}
 .card{padding:38px 18px;border-radius:30px}
 h1{font-size:40px}
 .icon{font-size:66px}
@@ -232,8 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const savedStory = JSON.parse(localStorage.getItem("fableaCurrentStory") || "{}");
 
 const fallbackTitle = "La storia della sera";
-const fallbackText = `
-Cesare trovò una mappa luminosa nascosta dentro un vecchio libro.
+const fallbackText = `Cesare trovò una mappa luminosa nascosta dentro un vecchio libro.
 
 Ogni stella sulla mappa brillava lentamente nel buio.
 
@@ -241,8 +228,7 @@ Quando la toccò, la stanza si riempì di luce dorata.
 
 Una piccola voce sussurrò:
 
-Benvenuto nel mondo di FABLEA.
-`;
+Benvenuto nel mondo di FABLEA.`;
 
 const title = savedStory.title || fallbackTitle;
 const text = savedStory.text || fallbackText;
@@ -269,21 +255,20 @@ generateBtn.disabled = true;
 generateBtn.innerText = "Generazione...";
 statusText.innerText = "Creazione della voce narrante...";
 
-const storyText = document.getElementById("storyText").innerText;
-
 const response = await fetch("/api/tts", {
 method: "POST",
 headers: {
 "Content-Type": "application/json"
 },
 body: JSON.stringify({
-text: storyText
+text: document.getElementById("storyText").innerText
 })
 });
 
 if (!response.ok) {
 const errorText = await response.text();
-throw new Error(errorText || "Errore generazione audio");
+statusText.innerText = "ERRORE API:\n" + errorText;
+throw new Error(errorText);
 }
 
 const blob = await response.blob();
@@ -305,16 +290,15 @@ generateBtn.innerText = "Voce pronta";
 
 console.error(error);
 
-statusText.innerText = "Audio non disponibile. Controlla API, deploy o crediti ElevenLabs.";
+if (!statusText.innerText.includes("ERRORE API")) {
+statusText.innerText = "Errore audio:\n" + error.message;
+}
+
 generateBtn.innerText = "Errore audio";
 
 } finally {
 
 generateBtn.disabled = false;
-
-if (generateBtn.innerText === "Generazione...") {
-generateBtn.innerText = "Genera voce narrante";
-}
 
 }
 
