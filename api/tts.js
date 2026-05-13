@@ -1,56 +1,73 @@
 export default async function handler(req, res) {
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({
-      error: 'Method not allowed'
-    });
-  }
-
   try {
+    const apiKey = process.env.ELEVENLABS_API_KEY;
+    const voiceId = process.env.ELEVENLABS_VOICE_ID;
 
-    const text = req.body.text || "Ciao Cesare";
+    if (req.method === "GET") {
+      return res.status(200).json({
+        ok: true,
+        apiKeyPresent: Boolean(apiKey),
+        voiceIdPresent: Boolean(voiceId),
+        voiceId: voiceId || null
+      });
+    }
+
+    if (req.method !== "POST") {
+      return res.status(405).json({ error: "Method not allowed" });
+    }
+
+    if (!apiKey || !voiceId) {
+      return res.status(500).json({
+        error: "Missing env variables",
+        apiKeyPresent: Boolean(apiKey),
+        voiceIdPresent: Boolean(voiceId)
+      });
+    }
+
+    const text = req.body?.text || "Ciao, benvenuto in FABLEA.";
 
     const eleven = await fetch(
-      `https://api.elevenlabs.io/v1/text-to-speech/${process.env.ELEVENLABS_VOICE_ID}`,
+      `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
       {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'xi-api-key': process.env.ELEVENLABS_API_KEY,
-          'Content-Type': 'application/json'
+          "Accept": "audio/mpeg",
+          "Content-Type": "application/json",
+          "xi-api-key": apiKey
         },
         body: JSON.stringify({
-          text,
-          model_id: 'eleven_multilingual_v2',
+          text: text.slice(0, 900),
+          model_id: "eleven_multilingual_v2",
           voice_settings: {
-            stability: 0.6,
-            similarity_boost: 0.8
+            stability: 0.55,
+            similarity_boost: 0.8,
+            style: 0.15,
+            use_speaker_boost: true
           }
         })
       }
     );
 
     if (!eleven.ok) {
-
-      const errorText = await eleven.text();
-
+      const details = await eleven.text();
       return res.status(500).json({
-        error: errorText
+        error: "ElevenLabs error",
+        status: eleven.status,
+        details
       });
-
     }
 
-    const audioBuffer = await eleven.arrayBuffer();
+    const audioBuffer = Buffer.from(await eleven.arrayBuffer());
 
-    res.setHeader('Content-Type', 'audio/mpeg');
+    res.setHeader("Content-Type", "audio/mpeg");
+    res.setHeader("Cache-Control", "no-store");
 
-    return res.send(Buffer.from(audioBuffer));
+    return res.status(200).send(audioBuffer);
 
-  } catch (err) {
-
+  } catch (error) {
     return res.status(500).json({
-      error: err.message
+      error: "Server error",
+      message: error.message
     });
-
   }
-
 }
