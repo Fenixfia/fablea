@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FABLEA | Crea una storia</title>
+<title>FABLEA | Nuova esperienza</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -26,134 +26,162 @@ color:#332d35;
 
 .card{
 width:92%;
-max-width:780px;
+max-width:840px;
 padding:52px 42px;
-border-radius:38px;
-background:rgba(255,250,245,.70);
+border-radius:42px;
+background:rgba(255,250,245,.72);
 backdrop-filter:blur(16px);
 border:1px solid rgba(255,255,255,.58);
 box-shadow:0 24px 80px rgba(80,65,55,.15);
 }
 
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:16px;
+flex-wrap:wrap;
+margin-bottom:30px;
+}
+
+.back{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:12px 17px;
+border-radius:999px;
+background:rgba(255,255,255,.58);
+border:1px solid rgba(80,65,55,.10);
+color:#6b6467;
+font-size:14px;
+font-weight:900;
+text-decoration:none;
+}
+
 .badge{
-text-align:center;
 font-size:12px;
 letter-spacing:5px;
 text-transform:uppercase;
 color:#9c8774;
-margin-bottom:18px;
 }
 
-h1{
-font-family:'Cormorant Garamond',serif;
-font-size:48px;
-font-weight:600;
+.hero{
 text-align:center;
-margin-bottom:14px;
-}
-
-.intro{
-text-align:center;
-font-size:18px;
-line-height:1.7;
-color:#6d6668;
-margin-bottom:28px;
-}
-
-.selected-child{
-padding:22px;
-border-radius:28px;
-background:rgba(255,255,255,.50);
-border:1px solid rgba(80,65,55,.10);
-text-align:center;
-margin-bottom:30px;
+margin-bottom:34px;
 }
 
 .avatar{
-width:74px;
-height:74px;
+width:86px;
+height:86px;
 border-radius:50%;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:36px;
+font-size:42px;
 background:linear-gradient(135deg,#f8e3aa,#e7dcff);
-margin:0 auto 14px;
+margin:0 auto 18px;
 }
 
-.child-name{
+h1{
 font-family:'Cormorant Garamond',serif;
-font-size:34px;
+font-size:54px;
 font-weight:600;
+line-height:1.08;
+margin-bottom:14px;
 }
 
-.child-meta{
-font-size:14px;
-font-weight:800;
-color:#9f8a76;
-margin-top:6px;
+.intro{
+font-size:18px;
+line-height:1.7;
+color:#6d6668;
+max-width:700px;
+margin:0 auto;
+}
+
+.profile-note{
+margin:26px auto 34px;
+padding:18px 22px;
+border-radius:26px;
+background:rgba(255,255,255,.48);
+border:1px solid rgba(80,65,55,.08);
+font-size:15px;
+line-height:1.6;
+color:#7b706c;
+text-align:center;
+max-width:700px;
 }
 
 label{
 display:block;
 font-size:15px;
-font-weight:700;
+font-weight:900;
 color:#6d5f57;
-margin:18px 0 8px;
+margin:20px 0 9px;
 }
 
 select{
 width:100%;
-height:58px;
-border-radius:18px;
+height:60px;
+border-radius:20px;
 border:1px solid rgba(80,65,55,.14);
-background:rgba(255,255,255,.70);
+background:rgba(255,255,255,.74);
 padding:0 18px;
 font-size:17px;
 font-family:'Nunito',sans-serif;
+font-weight:700;
 color:#332d35;
 outline:none;
 }
 
-button{
+.theme-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+margin-top:12px;
+}
+
+.theme{
+padding:17px 12px;
+border-radius:22px;
+background:rgba(255,255,255,.50);
+border:1px solid rgba(80,65,55,.10);
+text-align:center;
+font-size:15px;
+font-weight:900;
+cursor:pointer;
+transition:.25s;
+}
+
+.theme.active{
+background:linear-gradient(135deg,#f8e3aa,#e7c870);
+box-shadow:0 12px 26px rgba(231,200,112,.20);
+}
+
+button.main{
 width:100%;
-height:64px;
-margin-top:30px;
+height:66px;
+margin-top:34px;
 border:0;
 border-radius:999px;
 background:linear-gradient(135deg,#f8e3aa,#e7c870);
 color:#332d35;
-font-size:18px;
-font-weight:800;
+font-size:19px;
+font-weight:900;
 box-shadow:0 14px 28px rgba(181,145,73,.18);
 cursor:pointer;
 }
 
-.nav{
-display:flex;
-justify-content:center;
-gap:18px;
-margin-top:24px;
-font-size:15px;
-flex-wrap:wrap;
-}
-
-.nav a{
-color:#8f8078;
-text-decoration:none;
-}
-
 .empty{
 text-align:center;
-padding:28px;
-border-radius:30px;
+padding:34px 28px;
+border-radius:32px;
 background:rgba(255,255,255,.50);
 border:1px solid rgba(80,65,55,.10);
 }
 
 .empty h2{
 font-family:'Cormorant Garamond',serif;
-font-size:36px;
+font-size:38px;
 font-weight:600;
 margin-bottom:12px;
 }
@@ -174,14 +202,33 @@ border-radius:999px;
 background:linear-gradient(135deg,#f8e3aa,#e7c870);
 color:#332d35;
 font-size:16px;
-font-weight:800;
+font-weight:900;
 text-decoration:none;
 }
 
-@media(max-width:700px){
-.card{padding:42px 24px;border-radius:30px}
-h1{font-size:38px}
+.nav{
+display:flex;
+justify-content:center;
+gap:18px;
+margin-top:26px;
+font-size:15px;
+flex-wrap:wrap;
+}
+
+.nav a{
+color:#8f8078;
+text-decoration:none;
+font-weight:800;
+}
+
+@media(max-width:760px){
+body{padding:18px}
+.card{padding:40px 22px;border-radius:32px}
+h1{font-size:40px}
 .intro{font-size:16px}
+.theme-grid{grid-template-columns:1fr 1fr}
+.top{justify-content:center}
+.badge{text-align:center}
 }
 </style>
 </head>
@@ -190,66 +237,13 @@ h1{font-size:38px}
 
 <main class="card">
 
-<div class="badge">Crea con FABLEA</div>
-
-<h1>Che storia vuoi creare oggi?</h1>
-
-<div class="intro">
-FABLEA userà il profilo selezionato per adattare parole, ritmo, immagini e attività.
+<div class="top">
+<a class="back" href="/child-hub.html">← Torna al mondo</a>
+<div class="badge">Nuova esperienza</div>
+<a class="back" href="/onboarding.html">Profili</a>
 </div>
 
-<div id="childArea"></div>
-
-<div id="storyForm" style="display:none;">
-
-<label>Tipo di esperienza</label>
-<select id="experienceType">
-<option>Storia della sera</option>
-<option>Avventura immaginativa</option>
-<option>Storia sulle emozioni</option>
-<option>Storia educativa soft</option>
-<option>Mini racconto rilassante</option>
-</select>
-
-<label>Com’è stata la giornata?</label>
-<select id="childMood">
-<option>Tranquilla</option>
-<option>Felice</option>
-<option>Stancante</option>
-<option>Un po’ difficile</option>
-<option>Piena di energia</option>
-<option>Ha avuto paura di qualcosa</option>
-<option>Curiosa</option>
-<option>Un po’ arrabbiata</option>
-</select>
-
-<label>Che mondo vuoi esplorare?</label>
-<select id="storyTheme">
-<option>Foresta magica</option>
-<option>Il lupo cattivo gentile</option>
-<option>Mare e stelle</option>
-<option>Animali parlanti</option>
-<option>Dinosauri gentili</option>
-<option>Spazio e pianeti</option>
-<option>Castelli e draghi buoni</option>
-<option>Principesse coraggiose</option>
-<option>Regni della luna</option>
-<option>Montagna e nuvole</option>
-<option>Città segreta</option>
-<option>Coraggio e calma</option>
-</select>
-
-<button onclick="createStory()">Crea la storia</button>
-
-</div>
-
-<div class="nav">
-<a href="/profile.html">← Cambia bambino</a>
-<a href="/library.html">Libreria</a>
-<a href="/activity.html">Attività</a>
-<a href="/about.html">Manifesto</a>
-<a href="/index.html">Home</a>
-</div>
+<div id="content"></div>
 
 </main>
 
@@ -267,14 +261,6 @@ if(!profiles.length) return null;
 return profiles.find(profile => profile.id === selectedId) || profiles[0];
 }
 
-function ageLabel(value){
-if(value === '2-4') return '2–4 anni • Meraviglia';
-if(value === '5-7') return '5–7 anni • Esplorazione';
-if(value === '8-10') return '8–10 anni • Identità';
-if(value === '11-12') return '11–12 anni • Direzione';
-return 'Fascia FABLEA';
-}
-
 function avatarFor(age){
 if(age === '2-4') return '🌙';
 if(age === '5-7') return '🦊';
@@ -283,53 +269,67 @@ if(age === '11-12') return '🧭';
 return '✨';
 }
 
-const profile = getSelectedProfile();
-const childArea = document.getElementById('childArea');
-const storyForm = document.getElementById('storyForm');
+function ageLabel(value){
+if(value === '2-4') return 'Meraviglia';
+if(value === '5-7') return 'Esplorazione';
+if(value === '8-10') return 'Identità';
+if(value === '11-12') return 'Direzione';
+return 'FABLEA';
+}
 
-if(!profile){
+let selectedTheme = '';
 
-childArea.innerHTML = `
-<div class="empty">
-<h2>Nessun bambino selezionato.</h2>
-<p>
-Crea prima un profilo bambino. Poi FABLEA potrà adattare storie, voce e attività.
-</p>
-<a href="/onboarding.html">Crea profilo bambino</a>
-</div>
-`;
+function cleanInterest(value){
+return value.replace(/[^\p{L}\p{N}\s]/gu,'').trim();
+}
 
-}else{
+function setTheme(value){
+selectedTheme = value;
+document.querySelectorAll('.theme').forEach(item=>{
+item.classList.remove('active');
+if(item.dataset.theme === value){
+item.classList.add('active');
+}
+});
+}
 
-localStorage.setItem('fableaSelectedChildId', profile.id);
+function buildThemes(profile){
+const base = [
+'Foresta magica',
+'Il lupo cattivo gentile',
+'Mare e stelle',
+'Animali parlanti',
+'Dinosauri gentili',
+'Spazio e pianeti',
+'Principesse coraggiose',
+'Regni della luna',
+'Manualità e fantasia'
+];
 
-childArea.innerHTML = `
-<div class="selected-child">
-<div class="avatar">${avatarFor(profile.age)}</div>
-<div class="child-name">${profile.name}</div>
-<div class="child-meta">${ageLabel(profile.age)}</div>
-</div>
-`;
+const interests = profile.interests && profile.interests.length
+? profile.interests.map(cleanInterest).filter(Boolean)
+: [];
 
-storyForm.style.display = 'block';
+const merged = [...interests, ...base];
 
+return [...new Set(merged)].slice(0,9);
 }
 
 function createStory(){
+
+const profile = getSelectedProfile();
 
 if(!profile){
 window.location.href='/onboarding.html';
 return;
 }
 
-const selectedTheme = document.getElementById('storyTheme').value;
-
 const data = {
 name:profile.name,
 age:profile.age,
 experience:document.getElementById('experienceType').value,
 mood:document.getElementById('childMood').value,
-theme:selectedTheme,
+theme:selectedTheme || 'Foresta magica',
 interests:profile.interests || [],
 support:profile.support || '',
 duration:profile.duration || ''
@@ -339,6 +339,88 @@ localStorage.setItem('fableaStoryData', JSON.stringify(data));
 
 window.location.href='/story-result.html';
 }
+
+function render(){
+const profile = getSelectedProfile();
+const content = document.getElementById('content');
+
+if(!profile){
+content.innerHTML = `
+<div class="empty">
+<h2>Nessun esploratore selezionato.</h2>
+<p>
+Scegli o crea prima un profilo bambino. Poi FABLEA potrà costruire un’esperienza adatta al suo piccolo mondo.
+</p>
+<a href="/onboarding.html">Scegli profilo</a>
+</div>
+`;
+return;
+}
+
+localStorage.setItem('fableaSelectedChildId', profile.id);
+
+const themes = buildThemes(profile);
+selectedTheme = themes[0];
+
+content.innerHTML = `
+<section class="hero">
+<div class="avatar">${avatarFor(profile.age)}</div>
+<h1>Che esperienza viviamo oggi con ${profile.name}?</h1>
+<div class="intro">
+Scegli il ritmo della giornata, il mondo da esplorare e il tipo di esperienza. FABLEA adatterà voce, immagini e racconto alla fascia ${ageLabel(profile.age)}.
+</div>
+</section>
+
+<div class="profile-note">
+Il mondo di ${profile.name} parte dai suoi interessi e cresce nel tempo: ${profile.interests && profile.interests.length ? profile.interests.join(', ') : 'immaginazione, calma e scoperta'}.
+</div>
+
+<label>Tipo di esperienza</label>
+<select id="experienceType">
+<option>Avventura immaginativa</option>
+<option>Storia della sera</option>
+<option>Storia sulle emozioni</option>
+<option>Storia educativa soft</option>
+<option>Mini racconto rilassante</option>
+<option>Missione creativa</option>
+<option>Scoperta del giorno</option>
+</select>
+
+<label>Com’è il momento di oggi?</label>
+<select id="childMood">
+<option>Curiosa</option>
+<option>Tranquilla</option>
+<option>Felice</option>
+<option>Stancante</option>
+<option>Un po’ difficile</option>
+<option>Piena di energia</option>
+<option>Ha avuto paura di qualcosa</option>
+<option>Un po’ arrabbiata</option>
+</select>
+
+<label>Quale mondo apriamo?</label>
+<div class="theme-grid">
+${themes.map((theme,index)=>`
+<div class="theme ${index === 0 ? 'active' : ''}" data-theme="${theme}" onclick="setTheme('${theme.replace(/'/g,"\\'")}')">
+${theme}
+</div>
+`).join('')}
+</div>
+
+<button class="main" onclick="createStory()">
+Apri il mondo
+</button>
+
+<div class="nav">
+<a href="/child-hub.html">Mondo bambino</a>
+<a href="/library.html">Libreria</a>
+<a href="/activity.html">Attività</a>
+<a href="/index.html">Home</a>
+</div>
+`;
+}
+
+render();
 </script>
 
 </body>
