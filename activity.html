@@ -3,530 +3,587 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FABLEA | Entra nell’esperienza</title>
+
+<title>FABLEA | Il mondo continua</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 body{
 min-height:100vh;
-padding:24px;
+overflow-x:hidden;
 font-family:'Nunito',sans-serif;
 background:
-radial-gradient(circle at top left,#fff1d8 0%,transparent 30%),
-radial-gradient(circle at bottom right,#e7dcff 0%,transparent 34%),
-linear-gradient(135deg,#f8f1e8 0%,#ece4ea 45%,#d9ddea 100%);
-display:flex;
-justify-content:center;
-align-items:center;
+radial-gradient(circle at top,#fff0c9 0%,transparent 28%),
+radial-gradient(circle at bottom right,#e2d7ff 0%,transparent 34%),
+linear-gradient(135deg,#f7efe6 0%,#efe7ea 42%,#dce0ea 100%);
 color:#352f36;
 }
 
-.card{
-width:92%;
-max-width:980px;
-padding:52px 42px;
-border-radius:44px;
-background:rgba(255,251,247,.78);
-backdrop-filter:blur(16px);
-border:1px solid rgba(255,255,255,.62);
-box-shadow:0 24px 80px rgba(70,60,50,.12);
-text-align:center;
+.page{
+max-width:1200px;
+margin:auto;
+padding:34px 20px 70px;
 }
 
-.top{
+.hero{
+position:relative;
+overflow:hidden;
+padding:70px 44px;
+border-radius:44px;
+background:
+linear-gradient(180deg,rgba(255,255,255,.64),rgba(255,255,255,.42));
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,.6);
+box-shadow:0 24px 80px rgba(50,40,40,.12);
+margin-bottom:30px;
+}
+
+.heroGlow{
+position:absolute;
+width:420px;
+height:420px;
+border-radius:50%;
+background:radial-gradient(circle,rgba(255,224,145,.34),transparent 70%);
+top:-160px;
+right:-120px;
+filter:blur(10px);
+animation:pulse 8s infinite ease-in-out;
+}
+
+@keyframes pulse{
+0%{transform:scale(.95)}
+50%{transform:scale(1.08)}
+100%{transform:scale(.95)}
+}
+
+.topbar{
 display:flex;
 justify-content:space-between;
 align-items:center;
+margin-bottom:26px;
 gap:14px;
 flex-wrap:wrap;
-margin-bottom:30px;
 }
 
 .back{
 display:inline-flex;
 align-items:center;
 justify-content:center;
-padding:12px 17px;
+padding:12px 18px;
 border-radius:999px;
-background:rgba(255,255,255,.58);
+background:rgba(255,255,255,.62);
 border:1px solid rgba(80,65,55,.10);
-color:#6b6467;
-font-size:14px;
-font-weight:900;
 text-decoration:none;
+font-size:14px;
+font-weight:800;
+color:#5f575c;
 }
 
 .badge{
 font-size:12px;
-letter-spacing:5px;
+letter-spacing:4px;
 text-transform:uppercase;
 color:#9f8a76;
 }
 
-h1{
+.heroIcon{
+font-size:82px;
+margin-bottom:20px;
+animation:float 5s ease-in-out infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-8px)}
+100%{transform:translateY(0)}
+}
+
+.hero h1{
 font-family:'Cormorant Garamond',serif;
-font-size:58px;
-line-height:1.05;
+font-size:72px;
+line-height:1;
 font-weight:600;
-margin-bottom:14px;
+margin-bottom:18px;
 }
 
-.subtitle{
-font-size:18px;
-line-height:1.7;
-color:#756c70;
-max-width:720px;
-margin:0 auto 30px;
+.hero p{
+max-width:760px;
+font-size:21px;
+line-height:1.8;
+color:#6f666c;
 }
 
-.visual-zone{
-min-height:300px;
+.section{
+margin-top:34px;
+}
+
+.sectionTitle{
+font-size:14px;
+letter-spacing:3px;
+text-transform:uppercase;
+color:#9f8a76;
+margin-bottom:18px;
+}
+
+.moods{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:14px;
+}
+
+.mood{
+padding:24px 14px;
+border-radius:28px;
+background:rgba(255,255,255,.58);
+border:1px solid rgba(80,65,55,.08);
+text-align:center;
+cursor:pointer;
+transition:.25s ease;
+box-shadow:0 10px 26px rgba(50,40,40,.05);
+}
+
+.mood:hover{
+transform:translateY(-3px);
+}
+
+.mood.active{
+background:linear-gradient(135deg,#fff2ca,#f0db9a);
+border-color:#ebd188;
+}
+
+.moodEmoji{
+font-size:38px;
+margin-bottom:10px;
+}
+
+.moodLabel{
+font-size:15px;
+font-weight:800;
+}
+
+.scene{
+margin-top:28px;
+padding:40px;
 border-radius:38px;
-margin:28px auto;
-background:
-radial-gradient(circle at 50% 35%,#fff8d8 0%,transparent 24%),
-radial-gradient(circle at 20% 80%,#ffd9be 0%,transparent 24%),
-linear-gradient(135deg,#efe5ff,#f9e7b6);
-box-shadow:inset 0 0 80px rgba(255,255,255,.62);
-display:flex;
-align-items:center;
-justify-content:center;
+background:rgba(255,255,255,.54);
+border:1px solid rgba(80,65,55,.08);
+box-shadow:0 16px 40px rgba(50,40,40,.07);
+min-height:260px;
 position:relative;
 overflow:hidden;
 }
 
-.big-image{
-font-size:96px;
-animation:float 4.5s ease-in-out infinite;
-z-index:2;
+.sceneVisual{
+font-size:64px;
+margin-bottom:20px;
 }
 
-@keyframes float{
-0%{transform:translateY(0) scale(1)}
-50%{transform:translateY(-8px) scale(1.04)}
-100%{transform:translateY(0) scale(1)}
+.sceneTitle{
+font-family:'Cormorant Garamond',serif;
+font-size:46px;
+line-height:1.05;
+margin-bottom:18px;
 }
 
-.glow{
-position:absolute;
-width:170px;
-height:170px;
-border-radius:50%;
-background:rgba(255,244,190,.55);
-filter:blur(18px);
-animation:pulse 4s ease-in-out infinite;
+.sceneText{
+font-size:20px;
+line-height:1.9;
+color:#655d63;
+max-width:860px;
 }
 
-@keyframes pulse{
-0%{transform:scale(.9);opacity:.55}
-50%{transform:scale(1.15);opacity:.9}
-100%{transform:scale(.9);opacity:.55}
-}
-
-.activity{
-max-width:760px;
-margin:0 auto;
-font-size:23px;
-line-height:1.8;
-color:#4d4550;
-}
-
-.activity strong{
-color:#342f38;
-}
-
-.options{
+.world{
+margin-top:34px;
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:14px;
-margin-top:30px;
+gap:18px;
 }
 
-.option{
-padding:20px 16px;
-border-radius:26px;
-background:rgba(255,255,255,.52);
-border:1px solid rgba(80,65,55,.10);
-font-size:18px;
-font-weight:900;
-cursor:pointer;
-transition:.25s;
-}
-
-.option:hover{
-transform:translateY(-3px);
-background:rgba(255,255,255,.74);
-}
-
-.result{
-margin-top:30px;
+.worldCard{
 padding:28px;
-border-radius:30px;
+border-radius:34px;
 background:rgba(255,255,255,.56);
-font-size:22px;
-line-height:1.8;
-color:#5f575c;
-display:none;
-text-align:left;
+border:1px solid rgba(80,65,55,.08);
+box-shadow:0 14px 32px rgba(50,40,40,.06);
+}
+
+.worldIcon{
+font-size:42px;
+margin-bottom:16px;
+}
+
+.worldCard h3{
+font-family:'Cormorant Garamond',serif;
+font-size:34px;
+margin-bottom:12px;
+}
+
+.worldCard p{
+font-size:16px;
+line-height:1.7;
+color:#6d6668;
+}
+
+.treasures{
+display:flex;
+flex-wrap:wrap;
+gap:14px;
+margin-top:18px;
+}
+
+.treasure{
+padding:12px 18px;
+border-radius:999px;
+background:rgba(255,255,255,.72);
+border:1px solid rgba(80,65,55,.08);
+font-size:14px;
+font-weight:700;
+color:#655d63;
+}
+
+.final{
+margin-top:34px;
+padding:44px;
+border-radius:40px;
+text-align:center;
+background:
+linear-gradient(135deg,rgba(255,245,220,.72),rgba(255,255,255,.58));
+border:1px solid rgba(232,205,120,.32);
+box-shadow:0 20px 50px rgba(181,145,73,.10);
+}
+
+.final h2{
+font-family:'Cormorant Garamond',serif;
+font-size:54px;
+margin-bottom:16px;
+}
+
+.final p{
+max-width:720px;
+margin:auto;
+font-size:20px;
+line-height:1.9;
+color:#6f666c;
 }
 
 .actions{
-margin-top:40px;
+margin-top:28px;
 display:flex;
-gap:16px;
 justify-content:center;
+gap:14px;
 flex-wrap:wrap;
 }
 
 .button{
-padding:15px 28px;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:16px 28px;
 border-radius:999px;
+border:none;
+cursor:pointer;
 text-decoration:none;
 font-size:16px;
 font-weight:900;
 background:linear-gradient(135deg,#f8e3aa,#e7c870);
-color:#322d34;
-box-shadow:0 12px 30px rgba(231,200,112,.25);
-border:0;
-cursor:pointer;
+color:#322b35;
+box-shadow:0 14px 28px rgba(181,145,73,.16);
 }
 
 .secondary{
-background:rgba(255,255,255,.58);
+background:rgba(255,255,255,.62);
 border:1px solid rgba(80,65,55,.10);
-color:#6b6467;
 box-shadow:none;
+color:#625c60;
 }
 
-@media(max-width:760px){
-body{padding:18px}
-.card{padding:40px 22px;border-radius:32px}
-.top{justify-content:center}
-h1{font-size:40px}
-.subtitle{font-size:16px}
-.visual-zone{min-height:250px}
-.big-image{font-size:76px}
-.activity{font-size:19px}
-.options{grid-template-columns:1fr}
-.button{width:100%}
+@media(max-width:980px){
+
+.hero{
+padding:46px 24px;
+}
+
+.hero h1{
+font-size:50px;
+}
+
+.hero p{
+font-size:18px;
+}
+
+.moods{
+grid-template-columns:repeat(2,1fr);
+}
+
+.world{
+grid-template-columns:1fr;
+}
+
+.scene{
+padding:28px;
+}
+
+.sceneTitle{
+font-size:36px;
+}
+
+.sceneText{
+font-size:18px;
+}
+
+.final h2{
+font-size:40px;
+}
+
+}
+
+@media(max-width:640px){
+
+.hero h1{
+font-size:42px;
+}
+
+.heroIcon{
+font-size:64px;
+}
+
+.moods{
+grid-template-columns:1fr;
+}
+
+.button{
+width:100%;
+}
+
 }
 </style>
 </head>
 
 <body>
 
-<main class="card">
+<div class="page">
 
-<div class="top">
-<a class="back" href="/story-result.html">← Torna alla storia</a>
-<div class="badge" id="badge">FABLEA Activity</div>
-<a class="back" href="/child-hub.html">Mondo bambino</a>
+<section class="hero">
+
+<div class="heroGlow"></div>
+
+<div class="topbar">
+<a class="back" href="/child-hub.html">← Torna al mondo</a>
+<div class="badge">Il viaggio continua</div>
+<a class="back" href="/story-player.html">Voce narrante</a>
 </div>
 
-<h1 id="title">Entra nell’esperienza</h1>
+<div class="heroIcon">✨</div>
 
-<div class="subtitle" id="subtitle">
-Una piccola attività per trasformare la storia in immaginazione, movimento, calma o creatività.
+<h1 id="heroTitle">Bentornato nel mondo FABLEA.</h1>
+
+<p id="heroText">
+La stella trovata ieri pulsa ancora lentamente.  
+Ogni scelta lascia una piccola traccia nel viaggio del bambino.
+</p>
+
+</section>
+
+<div class="section">
+
+<div class="sectionTitle">
+Cosa senti oggi?
 </div>
 
-<div class="visual-zone">
-<div class="glow"></div>
-<div class="big-image" id="bigImage">✨</div>
+<div class="moods">
+
+<div class="mood active" onclick="setMood('calma')">
+<div class="moodEmoji">🌊</div>
+<div class="moodLabel">Calma</div>
 </div>
 
-<div class="activity" id="activityText"></div>
+<div class="mood" onclick="setMood('curiosita')">
+<div class="moodEmoji">✨</div>
+<div class="moodLabel">Curiosità</div>
+</div>
 
-<div class="options" id="options"></div>
+<div class="mood" onclick="setMood('avventura')">
+<div class="moodEmoji">🌲</div>
+<div class="moodLabel">Avventura</div>
+</div>
 
-<div class="result" id="resultBox"></div>
+<div class="mood" onclick="setMood('riposo')">
+<div class="moodEmoji">☁️</div>
+<div class="moodLabel">Riposo</div>
+</div>
+
+<div class="mood" onclick="setMood('silenzio')">
+<div class="moodEmoji">🌙</div>
+<div class="moodLabel">Silenzio</div>
+</div>
+
+</div>
+
+</div>
+
+<section class="scene" id="scene">
+
+<div class="sceneVisual" id="sceneVisual">🌊</div>
+
+<div class="sceneTitle" id="sceneTitle">
+Il mare respira lentamente
+</div>
+
+<div class="sceneText" id="sceneText">
+Le onde si muovono piano accanto a Cesare.
+
+La luce trovata nella storia continua a brillare vicino all'acqua.
+
+Anche il vento sembra voler raccontare qualcosa.
+</div>
+
+</section>
+
+<section class="world">
+
+<div class="worldCard">
+<div class="worldIcon">⭐</div>
+<h3>Oggetti trovati</h3>
+
+<div class="treasures">
+<div class="treasure">⭐ Stella luminosa</div>
+<div class="treasure">🗺️ Mappa dorata</div>
+<div class="treasure">🐚 Conchiglia calma</div>
+<div class="treasure">🌲 Foglia del bosco</div>
+</div>
+
+</div>
+
+<div class="worldCard">
+<div class="worldIcon">📖</div>
+<h3>Ultimo viaggio</h3>
+
+<p id="lastStory">
+La mappa luminosa continua a cambiare lentamente.  
+Ogni volta che il bambino torna, il mondo ricorda qualcosa del viaggio precedente.
+</p>
+
+</div>
+
+<div class="worldCard">
+<div class="worldIcon">🕯️</div>
+<h3>Piccolo rituale</h3>
+
+<p>
+Prima di lasciare FABLEA, scegli un oggetto da lasciare acceso per domani.
+
+Il mondo continuerà ad aspettarti lentamente.
+</p>
+
+</div>
+
+</section>
+
+<section class="final">
+
+<h2>Vuoi lasciare accesa la stella?</h2>
+
+<p>
+Ogni ritorno rende il mondo più familiare, più vivo e più vicino al bambino.
+</p>
 
 <div class="actions">
-<a class="button" href="/story-player.html">Ascolta la voce narrante</a>
-<a class="button secondary" href="/manualita.html">Crea con le mani</a>
-<a class="button secondary" href="/story.html">Nuova esperienza</a>
-<a class="button secondary" href="/child-hub.html">Torna al mondo</a>
-<a class="button secondary" href="/library.html">Libreria</a>
+
+<a class="button" href="/story-player.html">
+Ascolta la voce narrante
+</a>
+
+<a class="button secondary" href="/manualita.html">
+Crea con le mani
+</a>
+
+<a class="button secondary" href="/story.html">
+Nuova esperienza
+</a>
+
+<a class="button secondary" href="/library.html">
+Apri libreria
+</a>
+
 </div>
 
-</main>
+</section>
+
+</div>
 
 <script>
-const savedData = JSON.parse(localStorage.getItem('fableaStoryData') || '{}');
 
-const name = savedData.name || 'piccolo esploratore';
-const age = savedData.age || '5-7';
-const theme = savedData.theme || 'Foresta magica';
-const experience = savedData.experience || 'Avventura immaginativa';
-const mood = savedData.mood || 'Curiosa';
+const moods = {
 
-const badge = document.getElementById('badge');
-const title = document.getElementById('title');
-const subtitle = document.getElementById('subtitle');
-const bigImage = document.getElementById('bigImage');
-const activityText = document.getElementById('activityText');
-const options = document.getElementById('options');
-const resultBox = document.getElementById('resultBox');
+calma:{
+emoji:"🌊",
+title:"Il mare respira lentamente",
+text:"Le onde si muovono piano accanto a Cesare.\n\nLa luce trovata nella storia continua a brillare vicino all'acqua.\n\nAnche il vento sembra voler raccontare qualcosa."
+},
 
-function hasTheme(word){
-return theme.toLowerCase().includes(word.toLowerCase()) || experience.toLowerCase().includes(word.toLowerCase());
+curiosita:{
+emoji:"✨",
+title:"La stella vuole mostrare un segreto",
+text:"Piccole luci si accendono lungo il sentiero.\n\nQualcosa nel mondo di FABLEA sembra cambiato.\n\nOgni dettaglio invita il bambino ad avvicinarsi lentamente."
+},
+
+avventura:{
+emoji:"🌲",
+title:"Il bosco apre un nuovo sentiero",
+text:"Tra gli alberi compare una strada mai vista.\n\nUna piccola volpe osserva Cesare da lontano.\n\nForse conosce il prossimo pezzo della storia."
+},
+
+riposo:{
+emoji:"☁️",
+title:"Le nuvole rallentano il mondo",
+text:"Il cielo si fa morbido e silenzioso.\n\nTutto sembra più lento.\n\nPerfino la luce della stanza diventa più calma."
+},
+
+silenzio:{
+emoji:"🌙",
+title:"La luna resta accesa nel buio",
+text:"Non servono molte parole.\n\nLa stella trovata ieri continua a brillare piano.\n\nFABLEA rimane accanto al bambino anche nel silenzio."
 }
 
-function showResult(text,image){
-resultBox.style.display='block';
-resultBox.innerHTML=text;
-if(image){
-bigImage.innerText=image;
-}
-}
-
-function addOption(label,text,image){
-const div=document.createElement('div');
-div.className='option';
-div.innerText=label;
-div.onclick=function(){
-showResult(text,image);
 };
-options.appendChild(div);
-}
 
-if(age === '2-4'){
+function setMood(mood){
 
-badge.innerText='2–4 anni • Meraviglia';
-title.innerText='Guarda, tocca, immagina';
-subtitle.innerText='Un’attività breve, visiva e morbida per accompagnare attenzione, calma e fantasia.';
+document.querySelectorAll('.mood').forEach(el=>{
+el.classList.remove('active');
+});
 
-if(hasTheme('lupo')){
+event.currentTarget.classList.add('active');
 
-bigImage.innerText='🐺 🌙';
-
-activityText.innerHTML=`
-<strong>${name}</strong>, il lupo dal vocione è ancora nel bosco.<br><br>
-Non vuole fare paura.<br>
-Vuole imparare a parlare piano.<br><br>
-Aiutiamolo insieme.
-`;
-
-addOption(
-'🌙 Guarda la luna',
-`
-La luna illumina il bosco lentamente.<br><br>
-Il lupo alza il naso verso il cielo.<br>
-Respira piano.<br><br>
-Il suo vocione diventa più morbido.
-`,
-'🌙🐺'
-);
-
-addOption(
-'🤍 Carezza immaginaria',
-`
-${name} allunga la mano lentamente.<br><br>
-Il lupo chiude gli occhi.<br>
-La carezza immaginaria gli dice:<br><br>
-“Va tutto bene.”`,
-'🤍🐺'
-);
-
-addOption(
-'✨ Accendi la luce',
-`
-Una piccola luce compare tra le foglie.<br><br>
-Il bosco non sembra più buio.<br>
-Il lupo si sdraia vicino alla luce e resta calmo.`,
-'✨🐺'
-);
-
-}else{
-
-bigImage.innerText='🌙 🧸';
-
-activityText.innerHTML=`
-<strong>${name}</strong>, il piccolo mondo FABLEA è ancora acceso.<br><br>
-C’è una luce morbida.<br>
-Un orsetto vicino.<br>
-E una stellina che aspetta.
-`;
-
-addOption(
-'🌙 Guarda la luna',
-`
-La luna si muove piano nel cielo.<br><br>
-Inspira lentamente.<br>
-Espira lentamente.<br><br>
-Il corpo diventa morbido.`,
-'🌙'
-);
-
-addOption(
-'🧸 Abbraccia l’orsetto',
-`
-L’orsetto si avvicina.<br><br>
-Non parla forte.<br>
-Resta semplicemente vicino a ${name}.`,
-'🧸'
-);
-
-addOption(
-'✨ Segui la stellina',
-`
-La stellina lascia una piccola scia luminosa.<br><br>
-Non corre.<br>
-Aspetta che ${name} la segua piano.`,
-'✨'
-);
+document.getElementById('sceneVisual').innerText = moods[mood].emoji;
+document.getElementById('sceneTitle').innerText = moods[mood].title;
+document.getElementById('sceneText').innerText = moods[mood].text;
 
 }
 
-}else if(age === '5-7'){
+document.addEventListener("DOMContentLoaded",()=>{
 
-badge.innerText='5–7 anni • Esplorazione';
-title.innerText='Scegli il prossimo passo';
-subtitle.innerText='Una piccola scelta per continuare il viaggio e trasformare la storia in esperienza.';
+const story = JSON.parse(localStorage.getItem("fableaCurrentStory") || "{}");
 
-bigImage.innerText=hasTheme('principesse') ? '👑 ☁️' : '🗺️ 🦊';
+if(story.title){
+document.getElementById("heroTitle").innerText =
+story.childName
+? `Bentornato ${story.childName}.`
+: "Bentornato nel mondo FABLEA.";
 
-activityText.innerHTML=`
-<strong>${name}</strong>, davanti a te si aprono tre strade.<br><br>
-Ognuna porta verso qualcosa di nuovo.<br>
-Quale scegli?
-`;
-
-if(hasTheme('principesse')){
-
-addOption(
-'👑 La corona',
-`
-La corona luminosa si accende.<br><br>
-Non rende più potenti.<br>
-Ricorda soltanto di essere gentili anche quando si ha paura.`,
-'👑✨'
-);
-
-addOption(
-'☁️ Le nuvole',
-`
-Le nuvole si aprono lentamente.<br><br>
-Dietro compare un castello sospeso nel cielo.<br>
-La principessa sorride e invita ${name} a entrare.`,
-'☁️🏰'
-);
-
-addOption(
-'⭐ La stella',
-`
-Una piccola stella cade vicino al sentiero.<br><br>
-Quando ${name} la tocca, compare una strada nuova fatta di luce.`,
-'⭐🛤️'
-);
-
-}else{
-
-addOption(
-'🌲 Segui la volpe',
-`
-La volpe attraversa il bosco lentamente.<br><br>
-Ogni albero sembra sussurrare una parola gentile.`,
-'🌲🦊'
-);
-
-addOption(
-'🌊 Vai verso il mare',
-`
-Il sentiero porta a un piccolo mare calmo.<br><br>
-Le onde respirano lentamente insieme a ${name}.`,
-'🌊⭐'
-);
-
-addOption(
-'⭐ Tocca la stella',
-`
-La stella illumina la mappa.<br><br>
-Un nuovo simbolo compare sulla carta e il viaggio continua.`,
-'⭐🗺️'
-);
-
+document.getElementById("lastStory").innerText =
+`Ultimo viaggio: ${story.title}.\n\nIl mondo conserva ancora le emozioni e i simboli trovati durante quella esperienza.`;
 }
 
-}else if(age === '8-10'){
+});
 
-badge.innerText='8–10 anni • Identità';
-title.innerText='Dai un nome a quello che senti';
-subtitle.innerText='Una pausa narrativa per riconoscere emozioni, fiducia e piccoli cambiamenti interiori.';
-
-bigImage.innerText='💛 🌉';
-
-activityText.innerHTML=`
-<strong>${name}</strong>, sul ponte delle scelte sono apparse tre luci.<br><br>
-Non devi scegliere la più forte.<br>
-Solo quella che senti più vicina oggi.
-`;
-
-addOption(
-'💛 Fiducia',
-`
-La fiducia non cancella i dubbi.<br><br>
-Aiuta soltanto a fare un passo anche quando non si vede tutta la strada.`,
-'💛'
-);
-
-addOption(
-'🛡️ Coraggio',
-`
-Il coraggio non deve essere enorme.<br><br>
-A volte basta restare gentili quando sarebbe più facile chiudersi.`,
-'🛡️'
-);
-
-addOption(
-'🌧️ Calma',
-`
-La calma non corre.<br><br>
-Si siede accanto a ${name}.<br>
-Aspetta.<br>
-E lentamente tutto sembra più leggero.`,
-'🌧️'
-);
-
-}else{
-
-badge.innerText='11–12 anni • Direzione';
-title.innerText='Scegli una domanda';
-subtitle.innerText='Una micro-riflessione su identità, possibilità e direzione.';
-
-bigImage.innerText='🧭 🌌';
-
-activityText.innerHTML=`
-<strong>${name}</strong>, l’atlante delle possibilità non dà risposte immediate.<br><br>
-Fa domande importanti.
-`;
-
-addOption(
-'🧭 Chi sto diventando?',
-`
-Non serve avere subito una risposta.<br><br>
-Alcune domande servono solo a guardarsi meglio.`,
-'🧭'
-);
-
-addOption(
-'🌌 Cosa mi accende?',
-`
-A volte la direzione nasce da ciò che fa dimenticare la paura di provare.`,
-'🌌'
-);
-
-addOption(
-'📖 Cosa voglio capire?',
-`
-La curiosità è una bussola silenziosa.<br><br>
-Ti porta dove qualcosa dentro si sveglia davvero.`,
-'📖'
-);
-
-}
 </script>
 
 </body>
