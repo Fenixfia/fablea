@@ -8,7 +8,8 @@ export default async function handler(req, res) {
         ok: true,
         apiKeyPresent: Boolean(apiKey),
         voiceIdPresent: Boolean(voiceId),
-        voiceId: voiceId || null
+        voiceId: voiceId || null,
+        message: "API FABLEA attiva. Usa POST per generare audio."
       });
     }
 
@@ -36,7 +37,7 @@ export default async function handler(req, res) {
           "xi-api-key": apiKey
         },
         body: JSON.stringify({
-          text: text.slice(0, 900),
+          text: text.slice(0, 700),
           model_id: "eleven_multilingual_v2",
           voice_settings: {
             stability: 0.55,
@@ -50,10 +51,11 @@ export default async function handler(req, res) {
 
     if (!eleven.ok) {
       const details = await eleven.text();
+
       return res.status(500).json({
         error: "ElevenLabs error",
         status: eleven.status,
-        details
+        details: details
       });
     }
 
