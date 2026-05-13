@@ -26,7 +26,7 @@ max-width:1040px;
 margin:0 auto;
 padding:52px 44px;
 border-radius:44px;
-background:rgba(255,251,247,.80);
+background:rgba(255,251,247,.82);
 backdrop-filter:blur(16px);
 border:1px solid rgba(255,255,255,.62);
 box-shadow:0 24px 80px rgba(70,60,50,.12);
@@ -68,24 +68,31 @@ margin-bottom:38px;
 }
 
 .visual{
-height:260px;
-border-radius:38px;
+height:270px;
+border-radius:40px;
 margin-bottom:30px;
 background:
 radial-gradient(circle at 50% 35%,#fff6cf 0%,transparent 24%),
 radial-gradient(circle at 20% 80%,#f8d9b8 0%,transparent 22%),
 linear-gradient(135deg,#e7dcff,#f8e3aa);
-box-shadow:inset 0 0 70px rgba(255,255,255,.55);
+box-shadow:inset 0 0 80px rgba(255,255,255,.60);
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:86px;
+font-size:88px;
+animation:float 6s ease-in-out infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-7px)}
+100%{transform:translateY(0)}
 }
 
 h1{
 font-family:'Cormorant Garamond',serif;
-font-size:66px;
-line-height:1.05;
+font-size:68px;
+line-height:1.03;
 font-weight:600;
 margin-bottom:16px;
 }
@@ -98,41 +105,51 @@ max-width:760px;
 margin:0 auto;
 }
 
-.story{
+.preview{
 margin-top:34px;
 padding:46px;
-border-radius:38px;
-background:rgba(255,255,255,.52);
+border-radius:40px;
+background:rgba(255,255,255,.54);
 border:1px solid rgba(80,65,55,.08);
 box-shadow:0 18px 46px rgba(80,65,55,.08);
 }
 
-.story h2{
+.preview h2{
 font-family:'Cormorant Garamond',serif;
-font-size:42px;
+font-size:44px;
 font-weight:600;
 margin-bottom:22px;
 color:#403943;
 }
 
-.story p{
+.preview p{
 font-family:'Cormorant Garamond',serif;
-font-size:29px;
-line-height:1.85;
+font-size:30px;
+line-height:1.86;
 color:#4d4550;
 margin-bottom:22px;
 }
 
-.soft-note{
+.hook{
 margin-top:28px;
-padding:24px;
-border-radius:30px;
-background:linear-gradient(135deg,rgba(255,248,225,.75),rgba(255,255,255,.58));
-border:1px solid rgba(231,200,112,.32);
+padding:28px;
+border-radius:32px;
+background:linear-gradient(135deg,rgba(255,248,225,.82),rgba(255,255,255,.62));
+border:1px solid rgba(231,200,112,.34);
+text-align:center;
+}
+
+.hook h3{
+font-family:'Cormorant Garamond',serif;
+font-size:36px;
+font-weight:600;
+margin-bottom:10px;
+}
+
+.hook p{
 font-size:16px;
 line-height:1.7;
 color:#756c70;
-text-align:center;
 }
 
 .actions{
@@ -181,9 +198,9 @@ body{padding:18px}
 h1{font-size:42px}
 .subtitle{font-size:16px}
 .visual{height:210px;font-size:64px}
-.story{padding:28px 22px}
-.story h2{font-size:34px}
-.story p{font-size:23px}
+.preview{padding:28px 22px}
+.preview h2{font-size:34px}
+.preview p{font-size:23px}
 .button{width:100%}
 }
 </style>
@@ -207,25 +224,28 @@ Un nuovo racconto FABLEA è stato creato.
 </div>
 </section>
 
-<section class="story">
-<h2 id="storyHeading">Anteprima della storia</h2>
+<section class="preview">
+<h2 id="storyHeading">Anteprima narrativa</h2>
 <div id="storyText"></div>
-</section>
 
-<div class="soft-note">
-Questa è l’anteprima narrativa. La voce narrante trasformerà il racconto in un’esperienza lenta, immersiva e audio-first.
+<div class="hook">
+<h3>Ora ascoltala con la voce narrante.</h3>
+<p>
+La storia completa vive nel player cinematico: voce, ritmo lento, testo progressivo e rituale finale.
+</p>
 </div>
+</section>
 
 <div class="actions">
 <a class="button" href="/story-player.html">Ascolta la storia</a>
-<a class="button secondary" href="/activity.html">Il mondo continua</a>
 <a class="button secondary" href="/manualita.html">Crea con le mani</a>
 <a class="button secondary" href="/story.html">Nuova esperienza</a>
+<a class="button secondary" href="/child-hub.html">Torna al mondo</a>
 <a class="button secondary" href="/library.html">Libreria</a>
 </div>
 
 <div class="footer">
-FABLEA • immaginazione lenta • voce narrante • esperienza personale
+FABLEA • storia unica • voce narrante • rituale finale • mondo persistente
 </div>
 
 </main>
@@ -279,7 +299,6 @@ paragraphs = [
 
 `Da quella sera, il lupo non fu più il lupo cattivo. Diventò il lupo dal vocione gentile, quello che imparava a parlare piano quando qualcuno aveva paura.`
 ];
-
 return;
 }
 
@@ -300,7 +319,6 @@ paragraphs = [
 
 `La luce rimase accesa ancora un pochino, solo per dire: “Sono qui. Puoi immaginare piano.”`
 ];
-
 return;
 }
 
@@ -329,7 +347,6 @@ paragraphs = [
 
 `Quando il viaggio finì, la principessa salutò ${name} e disse: “Quando vuoi tornare, guarda una nuvola. Il regno non sparisce: si nasconde solo meglio.”`
 ];
-
 return;
 }
 
@@ -356,7 +373,6 @@ paragraphs = [
 
 `Quando il libro si richiuse, la mappa rimase luminosa. Una nuova stella brillava sulla pagina, pronta per il prossimo viaggio.`
 ];
-
 return;
 }
 
@@ -385,7 +401,6 @@ paragraphs = [
 
 `${name} guardò indietro. La paura non era sparita. Ma era diventata più piccola. E questo bastava per continuare.`
 ];
-
 return;
 }
 
@@ -423,7 +438,8 @@ document.getElementById('subtitle').innerText = subtitle;
 document.getElementById('heroIcon').innerText = heroIcon;
 document.getElementById('storyHeading').innerText = title;
 
-document.getElementById('storyText').innerHTML = paragraphs.map(p => `<p>${p}</p>`).join('');
+const teaser = paragraphs.slice(0,3);
+document.getElementById('storyText').innerHTML = teaser.map(p => `<p>${p}</p>`).join('');
 
 const fullText = paragraphs.join('\n\n');
 
