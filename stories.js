@@ -10,19 +10,25 @@ window.FABLEA_STORIES = {
       ritual: "⭐ Stella luminosa",
       activity: "Costruisci una piccola tana morbida per il lupo gentile.",
       paragraphs: [
-        "Nel bosco morbido, quando la luna saliva piano, {{name}} sentì un rumore grande tra le foglie.",
-        "“GROOOOAR...” fece una voce profonda. Le foglie tremarono un pochino, ma la luna restò ferma, tonda e gentile.",
-        "Dietro un albero comparve un lupo enorme. Aveva zampe grandi, coda folta e occhi dolci. Il lupo abbassò le orecchie: non voleva spaventare nessuno.",
-        "{{name}} trovò una piccola luce sotto una foglia. La prese piano, senza correre, e la mise vicino al lupo.",
-        "Il lupo guardò la luce. Respirò una volta. Poi un’altra. Poi un’altra ancora.",
-        "Quando provò a parlare, il suo vocione diventò piccolo piccolo. “Buonasera,” disse finalmente.",
-        "Da quella sera, il bosco non ebbe più paura del lupo. E il lupo imparò che anche una voce grande può diventare morbida.",
-        "Prima di tornare, {{name}} lasciò una stellina accesa vicino all’albero. Così il lupo avrebbe ricordato la sua voce gentile anche domani."
+        "Nel bosco morbido, quando la luna saliva piano piano, {{name}} sentì un rumore grande tra le foglie.",
+        "Era un rumore rotondo, profondo, un po’ tremolante. Le foglie fecero fru fru, i funghetti luminosi si abbassarono e una piccola lucciola si nascose dietro una radice.",
+        "Poi arrivò una voce enorme: “GROOOOAR”. Non era un ruggito cattivo. Era solo troppo grande per quel bosco così piccolo.",
+        "Dietro un albero comparve un lupo. Aveva zampe grandi, coda folta, orecchie morbide e occhi dolci. Il lupo abbassò la testa perché aveva capito di aver fatto paura.",
+        "{{name}} rimase fermo. Non scappò. Guardò il lupo e vide che sotto quel vocione enorme c’era un cuore un po’ triste.",
+        "Il lupo provò a parlare: “Buo...” ma uscì ancora un piccolo “GROAR”. Allora si sedette per terra e nascose il muso tra le zampe.",
+        "Sotto una foglia, {{name}} trovò una piccola luce. Non era grande. Non era forte. Ma era calda e gentile.",
+        "{{name}} prese la luce con delicatezza e la mise vicino al lupo. La luce non disse niente. Fece solo un piccolo bagliore dorato.",
+        "Il lupo la guardò. Respirò una volta. Poi un’altra. Poi un’altra ancora. Ogni respiro faceva diventare il bosco più tranquillo.",
+        "Alla fine il lupo provò di nuovo. Questa volta disse piano: “Buonasera”. Era una voce bassa, morbida, quasi come una coperta.",
+        "Le foglie smisero di tremare. I funghetti tornarono dritti. La lucciola uscì dalla radice e si posò sul naso del lupo.",
+        "Il lupo sorrise. {{name}} sorrise. E il bosco capì che a volte una cosa grande ha solo bisogno di imparare a diventare piccola.",
+        "Prima di tornare, {{name}} lasciò una stellina accesa vicino all’albero. Così il lupo avrebbe ricordato la sua voce gentile anche il giorno dopo."
       ]
     },
+
     {
       title: "{{name}} e la piccola luce",
-      subtitle: "Una storia visiva, breve e rassicurante.",
+      subtitle: "Una storia visiva, morbida e rassicurante.",
       icon: "🌙 ✨ 🧸",
       art: "space",
       scene: "🌙 ✨ 🧸",
@@ -30,16 +36,22 @@ window.FABLEA_STORIES = {
       ritual: "🌙 Luna silenziosa",
       activity: "Accendi una piccola luce morbida e raccontale dove deve brillare.",
       paragraphs: [
-        "Vicino a {{name}} comparve una piccola luce. Non correva, non faceva rumore, non chiedeva nulla.",
-        "Brillava piano, come se sapesse aspettare. Accanto alla luce arrivò un orsetto morbido, poi una stellina, poi una nuvola piccola.",
-        "Tutti si sedettero vicino a {{name}}. Nessuno aveva fretta. Il mondo sembrava più lento, più chiaro, più gentile.",
-        "La stellina fece un giro nel cielo e lasciò una scia dorata. L’orsetto sorrise. La nuvola si appoggiò vicino alla luna.",
-        "La piccola luce si avvicinò ancora un pochino, come per dire: “Sono qui.”",
-        "{{name}} guardò quella compagnia luminosa e sentì che tutto era al sicuro.",
-        "Quando il cielo diventò più scuro, la luce non sparì. Restò piccola, ma abbastanza forte da illuminare il cuore.",
-        "E da quel momento, ogni volta che {{name}} aveva bisogno di calma, poteva cercare quella lucina nel suo mondo FABLEA."
+        "Vicino a {{name}} comparve una piccola luce. Non arrivò all’improvviso. Prima sembrò un puntino, poi una goccia dorata, poi una stellina vicina.",
+        "La luce non correva. Non saltava. Non faceva rumore. Restava lì, tranquilla, come se sapesse aspettare.",
+        "{{name}} la guardò. La luce fece un piccolo brillio, come per dire: “Sono qui”.",
+        "Poco dopo arrivò un orsetto morbido. Aveva una sciarpa piccola e camminava piano, con passi rotondi.",
+        "Poi arrivò una nuvola bianca, così soffice che sembrava fatta di respiro. Dietro la nuvola, una stellina fece cucù.",
+        "Tutti si sedettero vicino a {{name}}. Nessuno aveva fretta. Nessuno chiedeva niente. Il mondo sembrava più lento.",
+        "La piccola luce si spostò un pochino e illuminò l’orsetto. L’orsetto sorrise. Poi illuminò la nuvola. La nuvola fece un piccolo dondolio.",
+        "La stellina salì in alto e disegnò un cerchio nel cielo. Non era un cerchio perfetto, ma era bellissimo.",
+        "{{name}} sentì che quella luce non serviva a vedere tutto. Serviva a vedere abbastanza. Abbastanza per sentirsi al sicuro.",
+        "La luna si avvicinò piano al bordo del cielo. Guardò {{name}}, guardò l’orsetto, guardò la luce, e sembrò sorridere.",
+        "La luce diventò un po’ più piccola, ma non sparì. Rimase lì, come una promessa morbida.",
+        "Quando il mondo diventò più scuro, {{name}} sapeva che poteva cercarla ancora.",
+        "Perché alcune luci non devono essere grandi. Devono solo restare accese."
       ]
     },
+
     {
       title: "{{name}} e la balena luminosa",
       subtitle: "Una balena gentile illumina il mare calmo.",
@@ -50,16 +62,22 @@ window.FABLEA_STORIES = {
       ritual: "🌊 Conchiglia calma",
       activity: "Disegna una grande balena e tre stelline che dormono nel mare.",
       paragraphs: [
-        "Nel mare calmo di FABLEA viveva una balena che brillava piano.",
-        "{{name}} la vide emergere vicino alla riva mentre il cielo diventava blu notte.",
-        "La balena non faceva paura. Portava piccole stelle sulla schiena e respirava lentamente.",
-        "“Vuoi vedere dove dormono le stelle cadute?” chiese con una voce profonda e gentile.",
-        "{{name}} salì sopra una piccola onda morbida e seguì la balena fino a una grotta d’acqua chiara.",
-        "Dentro la grotta, tante stelline riposavano come piccole lanterne silenziose.",
-        "La balena ne regalò una a {{name}}. “Quando hai bisogno di calma, ascolta il mare dentro questa luce.”",
-        "Poi il mare tornò piano sulla riva, e la conchiglia rimase lì, pronta a raccontare il suono della balena."
+        "Nel mare calmo di FABLEA viveva una balena che brillava piano. Non era una luce forte. Era una luce blu, lenta, profonda.",
+        "Ogni sera la balena saliva vicino alla riva, faceva un grande respiro e il mare diventava più tranquillo.",
+        "{{name}} la vide comparire quando il cielo stava diventando color notte. Prima uscì una pinna, poi un dorso grande, poi un occhio dolce.",
+        "La balena guardò {{name}} e fece un suono basso, come una ninna nanna dentro l’acqua.",
+        "“Vuoi vedere dove dormono le stelle cadute?” chiese la balena con una voce lenta.",
+        "Una piccola onda arrivò fino ai piedi di {{name}}. Non bagnava troppo. Era un’onda morbida, fatta apposta per accompagnare.",
+        "{{name}} seguì la balena fino a una grotta d’acqua chiara. Dentro la grotta non c’era buio. C’erano piccole luci appese come lanterne.",
+        "Erano stelle cadute dal cielo. Non erano rotte. Erano solo stanche e dormivano nel mare.",
+        "La balena ne sfiorò una con il muso. La stellina fece un piccolo bagliore e poi tornò a riposare.",
+        "“Anche le stelle hanno bisogno di calma,” disse la balena. “Anche le cose luminose si stancano.”",
+        "{{name}} ascoltò il mare. Ogni onda faceva avanti e indietro, avanti e indietro, come un respiro.",
+        "Prima di tornare alla riva, la balena regalò a {{name}} una conchiglia blu.",
+        "“Quando hai bisogno di calma,” disse, “ascolta il mare dentro questa conchiglia.”"
       ]
     },
+
     {
       title: "{{name}} e la nuvola lenta",
       subtitle: "Una nuvola insegna la bellezza del non correre.",
@@ -71,15 +89,21 @@ window.FABLEA_STORIES = {
       activity: "Disegna una nuvola grande e soffice, poi inventa dove sta andando.",
       paragraphs: [
         "Nel cielo di FABLEA c’era una nuvola che andava più piano di tutte.",
-        "Le altre nuvole correvano, cambiavano forma, si spostavano veloci. Lei no. Lei restava morbida.",
-        "{{name}} la guardò e la nuvola scese un pochino, come un cuscino sospeso.",
+        "Le altre nuvole cambiavano forma in fretta. Una diventava cavallo, una diventava barca, una diventava cappello.",
+        "Lei no. Lei restava tonda, morbida, tranquilla. Sembrava una coperta appesa al cielo.",
+        "{{name}} la guardò a lungo. La nuvola se ne accorse e scese un pochino più in basso.",
         "“Perché vai così piano?” chiese {{name}}.",
-        "“Perché alcune cose belle si vedono solo quando non si corre,” rispose la nuvola.",
-        "La nuvola mostrò a {{name}} un uccellino nascosto, una luce dietro una foglia e una piccola porta nel cielo.",
-        "Poi fece ombra dolce sopra un fiore stanco e il fiore si aprì senza fretta.",
-        "Da quel giorno, quando tutto sembrava veloce, {{name}} poteva cercare la nuvola lenta e ricordarsi di respirare piano."
+        "La nuvola fece un piccolo sbuffo bianco. “Perché alcune cose belle si vedono solo quando non si corre.”",
+        "Allora la nuvola mostrò a {{name}} un uccellino nascosto su un ramo. Era così piccolo che nessuna nuvola veloce lo aveva mai visto.",
+        "Poi mostrò una luce dietro una foglia. Poi una porta minuscola sopra una collina. Poi un fiore che si stava aprendo lentamente.",
+        "“Vedi?” disse la nuvola. “Il mondo non sparisce se vai piano. Anzi, diventa più grande.”",
+        "{{name}} respirò. La nuvola respirò. Anche il cielo sembrò respirare.",
+        "Per un momento non successe niente. E quel niente era bello.",
+        "Prima di risalire, la nuvola lasciò a {{name}} un pezzetto di bianco morbido.",
+        "“Tienilo per quando tutto corre troppo,” disse. “Ti ricorderà che puoi andare piano.”"
       ]
     },
+
     {
       title: "{{name}} e l’orsetto del sonno",
       subtitle: "Un orsetto guida verso un ritmo lento e sicuro.",
@@ -91,15 +115,21 @@ window.FABLEA_STORIES = {
       activity: "Scegli un peluche e inventa il suo posto sicuro.",
       paragraphs: [
         "{{name}} incontrò un orsetto con una coperta piccola sulle spalle.",
-        "L’orsetto camminava piano. Così piano che anche il vento abbassò la voce.",
-        "“Io conosco il sentiero del riposo,” disse l’orsetto. “Non bisogna correre per arrivarci.”",
-        "Sul sentiero c’erano tre cuscini di nuvola, una foglia morbida e una stella addormentata.",
-        "{{name}} aiutò la stella a trovare il suo posto nel cielo.",
-        "L’orsetto sorrise. “Quando aiutiamo qualcuno a riposare, anche il nostro cuore diventa più leggero.”",
-        "Arrivarono davanti a una piccola casa fatta di luna e silenzio.",
-        "L’orsetto lasciò a {{name}} un pezzetto di coperta luminosa: serviva a ricordare che il mondo può diventare morbido quando serve."
+        "L’orsetto aveva occhi gentili e zampe tonde. Camminava piano, così piano che anche il vento si mise a camminare piano con lui.",
+        "“Dove vai?” chiese {{name}}.",
+        "“Vado sul sentiero del riposo,” rispose l’orsetto. “È un posto che si trova solo quando il mondo abbassa la voce.”",
+        "{{name}} seguì l’orsetto. Il sentiero era fatto di piccole luci, cuscini di nuvola e foglie morbide.",
+        "La prima luce disse: “Lascia qui la fretta”. La seconda disse: “Lascia qui il rumore”. La terza disse: “Porta solo un pensiero gentile”.",
+        "Più camminavano, più il cielo diventava blu scuro e tranquillo.",
+        "A un certo punto trovarono una stellina addormentata in mezzo al sentiero. Era caduta e non sapeva come tornare in cielo.",
+        "{{name}} e l’orsetto la sollevarono piano, piano, piano. La stellina salì e si mise al suo posto.",
+        "Il cielo fece un piccolo sorriso luminoso.",
+        "“Quando aiutiamo qualcuno a riposare,” disse l’orsetto, “anche il nostro cuore diventa più leggero.”",
+        "Alla fine del sentiero c’era una casetta fatta di luna e silenzio.",
+        "L’orsetto diede a {{name}} un pezzetto di coperta luminosa. “Questo è per ricordare che il mondo può diventare morbido quando serve.”"
       ]
     },
+
     {
       title: "{{name}} e il giardino addormentato",
       subtitle: "Un giardino si sveglia con piccoli gesti gentili.",
@@ -111,15 +141,21 @@ window.FABLEA_STORIES = {
       activity: "Disegna un fiore addormentato e poi sveglialo con un colore.",
       paragraphs: [
         "{{name}} trovò un giardino dove tutti i fiori dormivano.",
-        "Non erano tristi. Erano solo molto stanchi.",
-        "Una coccinella con un cappellino rosso disse: “Qui si sveglia tutto con gentilezza.”",
-        "{{name}} soffiò piano su un fiore chiuso. Il fiore aprì un petalo.",
+        "Dormivano i tulipani, dormivano le margherite, dormivano le violette piccole vicino al sentiero.",
+        "Non erano tristi. Non erano rotti. Erano solo molto stanchi.",
+        "Una coccinella con un cappellino rosso uscì da sotto una foglia.",
+        "“Qui si sveglia tutto con gentilezza,” disse. “Niente rumore forte, niente fretta.”",
+        "{{name}} si avvicinò a un fiore chiuso e soffiò piano. Il fiore aprì un petalo.",
         "Poi toccò una foglia. La foglia fece una goccia luminosa.",
-        "Poco alla volta, il giardino si svegliò senza rumore.",
-        "Una margherita piccola fece un inchino. Un tulipano sbadigliò. Una rosa sorrise appena.",
-        "La coccinella regalò a {{name}} un semino dorato: “Non serve fare tanto. A volte basta fare piano.”"
+        "La goccia cadde sulla terra e la terra fece un piccolo profumo di primavera.",
+        "Poco alla volta, il giardino cominciò a svegliarsi. Una margherita sbadigliò. Un tulipano si stiracchiò. Una rosa fece un sorriso appena appena.",
+        "La coccinella batté le ali, felice.",
+        "“Vedi?” disse. “Non serve fare tanto. A volte basta fare piano.”",
+        "Quando il giardino fu sveglio, ma ancora tranquillo, regalò a {{name}} un semino dorato.",
+        "“Piantalo quando vuoi far crescere una cosa gentile,” sussurrò la terra."
       ]
     },
+
     {
       title: "{{name}} e la stellina silenziosa",
       subtitle: "Una stellina insegna che anche il silenzio può brillare.",
@@ -130,16 +166,22 @@ window.FABLEA_STORIES = {
       ritual: "⭐ Stella silenziosa",
       activity: "Cerca nella stanza un oggetto silenzioso e dagli un nome magico.",
       paragraphs: [
-        "Nel cielo c’era una stellina che non parlava mai.",
-        "Tutte le altre facevano scintille, suoni e piccole risate. Lei brillava in silenzio.",
-        "{{name}} la notò proprio perché era quieta.",
-        "La stellina scese piano e si posò su una coperta di luna.",
+        "Nel cielo di FABLEA c’era una stellina che non parlava mai.",
+        "Le altre stelline facevano scintille, risatine e piccoli suoni luminosi.",
+        "Lei invece brillava in silenzio. Non perché fosse triste. Era il suo modo di stare nel cielo.",
+        "{{name}} la vide subito. Tra tante luci che si muovevano, quella stellina quieta sembrava speciale.",
+        "La stellina scese piano, piano, piano, fino a posarsi su una coperta di luna.",
         "“Non parli?” chiese {{name}}.",
-        "La stellina fece una luce morbida. Non servivano parole: diceva già tutto.",
-        "{{name}} capì che il silenzio non è vuoto. A volte è una luce che riposa.",
-        "Prima di tornare in cielo, la stellina lasciò un piccolo puntino dorato vicino a {{name}}, per ricordargli che anche stare zitti può essere bello."
+        "La stellina non rispose con parole. Fece una luce morbida, più calda, più vicina.",
+        "{{name}} capì che quella luce diceva: “Sono qui”.",
+        "Poi la stellina illuminò un piccolo sasso, una foglia, un filo d’erba. Tutte cose silenziose. Tutte cose importanti.",
+        "Il silenzio non sembrava più vuoto. Sembrava una stanza piena di piccole luci.",
+        "La luna guardò {{name}} e sembrò dire: “A volte non servono tante parole per restare vicini.”",
+        "Prima di tornare in cielo, la stellina lasciò un puntino dorato nel mondo FABLEA.",
+        "Era piccolo, ma brillava abbastanza per essere ritrovato."
       ]
     },
+
     {
       title: "{{name}} e il coniglio della sera",
       subtitle: "Un coniglio prepara il mondo con piccoli gesti lenti.",
@@ -151,15 +193,21 @@ window.FABLEA_STORIES = {
       activity: "Prepara tre oggetti piccoli per chiudere la giornata: luce, peluche, coperta.",
       paragraphs: [
         "Quando il cielo diventò color miele, un coniglio bianco comparve davanti a {{name}}.",
-        "Aveva una piccola borsa piena di cose lente: una piuma, una stella, una foglia e una lucina.",
+        "Aveva una piccola borsa piena di cose lente: una piuma, una stella, una foglia, una lucina e un campanellino che non suonava quasi mai.",
         "“Ogni sera preparo il mondo a riposare,” disse il coniglio.",
-        "Prima sistemò la piuma sotto una nuvola. Poi mise la stella vicino alla luna.",
+        "Prima mise la piuma sotto una nuvola. La nuvola diventò più comoda.",
+        "Poi mise la stella vicino alla luna. La luna diventò un po’ più luminosa.",
+        "Poi sistemò la foglia sopra un sasso. Il sasso sembrò meno freddo.",
         "{{name}} lo aiutò ad accendere la lucina più piccola.",
-        "Il coniglio fece un inchino: “Anche le giornate grandi finiscono meglio con un gesto piccolo.”",
+        "La lucina non illuminò tutto. Illuminò solo il punto giusto.",
+        "“Vedi?” disse il coniglio. “La sera non ha bisogno di tanta luce. Ha bisogno di una luce gentile.”",
         "Poi aprì la borsa e mostrò uno spazio vuoto.",
-        "“Questo è per il gesto di domani,” disse. E {{name}} capì che il mondo FABLEA lo stava aspettando."
+        "“Questo è per il gesto di domani,” spiegò. “Ogni sera può avere il suo piccolo rito.”",
+        "{{name}} guardò il cielo color miele diventare blu.",
+        "Il coniglio fece un inchino e saltellò via, lasciando la lucina accesa."
       ]
     },
+
     {
       title: "{{name}} e il pesciolino dorato",
       subtitle: "Una piccola creatura insegna a seguire una luce calma.",
@@ -172,14 +220,19 @@ window.FABLEA_STORIES = {
       paragraphs: [
         "In una pozzanghera grande come un piccolo mare, {{name}} vide un pesciolino dorato.",
         "Il pesciolino nuotava piano e lasciava dietro di sé tre bolle luminose.",
+        "La prima bolla era piccola. La seconda era tonda. La terza brillava come una perla.",
         "“Dove vai?” chiese {{name}}.",
         "“Cerco una luce che non abbia fretta,” rispose il pesciolino.",
-        "{{name}} lo seguì con gli occhi, mentre le bolle salivano leggere.",
-        "Quando la terza bolla scoppiò, comparve una piccola perla calma.",
-        "Il pesciolino la spinse verso {{name}} con il naso.",
-        "“Tienila,” disse. “Quando il mondo sembra troppo pieno, guarda una cosa piccola.”"
+        "{{name}} lo seguì con gli occhi. Il pesciolino girò intorno a una foglia, passò sotto un riflesso di cielo e si fermò vicino a un sassolino.",
+        "Sul sassolino c’era una perla calma. Non brillava tanto. Brillava bene.",
+        "“È questa,” disse il pesciolino. “La luce che non corre.”",
+        "{{name}} guardò la perla. Sembrava respirare insieme all’acqua.",
+        "Il pesciolino la spinse verso la riva con il naso.",
+        "“Tienila,” disse. “Quando il mondo sembra troppo pieno, guarda una cosa piccola.”",
+        "Poi il pesciolino dorato fece un giro lento e tornò nel suo piccolo mare."
       ]
     },
+
     {
       title: "{{name}} e la porta piccolissima",
       subtitle: "Una porta minuscola apre un mondo grande ma gentile.",
@@ -191,13 +244,18 @@ window.FABLEA_STORIES = {
       activity: "Disegna una porta minuscola e cosa c’è dietro.",
       paragraphs: [
         "{{name}} trovò una porta piccolissima vicino a una radice.",
-        "Era così piccola che sembrava fatta per una formica elegante.",
-        "Un topolino uscì con una chiave grande quasi quanto lui.",
-        "“Questa porta si apre solo se si bussa piano,” disse.",
-        "{{name}} bussò con un dito leggero.",
-        "Dietro la porta c’era una stanza piena di lucine che aspettavano in silenzio.",
+        "Era così piccola che sembrava fatta per una formica elegante o per un topolino con un cappello.",
+        "La porta aveva una maniglia dorata grande come una briciola.",
+        "Da dietro la porta arrivò un toc toc leggero.",
+        "Poi uscì un topolino con una chiave grande quasi quanto lui.",
+        "“Questa porta si apre solo se si bussa piano,” disse il topolino.",
+        "{{name}} bussò con un dito leggero. Toc. Toc. Toc.",
+        "La porta si aprì e dietro c’era una stanza piena di lucine che aspettavano in silenzio.",
+        "Ogni lucina aveva una sedia piccola. Ogni sedia aspettava una storia.",
         "Il topolino diede a {{name}} una chiave invisibile.",
-        "“Non apre tutte le porte,” spiegò. “Apre solo quelle che hanno bisogno di gentilezza.”"
+        "“Non apre tutte le porte,” spiegò. “Apre solo quelle che hanno bisogno di gentilezza.”",
+        "{{name}} la tenne con cura, anche se non si vedeva.",
+        "Perché certe chiavi non si vedono con gli occhi. Si sentono quando si usa piano il cuore."
       ]
     }
   ],
