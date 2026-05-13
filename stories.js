@@ -260,48 +260,279 @@ window.FABLEA_STORIES = {
     }
   ],
 
-  "5-7": [
-    {
-      title: "{{name}} e la mappa luminosa",
-      subtitle: "Una storia di esplorazione, piccoli passi e meraviglia.",
-      icon: "📖 🗺️ ✨",
-      art: "forest",
-      scene: "🦊 🗺️ ✨",
-      keywords: ["mappa", "bosco", "volpe", "avventura"],
-      ritual: "🗺️ Mappa dorata",
-      activity: "Disegna una nuova parte della mappa.",
-      paragraphs: [
-        "{{name}} trovò un libro dimenticato sopra un tavolo. La copertina era liscia, calda e un po’ misteriosa.",
-        "Quando lo aprì, non trovò solo parole. Dentro c’era una mappa che brillava piano, come se respirasse.",
-        "Sulla mappa comparivano sentieri, alberi, piccole stelle e un bosco disegnato con linee dorate.",
-        "Tra le radici del bosco comparve una volpe gentile. “Non bisogna correre per vivere un’avventura,” disse. “Basta fare un passo e ascoltare.”",
-        "{{name}} seguì la volpe fino a una radura. Lì una stella cadde sulla mappa senza fare rumore.",
-        "Quando {{name}} la toccò, apparve un nuovo sentiero. Era sottile, luminoso e sembrava aspettare proprio quel momento.",
-        "Alla fine del sentiero c’era una lanterna. La volpe la consegnò a {{name}}: “Il coraggio non deve essere grande. A volte basta che sia acceso.”",
-        "Quando il libro si richiuse, la mappa rimase luminosa. Una nuova stella brillava sulla pagina, pronta per il prossimo viaggio."
-      ]
-    },
-    {
-      title: "{{name}} e la principessa delle nuvole",
-      subtitle: "Una storia luminosa su coraggio, gentilezza ed esplorazione.",
-      icon: "👑 ☁️ ✨",
-      art: "sky",
-      scene: "👑 ☁️ ✨",
-      keywords: ["principessa", "nuvole", "castello", "coraggio"],
-      ritual: "👑 Corona gentile",
-      activity: "Disegna una corona che non comanda, ma protegge.",
-      paragraphs: [
-        "Un pomeriggio, {{name}} vide una piccola porta nel cielo, fatta di nuvole, fili dorati e luce morbida.",
-        "Dietro si vedeva un regno alto, silenzioso, pieno di scale leggere e terrazze sospese.",
-        "{{name}} entrò piano e incontrò una principessa con scarpe comode, una mappa in mano e una corona storta.",
-        "“Non sto aspettando di essere salvata,” disse la principessa. “Sto cercando la stella che tiene insieme il regno delle nuvole.”",
-        "Camminarono tra ponti soffici e torri leggere. Ogni nuvola aveva un suono diverso.",
-        "Trovarono una corona luminosa. Ma non serviva a comandare: serviva a ricordare il coraggio gentile.",
-        "{{name}} toccò la corona e vide una stella nascosta aprire un nuovo sentiero.",
-        "Quando il viaggio finì, la principessa salutò {{name}}: “Quando vuoi tornare, guarda una nuvola. Il regno non sparisce: si nasconde solo meglio.”"
-      ]
-    }
-  ],
+ "5-7": [
+
+{
+title:"{{name}} e la mappa luminosa",
+subtitle:"Una storia di esplorazione, piccoli passi e meraviglia.",
+icon:"📖 🗺️ ✨",
+art:"forest",
+scene:"🦊 🗺️ ✨",
+keywords:["mappa","bosco","volpe","avventura"],
+ritual:"🗺️ Mappa dorata",
+activity:"Disegna una nuova parte della mappa.",
+paragraphs:[
+"{{name}} trovò un libro dimenticato sopra un tavolo. La copertina era liscia, calda e un po’ misteriosa.",
+"Quando lo aprì, non trovò solo parole. Dentro c’era una mappa che brillava piano, come se respirasse.",
+"Sulla mappa comparivano sentieri, alberi, piccole stelle e un bosco disegnato con linee dorate.",
+"Tra le radici del bosco comparve una volpe gentile. “Non bisogna correre per vivere un’avventura,” disse. “Basta fare un passo e ascoltare.”",
+"{{name}} seguì la volpe fino a una radura dove le foglie facevano luce sotto le scarpe.",
+"In mezzo alla radura c’era una lanterna sospesa nel vuoto. Non cadeva. Restava lì, come se stesse aspettando qualcuno.",
+"Quando {{name}} la toccò, sulla mappa apparve un nuovo sentiero mai visto prima.",
+"La volpe sorrise. “Le mappe vive cambiano quando qualcuno trova il coraggio di guardare meglio.”",
+"Il nuovo sentiero attraversava un ponte di legno sospeso sopra un lago nero e lucido come uno specchio.",
+"Nel lago si vedevano stelle che il cielo non aveva ancora acceso.",
+"Alla fine del ponte comparve una piccola casa con il tetto blu. Dentro c’era un vecchio cartografo.",
+"Il cartografo guardò {{name}} e disse: “Le mappe più importanti non mostrano dove andare. Mostrano chi stai diventando.”",
+"Prima di andare via, il cartografo regalò a {{name}} una bussola dorata.",
+"La bussola non indicava il nord. Indicava sempre la meraviglia."
+]
+},
+
+{
+title:"{{name}} e il treno delle stelle",
+subtitle:"Un viaggio notturno attraverso il cielo.",
+icon:"🚂 ⭐ 🌌",
+art:"space",
+scene:"🚂 ⭐ 🌌",
+keywords:["treno","stelle","spazio","viaggio"],
+ritual:"⭐ Biglietto stellare",
+activity:"Disegna la tua carrozza ideale del treno delle stelle.",
+paragraphs:[
+"La notte in cui il cielo sembrava più vicino del solito, {{name}} sentì un fischio dietro la finestra.",
+"Fuori non c’era una macchina. Non c’era un autobus. C’era un piccolo treno blu fermo sopra un binario fatto di luce.",
+"Il capotreno era un gufo con occhiali tondi e un orologio d’oro.",
+"“Biglietto?” chiese.",
+"“Non ce l’ho,” rispose {{name}}.",
+"Il gufo sorrise. “Per salire basta una domanda vera.”",
+"{{name}} ci pensò un momento. Poi fece la sua domanda al cielo.",
+"Il gufo timbrò un biglietto stellare comparso dal nulla.",
+"Appena il treno partì, le case diventarono piccole e il cielo si aprì come un oceano.",
+"La prima stazione era fatta di lune addormentate.",
+"La seconda stazione custodiva nuvole che ricordavano i sogni dimenticati dai bambini.",
+"Nella terza stazione viveva un uomo che riparava stelle rotte con ago e filo d’argento.",
+"“Anche le stelle si rompono ogni tanto,” disse l’uomo. “Ma non smettono di brillare.”",
+"Prima di tornare, il gufo regalò a {{name}} un pezzetto di cielo notturno piegato come carta.",
+"“Tienilo vicino,” disse. “Così saprai sempre che esistono strade sopra le nuvole.”"
+]
+},
+
+{
+title:"{{name}} e il castello sospeso",
+subtitle:"Un castello nel cielo custodisce una chiave speciale.",
+icon:"🏰 ☁️ ✨",
+art:"castle",
+scene:"🏰 ☁️ ✨",
+keywords:["castello","nuvole","chiave","cielo"],
+ritual:"🗝️ Chiave del cielo",
+activity:"Disegna il castello sospeso e la sua porta segreta.",
+paragraphs:[
+"Tra due nuvole altissime, {{name}} vide un castello sospeso nel cielo.",
+"Non era appoggiato a nulla. Restava in aria grazie a fili sottili di luce dorata.",
+"Le torri sembravano fatte di vento e pietra insieme.",
+"Alla porta del castello c’era una piccola chiave appesa a un filo.",
+"Un cavaliere con un mantello blu stava seduto sui gradini.",
+"“Questa porta non si apre con la forza,” spiegò. “Si apre solo con la parola giusta.”",
+"{{name}} provò a dire parole enormi, complicate e rumorose. Ma la porta restò chiusa.",
+"Poi guardò il cielo, respirò e disse una parola semplice.",
+"La porta si illuminò immediatamente.",
+"All’interno del castello c’erano stanze piene di mappe, telescopi e stelle sospese dentro barattoli di vetro.",
+"Nel salone centrale dormiva un drago bianco gigantesco.",
+"Il drago aprì un occhio e disse: “Le cose più importanti si aprono sempre piano.”",
+"Prima di andare via, il cavaliere regalò a {{name}} la piccola chiave dorata.",
+"“Non apre castelli,” spiegò. “Apre possibilità.”"
+]
+},
+
+{
+title:"{{name}} e il guardiano del faro",
+subtitle:"Una luce nel mare guida chi si è perso.",
+icon:"🌊 🕯️ 🌙",
+art:"ocean",
+scene:"🌊 🕯️ 🌙",
+keywords:["mare","faro","oceano","luce"],
+ritual:"🕯️ Luce del faro",
+activity:"Disegna il faro e la sua luce sul mare.",
+paragraphs:[
+"In mezzo al mare di FABLEA esisteva un faro che non compariva sulle mappe normali.",
+"Compariva solo quando qualcuno aveva bisogno di una luce.",
+"Una sera {{name}} vide il mare illuminarsi in lontananza.",
+"Vicino alle onde c’era una piccola barca che sembrava aspettare proprio lì.",
+"{{name}} salì sopra e il mare cominciò a muoversi lentamente.",
+"Il faro era altissimo. Le finestre brillavano color ambra.",
+"In cima viveva il guardiano del faro, un uomo con capelli bianchi e occhi gentili.",
+"“La mia luce non serve alle navi,” spiegò. “Serve ai pensieri che si sentono persi.”",
+"Ogni notte il guardiano accendeva la grande lanterna e il mare diventava più tranquillo.",
+"{{name}} aiutò il guardiano a girare la gigantesca ruota della luce.",
+"Quando la lanterna si accese, il cielo e il mare sembrarono respirare insieme.",
+"“Ricorda,” disse il guardiano. “Anche una piccola luce può aiutare qualcuno a ritrovare la strada.”",
+"Prima di tornare, regalò a {{name}} una mini lanterna dorata.",
+"Brillava solo quando serviva davvero."
+]
+},
+
+{
+title:"{{name}} e la biblioteca segreta",
+subtitle:"Una biblioteca che custodisce storie vive.",
+icon:"📚 ✨ 🌙",
+art:"castle",
+scene:"📚 ✨ 🌙",
+keywords:["biblioteca","libri","storie","magia"],
+ritual:"📖 Pagina dorata",
+activity:"Inventa il titolo di un nuovo libro magico.",
+paragraphs:[
+"Nascosta dietro una parete piena di edera viveva una biblioteca segreta.",
+"Le sue finestre brillavano solo di notte.",
+"Quando {{name}} entrò, i libri si mossero leggermente sugli scaffali.",
+"Non erano libri normali. Respiravano piano.",
+"Una bibliotecaria con lunghi capelli argentati si avvicinò sorridendo.",
+"“Qui custodiamo storie vive,” spiegò. “Ogni volta che qualcuno immagina davvero, un libro cambia.”",
+"{{name}} aprì un volume enorme con la copertina blu.",
+"All’interno non c’erano solo parole: c’erano cieli, oceani, castelli e città intere.",
+"Ogni pagina sembrava muoversi lentamente.",
+"La bibliotecaria mostrò una stanza piena di libri ancora vuoti.",
+"“Questi aspettano bambini pronti a immaginare qualcosa che ancora non esiste.”",
+"Prima di andare via, un piccolo libro dorato saltò giù dallo scaffale.",
+"La bibliotecaria sorrise. “Ha scelto te.”",
+"Sulla copertina apparve lentamente il nome di {{name}}."
+]
+},
+
+{
+title:"{{name}} e il drago delle lanterne",
+subtitle:"Un drago custodisce luci perdute.",
+icon:"🐉 🏮 ✨",
+art:"castle",
+scene:"🐉 🏮 ✨",
+keywords:["drago","lanterne","luce","castello"],
+ritual:"🏮 Lanterna dorata",
+activity:"Disegna una lanterna magica.",
+paragraphs:[
+"Sopra una montagna altissima viveva un drago che collezionava lanterne.",
+"Ogni lanterna custodiva una luce diversa.",
+"Una notte {{name}} vide il cielo riempirsi di piccoli punti dorati.",
+"Seguendo quelle luci arrivò fino alla montagna del drago.",
+"Il drago era enorme ma aveva occhi tranquilli.",
+"“Le persone pensano che io custodisca tesori,” disse. “In realtà custodisco luci.”",
+"Mostrò a {{name}} una lanterna azzurra che conteneva il coraggio.",
+"Una lanterna verde custodiva la calma.",
+"Una piccola lanterna rossa custodiva la speranza.",
+"Il drago spiegò che alcune luci si spengono se nessuno le guarda più.",
+"Per questo ogni notte lui volava sopra FABLEA per raccogliere le luci dimenticate.",
+"Prima che {{name}} andasse via, il drago regalò una piccola lanterna dorata.",
+"“Non illuminerà tutto,” disse. “Illuminerà ciò che conta.”"
+]
+},
+
+{
+title:"{{name}} e il ponte di carta",
+subtitle:"Un ponte fragile porta verso un posto speciale.",
+icon:"🌉 📜 ✨",
+art:"bridge",
+scene:"🌉 📜 ✨",
+keywords:["ponte","carta","città","viaggio"],
+ritual:"📜 Foglio del coraggio",
+activity:"Costruisci un piccolo ponte con carta o cartoncino.",
+paragraphs:[
+"Tra due colline lontane esisteva un ponte fatto interamente di carta.",
+"Sembrava fragile. Troppo fragile per attraversarlo.",
+"Ma ogni volta che qualcuno faceva un passo sincero, il ponte diventava più forte.",
+"{{name}} guardò in basso. Sotto il ponte scorreva un fiume pieno di stelle riflesse.",
+"All’inizio il vento muoveva i fogli del ponte facendoli tremare.",
+"Poi comparve una ragazza con un mantello argentato.",
+"“Questo ponte non regge chi ha fretta,” spiegò. “Regge chi ascolta.”",
+"{{name}} fece il primo passo lentamente.",
+"Il foglio sotto i piedi brillò di luce bianca.",
+"Più il viaggio continuava, più il ponte diventava stabile.",
+"Alla fine del percorso apparve una città fatta di carta luminosa.",
+"Ogni casa raccontava una storia diversa.",
+"La ragazza sorrise: “Le cose delicate non sono sempre deboli.”",
+"E il ponte rimase acceso dietro {{name}}, come un sentiero di luce."
+]
+},
+
+{
+title:"{{name}} e il mercato della luna",
+subtitle:"Un luogo notturno dove si vendono cose impossibili.",
+icon:"🌙 🏮 ✨",
+art:"sky",
+scene:"🌙 🏮 ✨",
+keywords:["mercato","luna","magia","notte"],
+ritual:"🌙 Moneta lunare",
+activity:"Inventa una bancarella magica.",
+paragraphs:[
+"Una notte {{name}} trovò una scala nascosta dietro una nuvola.",
+"La scala saliva fino a una piazza illuminata da centinaia di lanterne.",
+"Era il mercato della luna.",
+"Non vendeva pane o vestiti. Vendeva cose impossibili.",
+"C’era una bancarella di sogni lucidi.",
+"Una vendeva bottiglie piene di pioggia estiva.",
+"Un vecchio signore vendeva ricordi felici dimenticati sotto i letti.",
+"Una bambina con capelli argentati vendeva piccoli pezzi di aurora boreale.",
+"{{name}} camminò tra le bancarelle ascoltando il rumore morbido della notte.",
+"Al centro del mercato c’era una fontana che invece dell’acqua aveva stelle liquide.",
+"Il mercante della luna regalò a {{name}} una moneta dorata.",
+"“Non serve per comprare,” spiegò. “Serve per ricordarti che il mondo è più grande di quanto sembri.”",
+"Quando {{name}} tornò giù dalla scala, il cielo sembrava diverso.",
+"Come se nascondesse ancora mille posti segreti."
+]
+},
+
+{
+title:"{{name}} e la nave tra le nuvole",
+subtitle:"Una nave volante attraversa il cielo.",
+icon:"☁️ ⛵ ✨",
+art:"sky",
+scene:"☁️ ⛵ ✨",
+keywords:["nave","nuvole","cielo","viaggio"],
+ritual:"⛵ Bussola del cielo",
+activity:"Disegna una nave volante.",
+paragraphs:[
+"Sopra FABLEA esisteva una nave che navigava tra le nuvole.",
+"Le sue vele erano fatte di vento e il suo legno profumava di pioggia.",
+"{{name}} la vide passare lentamente sopra le montagne.",
+"Dal ponte salutava un capitano con un grande cappello blu.",
+"“Vuoi salire?” chiese.",
+"La nave attraversava tempeste morbide e oceani di cielo.",
+"Ogni nuvola aveva una forma diversa: draghi, castelli, balene e città sospese.",
+"Il capitano mostrò a {{name}} una stanza piena di mappe del cielo.",
+"“Le persone credono che le nuvole cambino sempre,” disse. “Ma alcune strade restano.”",
+"Più la nave saliva, più il cielo diventava silenzioso.",
+"A un certo punto comparve una gigantesca aurora luminosa.",
+"Tutto il ponte si colorò di verde, viola e oro.",
+"Prima di salutare, il capitano regalò a {{name}} una piccola bussola.",
+"La bussola puntava sempre verso l’avventura."
+]
+},
+
+{
+title:"{{name}} e il giardino delle lucciole",
+subtitle:"Un luogo dove le luci raccontano storie.",
+icon:"✨ 🌿 🐞",
+art:"forest",
+scene:"✨ 🌿 🐞",
+keywords:["lucciole","giardino","bosco","notte"],
+ritual:"✨ Lucciola gentile",
+activity:"Disegna un giardino pieno di lucciole.",
+paragraphs:[
+"Nel cuore del bosco esisteva un giardino che si illuminava solo di notte.",
+"Non aveva lampade. Non aveva candele.",
+"A illuminarlo erano migliaia di lucciole.",
+"Ogni lucciola custodiva una storia.",
+"Quando {{name}} entrò nel giardino, le luci si alzarono lentamente in aria.",
+"Una lucciola blu raccontava storie di oceani lontani.",
+"Una verde raccontava foreste dimenticate.",
+"Una dorata raccontava di bambini che avevano trovato coraggio nei momenti difficili.",
+"Il custode del giardino era un vecchio con una lanterna spenta.",
+"“La mia lanterna si accende solo quando qualcuno ascolta davvero,” spiegò.",
+"{{name}} rimase fermo ad ascoltare il rumore delle lucciole.",
+"Poco dopo la lanterna del custode si illuminò da sola.",
+"Il vecchio sorrise. “Vedi? Alcune luci si accendono solo nel silenzio.”",
+"E il giardino continuò a brillare piano nella notte."
+]
+}
+
+],
 
   "8-10": [
     {
