@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FABLEA | Entra nella storia</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -26,14 +26,37 @@ color:#352f36;
 
 .card{
 width:92%;
-max-width:920px;
+max-width:980px;
 padding:52px 42px;
-border-radius:42px;
-background:rgba(255,251,247,.74);
-backdrop-filter:blur(14px);
-border:1px solid rgba(255,255,255,.6);
+border-radius:44px;
+background:rgba(255,251,247,.78);
+backdrop-filter:blur(16px);
+border:1px solid rgba(255,255,255,.62);
 box-shadow:0 24px 80px rgba(70,60,50,.12);
 text-align:center;
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:14px;
+flex-wrap:wrap;
+margin-bottom:30px;
+}
+
+.back{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:12px 17px;
+border-radius:999px;
+background:rgba(255,255,255,.58);
+border:1px solid rgba(80,65,55,.10);
+color:#6b6467;
+font-size:14px;
+font-weight:900;
+text-decoration:none;
 }
 
 .badge{
@@ -41,27 +64,27 @@ font-size:12px;
 letter-spacing:5px;
 text-transform:uppercase;
 color:#9f8a76;
-margin-bottom:18px;
 }
 
 h1{
 font-family:'Cormorant Garamond',serif;
-font-size:54px;
+font-size:58px;
+line-height:1.05;
 font-weight:600;
 margin-bottom:14px;
 }
 
 .subtitle{
 font-size:18px;
-line-height:1.6;
+line-height:1.7;
 color:#756c70;
-max-width:680px;
-margin:0 auto 32px;
+max-width:720px;
+margin:0 auto 30px;
 }
 
 .visual-zone{
 min-height:300px;
-border-radius:36px;
+border-radius:38px;
 margin:28px auto;
 background:
 radial-gradient(circle at 50% 35%,#fff8d8 0%,transparent 24%),
@@ -77,7 +100,7 @@ overflow:hidden;
 
 .big-image{
 font-size:96px;
-animation:float 4s ease-in-out infinite;
+animation:float 4.5s ease-in-out infinite;
 z-index:2;
 }
 
@@ -89,8 +112,8 @@ z-index:2;
 
 .glow{
 position:absolute;
-width:160px;
-height:160px;
+width:170px;
+height:170px;
 border-radius:50%;
 background:rgba(255,244,190,.55);
 filter:blur(18px);
@@ -103,30 +126,8 @@ animation:pulse 4s ease-in-out infinite;
 100%{transform:scale(.9);opacity:.55}
 }
 
-.stars{
-position:absolute;
-inset:0;
-}
-
-.star{
-position:absolute;
-font-size:24px;
-opacity:.7;
-animation:twinkle 3s infinite alternate;
-}
-
-.star:nth-child(1){top:18%;left:18%}
-.star:nth-child(2){top:26%;right:20%;animation-delay:.5s}
-.star:nth-child(3){bottom:22%;left:24%;animation-delay:1s}
-.star:nth-child(4){bottom:28%;right:24%;animation-delay:1.5s}
-
-@keyframes twinkle{
-from{opacity:.3;transform:scale(.8)}
-to{opacity:1;transform:scale(1.15)}
-}
-
 .activity{
-max-width:700px;
+max-width:740px;
 margin:0 auto;
 font-size:22px;
 line-height:1.7;
@@ -147,26 +148,26 @@ margin-top:28px;
 .option{
 padding:20px 16px;
 border-radius:26px;
-background:rgba(255,255,255,.50);
+background:rgba(255,255,255,.52);
 border:1px solid rgba(80,65,55,.10);
 font-size:18px;
-font-weight:700;
+font-weight:900;
 cursor:pointer;
 transition:.25s;
 }
 
 .option:hover{
 transform:translateY(-3px);
-background:rgba(255,255,255,.72);
+background:rgba(255,255,255,.74);
 }
 
 .result{
 margin-top:26px;
-padding:22px;
-border-radius:26px;
-background:rgba(255,255,255,.46);
+padding:24px;
+border-radius:28px;
+background:rgba(255,255,255,.50);
 font-size:20px;
-line-height:1.6;
+line-height:1.65;
 color:#5f575c;
 display:none;
 }
@@ -184,7 +185,7 @@ padding:15px 28px;
 border-radius:999px;
 text-decoration:none;
 font-size:16px;
-font-weight:700;
+font-weight:900;
 background:linear-gradient(135deg,#f8e3aa,#e7c870);
 color:#322d34;
 box-shadow:0 12px 30px rgba(231,200,112,.25);
@@ -193,17 +194,20 @@ cursor:pointer;
 }
 
 .secondary{
-background:rgba(255,255,255,.55);
+background:rgba(255,255,255,.58);
 border:1px solid rgba(80,65,55,.10);
 color:#6b6467;
 box-shadow:none;
 }
 
-@media(max-width:700px){
-.card{padding:40px 22px;border-radius:30px}
-h1{font-size:38px}
-.visual-zone{min-height:260px}
-.big-image{font-size:82px}
+@media(max-width:760px){
+body{padding:18px}
+.card{padding:40px 22px;border-radius:32px}
+.top{justify-content:center}
+h1{font-size:40px}
+.subtitle{font-size:16px}
+.visual-zone{min-height:250px}
+.big-image{font-size:76px}
 .activity{font-size:19px}
 .options{grid-template-columns:1fr}
 .button{width:100%}
@@ -215,23 +219,21 @@ h1{font-size:38px}
 
 <main class="card">
 
-<div class="badge" id="badge">FABLEA activity</div>
+<div class="top">
+<a class="back" href="/story-result.html">← Torna alla storia</a>
+<div class="badge" id="badge">FABLEA Activity</div>
+<a class="back" href="/child-hub.html">Mondo bambino</a>
+</div>
 
-<h1 id="title">Entra nella storia</h1>
+<h1 id="title">Entra nell’esperienza</h1>
 
 <div class="subtitle" id="subtitle">
-Una piccola esperienza per ascoltare, immaginare e partecipare senza fretta.
+Una piccola attività per trasformare la storia in immaginazione, movimento, calma o creatività.
 </div>
 
-<div class="visual-zone" id="visualZone">
+<div class="visual-zone">
 <div class="glow"></div>
-<div class="stars">
-<div class="star">✨</div>
-<div class="star">⭐</div>
-<div class="star">✨</div>
-<div class="star">⭐</div>
-</div>
-<div class="big-image" id="bigImage">🌙</div>
+<div class="big-image" id="bigImage">✨</div>
 </div>
 
 <div class="activity" id="activityText"></div>
@@ -241,28 +243,22 @@ Una piccola esperienza per ascoltare, immaginare e partecipare senza fretta.
 <div class="result" id="resultBox"></div>
 
 <div class="actions">
-<a class="button" href="/story-player.html">Ascolta la storia</a>
-<a class="button secondary" href="/story-result.html">Torna alla storia</a>
-<a class="button secondary" href="/story.html">Nuova storia</a>
-<a class="button secondary" href="/index.html">Home</a>
+<a class="button" href="/story-player.html">Ascolta la voce narrante</a>
+<a class="button secondary" href="/story.html">Nuova esperienza</a>
+<a class="button secondary" href="/child-hub.html">Torna al mondo</a>
+<a class="button secondary" href="/library.html">Libreria</a>
 </div>
 
 </main>
 
 <script>
-const savedData = localStorage.getItem('fableaStoryData');
+const savedData = JSON.parse(localStorage.getItem('fableaStoryData') || '{}');
 
-const data = savedData ? JSON.parse(savedData) : {
-name:'il piccolo protagonista',
-age:'5-7',
-mood:'Tranquilla',
-theme:'Foresta magica'
-};
-
-const name = data.name || 'il piccolo protagonista';
-const age = data.age || '5-7';
-const mood = data.mood || 'Tranquilla';
-const theme = data.theme || 'Foresta magica';
+const name = savedData.name || 'piccolo esploratore';
+const age = savedData.age || '5-7';
+const theme = savedData.theme || 'Foresta magica';
+const experience = savedData.experience || 'Avventura immaginativa';
+const mood = savedData.mood || 'Curiosa';
 
 const badge = document.getElementById('badge');
 const title = document.getElementById('title');
@@ -271,6 +267,10 @@ const bigImage = document.getElementById('bigImage');
 const activityText = document.getElementById('activityText');
 const options = document.getElementById('options');
 const resultBox = document.getElementById('resultBox');
+
+function hasTheme(word){
+return theme.toLowerCase().includes(word.toLowerCase()) || experience.toLowerCase().includes(word.toLowerCase());
+}
 
 function showResult(text, image){
 resultBox.style.display='block';
@@ -289,61 +289,86 @@ options.appendChild(div);
 if(age === '2-4'){
 
 badge.innerText='2–4 anni • Meraviglia';
-title.innerText='Guarda, respira, immagina';
-subtitle.innerText='Una scena grande e calma per aiutare il bambino a concentrarsi senza iperstimolazione.';
+title.innerText='Guarda, tocca, immagina';
+subtitle.innerText='Un’attività breve, visiva e morbida per concentrare l’attenzione senza sovrastimolare.';
+
+if(hasTheme('lupo')){
+bigImage.innerText='🐺 🌙';
+
+activityText.innerHTML = `
+<strong>${name}</strong>, il lupo ha un vocione grande.<br>
+Ma non è cattivo davvero.<br><br>
+Aiutiamolo a diventare calmo.
+`;
+
+addOption('🌙 Luna', 'La luna illumina il bosco. Il lupo abbassa piano la voce.', '🌙🐺');
+addOption('🤍 Carezza', 'Una carezza immaginaria rende il lupo più tranquillo.', '🤍🐺');
+addOption('✨ Lucina', 'La piccola luce dice: piano piano, va tutto bene.', '✨🐺');
+
+}else{
 bigImage.innerText='🌙 🧸';
 
 activityText.innerHTML = `
-<strong>${name}</strong>, guarda la luna morbida.<br>
-Facciamo piano piano.<br><br>
-Tocca una figura e guarda cosa succede.
+<strong>${name}</strong>, guarda la figura grande davanti a te.<br>
+Respiriamo piano.<br><br>
+Scegli cosa facciamo adesso.
 `;
 
-addOption('🌙 Luna', 'La luna brilla piano. Inspira… espira… tutto è morbido.', '🌙');
-addOption('🧸 Orsetto', 'L’orsetto si avvicina. È caldo, dolce e resta vicino a te.', '🧸');
-addOption('✨ Stellina', 'La stellina fa una piccola luce. Non corre. Aspetta con te.', '✨');
+addOption('🌙 Guarda', 'Guarda la luna. Inspira piano… espira piano…', '🌙');
+addOption('🧸 Tocca', 'L’orsetto è morbido. Rimane vicino e non corre.', '🧸');
+addOption('✨ Brilla', 'La stellina fa una piccola luce. Aspetta con te.', '✨');
+}
 
 } else if(age === '5-7'){
 
 badge.innerText='5–7 anni • Esplorazione';
 title.innerText='Scegli il prossimo passo';
-subtitle.innerText='Per primi lettori: frasi semplici, scelte chiare e immagini che aiutano la comprensione.';
-bigImage.innerText='🗺️ 🦊';
+subtitle.innerText='Una scelta semplice, leggibile e chiara per continuare l’esperienza.';
+
+bigImage.innerText = hasTheme('principesse') ? '👑 ☁️' : '🗺️ 🦊';
 
 activityText.innerHTML = `
-<strong>${name}</strong>, la mappa luminosa mostra tre strade.<br>
+<strong>${name}</strong>, davanti a te ci sono tre strade.<br>
 Leggi piano e scegli dove andare.
 `;
 
-addOption('🌲 Bosco', 'La strada del bosco è silenziosa. La volpe ti guida tra foglie luminose.', '🌲🦊');
-addOption('🌊 Mare', 'La strada del mare respira piano. Ogni onda dice una parola gentile.', '🌊⭐');
-addOption('⭐ Stella', 'La strada della stella sale in alto. Da lì il mondo sembra piccolo e dolce.', '⭐☁️');
+if(hasTheme('principesse')){
+addOption('👑 Corona', 'La corona non comanda. Ricorda a chi la porta di essere gentile e coraggioso.', '👑✨');
+addOption('☁️ Nuvola', 'La nuvola si apre e mostra un piccolo regno nascosto.', '☁️🏰');
+addOption('⭐ Stella', 'La stella indica una strada nuova, scelta da te.', '⭐🛤️');
+}else{
+addOption('🌲 Bosco', 'Nel bosco ogni albero sussurra una parola gentile.', '🌲🦊');
+addOption('🌊 Mare', 'Il mare respira piano. Ogni onda porta una piccola idea.', '🌊⭐');
+addOption('⭐ Stella', 'La stella si accende sulla mappa e apre una nuova strada.', '⭐🗺️');
+}
 
 } else if(age === '8-10'){
 
 badge.innerText='8–10 anni • Identità';
-title.innerText='Dai un nome all’emozione';
-subtitle.innerText='Una pausa narrativa per riconoscere quello che si sente dentro.';
+title.innerText='Dai un nome a quello che senti';
+subtitle.innerText='Una pausa narrativa per riconoscere emozioni, fiducia e piccoli cambiamenti interiori.';
+
 bigImage.innerText='💛 🌉';
 
 activityText.innerHTML = `
-<strong>${name}</strong>, prima di attraversare il ponte, scegli quale luce senti più vicina oggi.
+<strong>${name}</strong>, prima di continuare scegli quale luce senti più vicina oggi.
 `;
 
 addOption('💛 Fiducia', 'La fiducia non cancella i dubbi. Ti aiuta a fare un passo anche quando non sai tutto.', '💛');
-addOption('🛡️ Coraggio', 'Il coraggio non deve essere grande. A volte è solo restare gentili anche quando è difficile.', '🛡️');
+addOption('🛡️ Coraggio', 'Il coraggio non deve essere grande. A volte è restare gentili anche quando è difficile.', '🛡️');
 addOption('🌧️ Calma', 'La calma arriva piano. Non forza nulla. Si siede accanto a te e aspetta.', '🌧️');
 
 } else {
 
 badge.innerText='11–12 anni • Direzione';
-title.innerText='Scegli una direzione';
-subtitle.innerText='Una micro-riflessione più matura su identità, possibilità e futuro.';
+title.innerText='Scegli una domanda';
+subtitle.innerText='Una micro-riflessione più matura su identità, direzione e possibilità.';
+
 bigImage.innerText='🧭 🌌';
 
 activityText.innerHTML = `
-<strong>${name}</strong>, l’atlante è aperto davanti a te.<br>
-Non devi decidere tutto. Scegli solo quale domanda vuoi portare con te.
+<strong>${name}</strong>, non devi decidere tutto oggi.<br>
+Scegli solo quale domanda vuoi portare con te.
 `;
 
 addOption('🧭 Chi sto diventando?', 'È una domanda grande. Non richiede una risposta subito. Richiede attenzione.', '🧭');
