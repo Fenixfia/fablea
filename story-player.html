@@ -297,6 +297,81 @@ background:linear-gradient(135deg,#f8e3aa,#e7c870);
 transition:width .25s linear;
 }
 
+.ritual{
+position:absolute;
+inset:0;
+z-index:5;
+display:none;
+align-items:center;
+justify-content:center;
+padding:24px;
+background:rgba(10,9,15,.72);
+backdrop-filter:blur(18px);
+}
+
+.ritual-card{
+width:min(760px,94vw);
+padding:44px 34px;
+border-radius:38px;
+background:rgba(255,255,255,.10);
+border:1px solid rgba(255,255,255,.16);
+box-shadow:0 26px 90px rgba(0,0,0,.45);
+text-align:center;
+}
+
+.ritual-icon{
+font-size:82px;
+margin-bottom:18px;
+}
+
+.ritual-card h2{
+font-family:'Cormorant Garamond',serif;
+font-size:52px;
+font-weight:600;
+line-height:1.05;
+margin-bottom:14px;
+}
+
+.ritual-card p{
+font-size:17px;
+line-height:1.75;
+color:rgba(255,255,255,.72);
+max-width:640px;
+margin:0 auto 24px;
+}
+
+.ritual-options{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+margin-top:20px;
+}
+
+.ritual-option{
+padding:18px 12px;
+border-radius:26px;
+background:rgba(255,255,255,.10);
+border:1px solid rgba(255,255,255,.13);
+cursor:pointer;
+font-size:15px;
+font-weight:900;
+color:white;
+transition:.25s;
+}
+
+.ritual-option:hover{
+background:rgba(255,255,255,.18);
+transform:translateY(-2px);
+}
+
+.saved-message{
+display:none;
+margin-top:20px;
+font-size:15px;
+line-height:1.6;
+color:#f8e3aa;
+}
+
 @media(max-width:740px){
 .stage{padding:12px}
 .panel{
@@ -313,6 +388,9 @@ h1{font-size:36px}
 .current-text{font-size:27px}
 .button{width:100%}
 .bottom .back{width:100%}
+.ritual-card{padding:34px 20px}
+.ritual-card h2{font-size:38px}
+.ritual-options{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -376,17 +454,44 @@ Pronto per generare la voce narrante.
 </div>
 
 <div class="bottom">
-<a class="back small" href="/activity.html">Entra nella storia</a>
 <a class="back small" href="/manualita.html">Crea con le mani</a>
 <a class="back small" href="/story.html">Nuova esperienza</a>
 <a class="back small" href="/library.html">Libreria</a>
+<a class="back small" href="/child-hub.html">Torna al mondo</a>
 </div>
 
 </main>
 
+<div class="ritual" id="ritualOverlay">
+<div class="ritual-card">
+<div class="ritual-icon" id="ritualIcon">⭐</div>
+<h2>Prima di chiudere il mondo...</h2>
+<p id="ritualText">
+Scegli quale luce lasciare accesa per domani. FABLEA la ricorderà nel mondo del bambino.
+</p>
+
+<div class="ritual-options">
+<div class="ritual-option" onclick="saveRitual('⭐ Stella luminosa')">⭐ Stella luminosa</div>
+<div class="ritual-option" onclick="saveRitual('🕯️ Lanterna gentile')">🕯️ Lanterna gentile</div>
+<div class="ritual-option" onclick="saveRitual('🌙 Luna silenziosa')">🌙 Luna silenziosa</div>
+</div>
+
+<div class="saved-message" id="savedMessage">
+La luce è stata lasciata accesa. Il mondo la ricorderà domani.
+</div>
+
+<div class="controls" style="margin-top:24px;">
+<a class="button" href="/child-hub.html">Torna al mondo</a>
+<a class="button secondary" href="/story.html">Nuova esperienza</a>
+</div>
+</div>
+</div>
+
 </div>
 
 <script>
+let activeStory = null;
+
 document.addEventListener("DOMContentLoaded", () => {
 
 const savedStory = JSON.parse(localStorage.getItem("fableaCurrentStory") || "{}");
@@ -399,10 +504,17 @@ Quando la toccò, la stanza si riempì di luce dorata.
 
 Una piccola voce sussurrò: benvenuto nel mondo di FABLEA.`;
 
-const title = savedStory.title || "La storia della sera";
-const subtitle = savedStory.subtitle || "Una nuova esperienza narrativa FABLEA.";
-const text = savedStory.text || fallbackText;
-const icon = savedStory.icon || "🌙";
+const story = {
+title:savedStory.title || "La storia della sera",
+subtitle:savedStory.subtitle || "Una nuova esperienza narrativa FABLEA.",
+text:savedStory.text || fallbackText,
+icon:savedStory.icon || "🌙",
+child:savedStory.child || "piccolo esploratore",
+age:savedStory.age || "",
+theme:savedStory.theme || ""
+};
+
+activeStory = story;
 
 const audio = document.getElementById("storyAudio");
 const generateBtn = document.getElementById("generateVoice");
@@ -414,11 +526,11 @@ const currentText = document.getElementById("currentText");
 const ambient = document.getElementById("ambient");
 const progressFill = document.getElementById("progressFill");
 
-document.getElementById("storyTitle").innerText = title;
-document.getElementById("storySubtitle").innerText = subtitle;
-document.getElementById("storyIcon").innerText = icon;
+document.getElementById("storyTitle").innerText = story.title;
+document.getElementById("storySubtitle").innerText = story.subtitle;
+document.getElementById("storyIcon").innerText = story.icon;
 
-const chunks = text
+const chunks = story.text
 .split(/\n\n|(?<=\.)\s+/)
 .map(item => item.trim())
 .filter(item => item.length > 8);
@@ -427,7 +539,7 @@ let currentChunk = 0;
 let currentAudioUrl = null;
 
 function setAmbient(){
-const lower = (title + " " + subtitle + " " + text).toLowerCase();
+const lower = (story.title + " " + story.subtitle + " " + story.text).toLowerCase();
 
 ambient.className = "ambient";
 
@@ -483,7 +595,7 @@ headers: {
 "Content-Type": "application/json"
 },
 body: JSON.stringify({
-text: text
+text: story.text
 })
 });
 
@@ -577,13 +689,78 @@ showChunk(estimatedIndex);
 });
 
 audio.addEventListener("ended", () => {
-statusText.innerText = "La storia è terminata dolcemente. Puoi continuare domani.";
+statusText.innerText = "La storia è terminata dolcemente.";
 pauseBtn.innerText = "Pausa";
 progressFill.style.width = "100%";
 showChunk(chunks.length - 1);
+showRitual();
 });
 
 });
+
+function showRitual(){
+const overlay = document.getElementById("ritualOverlay");
+const icon = document.getElementById("ritualIcon");
+const text = document.getElementById("ritualText");
+
+const story = activeStory || {};
+const lower = ((story.title || "") + " " + (story.text || "")).toLowerCase();
+
+if(lower.includes("mare") || lower.includes("onda")){
+icon.innerText = "🌊";
+text.innerText = "Il mare ha lasciato una conchiglia calma. Scegli una luce da lasciare accesa per il prossimo ritorno.";
+}else if(lower.includes("lupo")){
+icon.innerText = "🐺";
+text.innerText = "Il lupo dal vocione ha imparato a parlare piano. Scegli cosa resterà acceso nel bosco fino a domani.";
+}else if(lower.includes("principessa")){
+icon.innerText = "👑";
+text.innerText = "Il regno delle nuvole resta sospeso nel cielo. Scegli quale luce guiderà il prossimo viaggio.";
+}else if(lower.includes("ponte")){
+icon.innerText = "🌉";
+text.innerText = "Il ponte delle scelte resta illuminato. Scegli quale luce accompagnerà il prossimo passo.";
+}else if(lower.includes("atlante")){
+icon.innerText = "🧭";
+text.innerText = "L’atlante non si chiude davvero. Scegli quale domanda o luce resterà aperta per domani.";
+}else{
+icon.innerText = "⭐";
+text.innerText = "La storia ha lasciato una piccola luce. Scegli quale traccia resterà nel mondo del bambino.";
+}
+
+overlay.style.display = "flex";
+}
+
+function saveRitual(treasure){
+const story = activeStory || {};
+const child = story.child || "piccolo esploratore";
+
+const state = JSON.parse(localStorage.getItem("fableaWorldState") || "{}");
+
+if(!state[child]){
+state[child] = {
+treasures:[],
+rituals:[],
+lastStory:null,
+updatedAt:null
+};
+}
+
+if(!state[child].treasures.includes(treasure)){
+state[child].treasures.push(treasure);
+}
+
+state[child].rituals.push({
+treasure:treasure,
+story:story.title || "Storia FABLEA",
+date:new Date().toLocaleDateString("it-IT")
+});
+
+state[child].lastStory = story.title || "Storia FABLEA";
+state[child].updatedAt = new Date().toISOString();
+
+localStorage.setItem("fableaWorldState", JSON.stringify(state));
+
+document.getElementById("savedMessage").style.display = "block";
+}
 </script>
 
 </body>
