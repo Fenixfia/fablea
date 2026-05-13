@@ -7,6 +7,8 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+<script src="/stories.js"></script>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 
@@ -182,6 +184,13 @@ background:
 radial-gradient(circle at 50% 20%,rgba(255,220,150,.30),transparent 22%),
 radial-gradient(circle at 35% 80%,rgba(88,79,210,.30),transparent 30%),
 linear-gradient(180deg,#08091a 0%,#161743 100%);
+}
+
+.illustration.castle{
+background:
+radial-gradient(circle at 50% 20%,rgba(255,220,150,.36),transparent 22%),
+radial-gradient(circle at 35% 80%,rgba(180,160,255,.30),transparent 30%),
+linear-gradient(180deg,#1b1631 0%,#382a54 100%);
 }
 
 .scene-art{
@@ -417,6 +426,17 @@ letter-spacing:1.4px;
 color:rgba(255,255,255,.55);
 }
 
+.error-box{
+position:relative;
+z-index:3;
+padding:28px;
+border-radius:28px;
+background:rgba(255,80,100,.14);
+border:1px solid rgba(255,120,140,.35);
+color:#fff;
+line-height:1.6;
+}
+
 @media(max-width:920px){
 body{padding:14px}
 .stage{padding:24px 16px;border-radius:32px}
@@ -449,11 +469,11 @@ body{padding:14px}
 <section class="hero">
 <h1 id="mainTitle">La storia è pronta.</h1>
 <div class="subtitle">
-Leggi, sfoglia o ascolta la voce narrante. <span class="child-pill" id="childName">Cesare</span>
+Leggi, sfoglia o ascolta la voce narrante. <span class="child-pill" id="childName">Bambino</span>
 </div>
 </section>
 
-<section class="book">
+<section class="book" id="bookSection">
 
 <div class="illustration" id="illustration">
 <div class="scene-art" id="sceneArt">🌙 ✨ 🧸</div>
@@ -462,11 +482,11 @@ Leggi, sfoglia o ascolta la voce narrante. <span class="child-pill" id="childNam
 <div class="page-card">
 <div>
 <div class="kicker">Pagina della storia</div>
-<h2 class="story-title" id="storyTitle">Cesare e la piccola luce</h2>
+<h2 class="story-title" id="storyTitle">Storia FABLEA</h2>
 
 <div class="meta">
-<span id="ageMeta">2–4 anni</span>
-<span id="moodMeta">Meraviglia e calma</span>
+<span id="ageMeta">Fascia</span>
+<span id="moodMeta">Mondo narrativo</span>
 <span id="worldMeta">Mondo FABLEA</span>
 </div>
 
@@ -504,7 +524,7 @@ Voce opzionale: puoi leggere da solo o avviare la narrazione automatica.
 Scegli quale luce lasciare accesa per domani. FABLEA la ricorderà nel mondo del bambino.
 </p>
 <div class="ritual-options">
-<button class="button primary" onclick="saveRitual('⭐ Stella luminosa')">⭐ Stella luminosa</button>
+<button class="button primary" id="ritualPrimary">⭐ Lascia la luce</button>
 <button class="button" onclick="saveRitual('🕯️ Lanterna gentile')">🕯️ Lanterna gentile</button>
 <button class="button" onclick="saveRitual('🌙 Luna silenziosa')">🌙 Luna silenziosa</button>
 </div>
@@ -533,97 +553,63 @@ const mood = saved.mood || 'Curiosa';
 const experience = saved.experience || 'Avventura immaginativa';
 const interests = saved.interests || [];
 
-function story(title, subtitle, icon, art, scene, keywords, paragraphs){
-return {title, subtitle, icon, art, scene, keywords, paragraphs};
+const STORIES = window.FABLEA_STORIES;
+
+if(!STORIES){
+document.getElementById('bookSection').innerHTML = `
+<div class="error-box">
+<strong>Errore:</strong> il file <code>stories.js</code> non è stato caricato.<br>
+Controlla che esista nella root del progetto e che in questa pagina ci sia <code>&lt;script src="/stories.js"&gt;&lt;/script&gt;</code>.
+</div>
+`;
+throw new Error('stories.js non caricato');
 }
 
-function personalize(paragraphs){
-return paragraphs.map(p => p.replaceAll('{{name}}', name).replaceAll('{{mood}}', mood.toLowerCase()));
+function personalizeText(text){
+return String(text || '').replaceAll('{{name}}', name).replaceAll('{{mood}}', mood.toLowerCase());
 }
 
-const STORIES = {
-'2-4': [
-story('{{name}} e il lupo dal vocione','Una storia morbida dove la paura diventa gentilezza.','🌙 🐺 ✨','forest','🌲 🐺 ✨',['lupo','paura','bosco'],[
-'Nel bosco morbido, quando la luna saliva piano, {{name}} sentì un rumore grande tra le foglie.',
-'“GROOOOAR...” fece una voce profonda. Le foglie tremarono un pochino, ma la luna restò ferma, tonda e gentile.',
-'Dietro un albero comparve un lupo grande, con occhi dolci e un vocione enorme. Il lupo abbassò le orecchie: non voleva spaventare nessuno.',
-'{{name}} trovò una piccola luce sotto una foglia. La mise vicino al lupo, senza correre e senza fare rumore.',
-'Il lupo respirò. Una volta. Poi un’altra. E finalmente disse piano: “Buonasera”.',
-'Da quella sera, il lupo non fu più cattivo. Fu il lupo dal vocione gentile, quello che imparava a parlare piano quando qualcuno aveva paura.'
-]),
-story('{{name}} e la piccola luce','Una storia visiva, breve e rassicurante.','🌙 ✨ 🧸','space','🌙 ✨ 🧸',['luce','luna','calma'],[
-'Vicino a {{name}} comparve una piccola luce. Non correva, non faceva rumore, non chiedeva nulla.',
-'Brillava piano, come se sapesse aspettare. Accanto alla luce arrivò un orsetto morbido, poi una stellina, poi una nuvola piccola.',
-'Tutti si sedettero vicino a {{name}}. Nessuno aveva fretta. Il mondo sembrava più lento, più chiaro, più gentile.',
-'La stellina fece un giro nel cielo e lasciò una scia dorata. L’orsetto sorrise. La nuvola si appoggiò vicino alla luna.',
-'{{name}} guardò quella piccola compagnia luminosa e sentì che tutto era al sicuro.'
-])
-],
-'5-7': [
-story('{{name}} e la mappa luminosa','Una storia di esplorazione, piccoli passi e meraviglia.','📖 🗺️ ✨','forest','🦊 🗺️ ✨',['mappa','bosco','volpe'],[
-'{{name}} trovò un libro dimenticato sopra un tavolo. La copertina era liscia, calda e un po’ misteriosa.',
-'Quando lo aprì, non trovò solo parole. Dentro c’era una mappa che brillava piano, come se respirasse.',
-'Sulla mappa comparivano sentieri, alberi, piccole stelle e un bosco disegnato con linee dorate.',
-'Tra le radici del bosco comparve una volpe gentile. “Non bisogna correre per vivere un’avventura,” disse. “Basta fare un passo e ascoltare.”',
-'{{name}} seguì la volpe fino a una radura. Lì una stella cadde sulla mappa senza fare rumore.',
-'Quando {{name}} la toccò, apparve un nuovo sentiero. Era sottile, luminoso e sembrava aspettare proprio quel momento.',
-'Alla fine del sentiero c’era una lanterna. La volpe la consegnò a {{name}}: “Il coraggio non deve essere grande. A volte basta che sia acceso.”',
-'Quando il libro si richiuse, la mappa rimase luminosa. Una nuova stella brillava sulla pagina, pronta per il prossimo viaggio.'
-]),
-story('{{name}} e il treno delle stelle','Un treno lento porta il bambino tra stazioni del cielo.','🚂 ⭐ 🌌','space','🚂 ⭐ 🌌',['treno','stelle','spazio'],[
-'La notte in cui il cielo sembrava vicino, {{name}} sentì un fischio dolce dietro la finestra.',
-'Un piccolo treno blu era fermo su un binario fatto di luce.',
-'Il capotreno era un gufo con occhiali tondi. “Biglietto?” chiese. Ma poi sorrise: “Per entrare basta una domanda.”',
-'{{name}} salì e il treno partì senza rumore.',
-'La prima stazione era la Stazione delle Stelle Smarrite, dove piccole luci cercavano casa.',
-'Alla terza stazione, il gufo consegnò a {{name}} un biglietto dorato: “Vale per tornare quando avrai una nuova domanda.”'
-])
-],
-'8-10': [
-story('{{name}} e il ponte delle scelte','Una storia su emozioni, fiducia e piccoli cambiamenti interiori.','🌉 💛 🌙','bridge','🌉 💛 🌙',['ponte','scelte','fiducia'],[
-'Nel cuore di una città segreta, {{name}} trovò un ponte sospeso tra due colline. Non era fatto di legno né di pietra.',
-'Era fatto di scelte. Ogni tavola brillava quando qualcuno diceva qualcosa di vero a se stesso.',
-'Sotto il ponte scorreva un fiume calmo. Nell’acqua si vedevano pensieri: una paura, una domanda, un desiderio.',
-'Dopo una giornata {{mood}}, quel fiume sembrava più vicino del solito. Non spaventava. Aspettava.',
-'Sul ponte comparvero tre luci: coraggio, gentilezza, fiducia.',
-'{{name}} capì che non doveva scegliere la luce più forte. Doveva scegliere quella più vera.',
-'Quando fece il primo passo, il ponte vibrò piano. Non perché fosse fragile, ma perché aveva riconosciuto una scelta sincera.'
-])
-],
-'11-12': [
-story('{{name}} e l’atlante delle possibilità','Un racconto più maturo su identità, scelte e futuro.','🌌 🧭 📖','space','🌌 🧭 📖',['atlante','futuro','direzione'],[
-'La sera in cui {{name}} trovò l’atlante, il cielo sembrava più grande del solito. Non più scuro. Solo più profondo.',
-'Sulla scrivania c’era un libro senza titolo. Aveva una bussola disegnata in copertina e una frase: “Non tutte le direzioni si vedono da fuori.”',
-'{{name}} aprì il libro. Le pagine non mostravano città, montagne o confini. Mostravano possibilità.',
-'Una pagina era fatta di coraggio. Una di dubbi. Una di errori utili. Una di sogni ancora confusi.',
-'Al centro dell’atlante apparve una domanda: “Che cosa ti fa sentire vivo quando nessuno ti guarda?”',
-'Quando chiuse il libro, la bussola non indicava nord. Indicava avanti.'
-])
-]
-};
+function personalizeParagraphs(paragraphs){
+return (paragraphs || []).map(personalizeText);
+}
 
-function scoreStory(st){
+function scoreStory(story){
 const haystack = (theme + ' ' + experience + ' ' + interests.join(' ')).toLowerCase();
 let score = 0;
-st.keywords.forEach(k=>{
-if(haystack.includes(k.toLowerCase())) score += 3;
+
+(story.keywords || []).forEach(keyword => {
+if(haystack.includes(String(keyword).toLowerCase())) score += 3;
 });
-if(haystack.includes('lupo') && st.title.toLowerCase().includes('lupo')) score += 6;
-if(haystack.includes('spazio') && st.art === 'space') score += 5;
+
+if(haystack.includes('lupo') && personalizeText(story.title).toLowerCase().includes('lupo')) score += 6;
+if(haystack.includes('principesse') && personalizeText(story.title).toLowerCase().includes('principessa')) score += 6;
+if(haystack.includes('mare') && story.art === 'ocean') score += 5;
+if(haystack.includes('spazio') && story.art === 'space') score += 5;
+if(haystack.includes('luna') && (story.keywords || []).includes('luna')) score += 4;
+if(haystack.includes('animali') && (story.keywords || []).some(k => ['lupo','balena','coniglio','orsetto','pesce','volpe'].includes(k))) score += 3;
+
 return score;
 }
 
 function pickStory(){
-const list = STORIES[age] || STORIES['5-7'];
-const scored = list.map(item=>({item,score:scoreStory(item)})).sort((a,b)=>b.score-a.score);
+const list = STORIES[age] && STORIES[age].length ? STORIES[age] : STORIES['5-7'];
+
+if(!list || !list.length){
+throw new Error('Nessuna storia disponibile per questa fascia');
+}
+
+const scored = list.map(item => ({item, score: scoreStory(item)})).sort((a,b) => b.score - a.score);
+
 if(scored[0].score > 0) return scored[0].item;
 
-const key = `${name}-${age}-${theme}-${experience}`;
+const key = `${name}-${age}-${theme}-${experience}-${interests.join('-')}`;
 let hash = 0;
+
 for(let i=0;i<key.length;i++){
 hash = ((hash << 5) - hash) + key.charCodeAt(i);
 hash |= 0;
 }
+
 return list[Math.abs(hash) % list.length];
 }
 
@@ -644,11 +630,15 @@ return 'Mondo narrativo';
 }
 
 let selected = pickStory();
-let title = selected.title.replaceAll('{{name}}', name);
-let paragraphs = personalize(selected.paragraphs);
+let title = personalizeText(selected.title);
+let paragraphs = personalizeParagraphs(selected.paragraphs);
 let currentPage = 0;
 let autoTimer = null;
 let audioUrl = null;
+
+if(!paragraphs.length){
+paragraphs = ['Questa storia è ancora in costruzione nel mondo FABLEA.'];
+}
 
 const fullText = paragraphs.join('\n\n');
 
@@ -659,10 +649,12 @@ age:age,
 theme:theme,
 experience:experience,
 title:title,
-subtitle:selected.subtitle,
-icon:selected.icon,
-art:selected.art,
-scene:selected.scene,
+subtitle:selected.subtitle || '',
+icon:selected.icon || '✨',
+art:selected.art || 'space',
+scene:selected.scene || selected.icon || '✨',
+ritual:selected.ritual || '⭐ Stella luminosa',
+activity:selected.activity || '',
 text:fullText,
 date:new Date().toLocaleDateString('it-IT')
 };
@@ -671,16 +663,17 @@ localStorage.setItem('fableaCurrentStory', JSON.stringify(storyObject));
 
 const savedStories = JSON.parse(localStorage.getItem('fableaSavedStories') || '[]');
 const exists = savedStories.some(item => item.title === storyObject.title && item.child === storyObject.child && item.theme === storyObject.theme);
+
 if(!exists){
 savedStories.push(storyObject);
-localStorage.setItem('fableaSavedStories', JSON.stringify(savedStories.slice(-80)));
+localStorage.setItem('fableaSavedStories', JSON.stringify(savedStories.slice(-100)));
 }
 
 function renderPage(){
 const pageText = document.getElementById('pageText');
 pageText.classList.add('fade');
 
-setTimeout(()=>{
+setTimeout(() => {
 pageText.innerText = paragraphs[currentPage];
 pageText.classList.remove('fade');
 
@@ -701,6 +694,7 @@ if(currentPage < paragraphs.length - 1){
 currentPage++;
 renderPage();
 }else{
+document.getElementById('ritualBox').style.display = 'block';
 document.getElementById('ritualBox').scrollIntoView({behavior:'smooth',block:'center'});
 }
 }
@@ -717,8 +711,10 @@ document.getElementById('storyTitle').innerText = title;
 document.getElementById('ageMeta').innerText = ageText();
 document.getElementById('moodMeta').innerText = moodText();
 document.getElementById('worldMeta').innerText = theme || 'Mondo FABLEA';
-document.getElementById('sceneArt').innerText = selected.scene;
-document.getElementById('illustration').className = 'illustration ' + selected.art;
+document.getElementById('sceneArt').innerText = storyObject.scene;
+document.getElementById('illustration').className = 'illustration ' + storyObject.art;
+document.getElementById('ritualPrimary').innerText = storyObject.ritual;
+document.getElementById('ritualPrimary').onclick = function(){ saveRitual(storyObject.ritual); };
 
 document.getElementById('prevBtn').onclick = prevPage;
 document.getElementById('nextBtn').onclick = nextPage;
@@ -767,8 +763,8 @@ audioStatus.innerText = 'La voce sta narrando. Le pagine avanzano automaticament
 
 startAutoFlip();
 
-}catch(e){
-audioStatus.innerText = 'Errore audio: ' + e.message;
+}catch(error){
+audioStatus.innerText = 'Errore audio: ' + error.message;
 voiceBtn.innerText = 'Riprova voce';
 }finally{
 voiceBtn.disabled = false;
@@ -807,17 +803,18 @@ startAutoFlip();
 function startAutoFlip(){
 stopAutoFlip();
 
-const total = Math.max(audio.duration || paragraphs.length * 12, paragraphs.length * 8);
-const interval = Math.max(5000, (total * 1000) / paragraphs.length);
+const estimatedSeconds = paragraphs.length * 13;
+const total = Math.max(audio.duration || estimatedSeconds, estimatedSeconds);
+const interval = Math.max(5500, (total * 1000) / paragraphs.length);
 
-autoTimer = setInterval(()=>{
+autoTimer = setInterval(() => {
 if(currentPage < paragraphs.length - 1){
 currentPage++;
 renderPage();
 }else{
 stopAutoFlip();
 }
-},interval);
+}, interval);
 }
 
 function stopAutoFlip(){
@@ -827,7 +824,13 @@ autoTimer = null;
 }
 }
 
-audio.addEventListener('ended',()=>{
+audio.addEventListener('loadedmetadata', () => {
+if(!audio.paused){
+startAutoFlip();
+}
+});
+
+audio.addEventListener('ended', () => {
 stopAutoFlip();
 currentPage = paragraphs.length - 1;
 renderPage();
@@ -840,7 +843,7 @@ const child = name;
 const state = JSON.parse(localStorage.getItem("fableaWorldState") || "{}");
 
 if(!state[child]){
-state[child] = {treasures:[],rituals:[],lastStory:null,updatedAt:null};
+state[child] = {treasures:[],rituals:[],lastStory:null,lastActivity:null,updatedAt:null};
 }
 
 if(!state[child].treasures.includes(treasure)){
@@ -850,10 +853,12 @@ state[child].treasures.push(treasure);
 state[child].rituals.push({
 treasure:treasure,
 story:title,
+activity:storyObject.activity || '',
 date:new Date().toLocaleDateString("it-IT")
 });
 
 state[child].lastStory = title;
+state[child].lastActivity = storyObject.activity || '';
 state[child].updatedAt = new Date().toISOString();
 
 localStorage.setItem("fableaWorldState", JSON.stringify(state));
