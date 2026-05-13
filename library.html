@@ -5,9 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FABLEA | Libreria</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -20,44 +18,112 @@ background:
 radial-gradient(circle at top left,#fff1d8 0%,transparent 30%),
 radial-gradient(circle at bottom right,#e7dcff 0%,transparent 34%),
 linear-gradient(135deg,#f8f1e8 0%,#ece4ea 45%,#d9ddea 100%);
-color:#332d35;
+color:#352f36;
 }
 
 .page{
-max-width:1050px;
+max-width:1180px;
 margin:auto;
-padding:48px;
-border-radius:38px;
-background:rgba(255,250,245,.62);
+padding:54px 44px;
+border-radius:44px;
+background:rgba(255,251,247,.80);
 backdrop-filter:blur(16px);
-border:1px solid rgba(255,255,255,.55);
-box-shadow:0 24px 80px rgba(80,65,55,.15);
+border:1px solid rgba(255,255,255,.62);
+box-shadow:0 24px 80px rgba(70,60,50,.12);
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:14px;
+flex-wrap:wrap;
+margin-bottom:36px;
+}
+
+.back{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:12px 17px;
+border-radius:999px;
+background:rgba(255,255,255,.60);
+border:1px solid rgba(80,65,55,.10);
+color:#6b6467;
+font-size:14px;
+font-weight:900;
+text-decoration:none;
 }
 
 .badge{
-text-align:center;
 font-size:12px;
 letter-spacing:5px;
 text-transform:uppercase;
-color:#9c8774;
-margin-bottom:16px;
+color:#9f8a76;
+}
+
+.hero{
+text-align:center;
+margin-bottom:42px;
 }
 
 h1{
 font-family:'Cormorant Garamond',serif;
-font-size:58px;
-text-align:center;
+font-size:64px;
+line-height:1.05;
 font-weight:600;
-margin-bottom:14px;
+margin-bottom:16px;
 }
 
 .intro{
-text-align:center;
 font-size:18px;
-line-height:1.7;
-color:#6d6668;
-max-width:620px;
-margin:0 auto 36px;
+line-height:1.75;
+color:#756c70;
+max-width:820px;
+margin:0 auto;
+}
+
+.child-strip{
+margin:34px 0;
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.child-pill{
+padding:13px 18px;
+border-radius:999px;
+border:1px solid rgba(80,65,55,.10);
+background:rgba(255,255,255,.58);
+font-size:14px;
+font-weight:900;
+color:#6b6467;
+cursor:pointer;
+}
+
+.child-pill.active{
+background:linear-gradient(135deg,#f8e3aa,#e7c870);
+color:#332d35;
+box-shadow:0 12px 26px rgba(231,200,112,.20);
+}
+
+.section{
+margin-top:42px;
+}
+
+.section-title{
+font-family:'Cormorant Garamond',serif;
+font-size:44px;
+font-weight:600;
+margin-bottom:10px;
+}
+
+.section-desc{
+font-size:16px;
+line-height:1.65;
+color:#756c70;
+margin-bottom:22px;
 }
 
 .grid{
@@ -67,39 +133,132 @@ gap:20px;
 }
 
 .story-card{
-padding:26px;
-border-radius:28px;
-background:rgba(255,255,255,.52);
+padding:30px;
+border-radius:34px;
+background:rgba(255,255,255,.56);
 border:1px solid rgba(80,65,55,.10);
-min-height:230px;
+box-shadow:0 16px 38px rgba(80,65,55,.07);
 display:flex;
 flex-direction:column;
 justify-content:space-between;
+min-height:300px;
 }
 
-.icon{
-font-size:42px;
-margin-bottom:18px;
+.story-icon{
+font-size:48px;
+margin-bottom:16px;
 }
 
 .story-card h2{
 font-family:'Cormorant Garamond',serif;
-font-size:30px;
+font-size:36px;
 font-weight:600;
-margin-bottom:10px;
+line-height:1.08;
+margin-bottom:12px;
 }
 
 .story-card p{
+font-size:15px;
+line-height:1.7;
+color:#6d6668;
+}
+
+.meta{
+font-size:13px;
+font-weight:900;
+color:#9f8a76;
+margin-bottom:12px;
+}
+
+.tags{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+margin-top:18px;
+}
+
+.tag{
+font-size:13px;
+padding:8px 12px;
+border-radius:999px;
+background:rgba(255,250,245,.80);
+color:#8f8078;
+border:1px solid rgba(80,65,55,.08);
+font-weight:900;
+}
+
+.world{
+padding:30px;
+border-radius:34px;
+background:linear-gradient(135deg,rgba(255,248,225,.78),rgba(255,255,255,.58));
+border:1px solid rgba(231,200,112,.34);
+box-shadow:0 16px 38px rgba(231,200,112,.12);
+}
+
+.world h2{
+font-family:'Cormorant Garamond',serif;
+font-size:38px;
+font-weight:600;
+margin-bottom:12px;
+}
+
+.world p{
+font-size:16px;
+line-height:1.7;
+color:#756c70;
+}
+
+.treasures{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-top:16px;
+}
+
+.treasure{
+padding:10px 14px;
+border-radius:999px;
+background:rgba(255,255,255,.72);
+border:1px solid rgba(80,65,55,.08);
+font-size:14px;
+font-weight:900;
+color:#756c70;
+}
+
+.empty{
+padding:34px;
+border-radius:34px;
+background:rgba(255,255,255,.52);
+border:1px solid rgba(80,65,55,.08);
+text-align:center;
+color:#756c70;
+font-size:17px;
+line-height:1.75;
+}
+
+.catalog-card{
+padding:28px;
+border-radius:32px;
+background:rgba(255,255,255,.54);
+border:1px solid rgba(80,65,55,.10);
+min-height:250px;
+}
+
+.catalog-card h2{
+font-family:'Cormorant Garamond',serif;
+font-size:34px;
+font-weight:600;
+margin:14px 0 10px;
+}
+
+.catalog-card p{
 font-size:15px;
 line-height:1.65;
 color:#6d6668;
 }
 
-.tag{
-display:inline-block;
-margin-top:18px;
-font-size:13px;
-color:#9c8774;
+.catalog-icon{
+font-size:44px;
 }
 
 .actions{
@@ -107,7 +266,7 @@ display:flex;
 gap:14px;
 flex-wrap:wrap;
 justify-content:center;
-margin-top:36px;
+margin-top:46px;
 }
 
 .button{
@@ -119,23 +278,36 @@ border-radius:999px;
 background:linear-gradient(135deg,#f8e3aa,#e7c870);
 color:#332d35;
 font-size:16px;
-font-weight:700;
+font-weight:900;
 text-decoration:none;
 box-shadow:0 14px 28px rgba(181,145,73,.16);
+border:0;
+cursor:pointer;
 }
 
 .secondary{
-background:rgba(255,255,255,.52);
+background:rgba(255,255,255,.60);
 box-shadow:none;
-color:#6d6668;
+color:#6b6467;
 border:1px solid rgba(80,65,55,.10);
 }
 
-@media(max-width:850px){
-.page{padding:38px 24px;border-radius:30px}
+.footer{
+margin-top:36px;
+text-align:center;
+font-size:14px;
+line-height:1.6;
+color:#9a8b82;
+}
+
+@media(max-width:900px){
+body{padding:18px}
+.page{padding:42px 22px;border-radius:32px}
+h1{font-size:43px}
 .grid{grid-template-columns:1fr}
-h1{font-size:44px}
 .button{width:100%}
+.top{justify-content:center}
+.badge{text-align:center}
 }
 </style>
 </head>
@@ -144,52 +316,254 @@ h1{font-size:44px}
 
 <main class="page">
 
-<div class="badge">Libreria FABLEA</div>
-
-<h1>Le storie della sera</h1>
-
-<div class="intro">
-Qui vivranno le storie create per ogni bambino: piccole avventure da riascoltare, rileggere e conservare come un diario di immaginazione.
+<div class="top">
+<a class="back" href="/child-hub.html">← Mondo bambino</a>
+<div class="badge">Archivio FABLEA</div>
+<a class="back" href="/index.html">Home</a>
 </div>
 
-<div class="grid">
+<section class="hero">
+<h1>La libreria dei mondi.</h1>
+<div class="intro" id="intro">
+Qui FABLEA conserva storie, oggetti simbolici, rituali e mondi narrativi.  
+Ogni bambino costruisce lentamente il suo archivio personale.
+</div>
+</section>
 
-<div class="story-card">
-<div>
-<div class="icon">🌙</div>
-<h2>La lanterna del bosco</h2>
-<p>Una storia dolce sul buio, il coraggio e le stelle nascoste nelle cose che sembrano spaventose.</p>
+<div class="child-strip" id="childStrip"></div>
+
+<section class="section">
+<div class="section-title">Ultime storie</div>
+<div class="section-desc" id="storiesDesc">
+Le esperienze create su questo dispositivo.
 </div>
-<div class="tag">Calma • Coraggio • Buonanotte</div>
+<div id="savedStories"></div>
+</section>
+
+<section class="section">
+<div class="section-title">Mondo persistente</div>
+<div class="section-desc">
+Tesori, rituali e tracce lasciate dalle storie ascoltate.
+</div>
+<div id="worldState"></div>
+</section>
+
+<section class="section">
+<div class="section-title">Catalogo mondi FABLEA</div>
+<div class="section-desc">
+Questi sono i mondi narrativi disponibili o in espansione. Diventeranno sempre più lunghi, continui e personalizzati.
 </div>
 
-<div class="story-card">
-<div>
-<div class="icon">🐋</div>
-<h2>La balena tra le nuvole</h2>
-<p>Un viaggio lento nel cielo per imparare ad ascoltare il silenzio e respirare piano.</p>
-</div>
-<div class="tag">Sogno • Respiro • Meraviglia</div>
-</div>
-
-<div class="story-card">
-<div>
-<div class="icon">🦊</div>
-<h2>La volpe che cercava la luna</h2>
-<p>Una piccola avventura su amicizia, pazienza e desideri che brillano anche da lontano.</p>
-</div>
-<div class="tag">Amicizia • Pazienza • Luna</div>
-</div>
-
-</div>
+<div class="grid" id="catalog"></div>
+</section>
 
 <div class="actions">
-<a class="button" href="/story.html">Crea una nuova storia</a>
-<a class="button secondary" href="/about.html">Leggi il manifesto</a>
-<a class="button secondary" href="/index.html">Torna alla Home</a>
+<a class="button" href="/story.html">Nuova esperienza</a>
+<a class="button secondary" href="/story-player.html">Ultima voce narrante</a>
+<a class="button secondary" href="/manualita.html">Crea con le mani</a>
+<a class="button secondary" href="/child-hub.html">Mondo bambino</a>
+</div>
+
+<div class="footer">
+FABLEA non salva ancora nel cloud: per ora la memoria vive su questo dispositivo.  
+Il prossimo salto sarà account famiglia + sincronizzazione.
 </div>
 
 </main>
+
+<script>
+let selectedChild = localStorage.getItem('fableaSelectedChildName') || '';
+
+function getProfiles(){
+return JSON.parse(localStorage.getItem('fableaChildProfiles') || '[]');
+}
+
+function getSelectedProfile(){
+const profiles = getProfiles();
+const selectedId = localStorage.getItem('fableaSelectedChildId');
+
+if(!profiles.length) return null;
+
+return profiles.find(profile => profile.id === selectedId) || profiles[0];
+}
+
+function getStories(){
+return JSON.parse(localStorage.getItem('fableaSavedStories') || '[]');
+}
+
+function getWorldState(){
+return JSON.parse(localStorage.getItem('fableaWorldState') || '{}');
+}
+
+function setSelectedChild(name){
+selectedChild = name;
+localStorage.setItem('fableaSelectedChildName', name);
+renderAll();
+}
+
+function renderChildStrip(){
+const profiles = getProfiles();
+const strip = document.getElementById('childStrip');
+
+if(!profiles.length){
+strip.innerHTML = `<a class="button" href="/create-child.html">Crea primo esploratore</a>`;
+return;
+}
+
+const currentProfile = getSelectedProfile();
+
+if(!selectedChild && currentProfile){
+selectedChild = currentProfile.name;
+localStorage.setItem('fableaSelectedChildName', selectedChild);
+}
+
+strip.innerHTML = profiles.map(profile => `
+<button class="child-pill ${profile.name === selectedChild ? 'active' : ''}" onclick="setSelectedChild('${profile.name.replace(/'/g,"\\'")}')">
+${profile.name}
+</button>
+`).join('');
+}
+
+function renderStories(){
+const container = document.getElementById('savedStories');
+const desc = document.getElementById('storiesDesc');
+
+let stories = getStories();
+
+if(selectedChild){
+stories = stories.filter(story => story.child === selectedChild);
+desc.innerText = `Le esperienze create per ${selectedChild}.`;
+}
+
+if(!stories.length){
+container.innerHTML = `
+<div class="empty">
+Nessuna storia salvata ancora per questo bambino.  
+Crea una nuova esperienza: apparirà qui come parte della sua memoria narrativa.
+</div>
+`;
+return;
+}
+
+container.innerHTML = `
+<div class="grid">
+${stories.slice().reverse().map(story => `
+<div class="story-card">
+<div>
+<div class="meta">${story.child || 'FABLEA'} • ${story.age || 'Età'} • ${story.date || ''}</div>
+<div class="story-icon">${story.icon || '✨'}</div>
+<h2>${story.title}</h2>
+<p>${story.subtitle || 'Esperienza narrativa FABLEA.'}</p>
+<div class="tags">
+<span class="tag">${story.theme || 'Mondo'}</span>
+<span class="tag">${story.experience || 'Esperienza'}</span>
+</div>
+</div>
+<div class="actions" style="justify-content:flex-start;margin-top:20px;">
+<button class="button secondary" onclick="openStory('${story.id}')">Riascolta</button>
+</div>
+</div>
+`).join('')}
+</div>
+`;
+}
+
+function openStory(id){
+const story = getStories().find(item => item.id === id);
+if(!story) return;
+
+localStorage.setItem('fableaCurrentStory', JSON.stringify(story));
+window.location.href = '/story-player.html';
+}
+
+function renderWorld(){
+const container = document.getElementById('worldState');
+const state = getWorldState();
+
+const childState = selectedChild && state[selectedChild] ? state[selectedChild] : null;
+
+if(!childState){
+container.innerHTML = `
+<div class="empty">
+Il mondo non ha ancora oggetti simbolici salvati.  
+Dopo l’ascolto di una storia, il rituale finale potrà lasciare accesa una luce per il prossimo ritorno.
+</div>
+`;
+return;
+}
+
+const treasures = childState.treasures && childState.treasures.length
+? childState.treasures
+: ['✨ Prima luce'];
+
+const rituals = childState.rituals && childState.rituals.length
+? childState.rituals.slice(-3).reverse()
+: [];
+
+container.innerHTML = `
+<div class="world">
+<h2>Il mondo di ${selectedChild} conserva una traccia.</h2>
+<p>
+Ultima storia: <strong>${childState.lastStory || 'Storia FABLEA'}</strong>.
+Ogni oggetto simbolico rende il mondo più familiare e crea continuità tra un’esperienza e l’altra.
+</p>
+
+<div class="treasures">
+${treasures.map(item => `<span class="treasure">${item}</span>`).join('')}
+</div>
+
+${rituals.length ? `
+<div style="margin-top:24px;">
+<p><strong>Ultimi rituali:</strong></p>
+<div class="treasures">
+${rituals.map(item => `<span class="treasure">${item.treasure} • ${item.date}</span>`).join('')}
+</div>
+</div>
+` : ''}
+</div>
+`;
+}
+
+const catalogItems = [
+['🐺','Il lupo dal vocione','Paura morbida, gentilezza, bosco e luce calma.','2–4'],
+['🌙','La piccola luce','Ritmo lento, sicurezza, luna e presenza.','2–4'],
+['🐋','La balena luminosa','Mare calmo, luce profonda e meraviglia visiva.','2–4'],
+['🗺️','La mappa luminosa','Esplorazione, volpe guida e sentieri dorati.','5–7'],
+['👑','La principessa delle nuvole','Coraggio gentile, autonomia e regni sospesi.','5–7'],
+['🚂','Il treno delle stelle','Viaggio lento tra cieli, stazioni magiche e scelta.','5–7'],
+['🌉','Il ponte delle scelte','Emozioni, fiducia e piccoli cambiamenti interiori.','8–10'],
+['🐉','Il drago che non ruggiva','Autostima, diversità e forza gentile.','8–10'],
+['🪞','La città degli specchi','Identità, relazioni e sguardo su di sé.','8–10'],
+['🧭','L’atlante delle possibilità','Direzione, futuro, sogni e domande profonde.','11–12'],
+['🌌','La città dopo il tramonto','Introspezione, differenza e crescita.','11–12'],
+['📖','Il quaderno delle direzioni','Domande, scelte e bussola personale.','11–12']
+];
+
+function renderCatalog(){
+const catalog = document.getElementById('catalog');
+
+catalog.innerHTML = catalogItems.map(item => `
+<div class="catalog-card">
+<div class="catalog-icon">${item[0]}</div>
+<h2>${item[1]}</h2>
+<p>${item[2]}</p>
+<div class="tags">
+<span class="tag">${item[3]} anni</span>
+<span class="tag">Mondo FABLEA</span>
+</div>
+</div>
+`).join('');
+}
+
+function renderAll(){
+renderChildStrip();
+renderStories();
+renderWorld();
+renderCatalog();
+}
+
+renderAll();
+</script>
 
 </body>
 </html>
