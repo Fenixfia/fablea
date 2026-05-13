@@ -19,7 +19,7 @@ body{
 height:100vh;
 overflow:hidden;
 font-family:'Nunito',sans-serif;
-background:#15121d;
+background:#151120;
 color:white;
 }
 
@@ -38,45 +38,46 @@ overflow:hidden;
 position:absolute;
 inset:0;
 background:
-radial-gradient(circle at 50% 28%,rgba(255,232,171,.28),transparent 24%),
-radial-gradient(circle at 20% 80%,rgba(225,203,255,.22),transparent 30%),
-linear-gradient(180deg,#171421 0%,#231e31 48%,#100f16 100%);
+radial-gradient(circle at 50% 0%,rgba(138,119,166,.42),transparent 34%),
+radial-gradient(circle at 12% 22%,rgba(255,212,140,.14),transparent 18%),
+radial-gradient(circle at 86% 30%,rgba(189,165,255,.15),transparent 24%),
+linear-gradient(180deg,#29233b 0%,#211b32 52%,#14111f 100%);
 transition:background 1.2s ease;
 }
 
 .ambient.forest{
 background:
-radial-gradient(circle at 50% 30%,rgba(255,232,171,.26),transparent 24%),
-radial-gradient(circle at 20% 80%,rgba(117,178,133,.20),transparent 32%),
-linear-gradient(180deg,#151b19 0%,#243326 50%,#101510 100%);
+radial-gradient(circle at 50% 0%,rgba(255,219,142,.28),transparent 28%),
+radial-gradient(circle at 22% 72%,rgba(72,134,82,.22),transparent 32%),
+linear-gradient(180deg,#151b25 0%,#182c22 52%,#10140f 100%);
 }
 
 .ambient.ocean{
 background:
-radial-gradient(circle at 50% 30%,rgba(255,232,171,.22),transparent 24%),
-radial-gradient(circle at 20% 80%,rgba(114,188,219,.24),transparent 34%),
-linear-gradient(180deg,#121b2a 0%,#183448 50%,#0d1119 100%);
+radial-gradient(circle at 50% 0%,rgba(255,219,142,.24),transparent 28%),
+radial-gradient(circle at 25% 78%,rgba(67,174,214,.24),transparent 34%),
+linear-gradient(180deg,#111a32 0%,#12384d 52%,#0b111a 100%);
 }
 
 .ambient.sky{
 background:
-radial-gradient(circle at 50% 30%,rgba(255,232,171,.24),transparent 24%),
-radial-gradient(circle at 20% 80%,rgba(218,204,255,.30),transparent 34%),
-linear-gradient(180deg,#1d1830 0%,#30284b 50%,#12101a 100%);
+radial-gradient(circle at 50% 0%,rgba(255,219,142,.30),transparent 28%),
+radial-gradient(circle at 25% 78%,rgba(192,170,255,.30),transparent 34%),
+linear-gradient(180deg,#1d1736 0%,#3f315e 52%,#14111f 100%);
 }
 
 .ambient.bridge{
 background:
-radial-gradient(circle at 50% 30%,rgba(255,232,171,.24),transparent 24%),
-radial-gradient(circle at 20% 80%,rgba(255,210,180,.20),transparent 34%),
-linear-gradient(180deg,#1b1820 0%,#33283a 50%,#111016 100%);
+radial-gradient(circle at 50% 0%,rgba(255,219,142,.27),transparent 28%),
+radial-gradient(circle at 25% 78%,rgba(255,170,120,.20),transparent 34%),
+linear-gradient(180deg,#1b1728 0%,#3a2838 52%,#111016 100%);
 }
 
 .ambient.space{
 background:
-radial-gradient(circle at 50% 30%,rgba(255,232,171,.20),transparent 24%),
-radial-gradient(circle at 20% 80%,rgba(130,120,255,.24),transparent 34%),
-linear-gradient(180deg,#090915 0%,#151535 52%,#07070d 100%);
+radial-gradient(circle at 50% 0%,rgba(255,219,142,.18),transparent 28%),
+radial-gradient(circle at 25% 78%,rgba(88,79,210,.26),transparent 34%),
+linear-gradient(180deg,#08091a 0%,#151743 52%,#07070d 100%);
 }
 
 .star{
@@ -103,8 +104,8 @@ to{opacity:.75;transform:scale(1.25)}
 
 .glow{
 position:absolute;
-width:520px;
-height:520px;
+width:560px;
+height:560px;
 border-radius:50%;
 background:radial-gradient(circle,rgba(255,231,170,.22),transparent 70%);
 filter:blur(12px);
@@ -120,14 +121,14 @@ animation:pulse 8s infinite ease-in-out;
 .panel{
 position:relative;
 z-index:2;
-width:min(900px,94vw);
-height:min(760px,92vh);
+width:min(980px,94vw);
+height:min(800px,94vh);
 padding:34px;
 border-radius:42px;
 background:rgba(255,255,255,.085);
-backdrop-filter:blur(20px);
-border:1px solid rgba(255,255,255,.13);
-box-shadow:0 26px 90px rgba(0,0,0,.38);
+backdrop-filter:blur(22px);
+border:1px solid rgba(255,255,255,.14);
+box-shadow:0 28px 90px rgba(0,0,0,.42);
 display:flex;
 flex-direction:column;
 justify-content:space-between;
@@ -147,8 +148,8 @@ align-items:center;
 justify-content:center;
 padding:11px 16px;
 border-radius:999px;
-background:rgba(255,255,255,.10);
-border:1px solid rgba(255,255,255,.13);
+background:rgba(255,255,255,.11);
+border:1px solid rgba(255,255,255,.15);
 color:white;
 font-size:14px;
 font-weight:900;
@@ -159,13 +160,27 @@ text-decoration:none;
 font-size:12px;
 letter-spacing:5px;
 text-transform:uppercase;
-color:#d8c7a4;
+color:#e8d2a5;
+}
+
+.visual-wrap{
+margin:14px auto 12px;
+width:180px;
+height:180px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:
+radial-gradient(circle at 50% 35%,rgba(255,230,160,.46),transparent 38%),
+rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.13);
+box-shadow:inset 0 0 50px rgba(255,255,255,.07),0 18px 44px rgba(0,0,0,.20);
 }
 
 .visual{
-font-size:88px;
-margin:18px 0 14px;
-animation:float 5s ease-in-out infinite;
+font-size:82px;
+animation:float 5.8s ease-in-out infinite;
 }
 
 @keyframes float{
@@ -176,29 +191,29 @@ animation:float 5s ease-in-out infinite;
 
 h1{
 font-family:'Cormorant Garamond',serif;
-font-size:54px;
+font-size:52px;
 line-height:1.05;
 font-weight:600;
-margin-bottom:12px;
+margin-bottom:10px;
 }
 
 .subtitle{
-font-size:17px;
-line-height:1.65;
+font-size:16px;
+line-height:1.6;
 color:rgba(255,255,255,.68);
-max-width:680px;
-margin:0 auto 16px;
+max-width:720px;
+margin:0 auto 12px;
 }
 
 .textbox{
-margin:18px auto;
+margin:14px auto;
 width:100%;
-max-width:720px;
+max-width:760px;
 min-height:190px;
 padding:28px;
 border-radius:32px;
-background:rgba(255,255,255,.06);
-border:1px solid rgba(255,255,255,.09);
+background:rgba(255,255,255,.065);
+border:1px solid rgba(255,255,255,.10);
 display:flex;
 align-items:center;
 justify-content:center;
@@ -206,27 +221,27 @@ justify-content:center;
 
 .current-text{
 font-family:'Cormorant Garamond',serif;
-font-size:34px;
+font-size:33px;
 line-height:1.55;
-color:rgba(255,255,255,.86);
+color:rgba(255,255,255,.88);
 transition:opacity .5s ease;
 }
 
 .current-text.fade{
-opacity:.18;
+opacity:.16;
 }
 
 .audio-box{
 padding:18px;
 border-radius:28px;
-background:rgba(255,255,255,.06);
-border:1px solid rgba(255,255,255,.09);
+background:rgba(255,255,255,.065);
+border:1px solid rgba(255,255,255,.10);
 }
 
 .status{
 font-size:15px;
 line-height:1.5;
-color:#d8c7a4;
+color:#e8d2a5;
 margin-bottom:12px;
 white-space:pre-line;
 }
@@ -264,7 +279,7 @@ cursor:not-allowed;
 
 .secondary{
 background:rgba(255,255,255,.10);
-border:1px solid rgba(255,255,255,.13);
+border:1px solid rgba(255,255,255,.14);
 color:white;
 box-shadow:none;
 }
@@ -313,8 +328,8 @@ backdrop-filter:blur(18px);
 width:min(760px,94vw);
 padding:44px 34px;
 border-radius:38px;
-background:rgba(255,255,255,.10);
-border:1px solid rgba(255,255,255,.16);
+background:rgba(255,255,255,.11);
+border:1px solid rgba(255,255,255,.17);
 box-shadow:0 26px 90px rgba(0,0,0,.45);
 text-align:center;
 }
@@ -372,20 +387,21 @@ line-height:1.6;
 color:#f8e3aa;
 }
 
-@media(max-width:740px){
-.stage{padding:12px}
+@media(max-width:760px){
+.stage{padding:10px}
 .panel{
 height:96vh;
-padding:20px 16px;
+padding:18px 14px;
 border-radius:30px;
 }
 .top{justify-content:center;flex-wrap:wrap}
 .badge{width:100%;order:-1;margin-bottom:4px}
-.visual{font-size:64px;margin:12px 0}
-h1{font-size:36px}
-.subtitle{font-size:14px}
-.textbox{min-height:185px;padding:20px}
-.current-text{font-size:27px}
+.visual-wrap{width:120px;height:120px;margin:8px auto}
+.visual{font-size:58px}
+h1{font-size:33px}
+.subtitle{font-size:13px}
+.textbox{min-height:175px;padding:18px}
+.current-text{font-size:25px}
 .button{width:100%}
 .bottom .back{width:100%}
 .ritual-card{padding:34px 20px}
@@ -417,7 +433,9 @@ h1{font-size:36px}
 <a class="back" href="/child-hub.html">Mondo</a>
 </div>
 
+<div class="visual-wrap">
 <div class="visual" id="storyIcon">🌙</div>
+</div>
 
 <h1 id="storyTitle">La storia della sera</h1>
 
@@ -496,19 +514,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const savedStory = JSON.parse(localStorage.getItem("fableaCurrentStory") || "{}");
 
-const fallbackText = `Cesare trovò una mappa luminosa nascosta dentro un vecchio libro.
+const fallbackText = `Una piccola luce comparve nel buio.
 
-Ogni stella sulla mappa brillava lentamente nel buio.
+Non correva.
+Non faceva rumore.
+Aspettava.
 
-Quando la toccò, la stanza si riempì di luce dorata.
-
-Una piccola voce sussurrò: benvenuto nel mondo di FABLEA.`;
+E quando il bambino la guardò, il mondo diventò più lento.`;
 
 const story = {
-title:savedStory.title || "La storia della sera",
+title:savedStory.title || "La piccola luce",
 subtitle:savedStory.subtitle || "Una nuova esperienza narrativa FABLEA.",
 text:savedStory.text || fallbackText,
-icon:savedStory.icon || "🌙",
+icon:savedStory.scene || savedStory.icon || "🌙 ✨",
+art:savedStory.art || "space",
 child:savedStory.child || "piccolo esploratore",
 age:savedStory.age || "",
 theme:savedStory.theme || ""
@@ -539,19 +558,24 @@ let currentChunk = 0;
 let currentAudioUrl = null;
 
 function setAmbient(){
-const lower = (story.title + " " + story.subtitle + " " + story.text).toLowerCase();
-
 ambient.className = "ambient";
+
+if(story.art){
+ambient.classList.add(story.art);
+return;
+}
+
+const lower = (story.title + " " + story.subtitle + " " + story.text).toLowerCase();
 
 if(lower.includes("bosco") || lower.includes("lupo") || lower.includes("volpe")){
 ambient.classList.add("forest");
-}else if(lower.includes("mare") || lower.includes("oceano") || lower.includes("onda")){
+}else if(lower.includes("mare") || lower.includes("oceano") || lower.includes("onda") || lower.includes("balena")){
 ambient.classList.add("ocean");
 }else if(lower.includes("nuvol") || lower.includes("principessa") || lower.includes("cielo")){
 ambient.classList.add("sky");
 }else if(lower.includes("ponte") || lower.includes("scelte")){
 ambient.classList.add("bridge");
-}else if(lower.includes("atlante") || lower.includes("stella") || lower.includes("spazio")){
+}else if(lower.includes("atlante") || lower.includes("stella") || lower.includes("spazio") || lower.includes("treno")){
 ambient.classList.add("space");
 }
 }
@@ -704,21 +728,21 @@ const icon = document.getElementById("ritualIcon");
 const text = document.getElementById("ritualText");
 
 const story = activeStory || {};
-const lower = ((story.title || "") + " " + (story.text || "")).toLowerCase();
+const lower = ((story.title || "") + " " + (story.text || "") + " " + (story.art || "")).toLowerCase();
 
-if(lower.includes("mare") || lower.includes("onda")){
+if(lower.includes("mare") || lower.includes("onda") || lower.includes("balena") || lower.includes("ocean")){
 icon.innerText = "🌊";
 text.innerText = "Il mare ha lasciato una conchiglia calma. Scegli una luce da lasciare accesa per il prossimo ritorno.";
 }else if(lower.includes("lupo")){
 icon.innerText = "🐺";
 text.innerText = "Il lupo dal vocione ha imparato a parlare piano. Scegli cosa resterà acceso nel bosco fino a domani.";
-}else if(lower.includes("principessa")){
+}else if(lower.includes("principessa") || lower.includes("nuvol")){
 icon.innerText = "👑";
 text.innerText = "Il regno delle nuvole resta sospeso nel cielo. Scegli quale luce guiderà il prossimo viaggio.";
 }else if(lower.includes("ponte")){
 icon.innerText = "🌉";
 text.innerText = "Il ponte delle scelte resta illuminato. Scegli quale luce accompagnerà il prossimo passo.";
-}else if(lower.includes("atlante")){
+}else if(lower.includes("atlante") || lower.includes("bussola")){
 icon.innerText = "🧭";
 text.innerText = "L’atlante non si chiude davvero. Scegli quale domanda o luce resterà aperta per domani.";
 }else{
