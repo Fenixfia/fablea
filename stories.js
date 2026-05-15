@@ -827,26 +827,282 @@ paragraphs:[
 
 ],
 
-  "11-12": [
-    {
-      title: "{{name}} e l’atlante delle possibilità",
-      subtitle: "Un racconto più maturo su identità, scelte e futuro.",
-      icon: "🌌 🧭 📖",
-      art: "space",
-      scene: "🌌 🧭 ✨",
-      keywords: ["atlante", "futuro", "direzione", "identità"],
-      ritual: "🧭 Bussola interiore",
-      activity: "Scrivi una domanda che vuoi portare con te.",
-      paragraphs: [
-        "La sera in cui {{name}} trovò l’atlante, il cielo sembrava più grande del solito. Non più scuro. Solo più profondo.",
-        "Sulla scrivania c’era un libro senza titolo. Aveva una bussola disegnata in copertina e una frase: “Non tutte le direzioni si vedono da fuori.”",
-        "{{name}} aprì il libro. Le pagine non mostravano città, montagne o confini. Mostravano possibilità.",
-        "Una pagina era fatta di coraggio. Una di dubbi. Una di errori utili. Una di sogni ancora confusi.",
-        "Ogni pagina sembrava dire: puoi non sapere ancora, ma puoi iniziare a guardare.",
-        "Al centro dell’atlante apparve una domanda: “Che cosa ti fa sentire vivo quando nessuno ti guarda?”",
-        "{{name}} rimase in silenzio. Non perché non avesse una risposta, ma perché quella domanda meritava spazio.",
-        "Quando chiuse il libro, la bussola non indicava nord. Indicava avanti."
-      ]
-    }
-  ]
-};
+"11-12": [
+
+{
+title:"{{name}} e l’atlante delle possibilità",
+subtitle:"Un racconto su identità, scelte e futuro.",
+icon:"🌌 🧭 📖",
+art:"space",
+scene:"🌌 🧭 ✨",
+keywords:["atlante","futuro","direzione","identità"],
+ritual:"🧭 Bussola interiore",
+activity:"Scrivi una domanda che vuoi portare con te.",
+paragraphs:[
+"La sera in cui {{name}} trovò l’atlante, il cielo sembrava più grande del solito.",
+"Sulla scrivania c’era un libro senza titolo, con una bussola disegnata in copertina.",
+"La frase incisa diceva: “Non tutte le direzioni si vedono da fuori.”",
+"Quando {{name}} aprì il libro, le pagine non mostrarono città o confini.",
+"Mostrarono possibilità.",
+"Una pagina era fatta di coraggio. Una di dubbi. Una di errori utili.",
+"Un’altra sembrava piena di sogni ancora confusi.",
+"Al centro dell’atlante apparve una domanda: “Che cosa ti fa sentire vivo quando nessuno ti guarda?”",
+"{{name}} rimase in silenzio, non perché non avesse una risposta, ma perché quella domanda meritava spazio.",
+"La bussola sulla copertina iniziò a muoversi lentamente.",
+"Non indicò nord.",
+"Indicò avanti.",
+"{{name}} capì che crescere non significa sapere già tutto.",
+"Significa imparare ad ascoltare quale strada continua a chiamarti."
+]
+},
+
+{
+title:"{{name}} e la città dopo il tramonto",
+subtitle:"Una città notturna mostra ciò che resta acceso dentro.",
+icon:"🌆 🌙 ✨",
+art:"space",
+scene:"🌆 🌙 ✨",
+keywords:["città","notte","identità","tramonto"],
+ritual:"🌙 Lampione interiore",
+activity:"Disegna una città notturna con una finestra ancora accesa.",
+paragraphs:[
+"Dopo il tramonto, la città cambiava pelle.",
+"Le vetrine si spegnevano, i rumori scendevano, le strade diventavano più grandi.",
+"{{name}} camminava senza una meta precisa quando vide una strada che di giorno non esisteva.",
+"In fondo alla strada c’era una piazza silenziosa.",
+"Al centro della piazza, un lampione era acceso anche senza elettricità.",
+"Una voce disse: “Questa luce mostra ciò che resta quando il rumore finisce.”",
+"{{name}} guardò intorno e vide ombre di possibilità.",
+"Cose iniziate. Cose desiderate. Cose mai dette.",
+"Il lampione non giudicava.",
+"Illuminava.",
+"Sotto quella luce, {{name}} capì che crescere non è scegliere subito una forma definitiva.",
+"È imparare quali luci vale la pena tenere accese.",
+"La città tornò normale quando arrivò il mattino.",
+"Ma dentro {{name}}, quel lampione continuò a brillare."
+]
+},
+
+{
+title:"{{name}} e il ragazzo senza bussola",
+subtitle:"Perdersi diventa un modo diverso di iniziare.",
+icon:"🧭 ❔ 🌫️",
+art:"bridge",
+scene:"🧭 ❔ 🌫️",
+keywords:["bussola","strada","futuro","scelte"],
+ritual:"❔ Domanda guida",
+activity:"Scrivi una domanda che può diventare bussola.",
+paragraphs:[
+"Il ragazzo senza bussola viveva in una valle dove tutti portavano una direzione appesa al collo.",
+"Nord, sud, est, ovest.",
+"Tutti sembravano sapere dove andare.",
+"{{name}} lo incontrò seduto su un muretto, con una bussola vuota in mano.",
+"“Non indica niente,” disse il ragazzo. “Forse sono rotto io.”",
+"{{name}} guardò la bussola.",
+"Non sembrava rotta.",
+"Sembrava in attesa.",
+"Camminarono insieme tra strade che cambiavano nome e cartelli girati dal vento.",
+"Alla fine arrivarono davanti a un campo aperto.",
+"La bussola si accese, ma non indicò una direzione.",
+"Indicò una domanda: “Che cosa vuoi conoscere meglio?”",
+"Il ragazzo sorrise piano.",
+"Forse non era senza bussola.",
+"Forse aveva solo bisogno della domanda giusta."
+]
+},
+
+{
+title:"{{name}} e la biblioteca del cielo",
+subtitle:"Ogni libro contiene una versione possibile di sé.",
+icon:"📚 ☁️ 🌌",
+art:"sky",
+scene:"📚 ☁️ 🌌",
+keywords:["biblioteca","cielo","sogni","possibilità"],
+ritual:"📖 Pagina futura",
+activity:"Scrivi il titolo di un libro che parla di chi potresti diventare.",
+paragraphs:[
+"La biblioteca del cielo fluttuava sopra le nuvole.",
+"Nessuno la vedeva finché non aveva una domanda vera.",
+"{{name}} arrivò su una scala fatta di vento.",
+"All’ingresso c’era una ragazza con mani piene di polvere di stelle.",
+"“Qui non conserviamo libri su ciò che è stato,” disse.",
+"“Conserviamo libri su ciò che potresti diventare.”",
+"{{name}} aprì un volume e vide una versione di sé coraggiosa.",
+"Poi una più calma.",
+"Poi una ancora confusa, ma viva.",
+"“Quale devo scegliere?” chiese.",
+"La ragazza sorrise.",
+"“Nessuna adesso. Devi solo capire quali pagine ti chiamano.”",
+"{{name}} copiò una frase su un foglio: “Non sono una sola possibilità.”",
+"La biblioteca si allontanò tra le nuvole.",
+"Ma il foglio restò."
+]
+},
+
+{
+title:"{{name}} e il ponte delle costellazioni",
+subtitle:"Ogni scelta collega punti lontani.",
+icon:"🌉 ✨ 🌌",
+art:"space",
+scene:"🌉 ✨ 🌌",
+keywords:["stelle","ponte","costellazioni","scelte"],
+ritual:"✨ Stella da collegare",
+activity:"Disegna tre stelle e uniscile con una linea.",
+paragraphs:[
+"Nel cielo sopra la città, le stelle sembravano disordinate.",
+"Poi {{name}} vide una linea sottile unirne due.",
+"Poi tre.",
+"Poi molte.",
+"Si formò un ponte di costellazioni.",
+"Una figura luminosa camminava dall’altra parte.",
+"“Le scelte sono come stelle,” disse.",
+"“Da sole sembrano sparse. Col tempo diventano disegno.”",
+"{{name}} salì sul ponte e vide momenti della propria vita brillare sotto i piedi.",
+"Alcuni erano belli.",
+"Altri complicati.",
+"Altri ancora non avevano senso.",
+"Ma da lassù, tutti contribuivano a una forma.",
+"La figura luminosa indicò una stella spenta.",
+"“Questa è una scelta che non hai ancora fatto.”",
+"{{name}} non la accese subito.",
+"Ma capì che era lì, ad aspettare."
+]
+},
+
+{
+title:"{{name}} e la stanza delle versioni future",
+subtitle:"Una stanza mostra futuri possibili senza obbligare a sceglierne uno.",
+icon:"🚪 🪞 🔮",
+art:"castle",
+scene:"🚪 🪞 🔮",
+keywords:["futuro","specchio","identità","scelta"],
+ritual:"🪞 Riflesso futuro",
+activity:"Disegna una versione futura di te senza renderla perfetta.",
+paragraphs:[
+"La stanza delle versioni future aveva molte porte e nessuna maniglia.",
+"{{name}} entrò perché una porta si aprì da sola.",
+"Dentro c’erano specchi, ma non riflettevano il presente.",
+"In uno specchio, {{name}} parlava davanti a molte persone.",
+"In un altro viaggiava.",
+"In un altro costruiva qualcosa con pazienza.",
+"In un altro ancora restava semplicemente in silenzio, ma sembrava sereno.",
+"Una voce calma disse: “Non guardare per scegliere subito.”",
+"“Guarda per riconoscere cosa si accende.”",
+"{{name}} si avvicinò allo specchio più semplice.",
+"Non mostrava successo, applausi o grandi scene.",
+"Mostrava attenzione.",
+"Mostrava presenza.",
+"Mostrava una direzione ancora piccola, ma vera.",
+"La stanza diventò più luminosa.",
+"Forse il futuro non era una risposta.",
+"Era una direzione da ascoltare."
+]
+},
+
+{
+title:"{{name}} e il mare delle domande",
+subtitle:"Un mare calmo porta domande invece di risposte immediate.",
+icon:"🌊 ❔ 🐚",
+art:"ocean",
+scene:"🌊 ❔ 🐚",
+keywords:["mare","domande","futuro","calma"],
+ritual:"🐚 Conchiglia domanda",
+activity:"Scrivi una domanda e piegala come una barchetta.",
+paragraphs:[
+"Il mare delle domande era più silenzioso degli altri mari.",
+"Le onde non portavano conchiglie normali.",
+"Portavano frasi incomplete.",
+"{{name}} ne raccolse una: “E se...”",
+"Poi un’altra: “Perché mi importa...”",
+"Poi una terza: “Dove mi sento...”",
+"Sulla riva, un vecchio pescatore sistemava reti vuote.",
+"“Pesco domande,” disse.",
+"“Le risposte arrivano quando smetti di tirarle troppo forte.”",
+"{{name}} lasciò una domanda nell’acqua.",
+"Il mare non rispose.",
+"La tenne al sicuro.",
+"E per la prima volta, non avere subito una risposta sembrò meno spaventoso."
+]
+},
+
+{
+title:"{{name}} e il guardiano delle strade",
+subtitle:"Non tutte le strade vanno percorse subito.",
+icon:"🛤️ 🧥 🕯️",
+art:"bridge",
+scene:"🛤️ 🧥 🕯️",
+keywords:["strade","scelte","guardiano","direzione"],
+ritual:"🕯️ Candela del passo",
+activity:"Disegna quattro strade e scegli solo la prima curva.",
+paragraphs:[
+"Il guardiano delle strade indossava un cappotto pieno di mappe piegate.",
+"{{name}} lo trovò davanti a un incrocio con troppi cartelli.",
+"Alcuni indicavano posti luminosi.",
+"Altri sembravano difficili.",
+"Altri ancora non avevano nome.",
+"“Qual è quella giusta?” chiese {{name}}.",
+"Il guardiano rise piano.",
+"“Una domanda più utile è: quale strada vuoi conoscere adesso?”",
+"Indicò una strada luminosa, una ombrosa, una rumorosa e una quasi invisibile.",
+"{{name}} si accorse che stava guardando sempre quella quasi invisibile.",
+"“Allora forse non è la più facile,” disse il guardiano.",
+"“Ma è quella che ti parla.”",
+"Consegnò a {{name}} una piccola candela.",
+"“Non illumina tutta la strada. Solo il prossimo passo.”",
+"A volte basta."
+]
+},
+
+{
+title:"{{name}} e le finestre del tempo",
+subtitle:"Passato, presente e futuro si aprono come finestre.",
+icon:"🪟 ⏳ 🌙",
+art:"castle",
+scene:"🪟 ⏳ 🌙",
+keywords:["tempo","finestre","crescita","futuro"],
+ritual:"🪟 Finestra accesa",
+activity:"Disegna tre finestre: ieri, oggi, domani.",
+paragraphs:[
+"In una casa apparsa solo per una notte, {{name}} trovò tre finestre.",
+"La prima guardava indietro.",
+"Mostrava cose già vissute, alcune belle, altre difficili.",
+"La seconda guardava il presente.",
+"Mostrava {{name}} proprio lì, con domande ancora aperte.",
+"La terza guardava avanti, ma il vetro era appannato.",
+"Una voce disse: “Il futuro non si vede bene perché si costruisce mentre cammini.”",
+"{{name}} pulì un piccolo angolo del vetro.",
+"Non vide tutto.",
+"Vide solo una luce, lontana ma reale.",
+"Capì che non serviva conoscere ogni dettaglio.",
+"Serviva scegliere cosa tenere acceso mentre il tempo passava."
+]
+},
+
+{
+title:"{{name}} e il quaderno delle direzioni",
+subtitle:"Un quaderno raccoglie parole guida per orientarsi.",
+icon:"📓 🧭 ✨",
+art:"space",
+scene:"📓 🧭 ✨",
+keywords:["quaderno","direzione","parole","identità"],
+ritual:"📓 Parola guida",
+activity:"Scrivi una parola che vuoi portare con te questa settimana.",
+paragraphs:[
+"Il quaderno delle direzioni non aveva righe dritte.",
+"Ogni pagina cambiava forma in base a chi la apriva.",
+"{{name}} trovò la prima pagina vuota, tranne una frase.",
+"“Scrivi una parola che vuoi portare con te.”",
+"Pensò a molte parole.",
+"Alcune sembravano troppo grandi.",
+"Altre troppo facili.",
+"Alla fine ne scelse una semplice, ma vera.",
+"Quando la scrisse, la parola diventò una piccola bussola disegnata sul bordo della pagina.",
+"Il quaderno non disse dove andare.",
+"Disse soltanto: “Quando ti perdi, torna alla parola.”",
+"{{name}} chiuse il quaderno.",
+"E sentì che una direzione può iniziare anche così.",
+"Da una parola sincera."
+]
+}
+
+]
