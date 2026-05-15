@@ -1,268 +1,337 @@
+function fableaExpandStory(story){
+  const openings = {
+    forest:[
+      "Il mondo di FABLEA si aprì piano, tra foglie scure, luci piccole e un sentiero che sembrava aspettare proprio quel momento.",
+      "L’aria profumava di bosco, terra morbida e cose appena immaginate."
+    ],
+    ocean:[
+      "Il mondo di FABLEA si aprì con il suono lento dell’acqua.",
+      "Il mare non correva. Respirava piano, come se custodisse una storia sotto ogni onda."
+    ],
+    sky:[
+      "Il cielo di FABLEA si abbassò dolcemente, pieno di nuvole, luce e strade sospese.",
+      "Sembrava un posto dove anche i pensieri potevano camminare piano."
+    ],
+    space:[
+      "La notte di FABLEA si accese lentamente.",
+      "Le stelle non brillavano tutte insieme: una dopo l’altra, come se stessero preparando un piccolo teatro nel cielo."
+    ],
+    bridge:[
+      "Davanti a {{name}} comparve un luogo sospeso tra due mondi.",
+      "Non era ancora chiaro se fosse una strada, una domanda o una scelta. Forse era tutte e tre le cose."
+    ],
+    castle:[
+      "FABLEA aprì una porta antica, nascosta tra luce, silenzio e polvere dorata.",
+      "Dietro quella porta c’era un luogo che sembrava ricordare ogni bambino passato di lì."
+    ]
+  };
+
+  const middles = {
+    forest:[
+      "Ogni passo faceva nascere un piccolo suono: una foglia, una radice, una luce nascosta.",
+      "E più {{name}} avanzava, più il mondo sembrava diventare familiare."
+    ],
+    ocean:[
+      "Le onde raccontavano senza parole. Andavano e tornavano, come pensieri che imparano a calmarsi.",
+      "{{name}} ascoltò quel ritmo e sentì che anche l’avventura poteva essere gentile."
+    ],
+    sky:[
+      "Le nuvole cambiavano forma lentamente, mostrando strade, finestre e piccole aperture luminose.",
+      "Ogni cosa lassù sembrava dire: guarda meglio, ma senza fretta."
+    ],
+    space:[
+      "Il cielo era pieno di piccole distanze luminose.",
+      "{{name}} capì che non tutte le cose lontane fanno paura. Alcune chiamano soltanto piano."
+    ],
+    bridge:[
+      "Il passaggio non chiedeva velocità. Chiedeva presenza.",
+      "{{name}} fece un respiro e lasciò che il luogo mostrasse il passo successivo."
+    ],
+    castle:[
+      "Le pareti sembravano custodire voci antiche e promesse leggere.",
+      "Ogni stanza aveva una luce diversa, come se ogni porta proteggesse una piccola possibilità."
+    ]
+  };
+
+  const endings = {
+    forest:[
+      "Quando la storia cominciò a chiudersi, il bosco non sparì.",
+      "Rimase una piccola luce tra le radici, pronta per il prossimo ritorno."
+    ],
+    ocean:[
+      "Quando il mare tornò calmo, una piccola traccia luminosa rimase sulla riva.",
+      "FABLEA non aveva finito davvero: aveva solo abbassato la voce."
+    ],
+    sky:[
+      "Le nuvole si richiusero piano, ma una piccola apertura rimase nel cielo.",
+      "Da lì, un giorno, sarebbe potuta iniziare un’altra storia."
+    ],
+    space:[
+      "Le stelle tornarono al loro posto, ma una luce restò un po’ più vicina.",
+      "Era il segno che il viaggio non era stato solo immaginato: era stato vissuto."
+    ],
+    bridge:[
+      "Il ponte rimase alle spalle, acceso da piccole luci.",
+      "{{name}} non aveva risolto tutto, ma aveva attraversato qualcosa di importante."
+    ],
+    castle:[
+      "La porta del castello si chiuse senza rumore.",
+      "Ma una chiave, una parola o una luce restò con {{name}}, pronta a riaprire il mondo."
+    ]
+  };
+
+  const art = story.art || "space";
+  const intro = openings[art] || openings.space;
+  const middle = middles[art] || middles.space;
+  const ending = endings[art] || endings.space;
+
+  const original = story.paragraphs || [];
+  const expanded = [
+    intro[0],
+    intro[1],
+    ...original.slice(0, Math.ceil(original.length / 2)),
+    middle[0],
+    middle[1],
+    ...original.slice(Math.ceil(original.length / 2)),
+    ending[0],
+    ending[1],
+    "Prima di uscire dal mondo, {{name}} si fermò un istante.",
+    "C’era qualcosa da lasciare acceso: una piccola traccia, un oggetto, una luce gentile.",
+    "Non serviva spiegare tutto. Bastava ricordare che quel luogo poteva essere ritrovato.",
+    "E così FABLEA rimase lì, silenziosa e viva, in attesa della prossima pagina."
+  ];
+
+  return {
+    ...story,
+    paragraphs: expanded
+  };
+}
+
+function S(story){
+  return fableaExpandStory(story);
+}
+
 window.FABLEA_STORIES = {
-  "2-4": [
-    {
-      title: "{{name}} e il lupo dal vocione",
-      subtitle: "Una storia morbida dove la paura diventa gentilezza.",
-      icon: "🌙 🐺 ✨",
-      art: "forest",
-      scene: "🌲 🐺 ✨",
-      keywords: ["lupo", "bosco", "paura", "gentilezza"],
-      ritual: "⭐ Stella luminosa",
-      activity: "Costruisci una piccola tana morbida per il lupo gentile.",
-      paragraphs: [
-        "Nel bosco morbido, quando la luna saliva piano piano, {{name}} sentì un rumore grande tra le foglie.",
-        "Era un rumore rotondo, profondo, un po’ tremolante. Le foglie fecero fru fru, i funghetti luminosi si abbassarono e una piccola lucciola si nascose dietro una radice.",
-        "Poi arrivò una voce enorme: “GROOOOAR”. Non era un ruggito cattivo. Era solo troppo grande per quel bosco così piccolo.",
-        "Dietro un albero comparve un lupo. Aveva zampe grandi, coda folta, orecchie morbide e occhi dolci. Il lupo abbassò la testa perché aveva capito di aver fatto paura.",
-        "{{name}} rimase fermo. Non scappò. Guardò il lupo e vide che sotto quel vocione enorme c’era un cuore un po’ triste.",
-        "Il lupo provò a parlare: “Buo...” ma uscì ancora un piccolo “GROAR”. Allora si sedette per terra e nascose il muso tra le zampe.",
-        "Sotto una foglia, {{name}} trovò una piccola luce. Non era grande. Non era forte. Ma era calda e gentile.",
-        "{{name}} prese la luce con delicatezza e la mise vicino al lupo. La luce non disse niente. Fece solo un piccolo bagliore dorato.",
-        "Il lupo la guardò. Respirò una volta. Poi un’altra. Poi un’altra ancora. Ogni respiro faceva diventare il bosco più tranquillo.",
-        "Alla fine il lupo provò di nuovo. Questa volta disse piano: “Buonasera”. Era una voce bassa, morbida, quasi come una coperta.",
-        "Le foglie smisero di tremare. I funghetti tornarono dritti. La lucciola uscì dalla radice e si posò sul naso del lupo.",
-        "Il lupo sorrise. {{name}} sorrise. E il bosco capì che a volte una cosa grande ha solo bisogno di imparare a diventare piccola.",
-        "Prima di tornare, {{name}} lasciò una stellina accesa vicino all’albero. Così il lupo avrebbe ricordato la sua voce gentile anche il giorno dopo."
-      ]
-    },
 
-    {
-      title: "{{name}} e la piccola luce",
-      subtitle: "Una storia visiva, morbida e rassicurante.",
-      icon: "🌙 ✨ 🧸",
-      art: "space",
-      scene: "🌙 ✨ 🧸",
-      keywords: ["luce", "luna", "calma", "orsetto"],
-      ritual: "🌙 Luna silenziosa",
-      activity: "Accendi una piccola luce morbida e raccontale dove deve brillare.",
-      paragraphs: [
-        "Vicino a {{name}} comparve una piccola luce. Non arrivò all’improvviso. Prima sembrò un puntino, poi una goccia dorata, poi una stellina vicina.",
-        "La luce non correva. Non saltava. Non faceva rumore. Restava lì, tranquilla, come se sapesse aspettare.",
-        "{{name}} la guardò. La luce fece un piccolo brillio, come per dire: “Sono qui”.",
-        "Poco dopo arrivò un orsetto morbido. Aveva una sciarpa piccola e camminava piano, con passi rotondi.",
-        "Poi arrivò una nuvola bianca, così soffice che sembrava fatta di respiro. Dietro la nuvola, una stellina fece cucù.",
-        "Tutti si sedettero vicino a {{name}}. Nessuno aveva fretta. Nessuno chiedeva niente. Il mondo sembrava più lento.",
-        "La piccola luce si spostò un pochino e illuminò l’orsetto. L’orsetto sorrise. Poi illuminò la nuvola. La nuvola fece un piccolo dondolio.",
-        "La stellina salì in alto e disegnò un cerchio nel cielo. Non era un cerchio perfetto, ma era bellissimo.",
-        "{{name}} sentì che quella luce non serviva a vedere tutto. Serviva a vedere abbastanza. Abbastanza per sentirsi al sicuro.",
-        "La luna si avvicinò piano al bordo del cielo. Guardò {{name}}, guardò l’orsetto, guardò la luce, e sembrò sorridere.",
-        "La luce diventò un po’ più piccola, ma non sparì. Rimase lì, come una promessa morbida.",
-        "Quando il mondo diventò più scuro, {{name}} sapeva che poteva cercarla ancora.",
-        "Perché alcune luci non devono essere grandi. Devono solo restare accese."
-      ]
-    },
+"2-4":[
 
-    {
-      title: "{{name}} e la balena luminosa",
-      subtitle: "Una balena gentile illumina il mare calmo.",
-      icon: "🐋 🌊 ✨",
-      art: "ocean",
-      scene: "🐋 🌊 ✨",
-      keywords: ["balena", "mare", "oceano", "acqua", "calma"],
-      ritual: "🌊 Conchiglia calma",
-      activity: "Disegna una grande balena e tre stelline che dormono nel mare.",
-      paragraphs: [
-        "Nel mare calmo di FABLEA viveva una balena che brillava piano. Non era una luce forte. Era una luce blu, lenta, profonda.",
-        "Ogni sera la balena saliva vicino alla riva, faceva un grande respiro e il mare diventava più tranquillo.",
-        "{{name}} la vide comparire quando il cielo stava diventando color notte. Prima uscì una pinna, poi un dorso grande, poi un occhio dolce.",
-        "La balena guardò {{name}} e fece un suono basso, come una ninna nanna dentro l’acqua.",
-        "“Vuoi vedere dove dormono le stelle cadute?” chiese la balena con una voce lenta.",
-        "Una piccola onda arrivò fino ai piedi di {{name}}. Non bagnava troppo. Era un’onda morbida, fatta apposta per accompagnare.",
-        "{{name}} seguì la balena fino a una grotta d’acqua chiara. Dentro la grotta non c’era buio. C’erano piccole luci appese come lanterne.",
-        "Erano stelle cadute dal cielo. Non erano rotte. Erano solo stanche e dormivano nel mare.",
-        "La balena ne sfiorò una con il muso. La stellina fece un piccolo bagliore e poi tornò a riposare.",
-        "“Anche le stelle hanno bisogno di calma,” disse la balena. “Anche le cose luminose si stancano.”",
-        "{{name}} ascoltò il mare. Ogni onda faceva avanti e indietro, avanti e indietro, come un respiro.",
-        "Prima di tornare alla riva, la balena regalò a {{name}} una conchiglia blu.",
-        "“Quando hai bisogno di calma,” disse, “ascolta il mare dentro questa conchiglia.”"
-      ]
-    },
+S({
+title:"{{name}} e il lupo dal vocione",
+subtitle:"Una storia morbida dove la paura diventa gentilezza.",
+icon:"🌙 🐺 ✨",
+art:"forest",
+scene:"🌲 🐺 ✨",
+keywords:["lupo","bosco","paura","gentilezza"],
+ritual:"⭐ Stella luminosa",
+activity:"Costruisci una piccola tana morbida per il lupo gentile.",
+paragraphs:[
+"Nel bosco morbido, quando la luna saliva piano piano, {{name}} sentì un rumore grande tra le foglie.",
+"Era un rumore rotondo, profondo, un po’ tremolante.",
+"Poi arrivò una voce enorme: “GROOOOAR”.",
+"Dietro un albero comparve un lupo con zampe grandi, coda folta e occhi dolci.",
+"Il lupo abbassò la testa perché aveva capito di aver fatto paura.",
+"{{name}} trovò una piccola luce sotto una foglia e la mise vicino al lupo.",
+"Il lupo respirò una volta. Poi un’altra. Poi un’altra ancora.",
+"Alla fine disse piano: “Buonasera”.",
+"Il bosco capì che anche una voce grande può diventare morbida."
+]
+}),
 
-    {
-      title: "{{name}} e la nuvola lenta",
-      subtitle: "Una nuvola insegna la bellezza del non correre.",
-      icon: "☁️ 🌤️ ✨",
-      art: "sky",
-      scene: "☁️ ✨ 🌤️",
-      keywords: ["nuvola", "riposo", "cielo", "calma"],
-      ritual: "☁️ Nuvola morbida",
-      activity: "Disegna una nuvola grande e soffice, poi inventa dove sta andando.",
-      paragraphs: [
-        "Nel cielo di FABLEA c’era una nuvola che andava più piano di tutte.",
-        "Le altre nuvole cambiavano forma in fretta. Una diventava cavallo, una diventava barca, una diventava cappello.",
-        "Lei no. Lei restava tonda, morbida, tranquilla. Sembrava una coperta appesa al cielo.",
-        "{{name}} la guardò a lungo. La nuvola se ne accorse e scese un pochino più in basso.",
-        "“Perché vai così piano?” chiese {{name}}.",
-        "La nuvola fece un piccolo sbuffo bianco. “Perché alcune cose belle si vedono solo quando non si corre.”",
-        "Allora la nuvola mostrò a {{name}} un uccellino nascosto su un ramo. Era così piccolo che nessuna nuvola veloce lo aveva mai visto.",
-        "Poi mostrò una luce dietro una foglia. Poi una porta minuscola sopra una collina. Poi un fiore che si stava aprendo lentamente.",
-        "“Vedi?” disse la nuvola. “Il mondo non sparisce se vai piano. Anzi, diventa più grande.”",
-        "{{name}} respirò. La nuvola respirò. Anche il cielo sembrò respirare.",
-        "Per un momento non successe niente. E quel niente era bello.",
-        "Prima di risalire, la nuvola lasciò a {{name}} un pezzetto di bianco morbido.",
-        "“Tienilo per quando tutto corre troppo,” disse. “Ti ricorderà che puoi andare piano.”"
-      ]
-    },
+S({
+title:"{{name}} e la piccola luce",
+subtitle:"Una storia visiva, morbida e rassicurante.",
+icon:"🌙 ✨ 🧸",
+art:"space",
+scene:"🌙 ✨ 🧸",
+keywords:["luce","luna","calma","orsetto"],
+ritual:"🌙 Luna silenziosa",
+activity:"Accendi una piccola luce morbida e raccontale dove deve brillare.",
+paragraphs:[
+"Vicino a {{name}} comparve una piccola luce.",
+"Non arrivò all’improvviso. Prima sembrò un puntino, poi una goccia dorata.",
+"La luce non correva. Non saltava. Non faceva rumore.",
+"Poco dopo arrivò un orsetto morbido con una sciarpa piccola.",
+"Poi arrivò una nuvola bianca e una stellina fece cucù.",
+"Tutti si sedettero vicino a {{name}}.",
+"Nessuno aveva fretta.",
+"La piccola luce sembrava dire: “Sono qui”.",
+"{{name}} sentì che il mondo era abbastanza illuminato per essere sicuro."
+]
+}),
 
-    {
-      title: "{{name}} e l’orsetto del sonno",
-      subtitle: "Un orsetto guida verso un ritmo lento e sicuro.",
-      icon: "🧸 🌙 💤",
-      art: "space",
-      scene: "🧸 🌙 💤",
-      keywords: ["orsetto", "sonno", "riposo", "calma"],
-      ritual: "🧸 Amico morbido",
-      activity: "Scegli un peluche e inventa il suo posto sicuro.",
-      paragraphs: [
-        "{{name}} incontrò un orsetto con una coperta piccola sulle spalle.",
-        "L’orsetto aveva occhi gentili e zampe tonde. Camminava piano, così piano che anche il vento si mise a camminare piano con lui.",
-        "“Dove vai?” chiese {{name}}.",
-        "“Vado sul sentiero del riposo,” rispose l’orsetto. “È un posto che si trova solo quando il mondo abbassa la voce.”",
-        "{{name}} seguì l’orsetto. Il sentiero era fatto di piccole luci, cuscini di nuvola e foglie morbide.",
-        "La prima luce disse: “Lascia qui la fretta”. La seconda disse: “Lascia qui il rumore”. La terza disse: “Porta solo un pensiero gentile”.",
-        "Più camminavano, più il cielo diventava blu scuro e tranquillo.",
-        "A un certo punto trovarono una stellina addormentata in mezzo al sentiero. Era caduta e non sapeva come tornare in cielo.",
-        "{{name}} e l’orsetto la sollevarono piano, piano, piano. La stellina salì e si mise al suo posto.",
-        "Il cielo fece un piccolo sorriso luminoso.",
-        "“Quando aiutiamo qualcuno a riposare,” disse l’orsetto, “anche il nostro cuore diventa più leggero.”",
-        "Alla fine del sentiero c’era una casetta fatta di luna e silenzio.",
-        "L’orsetto diede a {{name}} un pezzetto di coperta luminosa. “Questo è per ricordare che il mondo può diventare morbido quando serve.”"
-      ]
-    },
+S({
+title:"{{name}} e la balena luminosa",
+subtitle:"Una balena gentile illumina il mare calmo.",
+icon:"🐋 🌊 ✨",
+art:"ocean",
+scene:"🐋 🌊 ✨",
+keywords:["balena","mare","oceano","calma"],
+ritual:"🌊 Conchiglia calma",
+activity:"Disegna una grande balena e tre stelline che dormono nel mare.",
+paragraphs:[
+"Nel mare calmo di FABLEA viveva una balena che brillava piano.",
+"Ogni sera la balena saliva vicino alla riva e il mare diventava più tranquillo.",
+"{{name}} la vide comparire quando il cielo stava diventando color notte.",
+"La balena fece un suono basso, come una ninna nanna dentro l’acqua.",
+"“Vuoi vedere dove dormono le stelle cadute?” chiese.",
+"{{name}} la seguì fino a una grotta d’acqua chiara.",
+"Dentro la grotta, tante stelline riposavano come piccole lanterne.",
+"La balena regalò a {{name}} una conchiglia blu."
+]
+}),
 
-    {
-      title: "{{name}} e il giardino addormentato",
-      subtitle: "Un giardino si sveglia con piccoli gesti gentili.",
-      icon: "🌷 💤 ✨",
-      art: "forest",
-      scene: "🌷 🐞 ✨",
-      keywords: ["giardino", "fiori", "natura", "gentilezza"],
-      ritual: "🌷 Semino dorato",
-      activity: "Disegna un fiore addormentato e poi sveglialo con un colore.",
-      paragraphs: [
-        "{{name}} trovò un giardino dove tutti i fiori dormivano.",
-        "Dormivano i tulipani, dormivano le margherite, dormivano le violette piccole vicino al sentiero.",
-        "Non erano tristi. Non erano rotti. Erano solo molto stanchi.",
-        "Una coccinella con un cappellino rosso uscì da sotto una foglia.",
-        "“Qui si sveglia tutto con gentilezza,” disse. “Niente rumore forte, niente fretta.”",
-        "{{name}} si avvicinò a un fiore chiuso e soffiò piano. Il fiore aprì un petalo.",
-        "Poi toccò una foglia. La foglia fece una goccia luminosa.",
-        "La goccia cadde sulla terra e la terra fece un piccolo profumo di primavera.",
-        "Poco alla volta, il giardino cominciò a svegliarsi. Una margherita sbadigliò. Un tulipano si stiracchiò. Una rosa fece un sorriso appena appena.",
-        "La coccinella batté le ali, felice.",
-        "“Vedi?” disse. “Non serve fare tanto. A volte basta fare piano.”",
-        "Quando il giardino fu sveglio, ma ancora tranquillo, regalò a {{name}} un semino dorato.",
-        "“Piantalo quando vuoi far crescere una cosa gentile,” sussurrò la terra."
-      ]
-    },
+S({
+title:"{{name}} e la nuvola lenta",
+subtitle:"Una nuvola insegna la bellezza del non correre.",
+icon:"☁️ 🌤️ ✨",
+art:"sky",
+scene:"☁️ ✨ 🌤️",
+keywords:["nuvola","riposo","cielo","calma"],
+ritual:"☁️ Nuvola morbida",
+activity:"Disegna una nuvola grande e soffice, poi inventa dove sta andando.",
+paragraphs:[
+"Nel cielo di FABLEA c’era una nuvola che andava più piano di tutte.",
+"Le altre nuvole cambiavano forma in fretta. Lei no.",
+"Lei restava tonda, morbida, tranquilla.",
+"{{name}} la guardò a lungo.",
+"La nuvola scese un pochino più in basso.",
+"“Perché vai così piano?” chiese {{name}}.",
+"“Perché alcune cose belle si vedono solo quando non si corre,” rispose la nuvola.",
+"La nuvola mostrò un uccellino nascosto, una luce dietro una foglia e un fiore che si apriva lentamente."
+]
+}),
 
-    {
-      title: "{{name}} e la stellina silenziosa",
-      subtitle: "Una stellina insegna che anche il silenzio può brillare.",
-      icon: "⭐ 🤫 🌙",
-      art: "space",
-      scene: "⭐ 🌙 🤫",
-      keywords: ["stella", "silenzio", "luna", "calma"],
-      ritual: "⭐ Stella silenziosa",
-      activity: "Cerca nella stanza un oggetto silenzioso e dagli un nome magico.",
-      paragraphs: [
-        "Nel cielo di FABLEA c’era una stellina che non parlava mai.",
-        "Le altre stelline facevano scintille, risatine e piccoli suoni luminosi.",
-        "Lei invece brillava in silenzio. Non perché fosse triste. Era il suo modo di stare nel cielo.",
-        "{{name}} la vide subito. Tra tante luci che si muovevano, quella stellina quieta sembrava speciale.",
-        "La stellina scese piano, piano, piano, fino a posarsi su una coperta di luna.",
-        "“Non parli?” chiese {{name}}.",
-        "La stellina non rispose con parole. Fece una luce morbida, più calda, più vicina.",
-        "{{name}} capì che quella luce diceva: “Sono qui”.",
-        "Poi la stellina illuminò un piccolo sasso, una foglia, un filo d’erba. Tutte cose silenziose. Tutte cose importanti.",
-        "Il silenzio non sembrava più vuoto. Sembrava una stanza piena di piccole luci.",
-        "La luna guardò {{name}} e sembrò dire: “A volte non servono tante parole per restare vicini.”",
-        "Prima di tornare in cielo, la stellina lasciò un puntino dorato nel mondo FABLEA.",
-        "Era piccolo, ma brillava abbastanza per essere ritrovato."
-      ]
-    },
+S({
+title:"{{name}} e l’orsetto del sonno",
+subtitle:"Un orsetto guida verso un ritmo lento e sicuro.",
+icon:"🧸 🌙 💤",
+art:"space",
+scene:"🧸 🌙 💤",
+keywords:["orsetto","sonno","riposo","calma"],
+ritual:"🧸 Amico morbido",
+activity:"Scegli un peluche e inventa il suo posto sicuro.",
+paragraphs:[
+"{{name}} incontrò un orsetto con una coperta piccola sulle spalle.",
+"L’orsetto camminava piano, così piano che anche il vento abbassò la voce.",
+"“Vado sul sentiero del riposo,” disse l’orsetto.",
+"Il sentiero era fatto di piccole luci, cuscini di nuvola e foglie morbide.",
+"La prima luce disse: “Lascia qui la fretta”.",
+"La seconda disse: “Lascia qui il rumore”.",
+"La terza disse: “Porta solo un pensiero gentile”.",
+"Alla fine del sentiero c’era una casetta fatta di luna e silenzio."
+]
+}),
 
-    {
-      title: "{{name}} e il coniglio della sera",
-      subtitle: "Un coniglio prepara il mondo con piccoli gesti lenti.",
-      icon: "🐰 🌙 🕯️",
-      art: "forest",
-      scene: "🐰 🌙 🕯️",
-      keywords: ["coniglio", "sera", "rituale", "luna"],
-      ritual: "🕯️ Lucina della sera",
-      activity: "Prepara tre oggetti piccoli per chiudere la giornata: luce, peluche, coperta.",
-      paragraphs: [
-        "Quando il cielo diventò color miele, un coniglio bianco comparve davanti a {{name}}.",
-        "Aveva una piccola borsa piena di cose lente: una piuma, una stella, una foglia, una lucina e un campanellino che non suonava quasi mai.",
-        "“Ogni sera preparo il mondo a riposare,” disse il coniglio.",
-        "Prima mise la piuma sotto una nuvola. La nuvola diventò più comoda.",
-        "Poi mise la stella vicino alla luna. La luna diventò un po’ più luminosa.",
-        "Poi sistemò la foglia sopra un sasso. Il sasso sembrò meno freddo.",
-        "{{name}} lo aiutò ad accendere la lucina più piccola.",
-        "La lucina non illuminò tutto. Illuminò solo il punto giusto.",
-        "“Vedi?” disse il coniglio. “La sera non ha bisogno di tanta luce. Ha bisogno di una luce gentile.”",
-        "Poi aprì la borsa e mostrò uno spazio vuoto.",
-        "“Questo è per il gesto di domani,” spiegò. “Ogni sera può avere il suo piccolo rito.”",
-        "{{name}} guardò il cielo color miele diventare blu.",
-        "Il coniglio fece un inchino e saltellò via, lasciando la lucina accesa."
-      ]
-    },
+S({
+title:"{{name}} e il giardino addormentato",
+subtitle:"Un giardino si sveglia con piccoli gesti gentili.",
+icon:"🌷 💤 ✨",
+art:"forest",
+scene:"🌷 🐞 ✨",
+keywords:["giardino","fiori","natura","gentilezza"],
+ritual:"🌷 Semino dorato",
+activity:"Disegna un fiore addormentato e poi sveglialo con un colore.",
+paragraphs:[
+"{{name}} trovò un giardino dove tutti i fiori dormivano.",
+"Dormivano i tulipani, le margherite e le violette piccole vicino al sentiero.",
+"Una coccinella con un cappellino rosso uscì da sotto una foglia.",
+"“Qui si sveglia tutto con gentilezza,” disse.",
+"{{name}} soffiò piano su un fiore chiuso.",
+"Il fiore aprì un petalo.",
+"Poi una foglia fece una goccia luminosa.",
+"Poco alla volta, il giardino cominciò a svegliarsi."
+]
+}),
 
-    {
-      title: "{{name}} e il pesciolino dorato",
-      subtitle: "Una piccola creatura insegna a seguire una luce calma.",
-      icon: "🐠 ✨ 🌊",
-      art: "ocean",
-      scene: "🐠 ✨ 🌊",
-      keywords: ["pesce", "mare", "luce", "acqua"],
-      ritual: "🐚 Perla calma",
-      activity: "Disegna un pesciolino e tre bolle luminose.",
-      paragraphs: [
-        "In una pozzanghera grande come un piccolo mare, {{name}} vide un pesciolino dorato.",
-        "Il pesciolino nuotava piano e lasciava dietro di sé tre bolle luminose.",
-        "La prima bolla era piccola. La seconda era tonda. La terza brillava come una perla.",
-        "“Dove vai?” chiese {{name}}.",
-        "“Cerco una luce che non abbia fretta,” rispose il pesciolino.",
-        "{{name}} lo seguì con gli occhi. Il pesciolino girò intorno a una foglia, passò sotto un riflesso di cielo e si fermò vicino a un sassolino.",
-        "Sul sassolino c’era una perla calma. Non brillava tanto. Brillava bene.",
-        "“È questa,” disse il pesciolino. “La luce che non corre.”",
-        "{{name}} guardò la perla. Sembrava respirare insieme all’acqua.",
-        "Il pesciolino la spinse verso la riva con il naso.",
-        "“Tienila,” disse. “Quando il mondo sembra troppo pieno, guarda una cosa piccola.”",
-        "Poi il pesciolino dorato fece un giro lento e tornò nel suo piccolo mare."
-      ]
-    },
+S({
+title:"{{name}} e la stellina silenziosa",
+subtitle:"Una stellina insegna che anche il silenzio può brillare.",
+icon:"⭐ 🤫 🌙",
+art:"space",
+scene:"⭐ 🌙 🤫",
+keywords:["stella","silenzio","luna","calma"],
+ritual:"⭐ Stella silenziosa",
+activity:"Cerca nella stanza un oggetto silenzioso e dagli un nome magico.",
+paragraphs:[
+"Nel cielo di FABLEA c’era una stellina che non parlava mai.",
+"Le altre stelline facevano scintille, risatine e piccoli suoni luminosi.",
+"Lei invece brillava in silenzio.",
+"{{name}} la vide subito.",
+"La stellina scese piano fino a posarsi su una coperta di luna.",
+"“Non parli?” chiese {{name}}.",
+"La stellina non rispose con parole.",
+"Fece una luce morbida, più calda, più vicina."
+]
+}),
 
-    {
-      title: "{{name}} e la porta piccolissima",
-      subtitle: "Una porta minuscola apre un mondo grande ma gentile.",
-      icon: "🚪 ✨ 🐭",
-      art: "forest",
-      scene: "🚪 ✨ 🐭",
-      keywords: ["porta", "topolino", "scoperta", "bosco"],
-      ritual: "🚪 Chiave gentile",
-      activity: "Disegna una porta minuscola e cosa c’è dietro.",
-      paragraphs: [
-        "{{name}} trovò una porta piccolissima vicino a una radice.",
-        "Era così piccola che sembrava fatta per una formica elegante o per un topolino con un cappello.",
-        "La porta aveva una maniglia dorata grande come una briciola.",
-        "Da dietro la porta arrivò un toc toc leggero.",
-        "Poi uscì un topolino con una chiave grande quasi quanto lui.",
-        "“Questa porta si apre solo se si bussa piano,” disse il topolino.",
-        "{{name}} bussò con un dito leggero. Toc. Toc. Toc.",
-        "La porta si aprì e dietro c’era una stanza piena di lucine che aspettavano in silenzio.",
-        "Ogni lucina aveva una sedia piccola. Ogni sedia aspettava una storia.",
-        "Il topolino diede a {{name}} una chiave invisibile.",
-        "“Non apre tutte le porte,” spiegò. “Apre solo quelle che hanno bisogno di gentilezza.”",
-        "{{name}} la tenne con cura, anche se non si vedeva.",
-        "Perché certe chiavi non si vedono con gli occhi. Si sentono quando si usa piano il cuore."
-      ]
-    }
-  ],
+S({
+title:"{{name}} e il coniglio della sera",
+subtitle:"Un coniglio prepara il mondo con piccoli gesti lenti.",
+icon:"🐰 🌙 🕯️",
+art:"forest",
+scene:"🐰 🌙 🕯️",
+keywords:["coniglio","sera","rituale","luna"],
+ritual:"🕯️ Lucina della sera",
+activity:"Prepara tre oggetti piccoli per chiudere la giornata: luce, peluche, coperta.",
+paragraphs:[
+"Quando il cielo diventò color miele, un coniglio bianco comparve davanti a {{name}}.",
+"Aveva una piccola borsa piena di cose lente.",
+"Dentro c’erano una piuma, una stella, una foglia, una lucina e un campanellino.",
+"“Ogni sera preparo il mondo a riposare,” disse il coniglio.",
+"Prima mise la piuma sotto una nuvola.",
+"Poi mise la stella vicino alla luna.",
+"Poi sistemò la foglia sopra un sasso.",
+"{{name}} lo aiutò ad accendere la lucina più piccola."
+]
+}),
 
- "5-7": [
+S({
+title:"{{name}} e il pesciolino dorato",
+subtitle:"Una piccola creatura insegna a seguire una luce calma.",
+icon:"🐠 ✨ 🌊",
+art:"ocean",
+scene:"🐠 ✨ 🌊",
+keywords:["pesce","mare","luce","acqua"],
+ritual:"🐚 Perla calma",
+activity:"Disegna un pesciolino e tre bolle luminose.",
+paragraphs:[
+"In una pozzanghera grande come un piccolo mare, {{name}} vide un pesciolino dorato.",
+"Il pesciolino nuotava piano e lasciava dietro di sé tre bolle luminose.",
+"La prima bolla era piccola.",
+"La seconda era tonda.",
+"La terza brillava come una perla.",
+"“Dove vai?” chiese {{name}}.",
+"“Cerco una luce che non abbia fretta,” rispose il pesciolino.",
+"Sul fondo comparve una perla calma."
+]
+}),
 
-{
+S({
+title:"{{name}} e la porta piccolissima",
+subtitle:"Una porta minuscola apre un mondo grande ma gentile.",
+icon:"🚪 ✨ 🐭",
+art:"forest",
+scene:"🚪 ✨ 🐭",
+keywords:["porta","topolino","scoperta","bosco"],
+ritual:"🚪 Chiave gentile",
+activity:"Disegna una porta minuscola e cosa c’è dietro.",
+paragraphs:[
+"{{name}} trovò una porta piccolissima vicino a una radice.",
+"Era così piccola che sembrava fatta per una formica elegante.",
+"La porta aveva una maniglia dorata grande come una briciola.",
+"Da dietro arrivò un toc toc leggero.",
+"Poi uscì un topolino con una chiave grande quasi quanto lui.",
+"“Questa porta si apre solo se si bussa piano,” disse il topolino.",
+"{{name}} bussò con un dito leggero.",
+"Dietro la porta c’era una stanza piena di lucine che aspettavano in silenzio."
+]
+})
+
+],
+
+"5-7":[
+
+S({
 title:"{{name}} e la mappa luminosa",
 subtitle:"Una storia di esplorazione, piccoli passi e meraviglia.",
 icon:"📖 🗺️ ✨",
@@ -272,24 +341,22 @@ keywords:["mappa","bosco","volpe","avventura"],
 ritual:"🗺️ Mappa dorata",
 activity:"Disegna una nuova parte della mappa.",
 paragraphs:[
-"{{name}} trovò un libro dimenticato sopra un tavolo. La copertina era liscia, calda e un po’ misteriosa.",
-"Quando lo aprì, non trovò solo parole. Dentro c’era una mappa che brillava piano, come se respirasse.",
-"Sulla mappa comparivano sentieri, alberi, piccole stelle e un bosco disegnato con linee dorate.",
-"Tra le radici del bosco comparve una volpe gentile. “Non bisogna correre per vivere un’avventura,” disse. “Basta fare un passo e ascoltare.”",
+"{{name}} trovò un libro dimenticato sopra un tavolo.",
+"Quando lo aprì, dentro c’era una mappa che brillava piano.",
+"Sulla mappa comparivano sentieri, alberi e piccole stelle.",
+"Tra le radici del bosco comparve una volpe gentile.",
+"“Non bisogna correre per vivere un’avventura,” disse la volpe.",
 "{{name}} seguì la volpe fino a una radura dove le foglie facevano luce sotto le scarpe.",
-"In mezzo alla radura c’era una lanterna sospesa nel vuoto. Non cadeva. Restava lì, come se stesse aspettando qualcuno.",
-"Quando {{name}} la toccò, sulla mappa apparve un nuovo sentiero mai visto prima.",
-"La volpe sorrise. “Le mappe vive cambiano quando qualcuno trova il coraggio di guardare meglio.”",
-"Il nuovo sentiero attraversava un ponte di legno sospeso sopra un lago nero e lucido come uno specchio.",
-"Nel lago si vedevano stelle che il cielo non aveva ancora acceso.",
-"Alla fine del ponte comparve una piccola casa con il tetto blu. Dentro c’era un vecchio cartografo.",
-"Il cartografo guardò {{name}} e disse: “Le mappe più importanti non mostrano dove andare. Mostrano chi stai diventando.”",
-"Prima di andare via, il cartografo regalò a {{name}} una bussola dorata.",
-"La bussola non indicava il nord. Indicava sempre la meraviglia."
+"In mezzo alla radura c’era una lanterna sospesa nel vuoto.",
+"Quando {{name}} la toccò, sulla mappa apparve un nuovo sentiero.",
+"Il nuovo sentiero attraversava un ponte sopra un lago nero e lucido.",
+"Alla fine del ponte comparve una casa con il tetto blu.",
+"Dentro c’era un vecchio cartografo.",
+"“Le mappe più importanti non mostrano dove andare,” disse. “Mostrano chi stai diventando.”"
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e il treno delle stelle",
 subtitle:"Un viaggio notturno attraverso il cielo.",
 icon:"🚂 ⭐ 🌌",
@@ -299,25 +366,22 @@ keywords:["treno","stelle","spazio","viaggio"],
 ritual:"⭐ Biglietto stellare",
 activity:"Disegna la tua carrozza ideale del treno delle stelle.",
 paragraphs:[
-"La notte in cui il cielo sembrava più vicino del solito, {{name}} sentì un fischio dietro la finestra.",
-"Fuori non c’era una macchina. Non c’era un autobus. C’era un piccolo treno blu fermo sopra un binario fatto di luce.",
+"La notte in cui il cielo sembrava più vicino, {{name}} sentì un fischio dietro la finestra.",
+"Fuori c’era un piccolo treno blu fermo sopra un binario fatto di luce.",
 "Il capotreno era un gufo con occhiali tondi e un orologio d’oro.",
 "“Biglietto?” chiese.",
 "“Non ce l’ho,” rispose {{name}}.",
 "Il gufo sorrise. “Per salire basta una domanda vera.”",
-"{{name}} ci pensò un momento. Poi fece la sua domanda al cielo.",
+"{{name}} fece la sua domanda al cielo.",
 "Il gufo timbrò un biglietto stellare comparso dal nulla.",
 "Appena il treno partì, le case diventarono piccole e il cielo si aprì come un oceano.",
 "La prima stazione era fatta di lune addormentate.",
-"La seconda stazione custodiva nuvole che ricordavano i sogni dimenticati dai bambini.",
-"Nella terza stazione viveva un uomo che riparava stelle rotte con ago e filo d’argento.",
-"“Anche le stelle si rompono ogni tanto,” disse l’uomo. “Ma non smettono di brillare.”",
-"Prima di tornare, il gufo regalò a {{name}} un pezzetto di cielo notturno piegato come carta.",
-"“Tienilo vicino,” disse. “Così saprai sempre che esistono strade sopra le nuvole.”"
+"La seconda custodiva nuvole che ricordavano sogni dimenticati.",
+"Nella terza viveva un uomo che riparava stelle rotte con filo d’argento."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e il castello sospeso",
 subtitle:"Un castello nel cielo custodisce una chiave speciale.",
 icon:"🏰 ☁️ ✨",
@@ -330,21 +394,19 @@ paragraphs:[
 "Tra due nuvole altissime, {{name}} vide un castello sospeso nel cielo.",
 "Non era appoggiato a nulla. Restava in aria grazie a fili sottili di luce dorata.",
 "Le torri sembravano fatte di vento e pietra insieme.",
-"Alla porta del castello c’era una piccola chiave appesa a un filo.",
+"Alla porta c’era una piccola chiave appesa a un filo.",
 "Un cavaliere con un mantello blu stava seduto sui gradini.",
-"“Questa porta non si apre con la forza,” spiegò. “Si apre solo con la parola giusta.”",
-"{{name}} provò a dire parole enormi, complicate e rumorose. Ma la porta restò chiusa.",
-"Poi guardò il cielo, respirò e disse una parola semplice.",
+"“Questa porta non si apre con la forza,” spiegò.",
+"{{name}} provò parole enormi, complicate e rumorose.",
+"Ma la porta restò chiusa.",
+"Poi disse una parola semplice.",
 "La porta si illuminò immediatamente.",
-"All’interno del castello c’erano stanze piene di mappe, telescopi e stelle sospese dentro barattoli di vetro.",
-"Nel salone centrale dormiva un drago bianco gigantesco.",
-"Il drago aprì un occhio e disse: “Le cose più importanti si aprono sempre piano.”",
-"Prima di andare via, il cavaliere regalò a {{name}} la piccola chiave dorata.",
-"“Non apre castelli,” spiegò. “Apre possibilità.”"
+"Dentro c’erano mappe, telescopi e stelle sospese dentro barattoli di vetro.",
+"Nel salone centrale dormiva un drago bianco gigantesco."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e il guardiano del faro",
 subtitle:"Una luce nel mare guida chi si è perso.",
 icon:"🌊 🕯️ 🌙",
@@ -357,21 +419,17 @@ paragraphs:[
 "In mezzo al mare di FABLEA esisteva un faro che non compariva sulle mappe normali.",
 "Compariva solo quando qualcuno aveva bisogno di una luce.",
 "Una sera {{name}} vide il mare illuminarsi in lontananza.",
-"Vicino alle onde c’era una piccola barca che sembrava aspettare proprio lì.",
-"{{name}} salì sopra e il mare cominciò a muoversi lentamente.",
-"Il faro era altissimo. Le finestre brillavano color ambra.",
-"In cima viveva il guardiano del faro, un uomo con capelli bianchi e occhi gentili.",
+"Vicino alle onde c’era una piccola barca che sembrava aspettare.",
+"{{name}} salì e il mare cominciò a muoversi lentamente.",
+"Il faro era altissimo.",
+"In cima viveva il guardiano del faro, con capelli bianchi e occhi gentili.",
 "“La mia luce non serve alle navi,” spiegò. “Serve ai pensieri che si sentono persi.”",
-"Ogni notte il guardiano accendeva la grande lanterna e il mare diventava più tranquillo.",
 "{{name}} aiutò il guardiano a girare la gigantesca ruota della luce.",
-"Quando la lanterna si accese, il cielo e il mare sembrarono respirare insieme.",
-"“Ricorda,” disse il guardiano. “Anche una piccola luce può aiutare qualcuno a ritrovare la strada.”",
-"Prima di tornare, regalò a {{name}} una mini lanterna dorata.",
-"Brillava solo quando serviva davvero."
+"Quando la lanterna si accese, il cielo e il mare sembrarono respirare insieme."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e la biblioteca segreta",
 subtitle:"Una biblioteca che custodisce storie vive.",
 icon:"📚 ✨ 🌙",
@@ -384,21 +442,18 @@ paragraphs:[
 "Nascosta dietro una parete piena di edera viveva una biblioteca segreta.",
 "Le sue finestre brillavano solo di notte.",
 "Quando {{name}} entrò, i libri si mossero leggermente sugli scaffali.",
-"Non erano libri normali. Respiravano piano.",
+"Non erano libri normali.",
+"Respiravano piano.",
 "Una bibliotecaria con lunghi capelli argentati si avvicinò sorridendo.",
-"“Qui custodiamo storie vive,” spiegò. “Ogni volta che qualcuno immagina davvero, un libro cambia.”",
+"“Qui custodiamo storie vive,” spiegò.",
 "{{name}} aprì un volume enorme con la copertina blu.",
 "All’interno non c’erano solo parole: c’erano cieli, oceani, castelli e città intere.",
-"Ogni pagina sembrava muoversi lentamente.",
 "La bibliotecaria mostrò una stanza piena di libri ancora vuoti.",
-"“Questi aspettano bambini pronti a immaginare qualcosa che ancora non esiste.”",
-"Prima di andare via, un piccolo libro dorato saltò giù dallo scaffale.",
-"La bibliotecaria sorrise. “Ha scelto te.”",
-"Sulla copertina apparve lentamente il nome di {{name}}."
+"“Questi aspettano bambini pronti a immaginare qualcosa che ancora non esiste.”"
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e il drago delle lanterne",
 subtitle:"Un drago custodisce luci perdute.",
 icon:"🐉 🏮 ✨",
@@ -412,19 +467,17 @@ paragraphs:[
 "Ogni lanterna custodiva una luce diversa.",
 "Una notte {{name}} vide il cielo riempirsi di piccoli punti dorati.",
 "Seguendo quelle luci arrivò fino alla montagna del drago.",
-"Il drago era enorme ma aveva occhi tranquilli.",
+"Il drago era enorme, ma aveva occhi tranquilli.",
 "“Le persone pensano che io custodisca tesori,” disse. “In realtà custodisco luci.”",
-"Mostrò a {{name}} una lanterna azzurra che conteneva il coraggio.",
+"Mostrò una lanterna azzurra che conteneva il coraggio.",
 "Una lanterna verde custodiva la calma.",
 "Una piccola lanterna rossa custodiva la speranza.",
 "Il drago spiegò che alcune luci si spengono se nessuno le guarda più.",
-"Per questo ogni notte lui volava sopra FABLEA per raccogliere le luci dimenticate.",
-"Prima che {{name}} andasse via, il drago regalò una piccola lanterna dorata.",
-"“Non illuminerà tutto,” disse. “Illuminerà ciò che conta.”"
+"Per questo ogni notte volava sopra FABLEA per raccogliere le luci dimenticate."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e il ponte di carta",
 subtitle:"Un ponte fragile porta verso un posto speciale.",
 icon:"🌉 📜 ✨",
@@ -437,21 +490,18 @@ paragraphs:[
 "Tra due colline lontane esisteva un ponte fatto interamente di carta.",
 "Sembrava fragile. Troppo fragile per attraversarlo.",
 "Ma ogni volta che qualcuno faceva un passo sincero, il ponte diventava più forte.",
-"{{name}} guardò in basso. Sotto il ponte scorreva un fiume pieno di stelle riflesse.",
+"{{name}} guardò in basso.",
+"Sotto il ponte scorreva un fiume pieno di stelle riflesse.",
 "All’inizio il vento muoveva i fogli del ponte facendoli tremare.",
 "Poi comparve una ragazza con un mantello argentato.",
 "“Questo ponte non regge chi ha fretta,” spiegò. “Regge chi ascolta.”",
 "{{name}} fece il primo passo lentamente.",
 "Il foglio sotto i piedi brillò di luce bianca.",
-"Più il viaggio continuava, più il ponte diventava stabile.",
-"Alla fine del percorso apparve una città fatta di carta luminosa.",
-"Ogni casa raccontava una storia diversa.",
-"La ragazza sorrise: “Le cose delicate non sono sempre deboli.”",
-"E il ponte rimase acceso dietro {{name}}, come un sentiero di luce."
+"Più il viaggio continuava, più il ponte diventava stabile."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e il mercato della luna",
 subtitle:"Un luogo notturno dove si vendono cose impossibili.",
 icon:"🌙 🏮 ✨",
@@ -464,21 +514,18 @@ paragraphs:[
 "Una notte {{name}} trovò una scala nascosta dietro una nuvola.",
 "La scala saliva fino a una piazza illuminata da centinaia di lanterne.",
 "Era il mercato della luna.",
-"Non vendeva pane o vestiti. Vendeva cose impossibili.",
+"Non vendeva pane o vestiti.",
+"Vendeva cose impossibili.",
 "C’era una bancarella di sogni lucidi.",
 "Una vendeva bottiglie piene di pioggia estiva.",
 "Un vecchio signore vendeva ricordi felici dimenticati sotto i letti.",
 "Una bambina con capelli argentati vendeva piccoli pezzi di aurora boreale.",
-"{{name}} camminò tra le bancarelle ascoltando il rumore morbido della notte.",
 "Al centro del mercato c’era una fontana che invece dell’acqua aveva stelle liquide.",
-"Il mercante della luna regalò a {{name}} una moneta dorata.",
-"“Non serve per comprare,” spiegò. “Serve per ricordarti che il mondo è più grande di quanto sembri.”",
-"Quando {{name}} tornò giù dalla scala, il cielo sembrava diverso.",
-"Come se nascondesse ancora mille posti segreti."
+"Il mercante della luna regalò a {{name}} una moneta dorata."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e la nave tra le nuvole",
 subtitle:"Una nave volante attraversa il cielo.",
 icon:"☁️ ⛵ ✨",
@@ -497,15 +544,11 @@ paragraphs:[
 "Ogni nuvola aveva una forma diversa: draghi, castelli, balene e città sospese.",
 "Il capitano mostrò a {{name}} una stanza piena di mappe del cielo.",
 "“Le persone credono che le nuvole cambino sempre,” disse. “Ma alcune strade restano.”",
-"Più la nave saliva, più il cielo diventava silenzioso.",
-"A un certo punto comparve una gigantesca aurora luminosa.",
-"Tutto il ponte si colorò di verde, viola e oro.",
-"Prima di salutare, il capitano regalò a {{name}} una piccola bussola.",
-"La bussola puntava sempre verso l’avventura."
+"Più la nave saliva, più il cielo diventava silenzioso."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e il giardino delle lucciole",
 subtitle:"Un luogo dove le luci raccontano storie.",
 icon:"✨ 🌿 🐞",
@@ -525,18 +568,15 @@ paragraphs:[
 "Una dorata raccontava di bambini che avevano trovato coraggio nei momenti difficili.",
 "Il custode del giardino era un vecchio con una lanterna spenta.",
 "“La mia lanterna si accende solo quando qualcuno ascolta davvero,” spiegò.",
-"{{name}} rimase fermo ad ascoltare il rumore delle lucciole.",
-"Poco dopo la lanterna del custode si illuminò da sola.",
-"Il vecchio sorrise. “Vedi? Alcune luci si accendono solo nel silenzio.”",
-"E il giardino continuò a brillare piano nella notte."
+"{{name}} rimase fermo ad ascoltare il rumore delle lucciole."
 ]
-}
+})
 
 ],
 
-"8-10": [
+"8-10":[
 
-{
+S({
 title:"{{name}} e il ponte delle scelte",
 subtitle:"Una storia su emozioni, fiducia e piccoli cambiamenti interiori.",
 icon:"🌉 💛 🌙",
@@ -550,21 +590,16 @@ paragraphs:[
 "Non era fatto di legno né di pietra. Era fatto di scelte.",
 "Ogni tavola brillava quando qualcuno diceva qualcosa di vero a se stesso.",
 "Sotto il ponte scorreva un fiume calmo. Nell’acqua non si vedevano pesci, ma pensieri.",
-"Si vedeva una paura piccola. Poi una domanda. Poi un desiderio che non aveva ancora trovato le parole.",
-"Dopo una giornata {{mood}}, quel fiume sembrava più vicino del solito.",
-"All’inizio {{name}} pensò di dover attraversare in fretta.",
-"Ma una voce leggera arrivò dal vento: “Il ponte non ama la fretta. Ama la verità.”",
+"Si vedeva una paura piccola, poi una domanda, poi un desiderio che non aveva ancora trovato parole.",
+"Dopo una giornata {{mood}}, quel fiume sembrava più vicino.",
+"Una voce leggera arrivò dal vento: “Il ponte non ama la fretta. Ama la verità.”",
 "Sul ponte comparvero tre luci: coraggio, gentilezza e fiducia.",
-"La luce del coraggio era forte. La luce della gentilezza era calda. La luce della fiducia era piccola, ma non tremava.",
 "{{name}} capì che non doveva scegliere la luce più grande. Doveva scegliere quella più vera.",
-"Quando fece il primo passo, il ponte vibrò piano.",
-"Non perché fosse fragile, ma perché aveva riconosciuto una scelta sincera.",
-"Dall’altra parte non c’era un premio. C’era una città più chiara, più calma, più vicina.",
-"E {{name}} capì che crescere non significa non avere paura. Significa attraversare il ponte anche con la paura accanto."
+"Quando fece il primo passo, il ponte vibrò piano."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e il teatro delle emozioni",
 subtitle:"Le emozioni salgono sul palco una alla volta.",
 icon:"🎭 ✨ 💛",
@@ -576,24 +611,17 @@ activity:"Disegna il volto di un’emozione e dagli un nome.",
 paragraphs:[
 "Il teatro delle emozioni apriva solo quando qualcuno aveva troppe cose dentro.",
 "{{name}} trovò il biglietto in tasca senza sapere come fosse arrivato lì.",
-"Era un biglietto color crema, con una scritta sottile: “Questa sera parlano loro.”",
-"Il teatro era nascosto dietro una porta rossa in fondo a una strada silenziosa.",
-"Dentro, le poltrone erano vuote. Il palco era illuminato da una sola luce.",
-"Per prima salì la Rabbia. Aveva scarpe rumorose e un mantello rosso.",
+"Era un biglietto color crema con una scritta sottile: “Questa sera parlano loro.”",
+"Il teatro era nascosto dietro una porta rossa.",
+"Dentro, le poltrone erano vuote e il palco era illuminato da una sola luce.",
+"Per prima salì la Rabbia, con scarpe rumorose e un mantello rosso.",
 "Non urlò. Disse soltanto: “Sono stanca di essere fraintesa.”",
-"Poi salì la Paura. Camminava piano e teneva una coperta tra le mani.",
-"“Io non voglio comandare,” disse. “Voglio solo proteggere.”",
-"Poi arrivò la Gioia. Era piccola, luminosa e un po’ timida.",
-"“A volte mi nascondo,” disse. “Ma torno quando qualcuno mi lascia spazio.”",
-"Il direttore del teatro guardò {{name}} e chiese: “Quale emozione ha bisogno di una sedia in prima fila?”",
-"{{name}} non rispose subito. Guardò il palco, poi il cuore, poi di nuovo il palco.",
-"Scelse con calma.",
-"Quando il sipario si chiuse, il petto sembrò più spazioso.",
-"Le emozioni non erano sparite. Ma ora parlavano una alla volta."
+"Poi salì la Paura, con una coperta tra le mani.",
+"Poi arrivò la Gioia, piccola, luminosa e un po’ timida."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e la città degli specchi",
 subtitle:"Una città riflette non l’aspetto, ma ciò che si porta dentro.",
 icon:"🪞 🏙️ ✨",
@@ -610,19 +638,12 @@ paragraphs:[
 "Riflettevano ciò che una persona portava dentro.",
 "In uno specchio {{name}} vide una paura nascosta dietro un sorriso.",
 "In un altro vide una speranza piccola, ma ostinata.",
-"In un altro ancora vide una versione di sé più coraggiosa, in piedi davanti a una porta difficile.",
-"Una ragazza con un cappello rosso si avvicinò.",
-"“Qui gli specchi non giudicano,” disse. “Mostrano.”",
-"Camminarono fino alla piazza centrale, dove c’era uno specchio coperto da un telo blu.",
-"{{name}} lo scoprì piano.",
-"Dentro non vide una persona perfetta. Vide una luce piccola, resistente, vera.",
-"“Quella è la parte che resta anche quando ti confondi,” disse la ragazza.",
-"La città svanì al tramonto.",
-"Ma lo specchio rimase dentro {{name}}, come una finestra accesa."
+"In un altro ancora vide una versione di sé più coraggiosa.",
+"Una ragazza con un cappello rosso disse: “Qui gli specchi non giudicano. Mostrano.”"
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e il drago che non ruggiva",
 subtitle:"Un drago trova una forza diversa dalla voce forte.",
 icon:"🐉 💛 🌿",
@@ -638,21 +659,14 @@ paragraphs:[
 "Si chiamava Niro e disegnava nell’aria con il fumo leggero.",
 "Con quel fumo creava ponti, alberi, piccoli animali e stelle sospese.",
 "“Pensano che io sia debole,” disse Niro. “Solo perché la mia forza non fa rumore.”",
-"{{name}} guardò i suoi disegni muoversi lenti nel cielo.",
-"Erano bellissimi. Eppure Niro li cancellava subito, come se avesse paura di mostrarli troppo.",
 "Quel giorno una frana bloccò il sentiero del villaggio.",
-"Tutti aspettarono un ruggito potente per spostare le pietre.",
-"Niro abbassò lo sguardo. Poi guardò {{name}}.",
+"Tutti aspettarono un ruggito potente.",
 "{{name}} disse piano: “Forse puoi fare a modo tuo.”",
-"Allora Niro soffiò una lunga linea di fumo dorato.",
-"Il fumo diventò un ponte leggero, ma solido.",
-"Il villaggio attraversò in silenzio.",
-"Da quel giorno, nessuno chiese più a Niro di ruggire.",
-"E Niro capì che la forza vera non deve sempre fare rumore."
+"Niro soffiò una lunga linea di fumo dorato."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e la stanza della pioggia",
 subtitle:"Una stanza ascolta le emozioni che non trovano parole.",
 icon:"🌧️ 🪟 💙",
@@ -670,18 +684,11 @@ paragraphs:[
 "Una voce gentile arrivò dalla finestra: “Non devi sistemare tutto. Puoi solo ascoltare.”",
 "{{name}} toccò una goccia e sentì una tristezza piccola.",
 "Ne toccò un’altra e sentì una rabbia stanca.",
-"Ne toccò una terza e sentì una paura che voleva solo una coperta.",
-"Le gocce non facevano male. Chiedevano solo un nome.",
-"{{name}} restò lì per un po’, senza cercare risposte veloci.",
-"Poi disse piano: “Oggi è stato difficile.”",
-"La pioggia cambiò suono.",
-"Non era più pesante. Sembrava musica.",
-"La porta restò socchiusa.",
-"Perché alcune stanze non servono per scappare. Servono per respirare."
+"Le gocce non facevano male. Chiedevano solo un nome."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e il custode delle domande",
 subtitle:"Un custode protegge le domande che fanno crescere.",
 icon:"❓ 📚 🕯️",
@@ -694,23 +701,16 @@ paragraphs:[
 "In una biblioteca senza pareti, {{name}} incontrò il custode delle domande.",
 "Non custodiva risposte. Quelle cambiavano troppo spesso.",
 "Custodiva domande importanti, scritte su fogli sospesi nell’aria.",
-"Alcune domande brillavano molto.",
-"Altre erano quasi invisibili.",
+"Alcune domande brillavano molto. Altre erano quasi invisibili.",
 "“Una buona domanda non ti chiude,” disse il custode. “Ti apre.”",
 "{{name}} lesse una domanda: “Che cosa mi aiuta quando non so cosa fare?”",
 "Poi un’altra: “Quando sono davvero me stesso?”",
-"Poi una terza: “Di cosa ho bisogno, anche se non lo dico?”",
-"Ogni domanda accendeva una piccola candela.",
 "Al centro della biblioteca c’era un foglio vuoto.",
-"Il custode porse una penna a {{name}}.",
-"“Non devi trovare una risposta oggi,” disse. “Scrivi solo una domanda che merita spazio.”",
-"{{name}} scrisse lentamente.",
-"Quando la domanda fu completa, il foglio diventò una lanterna.",
-"E il custode sorrise, perché una nuova luce era entrata nella biblioteca."
+"Il custode porse una penna a {{name}}."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e il ragazzo della luce blu",
 subtitle:"Una luce diversa aiuta a vedere porte invisibili.",
 icon:"💙 🛤️ 🌌",
@@ -727,18 +727,12 @@ paragraphs:[
 "“Perché usi una luce diversa?” chiese {{name}}.",
 "Il ragazzo sorrise. “Perché con questa vedo cose che gli altri non notano.”",
 "Illuminò il muro con la lanterna blu.",
-"All’improvviso comparve una porta sottile, nascosta tra i mattoni.",
-"Dietro la porta c’era un sentiero pieno di disegni, parole cancellate e idee lasciate a metà.",
-"“Questo è il posto delle possibilità non ascoltate,” spiegò il ragazzo.",
-"{{name}} vide un aquilone mai costruito, una canzone mai cantata, una frase mai detta.",
-"La lanterna blu non cambiava il mondo.",
-"Lo mostrava in un modo diverso.",
-"Prima di salutare, il ragazzo lasciò a {{name}} una piccola scintilla blu.",
-"“Tienila,” disse. “Quando tutti guardano dalla stessa parte, tu puoi cercare una porta nascosta.”"
+"All’improvviso comparve una porta sottile.",
+"Dietro la porta c’era un sentiero pieno di disegni, parole cancellate e idee lasciate a metà."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e il sentiero invisibile",
 subtitle:"Un sentiero appare solo quando si procede con fiducia.",
 icon:"🛤️ 🌫️ ✨",
@@ -750,25 +744,17 @@ activity:"Disegna il primo passo di un sentiero invisibile.",
 paragraphs:[
 "La nebbia copriva tutto, ma {{name}} sentiva che davanti c’era una strada.",
 "Non si vedeva. Non ancora.",
-"Solo un suono leggero arrivava da lontano, come foglie mosse da un vento gentile.",
+"Solo un suono leggero arrivava da lontano.",
 "Una tartaruga grigia camminava lentamente nella stessa direzione.",
 "“Come fai a sapere dove andare?” chiese {{name}}.",
 "“Non lo so tutto insieme,” rispose la tartaruga. “So solo il prossimo passo.”",
 "Appena la tartaruga mise una zampa avanti, una pietra comparve sotto di lei.",
 "{{name}} provò a fare lo stesso.",
-"Una nuova pietra apparve.",
-"Poi un’altra. Poi un’altra ancora.",
-"Il sentiero non era invisibile per fare paura.",
-"Era invisibile per insegnare fiducia.",
-"A metà strada, {{name}} volle guardare indietro.",
-"Le pietre già percorse brillavano piano.",
-"Non mostravan tutto il percorso. Mostravano solo che era possibile continuare.",
-"Alla fine, {{name}} non vedeva ancora tutta la strada.",
-"Ma non serviva più."
+"Una nuova pietra apparve."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e il lago dei ricordi",
 subtitle:"Un lago custodisce ricordi che possono diventare forza.",
 icon:"🪷 🌊 🧠",
@@ -786,18 +772,11 @@ paragraphs:[
 "Una donna anziana sedeva sulla riva con un bastone di legno chiaro.",
 "“I ricordi non sono pietre,” disse. “Sono semi.”",
 "{{name}} guardò un ricordo difficile.",
-"Sembrava pesante.",
-"La donna lo toccò con il bastone e dall’acqua nacque una piccola pianta.",
-"“Anche quello può insegnarti qualcosa,” spiegò.",
-"{{name}} vide che la pianta non era scura.",
-"Era verde, fragile, viva.",
-"Prese una foglia e la mise in tasca.",
-"Il lago rimase calmo.",
-"Come se sapesse aspettare il prossimo ricordo."
+"La donna lo toccò con il bastone e dall’acqua nacque una piccola pianta."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e il libro che ascoltava",
 subtitle:"Un libro risponde solo quando qualcuno è sincero.",
 icon:"📖 👂 ✨",
@@ -815,21 +794,15 @@ paragraphs:[
 "{{name}} rimase in silenzio.",
 "Poi raccontò qualcosa di piccolo, qualcosa che non aveva detto ad alta voce.",
 "Sulla pagina apparve una frase: “Grazie per avermi affidato questo.”",
-"Il libro non dava consigli veloci.",
-"Faceva spazio.",
-"Ogni volta che {{name}} diceva qualcosa di vero, compariva una riga nuova.",
-"Alcune righe erano luminose. Altre erano leggere come matita.",
-"Alla fine, il libro scrisse: “Le parole sincere non risolvono tutto, ma aprono una finestra.”",
-"Quando si chiuse, una pagina restò leggermente luminosa.",
-"{{name}} capì che essere ascoltati è già un piccolo inizio."
+"Il libro non dava consigli veloci. Faceva spazio."
 ]
-}
+})
 
 ],
 
-"11-12": [
+"11-12":[
 
-{
+S({
 title:"{{name}} e l’atlante delle possibilità",
 subtitle:"Un racconto su identità, scelte e futuro.",
 icon:"🌌 🧭 📖",
@@ -847,16 +820,13 @@ paragraphs:[
 "Una pagina era fatta di coraggio. Una di dubbi. Una di errori utili.",
 "Un’altra sembrava piena di sogni ancora confusi.",
 "Al centro dell’atlante apparve una domanda: “Che cosa ti fa sentire vivo quando nessuno ti guarda?”",
-"{{name}} rimase in silenzio, non perché non avesse una risposta, ma perché quella domanda meritava spazio.",
+"{{name}} rimase in silenzio.",
 "La bussola sulla copertina iniziò a muoversi lentamente.",
-"Non indicò nord.",
-"Indicò avanti.",
-"{{name}} capì che crescere non significa sapere già tutto.",
-"Significa imparare ad ascoltare quale strada continua a chiamarti."
+"Non indicò nord. Indicò avanti."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e la città dopo il tramonto",
 subtitle:"Una città notturna mostra ciò che resta acceso dentro.",
 icon:"🌆 🌙 ✨",
@@ -874,16 +844,11 @@ paragraphs:[
 "Una voce disse: “Questa luce mostra ciò che resta quando il rumore finisce.”",
 "{{name}} guardò intorno e vide ombre di possibilità.",
 "Cose iniziate. Cose desiderate. Cose mai dette.",
-"Il lampione non giudicava.",
-"Illuminava.",
-"Sotto quella luce, {{name}} capì che crescere non è scegliere subito una forma definitiva.",
-"È imparare quali luci vale la pena tenere accese.",
-"La città tornò normale quando arrivò il mattino.",
-"Ma dentro {{name}}, quel lampione continuò a brillare."
+"Il lampione non giudicava. Illuminava."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e il ragazzo senza bussola",
 subtitle:"Perdersi diventa un modo diverso di iniziare.",
 icon:"🧭 ❔ 🌫️",
@@ -899,19 +864,14 @@ paragraphs:[
 "{{name}} lo incontrò seduto su un muretto, con una bussola vuota in mano.",
 "“Non indica niente,” disse il ragazzo. “Forse sono rotto io.”",
 "{{name}} guardò la bussola.",
-"Non sembrava rotta.",
-"Sembrava in attesa.",
+"Non sembrava rotta. Sembrava in attesa.",
 "Camminarono insieme tra strade che cambiavano nome e cartelli girati dal vento.",
 "Alla fine arrivarono davanti a un campo aperto.",
-"La bussola si accese, ma non indicò una direzione.",
-"Indicò una domanda: “Che cosa vuoi conoscere meglio?”",
-"Il ragazzo sorrise piano.",
-"Forse non era senza bussola.",
-"Forse aveva solo bisogno della domanda giusta."
+"La bussola si accese, ma non indicò una direzione."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e la biblioteca del cielo",
 subtitle:"Ogni libro contiene una versione possibile di sé.",
 icon:"📚 ☁️ 🌌",
@@ -931,15 +891,11 @@ paragraphs:[
 "Poi una più calma.",
 "Poi una ancora confusa, ma viva.",
 "“Quale devo scegliere?” chiese.",
-"La ragazza sorrise.",
-"“Nessuna adesso. Devi solo capire quali pagine ti chiamano.”",
-"{{name}} copiò una frase su un foglio: “Non sono una sola possibilità.”",
-"La biblioteca si allontanò tra le nuvole.",
-"Ma il foglio restò."
+"La ragazza sorrise: “Nessuna adesso. Devi solo capire quali pagine ti chiamano.”"
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e il ponte delle costellazioni",
 subtitle:"Ogni scelta collega punti lontani.",
 icon:"🌉 ✨ 🌌",
@@ -958,18 +914,12 @@ paragraphs:[
 "“Le scelte sono come stelle,” disse.",
 "“Da sole sembrano sparse. Col tempo diventano disegno.”",
 "{{name}} salì sul ponte e vide momenti della propria vita brillare sotto i piedi.",
-"Alcuni erano belli.",
-"Altri complicati.",
-"Altri ancora non avevano senso.",
-"Ma da lassù, tutti contribuivano a una forma.",
-"La figura luminosa indicò una stella spenta.",
-"“Questa è una scelta che non hai ancora fatto.”",
-"{{name}} non la accese subito.",
-"Ma capì che era lì, ad aspettare."
+"Alcuni erano belli. Altri complicati.",
+"Da lassù, tutti contribuivano a una forma."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e la stanza delle versioni future",
 subtitle:"Una stanza mostra futuri possibili senza obbligare a sceglierne uno.",
 icon:"🚪 🪞 🔮",
@@ -988,18 +938,11 @@ paragraphs:[
 "In un altro ancora restava semplicemente in silenzio, ma sembrava sereno.",
 "Una voce calma disse: “Non guardare per scegliere subito.”",
 "“Guarda per riconoscere cosa si accende.”",
-"{{name}} si avvicinò allo specchio più semplice.",
-"Non mostrava successo, applausi o grandi scene.",
-"Mostrava attenzione.",
-"Mostrava presenza.",
-"Mostrava una direzione ancora piccola, ma vera.",
-"La stanza diventò più luminosa.",
-"Forse il futuro non era una risposta.",
-"Era una direzione da ascoltare."
+"{{name}} si avvicinò allo specchio più semplice."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e il mare delle domande",
 subtitle:"Un mare calmo porta domande invece di risposte immediate.",
 icon:"🌊 ❔ 🐚",
@@ -1018,14 +961,11 @@ paragraphs:[
 "Sulla riva, un vecchio pescatore sistemava reti vuote.",
 "“Pesco domande,” disse.",
 "“Le risposte arrivano quando smetti di tirarle troppo forte.”",
-"{{name}} lasciò una domanda nell’acqua.",
-"Il mare non rispose.",
-"La tenne al sicuro.",
-"E per la prima volta, non avere subito una risposta sembrò meno spaventoso."
+"{{name}} lasciò una domanda nell’acqua."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e il guardiano delle strade",
 subtitle:"Non tutte le strade vanno percorse subito.",
 icon:"🛤️ 🧥 🕯️",
@@ -1044,16 +984,11 @@ paragraphs:[
 "Il guardiano rise piano.",
 "“Una domanda più utile è: quale strada vuoi conoscere adesso?”",
 "Indicò una strada luminosa, una ombrosa, una rumorosa e una quasi invisibile.",
-"{{name}} si accorse che stava guardando sempre quella quasi invisibile.",
-"“Allora forse non è la più facile,” disse il guardiano.",
-"“Ma è quella che ti parla.”",
-"Consegnò a {{name}} una piccola candela.",
-"“Non illumina tutta la strada. Solo il prossimo passo.”",
-"A volte basta."
+"{{name}} si accorse che stava guardando sempre quella quasi invisibile."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e le finestre del tempo",
 subtitle:"Passato, presente e futuro si aprono come finestre.",
 icon:"🪟 ⏳ 🌙",
@@ -1072,13 +1007,11 @@ paragraphs:[
 "Una voce disse: “Il futuro non si vede bene perché si costruisce mentre cammini.”",
 "{{name}} pulì un piccolo angolo del vetro.",
 "Non vide tutto.",
-"Vide solo una luce, lontana ma reale.",
-"Capì che non serviva conoscere ogni dettaglio.",
-"Serviva scegliere cosa tenere acceso mentre il tempo passava."
+"Vide solo una luce, lontana ma reale."
 ]
-},
+}),
 
-{
+S({
 title:"{{name}} e il quaderno delle direzioni",
 subtitle:"Un quaderno raccoglie parole guida per orientarsi.",
 icon:"📓 🧭 ✨",
@@ -1097,12 +1030,10 @@ paragraphs:[
 "Altre troppo facili.",
 "Alla fine ne scelse una semplice, ma vera.",
 "Quando la scrisse, la parola diventò una piccola bussola disegnata sul bordo della pagina.",
-"Il quaderno non disse dove andare.",
-"Disse soltanto: “Quando ti perdi, torna alla parola.”",
-"{{name}} chiuse il quaderno.",
-"E sentì che una direzione può iniziare anche così.",
-"Da una parola sincera."
+"Il quaderno non disse dove andare."
 ]
-}
+})
 
 ]
+
+};
