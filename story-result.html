@@ -630,6 +630,18 @@ if(haystack.includes('animali') && (story.keywords || []).some(k => ['lupo','bal
 return score;
 }
 
+function getRotationKey(){
+return `${name}|${age}|${theme}|${experience}`;
+}
+
+function getRotationStore(){
+return JSON.parse(localStorage.getItem('fableaStoryRotation') || '{}');
+}
+
+function saveRotationStore(store){
+localStorage.setItem('fableaStoryRotation', JSON.stringify(store));
+}
+
 function pickStory(){
 const list = STORIES[age] && STORIES[age].length ? STORIES[age] : STORIES['5-7'];
 
@@ -637,19 +649,39 @@ if(!list || !list.length){
 throw new Error('Nessuna storia disponibile per questa fascia');
 }
 
-const scored = list.map(item => ({item, score: scoreStory(item)})).sort((a,b) => b.score - a.score);
+const scored = list
+.map(item => ({item, score:scoreStory(item), title:personalizeText(item.title)}))
+.sort((a,b) => b.score - a.score);
 
-if(scored[0].score > 0) return scored[0].item;
+let eligible = scored.filter(entry => entry.score > 0);
 
-const key = `${name}-${age}-${theme}-${experience}-${interests.join('-')}`;
-let hash = 0;
-
-for(let i=0;i<key.length;i++){
-hash = ((hash << 5) - hash) + key.charCodeAt(i);
-hash |= 0;
+if(eligible.length < 2){
+eligible = scored;
 }
 
-return list[Math.abs(hash) % list.length];
+const rotationKey = getRotationKey();
+const rotationStore = getRotationStore();
+const recentTitles = rotationStore[rotationKey] || [];
+
+let available = eligible.filter(entry => !recentTitles.includes(entry.title));
+
+if(!available.length){
+rotationStore[rotationKey] = [];
+available = eligible;
+}
+
+const randomIndex = Math.floor(Math.random() * available.length);
+const chosen = available[randomIndex];
+
+const maxMemory = Math.max(1, Math.min(eligible.length - 1, 6));
+const updatedRecent = [chosen.title, ...(rotationStore[rotationKey] || [])]
+.filter((title, index, array) => array.indexOf(title) === index)
+.slice(0, maxMemory);
+
+rotationStore[rotationKey] = updatedRecent;
+saveRotationStore(rotationStore);
+
+return chosen.item;
 }
 
 function ageText(){
@@ -683,15 +715,15 @@ child: existingStory.child || name,
 age: existingStory.age || age,
 theme: existingStory.theme || theme,
 experience: existingStory.experience || experience,
-title: title,
-subtitle: existingStory.subtitle || '',
-icon: existingStory.icon || '✨',
-art: existingStory.art || 'space',
-scene: existingStory.scene || existingStory.icon || '✨',
-ritual: existingStory.ritual || '⭐ Stella luminosa',
-activity: existingStory.activity || '',
-text: existingStory.text,
-date: existingStory.date || new Date().toLocaleDateString('it-IT')
+title:title,
+subtitle:existingStory.subtitle || '',
+icon:existingStory.icon || '✨',
+art:existingStory.art || 'space',
+scene:existingStory.scene || existingStory.icon || '✨',
+ritual:existingStory.ritual || '⭐ Stella luminosa',
+activity:existingStory.activity || '',
+text:existingStory.text,
+date:existingStory.date || new Date().toLocaleDateString('it-IT')
 };
 
 localStorage.removeItem('fableaReopenStory');
@@ -709,7 +741,7 @@ paragraphs = ['Questa storia è ancora in costruzione nel mondo FABLEA.'];
 const fullText = paragraphs.join('\n\n');
 
 storyObject = {
-id: Date.now().toString(),
+id:Date.now().toString(),
 child:name,
 age:age,
 theme:theme,
