@@ -6,7 +6,6 @@
 <title>FABLEA | Libreria dei mondi</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
 <script src="/stories.js"></script>
 
 <style>
@@ -49,7 +48,7 @@ opacity:.15;
 pointer-events:none;
 }
 
-.top,.hero,.section,.actions,.footer{
+.top,.hero,.section,.actions,.footer,.filters{
 position:relative;
 z-index:2;
 }
@@ -107,8 +106,6 @@ margin:0 auto;
 }
 
 .filters{
-position:relative;
-z-index:2;
 display:flex;
 gap:12px;
 flex-wrap:wrap;
@@ -182,29 +179,12 @@ border:1px solid rgba(255,255,255,.14);
 box-shadow:inset 0 0 50px rgba(255,255,255,.06);
 }
 
-.cover.forest{
-background:linear-gradient(180deg,#11192a,#193121);
-}
-
-.cover.sky{
-background:linear-gradient(180deg,#1b183a,#4b3d70);
-}
-
-.cover.ocean{
-background:linear-gradient(180deg,#111c35,#12384d);
-}
-
-.cover.bridge{
-background:linear-gradient(180deg,#1b1728,#3c2838);
-}
-
-.cover.space{
-background:linear-gradient(180deg,#08091a,#161743);
-}
-
-.cover.castle{
-background:linear-gradient(180deg,#1b1631,#382a54);
-}
+.cover.forest{background:linear-gradient(180deg,#11192a,#193121)}
+.cover.sky{background:linear-gradient(180deg,#1b183a,#4b3d70)}
+.cover.ocean{background:linear-gradient(180deg,#111c35,#12384d)}
+.cover.bridge{background:linear-gradient(180deg,#1b1728,#3c2838)}
+.cover.space{background:linear-gradient(180deg,#08091a,#161743)}
+.cover.castle{background:linear-gradient(180deg,#1b1631,#382a54)}
 
 .card h2{
 font-family:'Cormorant Garamond',serif;
@@ -477,10 +457,11 @@ ${stories.slice().reverse().map(story => `
 <span class="tag">${story.child || 'Bambino'}</span>
 <span class="tag">${ageLabel(story.age)}</span>
 <span class="tag">${story.date || ''}</span>
+${story.ritual ? `<span class="tag">${story.ritual}</span>` : ""}
 </div>
 </div>
 <div class="actions" style="justify-content:flex-start;margin-top:20px;">
-<button class="button secondary" onclick="openStory('${story.id}')">Riapri</button>
+<button class="button secondary" onclick="openStory('${story.id}')">Riapri libro vivo</button>
 </div>
 </div>
 `).join("")}
@@ -491,7 +472,9 @@ ${stories.slice().reverse().map(story => `
 function openStory(id){
 const story = getStories().find(item => item.id === id);
 if(!story) return;
+
 localStorage.setItem("fableaCurrentStory", JSON.stringify(story));
+localStorage.setItem("fableaReopenStory", "true");
 window.location.href = "/story-result.html";
 }
 
@@ -525,6 +508,12 @@ Ogni oggetto simbolico rende il mondo più familiare e crea continuità tra un�
 <div class="treasures">
 ${treasures.map(item => `<span class="treasure">${item}</span>`).join("")}
 </div>
+
+${childState.lastActivity ? `
+<div style="margin-top:22px;">
+<p><strong>Attività suggerita:</strong> ${childState.lastActivity}</p>
+</div>
+` : ""}
 
 ${rituals.length ? `
 <div style="margin-top:24px;">
