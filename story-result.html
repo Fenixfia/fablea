@@ -131,31 +131,58 @@ box-shadow:0 18px 50px rgba(0,0,0,.22);
 min-height:520px;
 border-radius:34px;
 border:1px solid rgba(255,255,255,.16);
-box-shadow:inset 0 0 70px rgba(255,255,255,.08),0 20px 46px rgba(0,0,0,.24);
+box-shadow:
+inset 0 0 90px rgba(255,255,255,.06),
+0 24px 60px rgba(0,0,0,.30);
 display:flex;
 align-items:center;
 justify-content:center;
 position:relative;
 overflow:hidden;
+transition:1.2s ease;
+isolation:isolate;
 }
 
 .illustration:before{
 content:"";
 position:absolute;
 inset:0;
-background-image:
-radial-gradient(circle,rgba(255,255,255,.9) 0 1px,transparent 1.4px),
-radial-gradient(circle,rgba(255,215,135,.9) 0 1px,transparent 1.6px);
-background-size:86px 86px,132px 132px;
-background-position:10px 20px,42px 70px;
-opacity:.32;
+background:
+radial-gradient(circle at 20% 20%,rgba(255,255,255,.22),transparent 20%),
+radial-gradient(circle at 80% 30%,rgba(255,220,140,.18),transparent 24%),
+radial-gradient(circle at 60% 80%,rgba(180,160,255,.12),transparent 26%);
+mix-blend-mode:screen;
+opacity:.8;
+animation:ambientGlow 12s ease-in-out infinite;
+}
+
+.illustration:after{
+content:"";
+position:absolute;
+inset:-40%;
+background:
+radial-gradient(circle,rgba(255,255,255,.08) 0 1px,transparent 1.5px);
+background-size:120px 120px;
+opacity:.14;
+animation:starsMove 90s linear infinite;
+}
+
+@keyframes starsMove{
+0%{transform:translateY(0)}
+100%{transform:translateY(-220px)}
+}
+
+@keyframes ambientGlow{
+0%{opacity:.45;transform:scale(1)}
+50%{opacity:.9;transform:scale(1.04)}
+100%{opacity:.45;transform:scale(1)}
 }
 
 .illustration.forest{
 background:
 radial-gradient(circle at 50% 20%,rgba(255,210,120,.42),transparent 22%),
-radial-gradient(circle at 25% 80%,rgba(46,83,58,.60),transparent 30%),
-linear-gradient(180deg,#11192a 0%,#193121 100%);
+radial-gradient(circle at 25% 80%,rgba(46,83,58,.70),transparent 30%),
+linear-gradient(180deg,#101824 0%,#183220 100%);
 }
 
 .illustration.sky{
@@ -183,29 +210,48 @@ linear-gradient(180deg,#1b1728 0%,#3c2838 100%);
 background:
 radial-gradient(circle at 50% 20%,rgba(255,220,150,.30),transparent 22%),
 radial-gradient(circle at 35% 80%,rgba(88,79,210,.30),transparent 30%),
-linear-gradient(180deg,#08091a 0%,#161743 100%);
+linear-gradient(180deg,#070816 0%,#17184b 100%);
 }
 
 .illustration.castle{
 background:
 radial-gradient(circle at 50% 20%,rgba(255,220,150,.36),transparent 22%),
 radial-gradient(circle at 35% 80%,rgba(180,160,255,.30),transparent 30%),
-linear-gradient(180deg,#1b1631 0%,#382a54 100%);
+linear-gradient(180deg,#1a1530 0%,#3b2957 100%);
 }
 
 .scene-art{
 position:relative;
-z-index:2;
-font-size:128px;
+z-index:3;
+font-size:132px;
 text-align:center;
-filter:drop-shadow(0 16px 30px rgba(0,0,0,.22));
-animation:float 7s ease-in-out infinite;
+filter:
+drop-shadow(0 20px 34px rgba(0,0,0,.34))
+drop-shadow(0 0 24px rgba(255,230,180,.22));
+animation:sceneFloat 7s ease-in-out infinite;
+transition:1s ease;
+user-select:none;
 }
 
-@keyframes float{
-0%{transform:translateY(0)}
-50%{transform:translateY(-8px)}
-100%{transform:translateY(0)}
+.scene-art::after{
+content:"";
+position:absolute;
+left:50%;
+bottom:-24px;
+transform:translateX(-50%);
+width:180px;
+height:40px;
+background:radial-gradient(circle,rgba(255,220,140,.22),transparent 70%);
+filter:blur(18px);
+z-index:-1;
+}
+
+@keyframes sceneFloat{
+0%{transform:translateY(0px) scale(1)}
+25%{transform:translateY(-6px) scale(1.01)}
+50%{transform:translateY(-12px) scale(1.02)}
+75%{transform:translateY(-6px) scale(1.01)}
+100%{transform:translateY(0px) scale(1)}
 }
 
 .page-card{
@@ -369,9 +415,7 @@ color:#302738;
 border:0;
 }
 
-audio{
-display:none;
-}
+audio{display:none}
 
 .ritual{
 display:none;
@@ -671,11 +715,22 @@ localStorage.setItem('fableaSavedStories', JSON.stringify(savedStories.slice(-10
 
 function renderPage(){
 const pageText = document.getElementById('pageText');
+const sceneArt = document.getElementById('sceneArt');
+const illustration = document.getElementById('illustration');
+
 pageText.classList.add('fade');
+sceneArt.style.opacity = '0.2';
+sceneArt.style.transform = 'translateY(10px) scale(.96)';
 
 setTimeout(() => {
 pageText.innerText = paragraphs[currentPage];
 pageText.classList.remove('fade');
+
+sceneArt.innerText = storyObject.scene;
+sceneArt.style.opacity = '1';
+sceneArt.style.transform = '';
+
+illustration.className = 'illustration ' + storyObject.art;
 
 document.getElementById('counter').innerText = `Pagina ${currentPage + 1} di ${paragraphs.length}`;
 document.getElementById('progressFill').style.width = `${((currentPage + 1) / paragraphs.length) * 100}%`;
