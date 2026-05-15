@@ -534,48 +534,298 @@ paragraphs:[
 
 ],
 
-  "8-10": [
-    {
-      title: "{{name}} e il ponte delle scelte",
-      subtitle: "Una storia su emozioni, fiducia e piccoli cambiamenti interiori.",
-      icon: "🌉 💛 🌙",
-      art: "bridge",
-      scene: "🌉 💛 🌙",
-      keywords: ["ponte", "scelte", "fiducia", "emozioni"],
-      ritual: "💛 Luce della fiducia",
-      activity: "Disegna tre luci: coraggio, gentilezza e fiducia.",
-      paragraphs: [
-        "Nel cuore di una città segreta, {{name}} trovò un ponte sospeso tra due colline. Non era fatto di legno né di pietra.",
-        "Era fatto di scelte. Ogni tavola brillava quando qualcuno diceva qualcosa di vero a se stesso.",
-        "Sotto il ponte scorreva un fiume calmo. Nell’acqua si vedevano pensieri: una paura, una domanda, un desiderio.",
-        "Dopo una giornata {{mood}}, quel fiume sembrava più vicino del solito. Non spaventava. Aspettava.",
-        "Sul ponte comparvero tre luci: coraggio, gentilezza, fiducia.",
-        "{{name}} capì che non doveva scegliere la luce più forte. Doveva scegliere quella più vera.",
-        "Quando fece il primo passo, il ponte vibrò piano. Non perché fosse fragile, ma perché aveva riconosciuto una scelta sincera.",
-        "Dall’altra parte non c’era un premio. C’era una città più chiara, più calma, più vicina."
-      ]
-    },
-    {
-      title: "{{name}} e il teatro delle emozioni",
-      subtitle: "Le emozioni salgono sul palco una alla volta.",
-      icon: "🎭 ✨ 💛",
-      art: "bridge",
-      scene: "🎭 🌙 ✨",
-      keywords: ["teatro", "emozioni", "rabbia", "paura"],
-      ritual: "🎭 Maschera gentile",
-      activity: "Disegna il volto di un’emozione e dagli un nome.",
-      paragraphs: [
-        "Il teatro delle emozioni apriva solo quando qualcuno aveva troppe cose dentro.",
-        "{{name}} trovò un biglietto nella tasca senza sapere come fosse arrivato lì.",
-        "Sul palco salì prima la Rabbia. Non urlò. Disse: “Sono stanca di essere fraintesa.”",
-        "Poi salì la Paura. “Io non voglio comandare. Voglio solo proteggere.”",
-        "Poi arrivò la Gioia, piccola e luminosa. “A volte mi nascondo, ma torno.”",
-        "Il direttore del teatro chiese a {{name}} quale emozione avesse bisogno di una sedia in prima fila.",
-        "{{name}} scelse con calma.",
-        "Quando il sipario si chiuse, il petto sembrò più spazioso."
-      ]
-    }
-  ],
+"8-10": [
+
+{
+title:"{{name}} e il ponte delle scelte",
+subtitle:"Una storia su emozioni, fiducia e piccoli cambiamenti interiori.",
+icon:"🌉 💛 🌙",
+art:"bridge",
+scene:"🌉 💛 🌙",
+keywords:["ponte","scelte","fiducia","emozioni"],
+ritual:"💛 Luce della fiducia",
+activity:"Disegna tre luci: coraggio, gentilezza e fiducia.",
+paragraphs:[
+"Nel cuore di una città segreta, {{name}} trovò un ponte sospeso tra due colline.",
+"Non era fatto di legno né di pietra. Era fatto di scelte.",
+"Ogni tavola brillava quando qualcuno diceva qualcosa di vero a se stesso.",
+"Sotto il ponte scorreva un fiume calmo. Nell’acqua non si vedevano pesci, ma pensieri.",
+"Si vedeva una paura piccola. Poi una domanda. Poi un desiderio che non aveva ancora trovato le parole.",
+"Dopo una giornata {{mood}}, quel fiume sembrava più vicino del solito.",
+"All’inizio {{name}} pensò di dover attraversare in fretta.",
+"Ma una voce leggera arrivò dal vento: “Il ponte non ama la fretta. Ama la verità.”",
+"Sul ponte comparvero tre luci: coraggio, gentilezza e fiducia.",
+"La luce del coraggio era forte. La luce della gentilezza era calda. La luce della fiducia era piccola, ma non tremava.",
+"{{name}} capì che non doveva scegliere la luce più grande. Doveva scegliere quella più vera.",
+"Quando fece il primo passo, il ponte vibrò piano.",
+"Non perché fosse fragile, ma perché aveva riconosciuto una scelta sincera.",
+"Dall’altra parte non c’era un premio. C’era una città più chiara, più calma, più vicina.",
+"E {{name}} capì che crescere non significa non avere paura. Significa attraversare il ponte anche con la paura accanto."
+]
+},
+
+{
+title:"{{name}} e il teatro delle emozioni",
+subtitle:"Le emozioni salgono sul palco una alla volta.",
+icon:"🎭 ✨ 💛",
+art:"bridge",
+scene:"🎭 🌙 ✨",
+keywords:["teatro","emozioni","rabbia","paura"],
+ritual:"🎭 Maschera gentile",
+activity:"Disegna il volto di un’emozione e dagli un nome.",
+paragraphs:[
+"Il teatro delle emozioni apriva solo quando qualcuno aveva troppe cose dentro.",
+"{{name}} trovò il biglietto in tasca senza sapere come fosse arrivato lì.",
+"Era un biglietto color crema, con una scritta sottile: “Questa sera parlano loro.”",
+"Il teatro era nascosto dietro una porta rossa in fondo a una strada silenziosa.",
+"Dentro, le poltrone erano vuote. Il palco era illuminato da una sola luce.",
+"Per prima salì la Rabbia. Aveva scarpe rumorose e un mantello rosso.",
+"Non urlò. Disse soltanto: “Sono stanca di essere fraintesa.”",
+"Poi salì la Paura. Camminava piano e teneva una coperta tra le mani.",
+"“Io non voglio comandare,” disse. “Voglio solo proteggere.”",
+"Poi arrivò la Gioia. Era piccola, luminosa e un po’ timida.",
+"“A volte mi nascondo,” disse. “Ma torno quando qualcuno mi lascia spazio.”",
+"Il direttore del teatro guardò {{name}} e chiese: “Quale emozione ha bisogno di una sedia in prima fila?”",
+"{{name}} non rispose subito. Guardò il palco, poi il cuore, poi di nuovo il palco.",
+"Scelse con calma.",
+"Quando il sipario si chiuse, il petto sembrò più spazioso.",
+"Le emozioni non erano sparite. Ma ora parlavano una alla volta."
+]
+},
+
+{
+title:"{{name}} e la città degli specchi",
+subtitle:"Una città riflette non l’aspetto, ma ciò che si porta dentro.",
+icon:"🪞 🏙️ ✨",
+art:"bridge",
+scene:"🪞 🏙️ ✨",
+keywords:["specchio","identità","città","crescita"],
+ritual:"🪞 Specchio sincero",
+activity:"Scrivi o disegna una qualità che vuoi ricordare.",
+paragraphs:[
+"La città degli specchi apparve a {{name}} dopo una curva che non c’era il giorno prima.",
+"Le strade erano pulite, silenziose, illuminate da lampioni argentati.",
+"Ogni palazzo aveva finestre lucide come acqua ferma.",
+"Ma quegli specchi non riflettevano il viso.",
+"Riflettevano ciò che una persona portava dentro.",
+"In uno specchio {{name}} vide una paura nascosta dietro un sorriso.",
+"In un altro vide una speranza piccola, ma ostinata.",
+"In un altro ancora vide una versione di sé più coraggiosa, in piedi davanti a una porta difficile.",
+"Una ragazza con un cappello rosso si avvicinò.",
+"“Qui gli specchi non giudicano,” disse. “Mostrano.”",
+"Camminarono fino alla piazza centrale, dove c’era uno specchio coperto da un telo blu.",
+"{{name}} lo scoprì piano.",
+"Dentro non vide una persona perfetta. Vide una luce piccola, resistente, vera.",
+"“Quella è la parte che resta anche quando ti confondi,” disse la ragazza.",
+"La città svanì al tramonto.",
+"Ma lo specchio rimase dentro {{name}}, come una finestra accesa."
+]
+},
+
+{
+title:"{{name}} e il drago che non ruggiva",
+subtitle:"Un drago trova una forza diversa dalla voce forte.",
+icon:"🐉 💛 🌿",
+art:"forest",
+scene:"🐉 💛 🌿",
+keywords:["drago","voce","forza","autostima"],
+ritual:"🐉 Fiamma gentile",
+activity:"Disegna un drago che usa un potere diverso dal ruggito.",
+paragraphs:[
+"Nel villaggio delle montagne tutti conoscevano i draghi per i loro ruggiti.",
+"Si diceva che un vero drago dovesse far tremare le rocce.",
+"Ma il drago che {{name}} incontrò non ruggiva mai.",
+"Si chiamava Niro e disegnava nell’aria con il fumo leggero.",
+"Con quel fumo creava ponti, alberi, piccoli animali e stelle sospese.",
+"“Pensano che io sia debole,” disse Niro. “Solo perché la mia forza non fa rumore.”",
+"{{name}} guardò i suoi disegni muoversi lenti nel cielo.",
+"Erano bellissimi. Eppure Niro li cancellava subito, come se avesse paura di mostrarli troppo.",
+"Quel giorno una frana bloccò il sentiero del villaggio.",
+"Tutti aspettarono un ruggito potente per spostare le pietre.",
+"Niro abbassò lo sguardo. Poi guardò {{name}}.",
+"{{name}} disse piano: “Forse puoi fare a modo tuo.”",
+"Allora Niro soffiò una lunga linea di fumo dorato.",
+"Il fumo diventò un ponte leggero, ma solido.",
+"Il villaggio attraversò in silenzio.",
+"Da quel giorno, nessuno chiese più a Niro di ruggire.",
+"E Niro capì che la forza vera non deve sempre fare rumore."
+]
+},
+
+{
+title:"{{name}} e la stanza della pioggia",
+subtitle:"Una stanza ascolta le emozioni che non trovano parole.",
+icon:"🌧️ 🪟 💙",
+art:"ocean",
+scene:"🌧️ 🪟 💙",
+keywords:["pioggia","calma","emozioni","silenzio"],
+ritual:"🌧️ Goccia calma",
+activity:"Disegna una goccia e scrivi dentro cosa vorresti lasciar andare.",
+paragraphs:[
+"In fondo a un corridoio silenzioso, {{name}} trovò una porta azzurra.",
+"Sopra la porta c’era scritto: “Stanza della pioggia”.",
+"Dentro non pioveva forte.",
+"Cadevano gocce lente, sospese nell’aria, una alla volta.",
+"Ogni goccia conteneva un’emozione che qualcuno non era riuscito a dire.",
+"Una voce gentile arrivò dalla finestra: “Non devi sistemare tutto. Puoi solo ascoltare.”",
+"{{name}} toccò una goccia e sentì una tristezza piccola.",
+"Ne toccò un’altra e sentì una rabbia stanca.",
+"Ne toccò una terza e sentì una paura che voleva solo una coperta.",
+"Le gocce non facevano male. Chiedevano solo un nome.",
+"{{name}} restò lì per un po’, senza cercare risposte veloci.",
+"Poi disse piano: “Oggi è stato difficile.”",
+"La pioggia cambiò suono.",
+"Non era più pesante. Sembrava musica.",
+"La porta restò socchiusa.",
+"Perché alcune stanze non servono per scappare. Servono per respirare."
+]
+},
+
+{
+title:"{{name}} e il custode delle domande",
+subtitle:"Un custode protegge le domande che fanno crescere.",
+icon:"❓ 📚 🕯️",
+art:"castle",
+scene:"❓ 📚 🕯️",
+keywords:["domande","libro","crescita","curiosità"],
+ritual:"❓ Domanda luminosa",
+activity:"Scrivi una domanda che vuoi tenere aperta.",
+paragraphs:[
+"In una biblioteca senza pareti, {{name}} incontrò il custode delle domande.",
+"Non custodiva risposte. Quelle cambiavano troppo spesso.",
+"Custodiva domande importanti, scritte su fogli sospesi nell’aria.",
+"Alcune domande brillavano molto.",
+"Altre erano quasi invisibili.",
+"“Una buona domanda non ti chiude,” disse il custode. “Ti apre.”",
+"{{name}} lesse una domanda: “Che cosa mi aiuta quando non so cosa fare?”",
+"Poi un’altra: “Quando sono davvero me stesso?”",
+"Poi una terza: “Di cosa ho bisogno, anche se non lo dico?”",
+"Ogni domanda accendeva una piccola candela.",
+"Al centro della biblioteca c’era un foglio vuoto.",
+"Il custode porse una penna a {{name}}.",
+"“Non devi trovare una risposta oggi,” disse. “Scrivi solo una domanda che merita spazio.”",
+"{{name}} scrisse lentamente.",
+"Quando la domanda fu completa, il foglio diventò una lanterna.",
+"E il custode sorrise, perché una nuova luce era entrata nella biblioteca."
+]
+},
+
+{
+title:"{{name}} e il ragazzo della luce blu",
+subtitle:"Una luce diversa aiuta a vedere porte invisibili.",
+icon:"💙 🛤️ 🌌",
+art:"space",
+scene:"💙 🛤️ 🌌",
+keywords:["luce","blu","diversità","strada"],
+ritual:"💙 Lanterna blu",
+activity:"Disegna una porta che solo una luce speciale può mostrare.",
+paragraphs:[
+"In una città dove tutte le luci erano gialle, viveva un ragazzo con una lanterna blu.",
+"Tutti gli dicevano che quella luce era strana.",
+"Lui la teneva comunque accesa.",
+"{{name}} lo incontrò vicino a un vicolo chiuso, davanti a un muro senza porte.",
+"“Perché usi una luce diversa?” chiese {{name}}.",
+"Il ragazzo sorrise. “Perché con questa vedo cose che gli altri non notano.”",
+"Illuminò il muro con la lanterna blu.",
+"All’improvviso comparve una porta sottile, nascosta tra i mattoni.",
+"Dietro la porta c’era un sentiero pieno di disegni, parole cancellate e idee lasciate a metà.",
+"“Questo è il posto delle possibilità non ascoltate,” spiegò il ragazzo.",
+"{{name}} vide un aquilone mai costruito, una canzone mai cantata, una frase mai detta.",
+"La lanterna blu non cambiava il mondo.",
+"Lo mostrava in un modo diverso.",
+"Prima di salutare, il ragazzo lasciò a {{name}} una piccola scintilla blu.",
+"“Tienila,” disse. “Quando tutti guardano dalla stessa parte, tu puoi cercare una porta nascosta.”"
+]
+},
+
+{
+title:"{{name}} e il sentiero invisibile",
+subtitle:"Un sentiero appare solo quando si procede con fiducia.",
+icon:"🛤️ 🌫️ ✨",
+art:"forest",
+scene:"🛤️ 🌫️ ✨",
+keywords:["sentiero","fiducia","nebbia","cammino"],
+ritual:"🛤️ Pietra del passo",
+activity:"Disegna il primo passo di un sentiero invisibile.",
+paragraphs:[
+"La nebbia copriva tutto, ma {{name}} sentiva che davanti c’era una strada.",
+"Non si vedeva. Non ancora.",
+"Solo un suono leggero arrivava da lontano, come foglie mosse da un vento gentile.",
+"Una tartaruga grigia camminava lentamente nella stessa direzione.",
+"“Come fai a sapere dove andare?” chiese {{name}}.",
+"“Non lo so tutto insieme,” rispose la tartaruga. “So solo il prossimo passo.”",
+"Appena la tartaruga mise una zampa avanti, una pietra comparve sotto di lei.",
+"{{name}} provò a fare lo stesso.",
+"Una nuova pietra apparve.",
+"Poi un’altra. Poi un’altra ancora.",
+"Il sentiero non era invisibile per fare paura.",
+"Era invisibile per insegnare fiducia.",
+"A metà strada, {{name}} volle guardare indietro.",
+"Le pietre già percorse brillavano piano.",
+"Non mostravan tutto il percorso. Mostravano solo che era possibile continuare.",
+"Alla fine, {{name}} non vedeva ancora tutta la strada.",
+"Ma non serviva più."
+]
+},
+
+{
+title:"{{name}} e il lago dei ricordi",
+subtitle:"Un lago custodisce ricordi che possono diventare forza.",
+icon:"🪷 🌊 🧠",
+art:"ocean",
+scene:"🪷 🌊 🧠",
+keywords:["lago","ricordi","calma","memoria"],
+ritual:"🪷 Foglia del ricordo",
+activity:"Disegna un ricordo come se fosse una pianta.",
+paragraphs:[
+"Il lago dei ricordi era nascosto tra montagne basse e alberi immobili.",
+"Non aveva onde. Non aveva barche.",
+"Sembrava aspettare in silenzio.",
+"{{name}} si avvicinò e vide immagini muoversi sotto l’acqua.",
+"C’erano giorni belli, giorni strani, giorni in cui non tutto era andato come avrebbe voluto.",
+"Una donna anziana sedeva sulla riva con un bastone di legno chiaro.",
+"“I ricordi non sono pietre,” disse. “Sono semi.”",
+"{{name}} guardò un ricordo difficile.",
+"Sembrava pesante.",
+"La donna lo toccò con il bastone e dall’acqua nacque una piccola pianta.",
+"“Anche quello può insegnarti qualcosa,” spiegò.",
+"{{name}} vide che la pianta non era scura.",
+"Era verde, fragile, viva.",
+"Prese una foglia e la mise in tasca.",
+"Il lago rimase calmo.",
+"Come se sapesse aspettare il prossimo ricordo."
+]
+},
+
+{
+title:"{{name}} e il libro che ascoltava",
+subtitle:"Un libro risponde solo quando qualcuno è sincero.",
+icon:"📖 👂 ✨",
+art:"castle",
+scene:"📖 👂 ✨",
+keywords:["libro","ascolto","parole","sincerità"],
+ritual:"📖 Pagina sincera",
+activity:"Scrivi una frase vera che vuoi custodire.",
+paragraphs:[
+"Il libro che ascoltava era appoggiato su una sedia vuota.",
+"Non aveva titolo.",
+"Non aveva disegni in copertina.",
+"Quando {{name}} lo aprì, le pagine erano bianche.",
+"“Non scrivo per primo,” disse una voce sottile. “Prima ascolto.”",
+"{{name}} rimase in silenzio.",
+"Poi raccontò qualcosa di piccolo, qualcosa che non aveva detto ad alta voce.",
+"Sulla pagina apparve una frase: “Grazie per avermi affidato questo.”",
+"Il libro non dava consigli veloci.",
+"Faceva spazio.",
+"Ogni volta che {{name}} diceva qualcosa di vero, compariva una riga nuova.",
+"Alcune righe erano luminose. Altre erano leggere come matita.",
+"Alla fine, il libro scrisse: “Le parole sincere non risolvono tutto, ma aprono una finestra.”",
+"Quando si chiuse, una pagina restò leggermente luminosa.",
+"{{name}} capì che essere ascoltati è già un piccolo inizio."
+]
+}
+
+],
 
   "11-12": [
     {
