@@ -6,7 +6,6 @@
 <title>FABLEA | Libro vivo</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
 <script src="/stories.js"></script>
 
 <style>
@@ -131,9 +130,7 @@ box-shadow:0 18px 50px rgba(0,0,0,.22);
 min-height:520px;
 border-radius:34px;
 border:1px solid rgba(255,255,255,.16);
-box-shadow:
-inset 0 0 90px rgba(255,255,255,.06),
-0 24px 60px rgba(0,0,0,.30);
+box-shadow:inset 0 0 90px rgba(255,255,255,.06),0 24px 60px rgba(0,0,0,.30);
 display:flex;
 align-items:center;
 justify-content:center;
@@ -160,8 +157,7 @@ animation:ambientGlow 12s ease-in-out infinite;
 content:"";
 position:absolute;
 inset:-40%;
-background:
-radial-gradient(circle,rgba(255,255,255,.08) 0 1px,transparent 1.5px);
+background:radial-gradient(circle,rgba(255,255,255,.08) 0 1px,transparent 1.5px);
 background-size:120px 120px;
 opacity:.14;
 animation:starsMove 90s linear infinite;
@@ -225,9 +221,7 @@ position:relative;
 z-index:3;
 font-size:132px;
 text-align:center;
-filter:
-drop-shadow(0 20px 34px rgba(0,0,0,.34))
-drop-shadow(0 0 24px rgba(255,230,180,.22));
+filter:drop-shadow(0 20px 34px rgba(0,0,0,.34)) drop-shadow(0 0 24px rgba(255,230,180,.22));
 animation:sceneFloat 7s ease-in-out infinite;
 transition:1s ease;
 user-select:none;
@@ -589,12 +583,14 @@ FABLEA • puoi leggere • puoi ascoltare • puoi immaginare con calma ✨
 
 <script>
 const saved = JSON.parse(localStorage.getItem('fableaStoryData') || '{}');
+const existingStory = JSON.parse(localStorage.getItem('fableaCurrentStory') || '{}');
+const reopenMode = localStorage.getItem('fableaReopenStory') === 'true';
 
-const name = saved.name || 'piccolo esploratore';
-const age = saved.age || '5-7';
-const theme = saved.theme || 'Foresta magica';
+const name = reopenMode && existingStory.child ? existingStory.child : (saved.name || 'piccolo esploratore');
+const age = reopenMode && existingStory.age ? existingStory.age : (saved.age || '5-7');
+const theme = reopenMode && existingStory.theme ? existingStory.theme : (saved.theme || 'Foresta magica');
 const mood = saved.mood || 'Curiosa';
-const experience = saved.experience || 'Avventura immaginativa';
+const experience = reopenMode && existingStory.experience ? existingStory.experience : (saved.experience || 'Avventura immaginativa');
 const interests = saved.interests || [];
 
 const STORIES = window.FABLEA_STORIES;
@@ -602,8 +598,7 @@ const STORIES = window.FABLEA_STORIES;
 if(!STORIES){
 document.getElementById('bookSection').innerHTML = `
 <div class="error-box">
-<strong>Errore:</strong> il file <code>stories.js</code> non è stato caricato.<br>
-Controlla che esista nella root del progetto e che in questa pagina ci sia <code>&lt;script src="/stories.js"&gt;&lt;/script&gt;</code>.
+<strong>Errore:</strong> il file <code>stories.js</code> non è stato caricato.
 </div>
 `;
 throw new Error('stories.js non caricato');
@@ -673,12 +668,39 @@ if(age === '11-12') return 'Direzione';
 return 'Mondo narrativo';
 }
 
-let selected = pickStory();
-let title = personalizeText(selected.title);
-let paragraphs = personalizeParagraphs(selected.paragraphs);
-let currentPage = 0;
-let autoTimer = null;
-let audioUrl = null;
+let title = '';
+let paragraphs = [];
+let storyObject = null;
+
+if(reopenMode && existingStory && existingStory.text){
+
+title = existingStory.title || 'Storia FABLEA';
+paragraphs = existingStory.text.split(/\n\n+/).map(p => p.trim()).filter(Boolean);
+
+storyObject = {
+id: existingStory.id || Date.now().toString(),
+child: existingStory.child || name,
+age: existingStory.age || age,
+theme: existingStory.theme || theme,
+experience: existingStory.experience || experience,
+title: title,
+subtitle: existingStory.subtitle || '',
+icon: existingStory.icon || '✨',
+art: existingStory.art || 'space',
+scene: existingStory.scene || existingStory.icon || '✨',
+ritual: existingStory.ritual || '⭐ Stella luminosa',
+activity: existingStory.activity || '',
+text: existingStory.text,
+date: existingStory.date || new Date().toLocaleDateString('it-IT')
+};
+
+localStorage.removeItem('fableaReopenStory');
+
+} else {
+
+const selected = pickStory();
+title = personalizeText(selected.title);
+paragraphs = personalizeParagraphs(selected.paragraphs);
 
 if(!paragraphs.length){
 paragraphs = ['Questa storia è ancora in costruzione nel mondo FABLEA.'];
@@ -686,7 +708,7 @@ paragraphs = ['Questa storia è ancora in costruzione nel mondo FABLEA.'];
 
 const fullText = paragraphs.join('\n\n');
 
-const storyObject = {
+storyObject = {
 id: Date.now().toString(),
 child:name,
 age:age,
@@ -712,6 +734,12 @@ if(!exists){
 savedStories.push(storyObject);
 localStorage.setItem('fableaSavedStories', JSON.stringify(savedStories.slice(-100)));
 }
+
+}
+
+let currentPage = 0;
+let autoTimer = null;
+let audioUrl = null;
 
 function renderPage(){
 const pageText = document.getElementById('pageText');
@@ -791,7 +819,7 @@ audioStatus.innerText = 'Sto creando la voce narrante. Puoi continuare a leggere
 const response = await fetch('/api/tts',{
 method:'POST',
 headers:{'Content-Type':'application/json'},
-body:JSON.stringify({text:fullText})
+body:JSON.stringify({text:storyObject.text})
 });
 
 if(!response.ok){
