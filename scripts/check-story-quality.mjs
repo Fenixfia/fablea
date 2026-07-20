@@ -6,7 +6,8 @@ const files = [
   'stories-v2/age-5-7.js',
   'stories-v2/age-8-10.js',
   'stories-v2/age-11-12.js',
-  'stories-v2/index.js'
+  'stories-v2/index.js',
+  'stories-v2/supplements.js'
 ];
 const context = {window:{}};
 vm.createContext(context);
