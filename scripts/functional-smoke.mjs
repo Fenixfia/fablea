@@ -19,6 +19,7 @@ for(const file of [
   'stories-v2/age-8-10.js',
   'stories-v2/age-11-12.js',
   'stories-v2/index.js',
+  'stories-v2/supplements.js',
   'assets/js/fablea-story-engine.js'
 ]){
   vm.runInContext(fs.readFileSync(file,'utf8'), context, {filename:file});
@@ -68,6 +69,7 @@ assert(shortStory.world === 'Dinosauri', 'mondo richiesto non conservato');
 assert(shortStory.text.includes('Valle delle Felci Giganti'), 'testo non adattato al mondo Dinosauri');
 assert(shortStory.text.includes(shortStory.companion), 'compagno nei metadati non coincide con il testo');
 assert(!/Nel dettaglio|passo narrativo riconoscibile|5-7-avventura-/i.test(shortStory.text), 'padding generato ancora presente');
+assert(longStory.pages.length > mediumStory.pages.length, 'la versione lunga non aggiunge scene narrative');
 
 E.saveStory(shortStory);
 const progressed = E.updateProgress(shortStory, 2);
@@ -96,4 +98,4 @@ assert(creator.includes('Usa il suo mondo') && creator.includes('Curiosità e vo
 assert(player.includes("fetch('/api/tts'") && player.includes('fableaReopenStory'), 'contratto TTS o riapertura mancanti');
 assert(player.includes('resumePage') && player.includes('Conserva nel suo mondo'), 'ripresa o memoria rituale mancanti');
 
-console.log('Smoke completato: migrazione, grammatica, mondo, durate, rotazione, prepared story, ripresa, memoria separata e TTS non invocato.');
+console.log('Smoke completato: migrazione, grammatica, mondo, durate, scene, rotazione, prepared story, ripresa, memoria separata e TTS non invocato.');
