@@ -1,7 +1,126 @@
-<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>FABLEA | Nuova esperienza</title><link rel="stylesheet" href="/assets/css/fablea.css"><script src="/assets/js/fablea-ui.js"></script><script src="/assets/js/fablea-grammar.js"></script><script src="/assets/js/fablea-profile.js"></script><script src="/stories-v2/age-2-4.js"></script><script src="/stories-v2/age-5-7.js"></script><script src="/stories-v2/age-8-10.js"></script><script src="/stories-v2/age-11-12.js"></script><script src="/stories-v2/index.js"></script><script src="/assets/js/fablea-story-engine.js"></script></head><body class="fablea-page"><main class="card"><div class="top"><a class="back" href="/child-hub.html">← Torna al mondo</a><div class="badge">Story Creator v2</div></div><div id="content"></div></main><script>
-const F=FableaProfile; const profile=F.getSelectedProfile(); const preset=JSON.parse(localStorage.getItem('fableaStoryData')||'{}');
-if(!profile) content.innerHTML='<div class="empty"><h2>Nessun profilo</h2><a class="button" href="/onboarding.html">Crea profilo</a></div>'; else {
-const moods=['Curiosità e voglia di scoprire','Momento tranquillo','Tanta energia','Una giornata difficile','Un po’ di rabbia','Una piccola paura','Stanchezza','Allegria'];
-content.innerHTML=`<section class="hero"><h1>Che cosa cambia oggi per ${F.escapeHTML(profile.name)}?</h1><div class="intro">Il mondo principale resta ${F.escapeHTML(profile.primaryWorld)}: non serve sceglierlo di nuovo.</div></section><label>Tipo di esperienza</label><select id="family"><option value="avventura">Avventura</option><option value="calma-sera">Calma/sera</option><option value="emozioni">Emozioni</option><option value="scoperta">Scoperta</option></select><label>Stato emotivo del momento</label><select id="mood">${moods.map(m=>`<option ${preset.mood===m?'selected':''}>${F.escapeHTML(m)}</option>`).join('')}</select><label>Durata</label><select id="duration"><option ${profile.duration==='Breve'?'selected':''}>Breve</option><option ${profile.duration==='Media'?'selected':''}>Media</option><option ${profile.duration==='Lunga'?'selected':''}>Lunga</option></select><label>Scenario</label><select id="scenarioMode" onchange="alt.style.display=this.value==='other'?'block':'none'"><option value="own">Usa il suo mondo (${F.escapeHTML(profile.primaryWorld)})</option><option value="other">Apriamo un mondo diverso</option></select><select id="alt" style="display:none">${F.WORLDS.filter(w=>w!==profile.primaryWorld).map(w=>`<option>${F.escapeHTML(w)}</option>`).join('')}</select><button class="main" onclick="go()">Apri il mondo</button>`; }
-function go(){ const scenario=scenarioMode.value==='other'?alt.value:profile.primaryWorld; localStorage.setItem('fableaStoryData',JSON.stringify({profileId:profile.id,family:family.value,mood:mood.value,duration:duration.value,scenario})); location.href='/story-result.html'; }
-</script></body></html>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FABLEA | Nuova esperienza</title>
+  <link rel="stylesheet" href="/assets/css/fablea.css">
+  <script src="/assets/js/fablea-ui.js"></script>
+  <script src="/assets/js/fablea-grammar.js"></script>
+  <script src="/assets/js/fablea-profile.js"></script>
+  <script src="/stories-v2/age-2-4.js"></script>
+  <script src="/stories-v2/age-5-7.js"></script>
+  <script src="/stories-v2/age-8-10.js"></script>
+  <script src="/stories-v2/age-11-12.js"></script>
+  <script src="/stories-v2/index.js"></script>
+  <script src="/assets/js/fablea-story-engine.js"></script>
+</head>
+<body class="fablea-page">
+  <main class="card">
+    <div class="top">
+      <a class="back" href="/child-hub.html">← Torna al mondo</a>
+      <div class="badge">Esperienza di oggi</div>
+      <a class="back" href="/profile.html">Cambia profilo</a>
+    </div>
+    <div id="content"></div>
+  </main>
+
+  <script>
+    const F = FableaProfile;
+    const profile = F.getSelectedProfile();
+    const preset = F.readJSON('fableaStoryData', {});
+
+    if(!profile){
+      content.innerHTML = '<div class="empty"><h2>Nessun profilo selezionato</h2><p>Crea o seleziona prima il mondo di un bambino.</p><a class="button" href="/onboarding.html">Crea profilo</a></div>';
+    }else{
+      if(window.FableaUI) window.FableaUI.applyAge(document.body, profile.age);
+      const moods = [
+        'Curiosità e voglia di scoprire',
+        'Momento tranquillo',
+        'Tanta energia',
+        'Una giornata difficile',
+        'Un po’ di rabbia',
+        'Una piccola paura',
+        'Stanchezza',
+        'Allegria'
+      ];
+      const familyLabels = {
+        avventura:'Avventura',
+        'calma-sera':'Calma e sera',
+        emozioni:'Emozioni',
+        scoperta:'Scoperta'
+      };
+      const styleLabels = {
+        calm:'calmo',
+        adventurous:'avventuroso',
+        funny:'divertente',
+        mysterious:'misterioso',
+        emotional:'emotivo'
+      };
+
+      content.innerHTML = `
+        <section class="hero">
+          <div class="kicker">${F.escapeHTML(profile.name)} • ${F.escapeHTML(F.ageLabel(profile.age))}</div>
+          <h1>Che cosa cambia oggi?</h1>
+          <p class="intro">FABLEA sa già che il suo mondo è <strong>${F.escapeHTML(profile.primaryWorld)}</strong>, con uno stile ${F.escapeHTML(styleLabels[profile.storyStyle] || profile.storyStyle)}. Scegliamo soltanto il momento di oggi.</p>
+        </section>
+
+        <div class="profile-note">
+          <strong>Identità già attiva:</strong> ${F.escapeHTML(profile.name)} · ${F.escapeHTML(profile.primaryWorld)} · ${F.escapeHTML(profile.duration)}
+          ${profile.favoriteCompanion ? ` · compagno: ${F.escapeHTML(profile.favoriteCompanion)}` : ''}
+        </div>
+
+        <label for="family">Tipo di esperienza</label>
+        <select id="family">
+          ${Object.entries(familyLabels).map(([value,label]) => `<option value="${value}" ${preset.family === value ? 'selected' : ''}>${label}</option>`).join('')}
+        </select>
+
+        <label for="mood">Stato emotivo del momento</label>
+        <select id="mood">
+          ${moods.map(item => `<option ${preset.mood === item ? 'selected' : ''}>${F.escapeHTML(item)}</option>`).join('')}
+        </select>
+
+        <label for="duration">Durata di questa storia</label>
+        <select id="duration">
+          ${F.DURATIONS.map(item => `<option ${item === (preset.duration || profile.duration) ? 'selected' : ''}>${item}</option>`).join('')}
+        </select>
+
+        <label for="scenarioMode">Scenario</label>
+        <select id="scenarioMode">
+          <option value="own">Usa il suo mondo: ${F.escapeHTML(profile.primaryWorld)}</option>
+          <option value="other">Apriamo un mondo diverso per questa storia</option>
+        </select>
+
+        <div id="alternativeWorld" hidden>
+          <label for="alternativeSelect">Mondo alternativo</label>
+          <select id="alternativeSelect">
+            ${F.WORLDS.filter(world => world !== profile.primaryWorld).map(world => `<option>${F.escapeHTML(world)}</option>`).join('')}
+          </select>
+        </div>
+
+        <button class="main" id="openStory" type="button">Apri la storia</button>
+      `;
+
+      scenarioMode.addEventListener('change', () => {
+        alternativeWorld.hidden = scenarioMode.value !== 'other';
+      });
+
+      openStory.addEventListener('click', () => {
+        const scenario = scenarioMode.value === 'other' ? alternativeSelect.value : profile.primaryWorld;
+        const request = {
+          profileId:profile.id,
+          family:family.value,
+          mood:mood.value,
+          duration:duration.value,
+          scenario,
+          firstStory:false
+        };
+        localStorage.removeItem(F.KEYS.prepared);
+        localStorage.setItem('fableaStoryData', JSON.stringify(request));
+        localStorage.removeItem('fableaReopenStory');
+        location.href = '/story-result.html';
+      });
+    }
+  </script>
+</body>
+</html>
