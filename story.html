@@ -248,6 +248,10 @@ h1{font-size:40px}
 </main>
 
 <script>
+function escapeHTML(value){
+return String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+}
+
 function getProfiles(){
 return JSON.parse(localStorage.getItem('fableaChildProfiles') || '[]');
 }
@@ -278,6 +282,7 @@ return 'FABLEA';
 }
 
 let selectedTheme = '';
+const presetData = JSON.parse(localStorage.getItem('fableaStoryData') || '{}');
 
 function cleanInterest(value){
 return value.replace(/[^\p{L}\p{N}\s]/gu,'').trim();
@@ -360,49 +365,57 @@ return;
 localStorage.setItem('fableaSelectedChildId', profile.id);
 
 const themes = buildThemes(profile);
-selectedTheme = themes[0];
+selectedTheme = presetData.theme || themes[0];
+
+if(presetData.quickStart && presetData.name && presetData.age){
+const cleanPreset = {...presetData};
+delete cleanPreset.quickStart;
+localStorage.setItem('fableaStoryData', JSON.stringify(cleanPreset));
+window.location.href = '/story-result.html';
+return;
+}
 
 content.innerHTML = `
 <section class="hero">
 <div class="avatar">${avatarFor(profile.age)}</div>
-<h1>Che esperienza viviamo oggi con ${profile.name}?</h1>
+<h1>Che esperienza viviamo oggi con ${escapeHTML(profile.name)}?</h1>
 <div class="intro">
-Scegli il ritmo della giornata, il mondo da esplorare e il tipo di esperienza. FABLEA adatterà voce, immagini e racconto alla fascia ${ageLabel(profile.age)}.
+Scegli il ritmo della giornata, il mondo da esplorare e il tipo di esperienza. FABLEA adatterà voce, immagini e racconto alla fascia ${escapeHTML(ageLabel(profile.age))}.
 </div>
 </section>
 
 <div class="profile-note">
-Il mondo di ${profile.name} parte dai suoi interessi e cresce nel tempo: ${profile.interests && profile.interests.length ? profile.interests.join(', ') : 'immaginazione, calma e scoperta'}.
+Il mondo di ${escapeHTML(profile.name)} parte dai suoi interessi e cresce nel tempo: ${profile.interests && profile.interests.length ? profile.interests.map(escapeHTML).join(', ') : 'immaginazione, calma e scoperta'}.
 </div>
 
 <label>Tipo di esperienza</label>
 <select id="experienceType">
-<option>Avventura immaginativa</option>
-<option>Storia della sera</option>
-<option>Storia sulle emozioni</option>
-<option>Storia educativa soft</option>
-<option>Mini racconto rilassante</option>
-<option>Missione creativa</option>
-<option>Scoperta del giorno</option>
+<option ${presetData.experience === 'Avventura immaginativa' ? 'selected' : ''}>Avventura immaginativa</option>
+<option ${presetData.experience === 'Storia della sera' ? 'selected' : ''}>Storia della sera</option>
+<option ${presetData.experience === 'Storia sulle emozioni' ? 'selected' : ''}>Storia sulle emozioni</option>
+<option ${presetData.experience === 'Storia educativa soft' ? 'selected' : ''}>Storia educativa soft</option>
+<option ${presetData.experience === 'Mini racconto rilassante' ? 'selected' : ''}>Mini racconto rilassante</option>
+<option ${presetData.experience === 'Missione creativa' ? 'selected' : ''}>Missione creativa</option>
+<option ${presetData.experience === 'Scoperta del giorno' ? 'selected' : ''}>Scoperta del giorno</option>
 </select>
 
 <label>Com’è il momento di oggi?</label>
 <select id="childMood">
-<option>Curiosa</option>
-<option>Tranquilla</option>
-<option>Felice</option>
-<option>Stancante</option>
-<option>Un po’ difficile</option>
-<option>Piena di energia</option>
-<option>Ha avuto paura di qualcosa</option>
-<option>Un po’ arrabbiata</option>
+<option ${presetData.mood === 'Curiosa' ? 'selected' : ''}>Curiosa</option>
+<option ${presetData.mood === 'Tranquilla' ? 'selected' : ''}>Tranquilla</option>
+<option ${presetData.mood === 'Felice' ? 'selected' : ''}>Felice</option>
+<option ${presetData.mood === 'Stancante' ? 'selected' : ''}>Stancante</option>
+<option ${presetData.mood === 'Un po’ difficile' ? 'selected' : ''}>Un po’ difficile</option>
+<option ${presetData.mood === 'Piena di energia' ? 'selected' : ''}>Piena di energia</option>
+<option ${presetData.mood === 'Ha avuto paura di qualcosa' ? 'selected' : ''}>Ha avuto paura di qualcosa</option>
+<option ${presetData.mood === 'Un po’ arrabbiata' ? 'selected' : ''}>Un po’ arrabbiata</option>
 </select>
 
 <label>Quale mondo apriamo?</label>
 <div class="theme-grid">
 ${themes.map((theme,index)=>`
-<div class="theme ${index === 0 ? 'active' : ''}" data-theme="${theme}" onclick="setTheme('${theme.replace(/'/g,"\\'")}')">
-${theme}
+<div class="theme ${theme === selectedTheme ? 'active' : ''}" data-theme="${escapeHTML(theme)}" onclick="setTheme(this.dataset.theme)">
+${escapeHTML(theme)}
 </div>
 `).join('')}
 </div>
@@ -414,7 +427,7 @@ Apri il mondo
 <div class="nav">
 <a href="/child-hub.html">Mondo bambino</a>
 <a href="/library.html">Libreria</a>
-<a href="/activity.html">Attività</a>
+<a href="/manualita.html">Manualità</a>
 <a href="/index.html">Home</a>
 </div>
 `;

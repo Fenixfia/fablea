@@ -377,6 +377,11 @@ FABLEA • libreria viva • mondi persistenti • storie scalabili
 
 <script>
 const STORIES = window.FABLEA_STORIES || {};
+const safeArtClasses = new Set(['forest','sky','ocean','bridge','space','castle']);
+function escapeHTML(value){
+return String(value ?? '').replace(/[&<>\"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[char]));
+}
+function safeArt(value){ return safeArtClasses.has(value) ? value : 'space'; }
 let activeAge = "all";
 
 function getProfiles(){
@@ -413,7 +418,7 @@ const ages = Object.keys(STORIES);
 filters.innerHTML = `
 <button class="filter ${activeAge === "all" ? "active" : ""}" onclick="setAge('all')">Tutte</button>
 ${ages.map(age => `
-<button class="filter ${activeAge === age ? "active" : ""}" onclick="setAge('${age}')">${ageLabel(age)}</button>
+<button class="filter ${activeAge === age ? "active" : ""}" onclick="setAge('${age}')">${escapeHTML(ageLabel(age))}</button>
 `).join("")}
 `;
 }
@@ -447,24 +452,27 @@ return;
 
 container.innerHTML = `
 <div class="grid">
-${stories.slice().reverse().map(story => `
+${stories.slice().reverse().map(story => {
+const safeId = String(story.id).replace(/[^a-zA-Z0-9_-]/g, '');
+return `
 <div class="card saved-card">
 <div>
-<div class="cover ${story.art || 'space'}">${story.scene || story.icon || '✨'}</div>
-<h2>${story.title}</h2>
-<p>${story.subtitle || 'Esperienza narrativa FABLEA.'}</p>
+<div class="cover ${safeArt(story.art)}">${escapeHTML(story.scene || story.icon || '✨')}</div>
+<h2>${escapeHTML(story.title)}</h2>
+<p>${escapeHTML(story.subtitle || 'Esperienza narrativa FABLEA.')}</p>
 <div class="tags">
-<span class="tag">${story.child || 'Bambino'}</span>
-<span class="tag">${ageLabel(story.age)}</span>
-<span class="tag">${story.date || ''}</span>
-${story.ritual ? `<span class="tag">${story.ritual}</span>` : ""}
+<span class="tag">${escapeHTML(story.child || 'Bambino')}</span>
+<span class="tag">${escapeHTML(ageLabel(story.age))}</span>
+<span class="tag">${escapeHTML(story.date || '')}</span>
+${story.ritual ? `<span class="tag">${escapeHTML(story.ritual)}</span>` : ""}
 </div>
 </div>
 <div class="actions" style="justify-content:flex-start;margin-top:20px;">
-<button class="button secondary" onclick="openStory('${story.id}')">Riapri libro vivo</button>
+<button class="button secondary" onclick="openStory('${safeId}')">Riapri libro vivo</button>
 </div>
 </div>
-`).join("")}
+`;
+}).join("")}
 </div>
 `;
 }
@@ -499,19 +507,19 @@ const rituals = childState.rituals && childState.rituals.length ? childState.rit
 
 container.innerHTML = `
 <div class="world">
-<h2>Il mondo di ${selectedName} conserva una traccia.</h2>
+<h2>Il mondo di ${escapeHTML(selectedName)} conserva una traccia.</h2>
 <p>
-Ultima storia: <strong>${childState.lastStory || 'Storia FABLEA'}</strong>.
+Ultima storia: <strong>${escapeHTML(childState.lastStory || 'Storia FABLEA')}</strong>.
 Ogni oggetto simbolico rende il mondo più familiare e crea continuità tra un’esperienza e l’altra.
 </p>
 
 <div class="treasures">
-${treasures.map(item => `<span class="treasure">${item}</span>`).join("")}
+${treasures.map(item => `<span class="treasure">${escapeHTML(item)}</span>`).join("")}
 </div>
 
 ${childState.lastActivity ? `
 <div style="margin-top:22px;">
-<p><strong>Attività suggerita:</strong> ${childState.lastActivity}</p>
+<p><strong>Attività suggerita:</strong> ${escapeHTML(childState.lastActivity)}</p>
 </div>
 ` : ""}
 
@@ -519,7 +527,7 @@ ${rituals.length ? `
 <div style="margin-top:24px;">
 <p><strong>Ultimi rituali:</strong></p>
 <div class="treasures">
-${rituals.map(item => `<span class="treasure">${item.treasure} • ${item.date}</span>`).join("")}
+${rituals.map(item => `<span class="treasure">${escapeHTML(item.treasure)} • ${escapeHTML(item.date)}</span>`).join("")}
 </div>
 </div>
 ` : ""}
@@ -553,13 +561,13 @@ container.innerHTML = `
 ${catalog.map(story => `
 <div class="card">
 <div>
-<div class="cover ${story.art || 'space'}">${story.scene || story.icon || '✨'}</div>
-<h2>${story.title.replaceAll('{{name}}','')}</h2>
-<p>${story.subtitle || 'Mondo narrativo FABLEA.'}</p>
+<div class="cover ${safeArt(story.art)}">${escapeHTML(story.scene || story.icon || '✨')}</div>
+<h2>${escapeHTML(story.title.replaceAll('{{name}}',''))}</h2>
+<p>${escapeHTML(story.subtitle || 'Mondo narrativo FABLEA.')}</p>
 <div class="tags">
-<span class="tag">${ageLabel(story.age)}</span>
-<span class="tag">${story.ritual || 'Rituale FABLEA'}</span>
-${story.keywords && story.keywords[0] ? `<span class="tag">${story.keywords[0]}</span>` : ""}
+<span class="tag">${escapeHTML(ageLabel(story.age))}</span>
+<span class="tag">${escapeHTML(story.ritual || 'Rituale FABLEA')}</span>
+${story.keywords && story.keywords[0] ? `<span class="tag">${escapeHTML(story.keywords[0])}</span>` : ""}
 </div>
 </div>
 </div>

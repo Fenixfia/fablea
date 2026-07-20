@@ -254,6 +254,9 @@ Index → Onboarding → Profile → Story → Result → Player
 
 <script>
 const area = document.getElementById('profileArea');
+function escapeHTML(value){
+return String(value ?? '').replace(/[&<>\"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[char]));
+}
 
 function getProfiles(){
 return JSON.parse(localStorage.getItem('fableaChildProfiles') || '[]');
@@ -335,8 +338,9 @@ return;
 area.innerHTML = `
 <div class="grid">
 ${profiles.map(profile => {
+const safeId = String(profile.id).replace(/[^a-zA-Z0-9_-]/g, '');
 const interests = profile.interests && profile.interests.length
-? profile.interests.map(item => `<span class="tag">${item}</span>`).join('')
+? profile.interests.map(item => `<span class="tag">${escapeHTML(item)}</span>`).join('')
 : `<span class="tag">✨ Immaginazione</span>`;
 
 const activeClass = profile.id === activeId ? 'active' : '';
@@ -344,18 +348,18 @@ const activeClass = profile.id === activeId ? 'active' : '';
 return `
 <div class="child ${activeClass}">
 <div class="avatar">${avatarFor(profile.age)}</div>
-<h2>${profile.name}</h2>
-<div class="meta">${ageLabel(profile.age)}</div>
-<div class="description">${profileDescription(profile)}</div>
+<h2>${escapeHTML(profile.name)}</h2>
+<div class="meta">${escapeHTML(ageLabel(profile.age))}</div>
+<div class="description">${escapeHTML(profileDescription(profile))}</div>
 
 <div class="tags">
 ${interests}
 </div>
 
 <div class="child-actions">
-<button class="small-button" onclick="selectChild('${profile.id}')">Crea storia</button>
-<button class="small-button small-secondary" onclick="onlySelectChild('${profile.id}')">Seleziona</button>
-<button class="small-button small-secondary" onclick="deleteChild('${profile.id}')">Elimina</button>
+<button class="small-button" onclick="selectChild('${safeId}')">Crea storia</button>
+<button class="small-button small-secondary" onclick="onlySelectChild('${safeId}')">Seleziona</button>
+<button class="small-button small-secondary" onclick="deleteChild('${safeId}')">Elimina</button>
 </div>
 </div>
 `;
