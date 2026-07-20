@@ -20,6 +20,7 @@ for(const file of [
   'stories-v2/age-11-12.js',
   'stories-v2/index.js',
   'stories-v2/supplements.js',
+  'stories-v2/final-scenes.js',
   'assets/js/fablea-story-engine.js'
 ]){
   vm.runInContext(fs.readFileSync(file,'utf8'), context, {filename:file});
@@ -78,9 +79,10 @@ const reopened = JSON.parse(localStorage.getItem('fableaCurrentStory'));
 assert(reopened.profileSnapshot && reopened.pages.length, 'snapshot o pagine mancanti nella riapertura');
 assert(reopened.resumePage === 2, 'riapertura non conserva la pagina');
 
+localStorage.removeItem('fableaStoryRotation');
 const firstSelection = E.selectStory(profile, common).id;
 const secondSelection = E.selectStory(profile, common).id;
-assert(firstSelection !== secondSelection, 'rotazione per bambino non varia il catalogo recente');
+assert(firstSelection !== secondSelection, 'rotazione per bambino non varia due selezioni consecutive');
 
 const other = F.saveProfile({
   id:'other',name:'Luca',age:'5-7',gender:'unspecified',primaryWorld:'Mare',interests:['Spazio'],
