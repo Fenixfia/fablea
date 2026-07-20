@@ -95,7 +95,7 @@ assert(F.getMemory(profile).treasures[0] !== F.getMemory(other).treasures[0], 'm
 const onboarding = fs.readFileSync('onboarding.html','utf8');
 const creator = fs.readFileSync('story.html','utf8');
 const player = fs.readFileSync('story-result.html','utf8');
-assert(onboarding.includes(F.KEYS.prepared) && onboarding.includes('Prima storia proposta'), 'prima storia non preparata nell’onboarding');
+assert(onboarding.includes('F.KEYS.prepared') && onboarding.includes('Prima storia proposta'), 'prima storia non preparata nell’onboarding');
 assert(creator.includes('Usa il suo mondo') && creator.includes('Curiosità e voglia di scoprire'), 'story creator duplica o perde il profilo');
 assert(player.includes("fetch('/api/tts'") && player.includes('fableaReopenStory'), 'contratto TTS o riapertura mancanti');
 assert(player.includes('resumePage') && player.includes('Conserva nel suo mondo'), 'ripresa o memoria rituale mancanti');
