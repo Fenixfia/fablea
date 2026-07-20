@@ -26,5 +26,14 @@ jobs:
       - name: Install
         run: npm install --ignore-scripts
 
-      - name: Run quality suite
-        run: npm test
+      - name: JavaScript syntax
+        run: npm run check:js
+
+      - name: Editorial story quality
+        run: npm run check:stories
+
+      - name: Functional flow smoke
+        run: npm run check:smoke
+
+      - name: Shared CSS class audit
+        run: npm run check:css-classes
