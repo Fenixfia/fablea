@@ -31,15 +31,18 @@
       const selectedId = localStorage.getItem('fableaSelectedChildId');
       return profiles.find(profile => profile.id === selectedId) || profiles[0] || null;
     },
-    applyAgeFromStorage(target = document.body){
-      const storyData = getJSON('fableaStoryData', {});
-      const profile = this.selectedProfile();
-      const age = storyData.age || (profile && profile.age) || '';
+    applyAge(target = document.body, age = ''){
       const ageClass = this.ageClass(age);
-      if(!ageClass) return '';
       target.classList.remove('age-2-4','age-5-7','age-8-10','age-11-12');
+      if(!ageClass) return '';
       target.classList.add(ageClass);
       return ageClass;
+    },
+    applyAgeFromStorage(target = document.body){
+      const profile = this.selectedProfile();
+      const storyData = getJSON('fableaStoryData', {});
+      const age = (profile && profile.age) || storyData.age || '';
+      return this.applyAge(target, age);
     }
   };
 })();

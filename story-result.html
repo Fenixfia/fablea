@@ -99,13 +99,13 @@ FABLEA • puoi leggere • puoi ascoltare • puoi immaginare con calma ✨
 </main>
 
 <script>
-if(window.FableaUI){ window.FableaUI.applyAgeFromStorage(document.body); }
 const saved = JSON.parse(localStorage.getItem('fableaStoryData') || '{}');
 const existingStory = JSON.parse(localStorage.getItem('fableaCurrentStory') || '{}');
 const reopenMode = localStorage.getItem('fableaReopenStory') === 'true';
 
 const name = reopenMode && existingStory.child ? existingStory.child : (saved.name || 'piccolo esploratore');
 const age = reopenMode && existingStory.age ? existingStory.age : (saved.age || '5-7');
+if(window.FableaUI){ window.FableaUI.applyAge(document.body, age); }
 const theme = reopenMode && existingStory.theme ? existingStory.theme : (saved.theme || 'Foresta magica');
 const mood = saved.mood || 'Curiosa';
 const experience = reopenMode && existingStory.experience ? existingStory.experience : (saved.experience || 'Avventura immaginativa');

@@ -84,7 +84,6 @@ h3 { margin: .2rem 0 .45rem; font-size: 1.08rem; }
 .description, .intro, .lead { max-width: var(--read); margin-left: auto; margin-right: auto; }
 .badge, .kicker { font-size: .76rem; letter-spacing: .28em; text-transform: uppercase; color: var(--subtle); font-weight: 900; }
 .footer { margin-top: var(--space-5); text-align: center; font-size: .92rem; }
-.text-danger { color: var(--danger); font-weight: 900; }
 
 /* 4. Layout */
 main.page, main.card, .stage { width: min(100%, var(--max)); margin: auto; position: relative; }
@@ -128,10 +127,11 @@ main.card, main.page { padding: clamp(28px, 5vw, 62px); border-radius: var(--r-x
 }
 .button:not(.secondary), .button.primary, .small-btn.primary, button.main { background: linear-gradient(135deg, #f6dfaa, #dfbc68); box-shadow: 0 12px 26px rgba(166,119,48,.18); border-color: rgba(151,103,43,.18); }
 .secondary, .secondary-small, .small-secondary { background: var(--surface-quiet); box-shadow: none; color: var(--muted); }
-.button-small, .small-button { min-height: 38px; padding: .55rem .9rem; font-size: .88rem; }
+.button-small, .small-button { min-height: 44px; padding: .55rem .9rem; font-size: .88rem; }
 .button:hover, .back:hover, .small-btn:hover, .button-small:hover, .small-button:hover, .theme:hover, .choice:hover, .filter:hover, .child:hover { transform: translateY(-2px); }
 :disabled, [disabled] { opacity: .48; cursor: not-allowed; }
 .quiet-link { display: inline-flex; margin-top: 14px; color: var(--muted); font-weight: 900; text-decoration: none; }
+.text-danger { display: inline-flex; align-items: center; justify-content: center; border: 0; background: transparent; padding: .65rem .25rem; min-height: 44px; color: var(--danger); text-decoration: underline; cursor: pointer; box-shadow: none; }
 
 /* 7. Card e superfici */
 .choice, .theme, .profile-card, .section, .empty, .saved, .quote, .audio-zone, .ritual, .page-card, .book, .illustration, .grid > .card, .child, .continue, .saved-card, .world, .profile-note, .cover {
@@ -183,13 +183,14 @@ input, select { width: 100%; min-height: 58px; border-radius: 18px; border: 1px 
 .page-card { display: grid; align-content: space-between; background: var(--surface-raised); }
 .story-title { font-size: clamp(2rem, 4vw, 3.7rem); }
 .text { font-family: var(--font-display); font-size: clamp(1.45rem, 2.6vw, 2rem); line-height: 1.55; color: #382f35; }
+.text.fade { opacity: .18; transform: translateY(6px); transition: opacity var(--fast), transform var(--fast); }
 .counter { margin: 18px 0 8px; color: var(--subtle); font-weight: 900; font-size: .9rem; }
 .progress { height: 8px; border-radius: 999px; background: var(--surface-deep); overflow: hidden; }
 .progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width var(--slow); }
 .controls { margin-top: 24px; justify-content: space-between; }
 .audio-status { padding: 14px 16px; border-radius: var(--r-md); background: rgba(109,135,152,.10); color: var(--text); border: 1px solid rgba(109,135,152,.20); font-weight: 800; }
 .error-box { padding: 18px; border-radius: var(--r-md); background: rgba(182,83,72,.12); border: 1px solid rgba(182,83,72,.26); color: var(--danger); }
-.ritual { margin-top: var(--space-5); }
+.ritual { display: none; margin-top: var(--space-5); }
 .ritual[style*="display: block"] { border-color: rgba(246,223,170,.55); }
 .footer-actions { margin-top: var(--space-5); }
 
@@ -245,7 +246,7 @@ input, select { width: 100%; min-height: 58px; border-radius: 18px; border: 1px 
 }
 .theme-night main.page, .theme-night main.card, .theme-night .stage { background: rgba(28,30,47,.78); }
 .theme-night .subtitle, .theme-night .lead, .theme-night .text { color: #fff4df; }
-.theme-night .page-card, .theme-night .saved-card, .theme-night .world, .theme-night .ritual, .theme-night .audio-zone, .theme-night .section, .theme-night .empty { background: rgba(255,255,255,.075); border-color: rgba(255,255,255,.14); }
+.theme-night .book, .theme-night .page-card, .theme-night .saved-card, .theme-night .world, .theme-night .ritual, .theme-night .audio-zone, .theme-night .section, .theme-night .empty { background: rgba(255,255,255,.075); border-color: rgba(255,255,255,.14); }
 .theme-night input, .theme-night select { background: rgba(255,255,255,.10); color: var(--ink); }
 .theme-night .filter.active, .theme-night .choice.active, .theme-night .theme.active { background: linear-gradient(135deg, rgba(240,204,131,.30), rgba(158,183,200,.18)); }
 .theme-night .progress { background: rgba(255,255,255,.14); }

@@ -88,7 +88,7 @@ Negli sprint successivi aggiungere componenti solo se riutilizzati in almeno due
 Lo script `npm run check:css-classes` estrae le classi statiche dai file HTML core e le confronta con i selettori definiti in `assets/css/fablea.css`. Le classi dinamiche documentate sono: `active`, `primary`, `secondary`, `selected`, `theme-night`, `scene-night`, `age-2-4`, `age-5-7`, `age-8-10`, `age-11-12`.
 
 ## Applicazione runtime delle fasce d'età
-Le pagine legate a un bambino usano `FableaUI.applyAgeFromStorage(document.body)` per leggere il profilo selezionato o `fableaStoryData` da localStorage e applicare al `body` il modificatore coerente (`age-2-4`, `age-5-7`, `age-8-10`, `age-11-12`) senza cambiare chiavi o struttura dati.
+Le pagine legate a un bambino usano `FableaUI.applyAgeFromStorage(document.body)`, che preferisce sempre il profilo selezionato e usa `fableaStoryData` solo come fallback. Il player usa `FableaUI.applyAge(document.body, age)` dopo aver calcolato l’età effettiva, includendo le storie riaperte da `fableaCurrentStory`. In entrambi i casi viene applicato al `body` il modificatore coerente (`age-2-4`, `age-5-7`, `age-8-10`, `age-11-12`) senza cambiare chiavi o struttura dati.
 
 ## Tema notte editoriale
 `story-result.html` e `library.html` applicano `theme-night` e `data-theme="night"` al `body`. Il tema ridefinisce token, superfici, testo, metadati, progress bar, stati audio, rituali, card e filtri per creare un ambiente scuro editoriale e leggibile, non un semplice sfondo scuro.
