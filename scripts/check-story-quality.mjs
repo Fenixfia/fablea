@@ -7,7 +7,8 @@ const files = [
   'stories-v2/age-8-10.js',
   'stories-v2/age-11-12.js',
   'stories-v2/index.js',
-  'stories-v2/supplements.js'
+  'stories-v2/supplements.js',
+  'stories-v2/final-scenes.js'
 ];
 const context = {window:{}};
 vm.createContext(context);
@@ -35,23 +36,12 @@ const allowedTokens = new Set([
 function wordCount(text){
   return String(text || '').trim().split(/\s+/).filter(Boolean).length;
 }
-
 function normalizeSentence(sentence){
-  return sentence
-    .toLowerCase()
-    .replace(/\{\{[a-z]+\}\}/g,'{{token}}')
-    .replace(/[^a-zà-öø-ÿ0-9\s]/gi,' ')
-    .replace(/\s+/g,' ')
-    .trim();
+  return sentence.toLowerCase().replace(/\{\{[a-z]+\}\}/g,'{{token}}').replace(/[^a-zà-öø-ÿ0-9\s]/gi,' ').replace(/\s+/g,' ').trim();
 }
-
 function sentences(text){
-  return String(text || '')
-    .split(/(?<=[.!?])\s+/)
-    .map(normalizeSentence)
-    .filter(sentence => sentence.split(' ').length >= 7);
+  return String(text || '').split(/(?<=[.!?])\s+/).map(normalizeSentence).filter(sentence => sentence.split(' ').length >= 7);
 }
-
 function combinedPages(story){
   const byAnchor = new Map();
   (story.extensions || []).forEach(extension => {
@@ -65,12 +55,9 @@ function combinedPages(story){
     combined.push(...(byAnchor.get(page.id) || []));
   });
   const known = new Set((story.pages || []).map(page => page.id));
-  (story.extensions || []).filter(extension => !known.has(extension.after)).forEach(extension => {
-    combined.push({...extension,isExtension:true});
-  });
+  (story.extensions || []).filter(extension => !known.has(extension.after)).forEach(extension => combined.push({...extension,isExtension:true}));
   return combined;
 }
-
 function requiredAnchors(story,duration){
   const required = new Set();
   (story.extensions || []).forEach(extension => {
@@ -79,7 +66,6 @@ function requiredAnchors(story,duration){
   });
   return required;
 }
-
 function visible(page,duration,anchors){
   if(page.isExtension){
     if(duration === 'Breve') return Boolean(page.includeInShort);
@@ -90,14 +76,10 @@ function visible(page,duration,anchors){
   if(duration === 'Media') return !page.optionalForMedium || anchors.has(page.id);
   return true;
 }
-
 function textsFor(story,duration){
   const anchors = requiredAnchors(story,duration);
-  return combinedPages(story)
-    .filter(page => visible(page,duration,anchors))
-    .map(page => duration === 'Breve' ? page.text : [page.text,page.detail].filter(Boolean).join(' '));
+  return combinedPages(story).filter(page => visible(page,duration,anchors)).map(page => duration === 'Breve' ? page.text : [page.text,page.detail].filter(Boolean).join(' '));
 }
-
 function jaccard(first,second){
   const a = new Set(sentences(first));
   const b = new Set(sentences(second));
@@ -110,9 +92,7 @@ for(const age of ages){
   const ageStories = stories.filter(story => story.age === age);
   if(ageStories.length !== 4) failures.push(`${age}: attese esattamente 4 storie editoriali, trovate ${ageStories.length}`);
   for(const family of families){
-    if(ageStories.filter(story => story.family === family).length !== 1){
-      failures.push(`${age}: la famiglia ${family} deve comparire esattamente una volta`);
-    }
+    if(ageStories.filter(story => story.family === family).length !== 1) failures.push(`${age}: la famiglia ${family} deve comparire esattamente una volta`);
   }
 }
 
@@ -122,7 +102,6 @@ for(const story of stories){
   const cleanTitle = String(story.title || '').toLowerCase();
   if(titles.has(cleanTitle)) failures.push(`titolo duplicato: ${story.title}`);
   titles.add(cleanTitle);
-
   if(!story.title || !story.subtitle) failures.push(`${story.id}: titolo o sottotitolo mancante`);
   if(!story.adaptableToWorld && (!Array.isArray(story.worlds) || !story.worlds.length)) failures.push(`${story.id}: mondi mancanti`);
   if(!Array.isArray(story.pages) || story.pages.length < 9) failures.push(`${story.id}: servono almeno 9 scene principali`);
@@ -139,18 +118,10 @@ for(const story of stories){
   }
 
   const allText = [story.title,story.subtitle,story.treasure,story.ritual,story.activity]
-    .concat(combinedPages(story).flatMap(page => [page.scene,page.text,page.detail]))
-    .filter(Boolean)
-    .join(' ');
-
-  if(/Nel dettaglio|passo narrativo riconoscibile|\b\d+-\d+-(?:avventura|calma-sera|emozioni|scoperta)-\w+-\d+\b/i.test(allText)){
-    failures.push(`${story.id}: rilevato padding o codice-seme nel testo`);
-  }
+    .concat(combinedPages(story).flatMap(page => [page.scene,page.text,page.detail])).filter(Boolean).join(' ');
+  if(/Nel dettaglio|passo narrativo riconoscibile|\b\d+-\d+-(?:avventura|calma-sera|emozioni|scoperta)-\w+-\d+\b/i.test(allText)) failures.push(`${story.id}: rilevato padding o codice-seme nel testo`);
   if(/fableaExpandStory|extendedForLong/.test(allText)) failures.push(`${story.id}: formato legacy presente`);
-
-  const unknownTokens = [...allText.matchAll(/\{\{([a-zA-Z]+)\}\}/g)]
-    .map(match => match[1])
-    .filter(token => !allowedTokens.has(token));
+  const unknownTokens = [...allText.matchAll(/\{\{([a-zA-Z]+)\}\}/g)].map(match => match[1]).filter(token => !allowedTokens.has(token));
   if(unknownTokens.length) failures.push(`${story.id}: token sconosciuti ${[...new Set(unknownTokens)].join(', ')}`);
 
   const seenSentences = new Map();
@@ -161,8 +132,7 @@ for(const story of stories){
 
   let previousCount = 0;
   for(const duration of ['Breve','Media','Lunga']){
-    const text = textsFor(story,duration).join(' ');
-    const count = wordCount(text);
+    const count = wordCount(textsFor(story,duration).join(' '));
     const [minimum,maximum] = targets[story.age][duration];
     if(count < minimum || count > maximum) failures.push(`${story.id} ${duration}: ${count} parole, target ${minimum}-${maximum}`);
     if(count <= previousCount) failures.push(`${story.id}: la durata ${duration} non cresce rispetto alla precedente`);
@@ -173,18 +143,13 @@ for(const story of stories){
 for(let i = 0; i < stories.length; i += 1){
   for(let j = i + 1; j < stories.length; j += 1){
     const similarity = jaccard(textsFor(stories[i],'Media').join(' '),textsFor(stories[j],'Media').join(' '));
-    if(similarity > 0.18){
-      failures.push(`somiglianza eccessiva ${(similarity * 100).toFixed(1)}% tra ${stories[i].id} e ${stories[j].id}`);
-    }
+    if(similarity > 0.18) failures.push(`somiglianza eccessiva ${(similarity * 100).toFixed(1)}% tra ${stories[i].id} e ${stories[j].id}`);
   }
 }
 
 const generator = fs.readFileSync('scripts/generate-stories.mjs','utf8');
 if(/while\s*\([^)]*word|function\s+pad|\.repeat\s*\(/i.test(generator)) failures.push('generate-stories.mjs contiene logiche di padding o ripetizione');
-
-const mainFlow = ['story-result.html','assets/js/fablea-story-engine.js','library.html']
-  .map(file => fs.readFileSync(file,'utf8'))
-  .join('\n');
+const mainFlow = ['story-result.html','assets/js/fablea-story-engine.js','library.html'].map(file => fs.readFileSync(file,'utf8')).join('\n');
 if(mainFlow.includes('fableaExpandStory')) failures.push('fableaExpandStory presente nel flusso principale');
 if(stories.some(story => story.legacy)) failures.push('storia legacy nel catalogo principale');
 
@@ -192,10 +157,7 @@ if(failures.length){
   console.error(`Quality gate fallito con ${failures.length} problema/i:\n- ${failures.join('\n- ')}`);
   process.exit(1);
 }
-
 for(const story of stories){
-  const counts = ['Breve','Media','Lunga']
-    .map(duration => `${duration.toLowerCase()}=${wordCount(textsFor(story,duration).join(' '))}`)
-    .join(', ');
+  const counts = ['Breve','Media','Lunga'].map(duration => `${duration.toLowerCase()}=${wordCount(textsFor(story,duration).join(' '))}`).join(', ');
   console.log(`${story.id}: ${counts}, scene=${combinedPages(story).length}`);
 }
