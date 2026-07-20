@@ -1,6 +1,215 @@
-<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>FABLEA | Libro vivo</title><link rel="stylesheet" href="/assets/css/fablea.css"><script src="/assets/js/fablea-ui.js"></script><script src="/assets/js/fablea-grammar.js"></script><script src="/assets/js/fablea-profile.js"></script><script src="/stories-v2/age-2-4.js"></script><script src="/stories-v2/age-5-7.js"></script><script src="/stories-v2/age-8-10.js"></script><script src="/stories-v2/age-11-12.js"></script><script src="/stories-v2/index.js"></script><script src="/assets/js/fablea-story-engine.js"></script></head><body class="fablea-page theme-night"><main class="stage"><div class="top"><a class="back" href="/story.html">← Modifica esperienza</a><div class="badge">Libro vivo FABLEA</div><a class="back" href="/child-hub.html">⌂ Mondo bambino</a></div><section class="hero"><h1 id="mainTitle">La storia è pronta.</h1><div class="subtitle"><span id="meta"></span></div></section><section class="book"><div class="illustration" id="illustration"><div class="scene-art" id="sceneArt">✨</div></div><div class="page-card"><div><div class="kicker" id="kicker">Scena narrativa</div><h2 class="story-title" id="title"></h2><div class="meta"><span id="world"></span><span id="duration"></span><span id="family"></span><span id="wc"></span></div><div class="text" id="text"></div><div class="counter" id="counter"></div><div class="progress"><div class="progress-fill" id="progressFill"></div></div></div><div class="controls"><button class="button" id="prev">← Pagina prima</button><button class="button primary" id="next">Pagina dopo →</button></div></div></section><section class="audio-zone"><div class="audio-status" id="audioStatus">Voce opzionale: il TTS resta disponibile senza cambiare contratto.</div><button class="small-btn primary" id="voiceBtn">▶ Ascolta</button><button class="small-btn" id="pauseBtn">Pausa</button><audio id="storyAudio"></audio></section><section class="ritual" id="ritualBox" style="display:none"><h2>Rituale finale</h2><p id="ritualText"></p><p><strong>Attività:</strong> <span id="activity"></span></p><button class="button primary" id="saveRitualBtn">Salva tesoro e rituale</button></section><div class="footer-actions"><a class="button" href="/story.html">＋ Nuova esperienza</a><a class="button" href="/library.html">📖 Libreria</a></div></main><script>
-const F=FableaProfile,E=FableaStoryEngine; let profile=F.getSelectedProfile(); const data=JSON.parse(localStorage.getItem('fableaStoryData')||'{}'); let story; if(localStorage.getItem('fableaReopenStory')==='true'){story=JSON.parse(localStorage.getItem('fableaCurrentStory')||'{}'); localStorage.removeItem('fableaReopenStory');} else { if(!profile) location.href='/onboarding.html'; story=E.buildStory(profile,{scenario:data.scenario||profile.primaryWorld,family:data.family||'avventura',mood:data.mood||'Curiosità e voglia di scoprire',duration:data.duration||profile.duration,experience:data.family||''}); E.saveStory(story); }
-profile=story.profileSnapshot||profile||{id:story.childId,name:story.child}; let pages=story.pages&&story.pages.length?story.pages:story.text.split(/\n\n+/).map((t,i)=>({id:'p'+i,scene:'Scena '+(i+1),text:t})); let i=0; title.textContent=story.title; meta.textContent=`${story.child} • ${F.ageLabel(story.age)}`; world.textContent=story.world||story.theme; duration.textContent=story.duration; family.textContent=story.family; wc.textContent=`${story.wordCount||E.words(story.text)} parole`; sceneArt.textContent=story.icon||'✨'; ritualText.textContent=story.ritual; activity.textContent=story.activity;
-function render(){ text.textContent=pages[i].text; kicker.textContent=pages[i].scene||'Scena'; counter.textContent=`Pagina ${i+1} di ${pages.length}`; progressFill.style.width=((i+1)/pages.length*100)+'%'; prev.disabled=i===0; next.textContent=i===pages.length-1?'Rituale finale ✨':'Pagina dopo →'; ritualBox.style.display=i===pages.length-1?'block':'none'; } prev.onclick=()=>{if(i>0){i--;render();}}; next.onclick=()=>{if(i<pages.length-1){i++;render();} else ritualBox.scrollIntoView({behavior:'smooth'});}; saveRitualBtn.onclick=()=>{ const mem=F.getMemory(profile); const treasures=[...(mem.treasures||[])]; if(!treasures.includes(story.treasure)) treasures.push(story.treasure); F.updateMemory(profile,{treasures, rituals:[...(mem.rituals||[]),{treasure:story.treasure,ritual:story.ritual,story:story.title,activity:story.activity,date:new Date().toLocaleDateString('it-IT')}], lastStory:story.title,lastScenario:story.world,lastActivity:story.activity}); alert('Memoria salvata per '+profile.name); }; render();
-voiceBtn.onclick=async()=>{try{audioStatus.textContent='Genero voce...'; const r=await fetch('/api/tts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:story.text})}); if(!r.ok) throw new Error('Voce non disponibile.'); storyAudio.src=URL.createObjectURL(await r.blob()); await storyAudio.play(); audioStatus.textContent='Voce attiva.';}catch(e){audioStatus.textContent=e.message;}}; pauseBtn.onclick=()=>storyAudio.paused?storyAudio.play():storyAudio.pause();
-</script></body></html>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FABLEA | Libro vivo</title>
+  <link rel="stylesheet" href="/assets/css/fablea.css">
+  <script src="/assets/js/fablea-ui.js"></script>
+  <script src="/assets/js/fablea-grammar.js"></script>
+  <script src="/assets/js/fablea-profile.js"></script>
+  <script src="/stories-v2/age-2-4.js"></script>
+  <script src="/stories-v2/age-5-7.js"></script>
+  <script src="/stories-v2/age-8-10.js"></script>
+  <script src="/stories-v2/age-11-12.js"></script>
+  <script src="/stories-v2/index.js"></script>
+  <script src="/assets/js/fablea-story-engine.js"></script>
+</head>
+<body class="fablea-page theme-night" data-theme="night">
+  <main class="stage">
+    <div class="top">
+      <a class="back" href="/story.html">← Modifica esperienza</a>
+      <div class="badge">Libro vivo FABLEA</div>
+      <a class="back" href="/child-hub.html">⌂ Mondo bambino</a>
+    </div>
+
+    <section class="hero">
+      <div class="kicker" id="mainKicker">La storia di oggi</div>
+      <h1 id="mainTitle">La storia è pronta.</h1>
+      <div class="subtitle" id="mainSubtitle"></div>
+      <div class="meta" id="storyMeta"></div>
+    </section>
+
+    <section class="book">
+      <div class="illustration" id="illustration" aria-hidden="true">
+        <div class="scene-art" id="sceneArt">✨</div>
+      </div>
+      <article class="page-card" aria-live="polite">
+        <div>
+          <div class="kicker" id="kicker">Scena narrativa</div>
+          <h2 class="story-title" id="title"></h2>
+          <div class="text" id="text"></div>
+          <div class="counter" id="counter"></div>
+          <div class="progress" aria-label="Avanzamento storia"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+        <div class="controls">
+          <button class="button" id="prev" type="button">← Pagina precedente</button>
+          <button class="button primary" id="next" type="button">Pagina successiva →</button>
+        </div>
+      </article>
+    </section>
+
+    <section class="audio-zone">
+      <div class="audio-status" id="audioStatus" aria-live="polite">Puoi ascoltare la pagina corrente oppure l’intera storia.</div>
+      <div class="audio-buttons">
+        <button class="small-btn primary" id="voicePageBtn" type="button">▶ Ascolta pagina</button>
+        <button class="small-btn" id="voiceAllBtn" type="button">Ascolta tutta</button>
+        <button class="small-btn" id="pauseBtn" type="button">Pausa</button>
+      </div>
+      <audio id="storyAudio"></audio>
+    </section>
+
+    <section class="ritual" id="ritualBox">
+      <div class="kicker">La storia si chiude, il ricordo resta</div>
+      <h2>Rituale finale</h2>
+      <p id="ritualText"></p>
+      <p><strong>Tesoro:</strong> <span id="treasureText"></span></p>
+      <p><strong>Attività:</strong> <span id="activity"></span></p>
+      <button class="button primary" id="saveRitualBtn" type="button">Conserva nel suo mondo</button>
+    </section>
+
+    <div class="footer-actions">
+      <a class="button" href="/story.html">＋ Nuova esperienza</a>
+      <a class="button" href="/library.html">📖 Libreria</a>
+    </div>
+  </main>
+
+  <script>
+    const F = FableaProfile;
+    const E = FableaStoryEngine;
+    const params = new URLSearchParams(location.search);
+    let profile = F.getSelectedProfile();
+    const request = F.readJSON('fableaStoryData', {});
+    const current = F.readJSON('fableaCurrentStory', null);
+    const prepared = F.readJSON(F.KEYS.prepared, null);
+    const reopenMode = localStorage.getItem('fableaReopenStory') === 'true';
+    let story;
+
+    if(reopenMode && current){
+      story = current;
+      localStorage.removeItem('fableaReopenStory');
+    }else if(prepared && profile && prepared.childId === profile.id && (params.get('prepared') === '1' || request.firstStory)){
+      story = prepared;
+      localStorage.removeItem(F.KEYS.prepared);
+    }else{
+      if(!profile){
+        location.replace('/onboarding.html');
+        throw new Error('Profilo mancante');
+      }
+      story = E.buildStory(profile, {
+        scenario: request.scenario || profile.primaryWorld,
+        family: request.family || 'avventura',
+        mood: request.mood || 'Curiosità e voglia di scoprire',
+        duration: request.duration || profile.duration,
+        experience: request.family || ''
+      });
+    }
+
+    profile = story.profileSnapshot || profile || {id:story.childId,name:story.child,age:story.age,gender:story.gender};
+    F.setSelectedProfile(profile.id);
+    if(window.FableaUI) window.FableaUI.applyAge(document.body, story.age);
+    story = E.saveStory(story);
+
+    const pages = Array.isArray(story.pages) && story.pages.length
+      ? story.pages
+      : String(story.text || '').split(/\n\n+/).map((pageText,index) => ({id:`legacy-${index}`,scene:`Scena ${index + 1}`,text:pageText}));
+    let pageIndex = Math.min(Math.max(Number(story.resumePage) || 0, 0), pages.length - 1);
+    let audioUrl = null;
+
+    mainTitle.textContent = story.title;
+    mainSubtitle.textContent = story.subtitle || '';
+    mainKicker.textContent = `${story.child} • ${F.ageLabel(story.age)}`;
+    storyMeta.innerHTML = [story.world, story.duration, story.family, `${story.wordCount || E.words(story.text)} parole`, story.companion]
+      .filter(Boolean)
+      .map(item => `<span>${F.escapeHTML(item)}</span>`)
+      .join('');
+    sceneArt.textContent = story.icon || '✨';
+    ritualText.textContent = story.ritual;
+    treasureText.textContent = story.treasure;
+    activity.textContent = story.activity;
+
+    function render({persist=true} = {}){
+      const page = pages[pageIndex];
+      title.textContent = page.scene || `Scena ${pageIndex + 1}`;
+      kicker.textContent = pageIndex === 0 ? 'La storia comincia' : `Scena ${pageIndex + 1}`;
+      text.classList.add('fade');
+      setTimeout(() => {
+        text.textContent = page.text;
+        text.classList.remove('fade');
+      }, 90);
+      counter.textContent = `Pagina ${pageIndex + 1} di ${pages.length}`;
+      progressFill.style.width = `${((pageIndex + 1) / pages.length) * 100}%`;
+      prev.disabled = pageIndex === 0;
+      next.textContent = pageIndex === pages.length - 1 ? 'Vai al rituale ✨' : 'Pagina successiva →';
+      ritualBox.style.display = pageIndex === pages.length - 1 ? 'block' : 'none';
+      if(persist) story = E.updateProgress({...story,pages}, pageIndex);
+    }
+
+    prev.addEventListener('click', () => {
+      if(pageIndex > 0){ pageIndex -= 1; render(); }
+    });
+    next.addEventListener('click', () => {
+      if(pageIndex < pages.length - 1){ pageIndex += 1; render(); }
+      else ritualBox.scrollIntoView({behavior:'smooth',block:'center'});
+    });
+    document.addEventListener('keydown', event => {
+      if(event.key === 'ArrowLeft' && pageIndex > 0){ pageIndex -= 1; render(); }
+      if(event.key === 'ArrowRight' && pageIndex < pages.length - 1){ pageIndex += 1; render(); }
+    });
+
+    async function speak(content){
+      try{
+        audioStatus.textContent = 'Sto preparando la voce…';
+        storyAudio.pause();
+        if(audioUrl) URL.revokeObjectURL(audioUrl);
+        const response = await fetch('/api/tts', {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({text:content})
+        });
+        if(!response.ok){
+          const payload = await response.json().catch(() => ({}));
+          throw new Error(payload.error || 'Voce non disponibile in questo momento.');
+        }
+        audioUrl = URL.createObjectURL(await response.blob());
+        storyAudio.src = audioUrl;
+        await storyAudio.play();
+        audioStatus.textContent = 'Voce attiva.';
+        pauseBtn.textContent = 'Pausa';
+      }catch(error){
+        audioStatus.textContent = error.message || 'Non è stato possibile generare la voce.';
+      }
+    }
+
+    voicePageBtn.addEventListener('click', () => speak(pages[pageIndex].text));
+    voiceAllBtn.addEventListener('click', () => speak(story.text));
+    pauseBtn.addEventListener('click', async () => {
+      if(!storyAudio.src) return;
+      if(storyAudio.paused){ await storyAudio.play(); pauseBtn.textContent = 'Pausa'; }
+      else { storyAudio.pause(); pauseBtn.textContent = 'Riprendi'; }
+    });
+
+    saveRitualBtn.addEventListener('click', () => {
+      const memory = F.getMemory(profile);
+      const treasures = [...(memory.treasures || [])];
+      if(!treasures.includes(story.treasure)) treasures.push(story.treasure);
+      const ritualEntry = {storyId:story.id,story:story.title,treasure:story.treasure,ritual:story.ritual,activity:story.activity,date:new Date().toLocaleDateString('it-IT')};
+      const rituals = [ritualEntry, ...(memory.rituals || []).filter(item => item.storyId !== story.id)];
+      F.updateMemory(profile, {
+        treasures,
+        rituals,
+        lastStory:story.title,
+        lastStoryId:story.id,
+        lastScenario:story.world,
+        lastCompanion:story.companion,
+        lastActivity:story.activity,
+        resume:null
+      });
+      saveRitualBtn.disabled = true;
+      saveRitualBtn.textContent = 'Conservato nel suo mondo ✓';
+    });
+
+    render({persist:false});
+  </script>
+</body>
+</html>
