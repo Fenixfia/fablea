@@ -9,10 +9,10 @@
 <script src="/stories.js"></script>
 
 <link rel="stylesheet" href="/assets/css/fablea.css">
-<script src="/assets/js/fablea-ui.js" defer></script>
+<script src="/assets/js/fablea-ui.js"></script>
 </head>
 
-<body class="fablea-page">
+<body class="fablea-page theme-night" data-theme="night">
 
 <main class="stage">
 
@@ -99,6 +99,7 @@ FABLEA • puoi leggere • puoi ascoltare • puoi immaginare con calma ✨
 </main>
 
 <script>
+if(window.FableaUI){ window.FableaUI.applyAgeFromStorage(document.body); }
 const saved = JSON.parse(localStorage.getItem('fableaStoryData') || '{}');
 const existingStory = JSON.parse(localStorage.getItem('fableaCurrentStory') || '{}');
 const reopenMode = localStorage.getItem('fableaReopenStory') === 'true';

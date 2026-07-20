@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="/assets/css/fablea.css">
-<script src="/assets/js/fablea-ui.js" defer></script>
+<script src="/assets/js/fablea-ui.js"></script>
 </head>
 
 <body class="fablea-page">
@@ -26,8 +26,9 @@
 </main>
 
 <script>
+if(window.FableaUI){ window.FableaUI.applyAgeFromStorage(document.body); }
 function escapeHTML(value){
-return String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+return window.FableaUI ? window.FableaUI.escapeHTML(value) : String(value ?? '');
 }
 
 function getProfiles(){

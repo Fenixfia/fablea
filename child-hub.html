@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="/assets/css/fablea.css">
-<script src="/assets/js/fablea-ui.js" defer></script>
+<script src="/assets/js/fablea-ui.js"></script>
 </head>
 
 <body class="fablea-page">
@@ -18,6 +18,7 @@
 </main>
 
 <script>
+if(window.FableaUI){ window.FableaUI.applyAgeFromStorage(document.body); }
 function getProfiles(){
 return JSON.parse(localStorage.getItem('fableaChildProfiles') || '[]');
 }
@@ -44,7 +45,7 @@ localStorage.setItem('fableaWorldState', JSON.stringify(state));
 }
 
 function escapeHTML(value){
-return String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+return window.FableaUI ? window.FableaUI.escapeHTML(value) : String(value ?? '');
 }
 
 function ageLabel(value){
@@ -219,7 +220,7 @@ FABLEA userà ${escapeHTML(toneFor(profile))}
 <p>${continueText}</p>
 <div class="actions" style="justify-content:flex-start;margin-top:24px;">
 ${lastStory ? `<button class="button secondary" onclick="startExperience('Continua il viaggio')">Continua il viaggio</button>` : ''}
-<a class="button" href="/story-result.html">Nuova storia</a>
+<a class="button" href="/story.html">Nuova storia</a>
 </div>
 </div>
 </section>
@@ -266,7 +267,7 @@ ${memories.rituals.length ? `Ultimo rituale salvato: ${escapeHTML(memories.ritua
 <h3>Nuova storia</h3>
 <p>Crea una storia più lunga, immersiva e adatta al momento della giornata.</p>
 <div class="actions" style="justify-content:flex-start;margin-top:20px;">
-<a class="button" href="/story-result.html">Nuova storia</a>
+<a class="button" href="/story.html">Nuova storia</a>
 </div>
 </div>
 

@@ -9,10 +9,10 @@
 <script src="/stories.js"></script>
 
 <link rel="stylesheet" href="/assets/css/fablea.css">
-<script src="/assets/js/fablea-ui.js" defer></script>
+<script src="/assets/js/fablea-ui.js"></script>
 </head>
 
-<body class="fablea-page">
+<body class="fablea-page theme-night" data-theme="night">
 
 <main class="page">
 
@@ -65,6 +65,7 @@ FABLEA • libreria viva • mondi persistenti • storie scalabili
 </main>
 
 <script>
+if(window.FableaUI){ window.FableaUI.applyAgeFromStorage(document.body); }
 const STORIES = window.FABLEA_STORIES || {};
 let activeAge = "all";
 

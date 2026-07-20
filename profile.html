@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="/assets/css/fablea.css">
-<script src="/assets/js/fablea-ui.js" defer></script>
+<script src="/assets/js/fablea-ui.js"></script>
 </head>
 
 <body class="fablea-page">
@@ -39,6 +39,7 @@ Index → Onboarding → Profile → Story → Result → Player
 </main>
 
 <script>
+if(window.FableaUI){ window.FableaUI.applyAgeFromStorage(document.body); }
 const area = document.getElementById('profileArea');
 
 function getProfiles(){
