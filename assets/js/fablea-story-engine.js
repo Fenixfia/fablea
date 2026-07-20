@@ -2,10 +2,10 @@
   'use strict';
 
   const TARGETS = {
-    '2-4': {Breve:[220,380], Media:[320,560], Lunga:[450,760]},
-    '5-7': {Breve:[420,680], Media:[600,950], Lunga:[820,1250]},
-    '8-10': {Breve:[620,980], Media:[850,1350], Lunga:[1150,1750]},
-    '11-12': {Breve:[820,1300], Media:[1150,1800], Lunga:[1500,2300]}
+    '2-4': {Breve:[200,380], Media:[300,600], Lunga:[430,800]},
+    '5-7': {Breve:[380,750], Media:[520,1050], Lunga:[760,1400]},
+    '8-10': {Breve:[500,1100], Media:[750,1500], Lunga:[1050,1900]},
+    '11-12': {Breve:[800,1450], Media:[1000,2000], Lunga:[1350,2500]}
   };
 
   const WORLD_LORE = {
@@ -137,119 +137,156 @@
   function selectStory(profile, options = {}){
     const request = {
       profile,
-      scenario: options.scenario || profile.primaryWorld,
-      family: options.family || 'avventura',
-      mood: options.mood || 'Curiosità e voglia di scoprire'
+      scenario:options.scenario || profile.primaryWorld,
+      family:options.family || 'avventura',
+      mood:options.mood || 'Curiosità e voglia di scoprire'
     };
     const rotation = readRotation();
     const key = rotationKey(profile);
     const recent = rotation[key] || [];
     const ranked = catalog()
       .filter(story => story.age === profile.age)
-      .map(story => ({story, score:score(story, request, recent)}))
-      .sort((a,b) => b.score - a.score);
+      .map(story => ({story,score:score(story,request,recent)}))
+      .sort((first,second) => second.score - first.score);
     const chosen = (ranked[0] && ranked[0].story) || catalog().find(story => story.age === profile.age) || catalog()[0];
     if(!chosen) throw new Error('Nessuna storia disponibile per questa fascia d’età.');
-    rotation[key] = [chosen.id, ...recent.filter(id => id !== chosen.id)].slice(0, 4);
+    rotation[key] = [chosen.id, ...recent.filter(id => id !== chosen.id)].slice(0,4);
     saveRotation(rotation);
     return chosen;
   }
 
-  function contextFor(profile, scenario, selected){
-    const world = global.FableaProfile ? global.FableaProfile.normalizeWorld(scenario || profile.primaryWorld) : (scenario || profile.primaryWorld);
+  function contextFor(profile, scenario, selected = {}){
+    const world = global.FableaProfile
+      ? global.FableaProfile.normalizeWorld(scenario || profile.primaryWorld)
+      : (scenario || profile.primaryWorld);
     const lore = WORLD_LORE[world] || WORLD_LORE.Magia;
     return {
       ...lore,
       world,
-      companion: profile.favoriteCompanion || selected.companion || lore.companion
+      companion:profile.favoriteCompanion || selected.companion || lore.companion
     };
   }
 
+  function combinedPages(story){
+    const extensionsByAnchor = new Map();
+    (story.extensions || []).forEach(extension => {
+      const list = extensionsByAnchor.get(extension.after) || [];
+      list.push({...extension,isExtension:true});
+      extensionsByAnchor.set(extension.after,list);
+    });
+    const combined = [];
+    (story.pages || []).forEach(page => {
+      combined.push({...page,isExtension:false});
+      combined.push(...(extensionsByAnchor.get(page.id) || []));
+    });
+    const knownAnchors = new Set((story.pages || []).map(page => page.id));
+    (story.extensions || []).filter(extension => !knownAnchors.has(extension.after)).forEach(extension => {
+      combined.push({...extension,isExtension:true});
+    });
+    return combined;
+  }
+
+  function anchorsRequired(story, duration){
+    const required = new Set();
+    (story.extensions || []).forEach(extension => {
+      if(duration === 'Breve' && extension.includeInShort) required.add(extension.after);
+      if(duration === 'Media' && extension.includeInMedium) required.add(extension.after);
+    });
+    return required;
+  }
+
+  function visiblePage(page, duration, requiredAnchors){
+    if(page.isExtension){
+      if(duration === 'Breve') return Boolean(page.includeInShort);
+      if(duration === 'Media') return Boolean(page.includeInMedium);
+      return true;
+    }
+    if(duration === 'Breve') return !page.optionalForShort || requiredAnchors.has(page.id);
+    if(duration === 'Media') return !page.optionalForMedium || requiredAnchors.has(page.id);
+    return true;
+  }
+
   function pageText(page, duration){
-    if(duration === 'Lunga') return [page.text, page.detail].filter(Boolean).join(' ');
-    return page.text || '';
+    if(duration === 'Breve') return page.text || '';
+    return [page.text,page.detail].filter(Boolean).join(' ');
   }
 
   function pagesForDuration(story, duration){
     const normalized = global.FableaProfile
       ? global.FableaProfile.normalizeDuration(duration)
       : (duration || 'Breve');
-    return (story.pages || [])
-      .filter(page => {
-        if(normalized === 'Breve') return !page.optionalForShort;
-        if(normalized === 'Media') return !page.optionalForMedium;
-        return true;
-      })
-      .map(page => ({...page, text:pageText(page, normalized)}));
+    const requiredAnchors = anchorsRequired(story, normalized);
+    return combinedPages(story)
+      .filter(page => visiblePage(page, normalized, requiredAnchors))
+      .map(page => ({...page,text:pageText(page,normalized)}));
   }
 
   function personalize(value, profile, context){
     return global.FableaGrammar
-      ? global.FableaGrammar.apply(value, profile, context)
-      : String(value || '').replaceAll('{{name}}', profile.name);
+      ? global.FableaGrammar.apply(value,profile,context)
+      : String(value || '').replaceAll('{{name}}',profile.name);
   }
 
   function buildStory(profile, options = {}){
     if(!profile) throw new Error('Profilo bambino mancante.');
-    const selected = options.story || selectStory(profile, options);
+    const selected = options.story || selectStory(profile,options);
     const duration = global.FableaProfile
       ? global.FableaProfile.normalizeDuration(options.duration || profile.duration)
       : (options.duration || profile.duration || 'Breve');
     const scenario = global.FableaProfile
       ? global.FableaProfile.normalizeWorld(options.scenario || profile.primaryWorld)
       : (options.scenario || profile.primaryWorld);
-    const context = contextFor(profile, scenario, selected);
-    const pages = pagesForDuration(selected, duration).map((page, index) => ({
-      id: page.id || `page-${index + 1}`,
-      scene: personalize(page.scene || `Scena ${index + 1}`, profile, context),
-      text: personalize(page.text, profile, context),
-      art: page.art || selected.cover && selected.cover.art || 'forest'
+    const context = contextFor(profile,scenario,selected);
+    const pages = pagesForDuration(selected,duration).map((page,index) => ({
+      id:page.id || `page-${index + 1}`,
+      scene:personalize(page.scene || `Scena ${index + 1}`,profile,context),
+      text:personalize(page.text,profile,context),
+      art:page.art || (selected.cover && selected.cover.art) || 'forest'
     }));
     const text = pages.map(page => page.text).join('\n\n');
     const snapshot = {
-      id: profile.id,
-      name: profile.name,
-      age: profile.age,
-      gender: profile.gender,
-      primaryWorld: profile.primaryWorld,
-      interests: profile.interests || [],
-      support: profile.support,
+      id:profile.id,
+      name:profile.name,
+      age:profile.age,
+      gender:profile.gender,
+      primaryWorld:profile.primaryWorld,
+      interests:profile.interests || [],
+      support:profile.support,
       duration,
-      storyStyle: profile.storyStyle,
-      favoriteCompanion: profile.favoriteCompanion || ''
+      storyStyle:profile.storyStyle,
+      favoriteCompanion:profile.favoriteCompanion || ''
     };
-    const uniqueId = `story-${profile.id}-${Date.now()}-${Math.random().toString(36).slice(2,7)}`;
 
     return {
-      id: uniqueId,
-      storyId: selected.id,
-      schemaVersion: 2,
-      child: profile.name,
-      childId: profile.id,
-      profileSnapshot: snapshot,
-      age: profile.age,
-      gender: profile.gender,
-      theme: scenario,
-      world: scenario,
+      id:`story-${profile.id}-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,
+      storyId:selected.id,
+      schemaVersion:2,
+      child:profile.name,
+      childId:profile.id,
+      profileSnapshot:snapshot,
+      age:profile.age,
+      gender:profile.gender,
+      theme:scenario,
+      world:scenario,
       duration,
-      family: selected.family,
-      mood: options.mood || '',
-      experience: options.experience || options.family || selected.family,
-      title: personalize(selected.title, profile, context),
-      subtitle: personalize(selected.subtitle, profile, context),
-      companion: context.companion,
-      icon: selected.cover && selected.cover.icon,
-      art: selected.cover && selected.cover.art,
-      scene: selected.cover && selected.cover.icon,
+      family:selected.family,
+      mood:options.mood || '',
+      experience:options.experience || options.family || selected.family,
+      title:personalize(selected.title,profile,context),
+      subtitle:personalize(selected.subtitle,profile,context),
+      companion:context.companion,
+      icon:selected.cover && selected.cover.icon,
+      art:selected.cover && selected.cover.art,
+      scene:selected.cover && selected.cover.icon,
       pages,
       text,
-      wordCount: words(text),
-      treasure: personalize(selected.treasure, profile, context),
-      ritual: personalize(selected.ritual, profile, context),
-      activity: personalize(selected.activity, profile, context),
-      date: new Date().toLocaleDateString('it-IT'),
-      createdAt: new Date().toISOString(),
-      resumePage: 0
+      wordCount:words(text),
+      treasure:personalize(selected.treasure,profile,context),
+      ritual:personalize(selected.ritual,profile,context),
+      activity:personalize(selected.activity,profile,context),
+      date:new Date().toLocaleDateString('it-IT'),
+      createdAt:new Date().toISOString(),
+      resumePage:0
     };
   }
 
@@ -267,25 +304,25 @@
     const index = list.findIndex(item => item.id === story.id);
     if(index >= 0) list[index] = story;
     else list.push(story);
-    localStorage.setItem('fableaSavedStories', JSON.stringify(list.slice(-100)));
-    localStorage.setItem('fableaCurrentStory', JSON.stringify(story));
-    const profile = story.profileSnapshot || {id:story.childId, name:story.child};
+    localStorage.setItem('fableaSavedStories',JSON.stringify(list.slice(-100)));
+    localStorage.setItem('fableaCurrentStory',JSON.stringify(story));
+    const profile = story.profileSnapshot || {id:story.childId,name:story.child};
     if(global.FableaProfile){
       const memory = global.FableaProfile.getMemory(profile);
-      global.FableaProfile.updateMemory(profile, {
-        lastStory: story.title,
-        lastStoryId: story.id,
-        lastScenario: story.world,
-        lastCompanion: story.companion,
-        resume: {storyId:story.id, page:story.resumePage || 0},
-        history: [story.id, ...(memory.history || []).filter(id => id !== story.id)].slice(0, 30)
+      global.FableaProfile.updateMemory(profile,{
+        lastStory:story.title,
+        lastStoryId:story.id,
+        lastScenario:story.world,
+        lastCompanion:story.companion,
+        resume:{storyId:story.id,page:story.resumePage || 0},
+        history:[story.id,...(memory.history || []).filter(id => id !== story.id)].slice(0,30)
       });
     }
     return story;
   }
 
   function updateProgress(story, pageIndex){
-    const next = {...story, resumePage:Math.max(0, Number(pageIndex) || 0)};
+    const next = {...story,resumePage:Math.max(0,Number(pageIndex) || 0)};
     saveStory(next);
     return next;
   }
