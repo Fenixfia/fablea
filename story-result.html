@@ -591,7 +591,11 @@ const age = reopenMode && existingStory.age ? existingStory.age : (saved.age || 
 const theme = reopenMode && existingStory.theme ? existingStory.theme : (saved.theme || 'Foresta magica');
 const mood = saved.mood || 'Curiosa';
 const experience = reopenMode && existingStory.experience ? existingStory.experience : (saved.experience || 'Avventura immaginativa');
-const interests = saved.interests || [];
+const interests = Array.isArray(saved.interests) ? saved.interests : [];
+const support = saved.support || '';
+const duration = saved.duration || '';
+const safeArtClasses = new Set(['forest','sky','ocean','bridge','space','castle']);
+function safeArt(value){ return safeArtClasses.has(value) ? value : 'space'; }
 
 const STORIES = window.FABLEA_STORIES;
 
@@ -613,7 +617,7 @@ return (paragraphs || []).map(personalizeText);
 }
 
 function scoreStory(story){
-const haystack = (theme + ' ' + experience + ' ' + interests.join(' ')).toLowerCase();
+const haystack = (theme + ' ' + experience + ' ' + interests.join(' ') + ' ' + support + ' ' + duration + ' ' + mood).toLowerCase();
 let score = 0;
 
 (story.keywords || []).forEach(keyword => {
@@ -626,6 +630,11 @@ if(haystack.includes('mare') && story.art === 'ocean') score += 5;
 if(haystack.includes('spazio') && story.art === 'space') score += 5;
 if(haystack.includes('luna') && (story.keywords || []).includes('luna')) score += 4;
 if(haystack.includes('animali') && (story.keywords || []).some(k => ['lupo','balena','coniglio','orsetto','pesce','volpe'].includes(k))) score += 3;
+if((haystack.includes('calma') || haystack.includes('sera') || haystack.includes('tranquilla')) && (story.keywords || []).some(k => ['luna','sera','calma','silenzio'].includes(k))) score += 5;
+if((haystack.includes('emozioni') || haystack.includes('difficile') || haystack.includes('paura') || haystack.includes('arrabbiata')) && (story.keywords || []).some(k => ['emozioni','coraggio','fiducia','paura','rabbia'].includes(k))) score += 5;
+if((haystack.includes('manualità') || haystack.includes('creativa')) && story.activity) score += 4;
+if(haystack.includes('breve') && (story.paragraphs || []).length <= 4) score += 3;
+if(haystack.includes('lunga') && (story.paragraphs || []).length >= 5) score += 3;
 
 return score;
 }
@@ -693,7 +702,7 @@ return 'FABLEA';
 }
 
 function moodText(){
-if(age === '2-4') return 'Meraviglia e calma';
+if(mood) return mood;
 if(age === '5-7') return 'Esplorazione e meraviglia';
 if(age === '8-10') return 'Identità ed emozioni';
 if(age === '11-12') return 'Direzione';
@@ -718,7 +727,7 @@ experience: existingStory.experience || experience,
 title:title,
 subtitle:existingStory.subtitle || '',
 icon:existingStory.icon || '✨',
-art:existingStory.art || 'space',
+art:safeArt(existingStory.art),
 scene:existingStory.scene || existingStory.icon || '✨',
 ritual:existingStory.ritual || '⭐ Stella luminosa',
 activity:existingStory.activity || '',
@@ -733,6 +742,12 @@ localStorage.removeItem('fableaReopenStory');
 const selected = pickStory();
 title = personalizeText(selected.title);
 paragraphs = personalizeParagraphs(selected.paragraphs);
+if(duration.toLowerCase().includes('breve')){
+paragraphs = paragraphs.slice(0, Math.max(2, Math.min(3, paragraphs.length)));
+}
+if(duration.toLowerCase().includes('lunga') && paragraphs.length){
+paragraphs = [...paragraphs, `E ${name} poté restare ancora un momento in quel mondo, scegliendo con calma quale piccola luce portare con sé.`];
+}
 
 if(!paragraphs.length){
 paragraphs = ['Questa storia è ancora in costruzione nel mondo FABLEA.'];
@@ -749,7 +764,7 @@ experience:experience,
 title:title,
 subtitle:selected.subtitle || '',
 icon:selected.icon || '✨',
-art:selected.art || 'space',
+art:safeArt(selected.art),
 scene:selected.scene || selected.icon || '✨',
 ritual:selected.ritual || '⭐ Stella luminosa',
 activity:selected.activity || '',
@@ -790,7 +805,7 @@ sceneArt.innerText = storyObject.scene;
 sceneArt.style.opacity = '1';
 sceneArt.style.transform = '';
 
-illustration.className = 'illustration ' + storyObject.art;
+illustration.className = 'illustration ' + safeArt(storyObject.art);
 
 document.getElementById('counter').innerText = `Pagina ${currentPage + 1} di ${paragraphs.length}`;
 document.getElementById('progressFill').style.width = `${((currentPage + 1) / paragraphs.length) * 100}%`;
@@ -827,7 +842,7 @@ document.getElementById('ageMeta').innerText = ageText();
 document.getElementById('moodMeta').innerText = moodText();
 document.getElementById('worldMeta').innerText = theme || 'Mondo FABLEA';
 document.getElementById('sceneArt').innerText = storyObject.scene;
-document.getElementById('illustration').className = 'illustration ' + storyObject.art;
+document.getElementById('illustration').className = 'illustration ' + safeArt(storyObject.art);
 document.getElementById('ritualPrimary').innerText = storyObject.ritual;
 document.getElementById('ritualPrimary').onclick = function(){ saveRitual(storyObject.ritual); };
 
@@ -855,8 +870,9 @@ body:JSON.stringify({text:storyObject.text})
 });
 
 if(!response.ok){
-const err = await response.text();
-throw new Error(err);
+let message = 'Voce non disponibile in questo momento.';
+try { message = (await response.json()).error || message; } catch (_) {}
+throw new Error(message);
 }
 
 const blob = await response.blob();

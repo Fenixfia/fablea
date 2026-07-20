@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check:js": "node --check api/tts.js"
+  }
+}
