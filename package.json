@@ -3,6 +3,7 @@
   "type": "module",
   "scripts": {
     "check:js": "node --check api/tts.js",
-    "check:css-classes": "node scripts/check-css-classes.mjs"
+    "check:css-classes": "node scripts/check-css-classes.mjs",
+    "check:stories": "node scripts/check-story-quality.mjs"
   }
 }
