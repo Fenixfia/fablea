@@ -2,6 +2,7 @@
   if(typeof document !== 'undefined' && !window.FABLEA_STORY_SUPPLEMENTS){
     document.write('<script src="/stories-v2/supplement-loader.js"><\/script>');
     document.write('<script src="/stories-v2/supplements.js"><\/script>');
+    document.write('<script src="/stories-v2/final-scenes.js"><\/script>');
   }
 
   function getJSON(key, fallback){
