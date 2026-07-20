@@ -491,6 +491,7 @@ body{padding:14px}
 .top{justify-content:center}
 .badge{width:100%;order:-1}
 }
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 
@@ -543,7 +544,7 @@ Leggi, sfoglia o ascolta la voce narrante. <span class="child-pill" id="childNam
 </section>
 
 <section class="audio-zone">
-<div class="audio-status" id="audioStatus">
+<div class="audio-status" id="audioStatus" role="status" aria-live="polite">
 Voce opzionale: puoi leggere da solo o avviare la narrazione automatica.
 </div>
 
@@ -569,7 +570,6 @@ Scegli quale luce lasciare accesa per domani. FABLEA la ricorderà nel mondo del
 </section>
 
 <div class="footer-actions">
-<a class="button" href="/manualita.html">🖐🏻 Crea con le mani</a>
 <a class="button" href="/story.html">＋ Nuova esperienza</a>
 <a class="button" href="/child-hub.html">🪐 Torna al mondo</a>
 <a class="button" href="/library.html">📖 Libreria</a>
@@ -787,6 +787,8 @@ localStorage.setItem('fableaSavedStories', JSON.stringify(savedStories.slice(-10
 let currentPage = 0;
 let autoTimer = null;
 let audioUrl = null;
+let isGeneratingAudio = false;
+let manualPageChangeAt = 0;
 
 function renderPage(){
 const pageText = document.getElementById('pageText');
@@ -820,6 +822,7 @@ document.getElementById('ritualBox').style.display = 'block';
 }
 
 function nextPage(){
+manualPageChangeAt = Date.now();
 if(currentPage < paragraphs.length - 1){
 currentPage++;
 renderPage();
@@ -830,6 +833,7 @@ document.getElementById('ritualBox').scrollIntoView({behavior:'smooth',block:'ce
 }
 
 function prevPage(){
+manualPageChangeAt = Date.now();
 if(currentPage > 0){
 currentPage--;
 renderPage();
@@ -858,7 +862,9 @@ const restartBtn = document.getElementById('restartBtn');
 const audioStatus = document.getElementById('audioStatus');
 
 voiceBtn.onclick = async function(){
+if(isGeneratingAudio) return;
 try{
+isGeneratingAudio = true;
 voiceBtn.disabled = true;
 voiceBtn.innerText = 'Genero voce...';
 audioStatus.innerText = 'Sto creando la voce narrante. Puoi continuare a leggere mentre preparo l’audio.';
@@ -872,7 +878,7 @@ body:JSON.stringify({text:storyObject.text})
 if(!response.ok){
 let message = 'Voce non disponibile in questo momento.';
 try { message = (await response.json()).error || message; } catch (_) {}
-throw new Error(message);
+throw new Error('La voce non è disponibile adesso. Puoi continuare a leggere e riprovare tra poco.');
 }
 
 const blob = await response.blob();
@@ -895,9 +901,10 @@ audioStatus.innerText = 'La voce sta narrando. Le pagine avanzano automaticament
 startAutoFlip();
 
 }catch(error){
-audioStatus.innerText = 'Errore audio: ' + error.message;
+audioStatus.innerText = error.message || 'La voce non è disponibile adesso. Puoi continuare a leggere.';
 voiceBtn.innerText = 'Riprova voce';
 }finally{
+isGeneratingAudio = false;
 voiceBtn.disabled = false;
 }
 };
@@ -911,10 +918,12 @@ return;
 if(audio.paused){
 audio.play();
 pauseBtn.innerText = 'Pausa';
+audioStatus.innerText = 'La voce riprende con calma.';
 startAutoFlip();
 }else{
 audio.pause();
 pauseBtn.innerText = 'Riprendi';
+audioStatus.innerText = 'Voce in pausa.';
 stopAutoFlip();
 }
 };
@@ -939,6 +948,7 @@ const total = Math.max(audio.duration || estimatedSeconds, estimatedSeconds);
 const interval = Math.max(5500, (total * 1000) / paragraphs.length);
 
 autoTimer = setInterval(() => {
+if(Date.now() - manualPageChangeAt < interval) return;
 if(currentPage < paragraphs.length - 1){
 currentPage++;
 renderPage();

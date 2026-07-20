@@ -89,6 +89,8 @@ transition:.28s;
 transform:translateY(-3px);
 }
 
+.quiet-link{display:inline-block;margin-top:16px;color:#8f8078;text-decoration:none;font-weight:800}
+
 .menu{
 display:flex;
 justify-content:center;
@@ -139,9 +141,11 @@ FABLEA accompagna immaginazione, calma, scoperta, emozioni e creatività durante
 Ogni bambino ha il suo mondo, le sue storie e una voce narrante che lo guida senza iperstimolazione.
 </div>
 
-<a class="button" href="/onboarding.html">
-Entra in FABLEA
+<a class="button" id="primaryCta" href="/create-child.html">
+Crea il primo mondo
 </a>
+
+<a class="quiet-link" id="switchExplorer" href="/onboarding.html" hidden>Cambia esploratore</a>
 
 <div class="menu">
 <a href="/onboarding.html">Profili</a>
@@ -154,6 +158,23 @@ Audio-first • Low stimulation • Immaginazione evolutiva • Esperienze 2–1
 </div>
 
 </main>
+
+<script>
+function getProfiles(){
+try{return JSON.parse(localStorage.getItem('fableaChildProfiles') || '[]');}catch(_){return [];}
+}
+const profiles = getProfiles();
+const selectedId = localStorage.getItem('fableaSelectedChildId');
+const selected = profiles.find(profile => profile.id === selectedId) || profiles[0];
+const cta = document.getElementById('primaryCta');
+const switcher = document.getElementById('switchExplorer');
+if(selected){
+localStorage.setItem('fableaSelectedChildId', selected.id);
+cta.href = '/child-hub.html';
+cta.innerText = `Continua con ${selected.name || 'il mondo scelto'}`;
+switcher.hidden = false;
+}
+</script>
 
 </body>
 </html>
