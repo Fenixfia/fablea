@@ -3,15 +3,20 @@
 
   let catalogValue = global.FABLEA_STORIES_V2;
 
+  function additionsFor(storyId){
+    return [
+      ...((global.FABLEA_STORY_SUPPLEMENTS || {})[storyId] || []),
+      ...((global.FABLEA_STORY_FINAL_SCENES || {})[storyId] || [])
+    ];
+  }
+
   function attach(catalog){
     if(!Array.isArray(catalog)) return catalog;
-    const supplements = global.FABLEA_STORY_SUPPLEMENTS || {};
     catalog.forEach(story => {
-      const additions = supplements[story.id] || [];
       const existing = new Set((story.extensions || []).map(page => page.id));
       story.extensions = [
         ...(story.extensions || []),
-        ...additions.filter(page => !existing.has(page.id))
+        ...additionsFor(story.id).filter(page => !existing.has(page.id))
       ];
     });
     return catalog;
