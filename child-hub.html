@@ -1,3 +1,133 @@
-<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>FABLEA | Mondo bambino</title><link rel="stylesheet" href="/assets/css/fablea.css"><script src="/assets/js/fablea-ui.js"></script><script src="/assets/js/fablea-grammar.js"></script><script src="/assets/js/fablea-profile.js"></script><script src="/stories-v2/age-2-4.js"></script><script src="/stories-v2/age-5-7.js"></script><script src="/stories-v2/age-8-10.js"></script><script src="/stories-v2/age-11-12.js"></script><script src="/stories-v2/index.js"></script><script src="/assets/js/fablea-story-engine.js"></script></head><body class="fablea-page"><main class="page"><div id="content"></div></main><script>
-const F=FableaProfile,p=F.getSelectedProfile(); if(!p) content.innerHTML='<div class="empty"><h1>Nessun profilo</h1><a class="button" href="/onboarding.html">Crea profilo</a></div>'; else { const m=F.getMemory(p); const g=FableaGrammar.words(p); content.innerHTML=`<div class="top"><a class="back" href="/onboarding.html">← Profili</a><div class="badge">Casa narrativa v2</div><a class="back" href="/library.html">Libreria</a></div><section class="hero"><div class="avatar-card"><div class="avatar">✨</div><h2>${F.escapeHTML(p.name)}</h2><div class="meta">${F.ageLabel(p.age)} • ${F.escapeHTML(p.primaryWorld)} • ${F.escapeHTML(g.explorer)}</div></div><div class="hero-copy"><h1>Il mondo di ${F.escapeHTML(p.name)} ricorda</h1><p>Genere grammaticale: ${F.escapeHTML(p.gender)}. Interessi secondari: ${p.interests.map(F.escapeHTML).join(', ')||'nessuno'}. Durata abituale: ${p.duration}. Stile: ${p.storyStyle}.</p></div></section><section class="continue"><div class="continue-icon">📖</div><div><h2>${m.lastStory?F.escapeHTML(m.lastStory):'Il primo viaggio è pronto'}</h2><p>Scenario recente: ${F.escapeHTML(m.lastScenario||p.primaryWorld)}.</p><a class="button" href="/story.html">Nuova storia</a></div></section><section class="grid"><div class="card"><h3>Tesori</h3><div class="treasures">${(m.treasures||[]).map(x=>`<span class="treasure">${F.escapeHTML(x)}</span>`).join('')||'<span class="treasure">Nessun tesoro ancora</span>'}</div></div><div class="card"><h3>Rituali</h3><p>${(m.rituals||[]).length} rituali salvati solo per questo bambino.</p></div></section>`; }
-</script></body></html>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FABLEA | Mondo bambino</title>
+  <link rel="stylesheet" href="/assets/css/fablea.css">
+  <script src="/assets/js/fablea-ui.js"></script>
+  <script src="/assets/js/fablea-grammar.js"></script>
+  <script src="/assets/js/fablea-profile.js"></script>
+  <script src="/stories-v2/age-2-4.js"></script>
+  <script src="/stories-v2/age-5-7.js"></script>
+  <script src="/stories-v2/age-8-10.js"></script>
+  <script src="/stories-v2/age-11-12.js"></script>
+  <script src="/stories-v2/index.js"></script>
+  <script src="/assets/js/fablea-story-engine.js"></script>
+</head>
+<body class="fablea-page">
+  <main class="page"><div id="content"></div></main>
+
+  <script>
+    const F = FableaProfile;
+    const E = FableaStoryEngine;
+    const profile = F.getSelectedProfile();
+
+    if(!profile){
+      content.innerHTML = '<div class="empty"><div class="empty-icon">✨</div><h1>Nessun profilo selezionato</h1><p>Crea o seleziona il mondo di un bambino.</p><a class="button" href="/onboarding.html">Crea profilo</a></div>';
+    }else{
+      if(window.FableaUI) window.FableaUI.applyAge(document.body, profile.age);
+      const memory = F.getMemory(profile);
+      const prepared = F.readJSON(F.KEYS.prepared, null);
+      const savedStories = E.savedStories().filter(story => story.childId === profile.id || (!story.childId && story.child === profile.name));
+      const lastStory = savedStories.find(story => story.id === memory.lastStoryId) || savedStories[savedStories.length - 1] || null;
+      const companion = memory.lastCompanion || profile.favoriteCompanion || E.WORLD_LORE[profile.primaryWorld].companion;
+      const styleLabels = {calm:'calmo',adventurous:'avventuroso',funny:'divertente',mysterious:'misterioso',emotional:'emotivo'};
+
+      content.innerHTML = `
+        <div class="top">
+          <a class="back" href="/profile.html">← Profili</a>
+          <div class="badge">Casa narrativa</div>
+          <a class="back" href="/library.html">Libreria</a>
+        </div>
+
+        <section class="hero">
+          <div class="avatar-card">
+            <div class="glow"></div>
+            <div class="avatar">${F.escapeHTML(lastStory && lastStory.icon || '✨')}</div>
+            <h2>${F.escapeHTML(profile.name)}</h2>
+            <div class="meta">${F.escapeHTML(F.ageLabel(profile.age))} • ${F.escapeHTML(profile.primaryWorld)}</div>
+          </div>
+          <div class="hero-copy">
+            <div class="kicker">Il mondo ricorda chi lo attraversa</div>
+            <h1>Questa è la casa narrativa di ${F.escapeHTML(profile.name)}.</h1>
+            <p>Stile ${F.escapeHTML(styleLabels[profile.storyStyle] || profile.storyStyle)}, durata abituale ${F.escapeHTML(profile.duration)} e supporto dedicato a “${F.escapeHTML(profile.support)}”.</p>
+            <div class="tags">
+              <span class="tag">${F.escapeHTML(F.genderLabel(profile.gender))}</span>
+              <span class="tag">Compagno: ${F.escapeHTML(companion)}</span>
+              ${(profile.interests || []).map(item => `<span class="tag">${F.escapeHTML(item)}</span>`).join('')}
+            </div>
+          </div>
+        </section>
+
+        <section class="continue">
+          <div class="continue-icon">${prepared && prepared.childId === profile.id ? '🌟' : '📖'}</div>
+          <div>
+            <div class="kicker">${prepared && prepared.childId === profile.id ? 'Prima storia pronta' : lastStory ? 'Continua da dove eri' : 'Inizia il primo viaggio'}</div>
+            <h2>${F.escapeHTML(prepared && prepared.childId === profile.id ? prepared.title : lastStory ? lastStory.title : `Il mondo di ${profile.primaryWorld} aspetta`)}</h2>
+            <p>${F.escapeHTML(prepared && prepared.childId === profile.id ? prepared.subtitle : lastStory ? `Pagina ${(lastStory.resumePage || 0) + 1} di ${lastStory.pages.length}` : 'La prima esperienza userà automaticamente il mondo e le preferenze già scelte.')}</p>
+            <div class="actions">
+              ${prepared && prepared.childId === profile.id ? '<a class="button primary" href="/story-result.html?prepared=1">Apri la prima storia</a>' : lastStory ? '<button class="button primary" id="resumeStory" type="button">Riprendi la storia</button>' : '<a class="button primary" href="/story.html">Crea la prima storia</a>'}
+              <a class="button secondary" href="/story.html">Nuova esperienza</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="kicker">Modalità rapide</div>
+          <h2>Un gesto semplice per il momento di oggi</h2>
+          <div class="grid">
+            <button class="choice quick-mode" type="button" data-family="calma-sera" data-mood="Stanchezza">🌙 Calma della sera</button>
+            <button class="choice quick-mode" type="button" data-family="emozioni" data-mood="Una giornata difficile">💛 Mettere ordine nelle emozioni</button>
+            <button class="choice quick-mode" type="button" data-family="scoperta" data-mood="Curiosità e voglia di scoprire">🔎 Una scoperta</button>
+            <button class="choice quick-mode" type="button" data-family="avventura" data-mood="Tanta energia">🧭 Un’avventura</button>
+          </div>
+        </section>
+
+        <section class="grid">
+          <article class="card">
+            <div class="card-icon">💎</div>
+            <h3>Tesori</h3>
+            <div class="treasures">${(memory.treasures || []).length ? memory.treasures.map(item => `<span class="treasure">${F.escapeHTML(item)}</span>`).join('') : '<span class="treasure">Il primo tesoro deve ancora arrivare</span>'}</div>
+          </article>
+          <article class="card">
+            <div class="card-icon">🕯️</div>
+            <h3>Rituali</h3>
+            <p>${(memory.rituals || []).length ? `${memory.rituals.length} rituali custoditi per ${F.escapeHTML(profile.name)}.` : 'I rituali finali appariranno qui dopo essere stati conservati.'}</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">🗺️</div>
+            <h3>Mondi visitati</h3>
+            <p>${F.escapeHTML([...new Set(savedStories.map(story => story.world).filter(Boolean))].join(', ') || profile.primaryWorld)}</p>
+          </article>
+        </section>
+      `;
+
+      const resumeButton = document.getElementById('resumeStory');
+      if(resumeButton && lastStory){
+        resumeButton.addEventListener('click', () => {
+          localStorage.setItem('fableaCurrentStory', JSON.stringify(lastStory));
+          localStorage.setItem('fableaReopenStory', 'true');
+          location.href = '/story-result.html';
+        });
+      }
+
+      document.querySelectorAll('.quick-mode').forEach(button => {
+        button.addEventListener('click', () => {
+          localStorage.removeItem(F.KEYS.prepared);
+          localStorage.setItem('fableaStoryData', JSON.stringify({
+            profileId:profile.id,
+            family:button.dataset.family,
+            mood:button.dataset.mood,
+            duration:profile.duration,
+            scenario:profile.primaryWorld,
+            firstStory:false
+          }));
+          localStorage.removeItem('fableaReopenStory');
+          location.href = '/story-result.html';
+        });
+      });
+    }
+  </script>
+</body>
+</html>
