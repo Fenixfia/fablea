@@ -64,7 +64,7 @@ color:#9f8a76;
 
 .hero{
 position:relative;
-overflow:hidden;
+overflow:visible;
 display:grid;
 grid-template-columns:1fr 1.35fr;
 gap:34px;
@@ -88,6 +88,7 @@ right:-110px;
 top:-130px;
 filter:blur(12px);
 animation:pulse 8s ease-in-out infinite;
+pointer-events:none;
 }
 
 @keyframes pulse{
@@ -336,6 +337,7 @@ body{padding:18px}
 .badge{text-align:center}
 .continue-icon{height:190px}
 }
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 
@@ -414,15 +416,14 @@ function storiesCountForChild(name){
 return getSavedStories().filter(story => story.child === name).length;
 }
 
-function defaultTreasures(profile,lastStory){
-const base = ['⭐ Stella luminosa','🕯️ Lanterna gentile','🌙 Luna silenziosa'];
-
-if(profile.age === '2-4') return ['🌙 Luna silenziosa','✨ Piccola luce','🧸 Amico morbido'];
-if(profile.age === '5-7') return ['🗺️ Mappa dorata','⭐ Stella guida','🦊 Impronta gentile'];
-if(profile.age === '8-10') return ['💛 Luce della fiducia','🌉 Pietra del ponte','🌧️ Goccia calma'];
-if(profile.age === '11-12') return ['🧭 Bussola interiore','📖 Pagina segreta','🌌 Stella lontana'];
-
-return base;
+function memoriesForChild(name){
+const state = getWorldState();
+const childState = state[name] || {};
+return {
+treasures:Array.isArray(childState.treasures) ? childState.treasures : [],
+rituals:Array.isArray(childState.rituals) ? childState.rituals : [],
+lastStory:childState.lastStory || null
+};
 }
 
 function startExperience(type){
@@ -479,7 +480,7 @@ data.experience = 'Scoperta del giorno';
 
 localStorage.setItem('fableaStoryData', JSON.stringify(data));
 
-window.location.href = '/story.html';
+window.location.href = '/story-result.html';
 }
 
 function render(){
@@ -501,7 +502,8 @@ localStorage.setItem('fableaSelectedChildId', profile.id);
 
 const lastStory = recentForChild(profile.name);
 const storyCount = storiesCountForChild(profile.name);
-const treasures = defaultTreasures(profile,lastStory);
+const memories = memoriesForChild(profile.name);
+const treasures = memories.treasures;
 
 const tags = profile.interests && profile.interests.length
 ? profile.interests.map(item => `<span class="tag">${escapeHTML(item)}</span>`).join('')
@@ -546,8 +548,8 @@ FABLEA userà ${escapeHTML(toneFor(profile))}
 <h2>${continueTitle}</h2>
 <p>${continueText}</p>
 <div class="actions" style="justify-content:flex-start;margin-top:24px;">
-<button class="button" onclick="startExperience('Continua il viaggio')">Continua il viaggio</button>
-<a class="button secondary" href="/story.html">Nuova storia</a>
+${lastStory ? `<button class="button secondary" onclick="startExperience('Continua il viaggio')">Continua il viaggio</button>` : ''}
+<a class="button" href="/story-result.html">Nuova storia</a>
 </div>
 </div>
 </section>
@@ -561,7 +563,7 @@ FABLEA userà ${escapeHTML(toneFor(profile))}
 <h3>Tesori trovati</h3>
 <p>Piccoli oggetti simbolici che rendono il mondo familiare e danno continuità alle esperienze.</p>
 <div class="treasures">
-${treasures.map(item => `<span class="treasure">${escapeHTML(item)}</span>`).join('')}
+${treasures.length ? treasures.map(item => `<span class="treasure">${escapeHTML(item)}</span>`).join('') : '<span class="treasure">Nessun tesoro ancora conquistato</span>'}
 </div>
 </div>
 
@@ -579,7 +581,7 @@ ${treasures.map(item => `<span class="treasure">${escapeHTML(item)}</span>`).joi
 <div class="card-icon">🕯️</div>
 <h3>Rituale attivo</h3>
 <p>
-${lastStory ? 'Una piccola luce è rimasta accesa dall’ultimo viaggio. Può diventare il punto di partenza della prossima storia.' : 'Il primo rituale nascerà dalla prima storia ascoltata.'}
+${memories.rituals.length ? `Ultimo rituale salvato: ${escapeHTML(memories.rituals[memories.rituals.length - 1].treasure || 'luce gentile')}.` : 'Nessun rituale salvato: nascerà quando una storia verrà conclusa.'}
 </p>
 </div>
 
@@ -594,7 +596,7 @@ ${lastStory ? 'Una piccola luce è rimasta accesa dall’ultimo viaggio. Può di
 <h3>Nuova storia</h3>
 <p>Crea una storia più lunga, immersiva e adatta al momento della giornata.</p>
 <div class="actions" style="justify-content:flex-start;margin-top:20px;">
-<a class="button" href="/story.html">Apri il mondo</a>
+<a class="button" href="/story-result.html">Nuova storia</a>
 </div>
 </div>
 
@@ -618,12 +620,6 @@ ${lastStory ? 'Una piccola luce è rimasta accesa dall’ultimo viaggio. Può di
 
 </section>
 
-<div class="actions">
-<a class="button" href="/story.html">Nuova esperienza</a>
-<a class="button secondary" href="/story-player.html">Ultima voce narrante</a>
-<a class="button secondary" href="/library.html">Libreria</a>
-<a class="button secondary" href="/manualita.html">Manualità</a>
-</div>
 
 <div class="footer">
 FABLEA non è solo una favola: è un mondo lento, personale e persistente che accompagna immaginazione, calma e scoperta.

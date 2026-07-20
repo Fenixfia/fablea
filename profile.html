@@ -222,6 +222,8 @@ h1{font-size:42px}
 .grid{grid-template-columns:1fr}
 .button,.small-button{width:100%;text-align:center}
 }
+.selected-badge{display:inline-flex;margin-bottom:12px;padding:7px 11px;border-radius:999px;background:#fff2bf;color:#6b5532;font-size:12px;font-weight:900}.text-danger{min-height:44px;padding:10px 4px;border:0;background:transparent;color:#9a5b54;text-decoration:underline;cursor:pointer;font-weight:800}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 
@@ -285,7 +287,7 @@ return '✨';
 
 function selectChild(id){
 localStorage.setItem('fableaSelectedChildId', id);
-window.location.href='/story.html';
+window.location.href='/child-hub.html';
 }
 
 function onlySelectChild(id){
@@ -340,9 +342,11 @@ const interests = profile.interests && profile.interests.length
 : `<span class="tag">✨ Immaginazione</span>`;
 
 const activeClass = profile.id === activeId ? 'active' : '';
+const selectedBadge = profile.id === activeId ? '<div class="selected-badge">Profilo selezionato</div>' : '';
 
 return `
 <div class="child ${activeClass}">
+${selectedBadge}
 <div class="avatar">${avatarFor(profile.age)}</div>
 <h2>${profile.name}</h2>
 <div class="meta">${ageLabel(profile.age)}</div>
@@ -353,9 +357,9 @@ ${interests}
 </div>
 
 <div class="child-actions">
-<button class="small-button" onclick="selectChild('${profile.id}')">Crea storia</button>
+<button class="small-button" onclick="selectChild('${profile.id}')">Entra nel mondo</button>
 <button class="small-button small-secondary" onclick="onlySelectChild('${profile.id}')">Seleziona</button>
-<button class="small-button small-secondary" onclick="deleteChild('${profile.id}')">Elimina</button>
+<button class="text-danger" onclick="deleteChild('${profile.id}')">Elimina…</button>
 </div>
 </div>
 `;
