@@ -371,6 +371,10 @@ function saveWorldState(state){
 localStorage.setItem('fableaWorldState', JSON.stringify(state));
 }
 
+function escapeHTML(value){
+return String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+}
+
 function ageLabel(value){
 if(value === '2-4') return '2–4 anni • Meraviglia';
 if(value === '5-7') return '5–7 anni • Esplorazione';
@@ -443,7 +447,8 @@ mood:'Curiosa',
 theme:baseTheme || 'Foresta magica',
 interests:profile.interests || [],
 support:profile.support || '',
-duration:profile.duration || ''
+duration:profile.duration || '',
+quickStart:true
 };
 
 if(type === 'Continua il viaggio'){
@@ -499,13 +504,13 @@ const storyCount = storiesCountForChild(profile.name);
 const treasures = defaultTreasures(profile,lastStory);
 
 const tags = profile.interests && profile.interests.length
-? profile.interests.map(item => `<span class="tag">${item}</span>`).join('')
+? profile.interests.map(item => `<span class="tag">${escapeHTML(item)}</span>`).join('')
 : `<span class="tag">✨ Immaginazione</span>`;
 
-const continueTitle = lastStory ? lastStory.title : 'Il primo viaggio è pronto';
+const continueTitle = lastStory ? escapeHTML(lastStory.title) : 'Il primo viaggio è pronto';
 const continueText = lastStory
-? `L’ultimo viaggio ha lasciato una traccia nel mondo di ${profile.name}. ${lastStory.subtitle || 'Una piccola luce è rimasta accesa e può guidare la prossima esperienza.'}`
-: `Il mondo di ${profile.name} è ancora tutto da aprire. La prima storia creerà la prima luce, il primo luogo e il primo ricordo.`;
+? `L’ultimo viaggio ha lasciato una traccia nel mondo di ${escapeHTML(profile.name)}. ${escapeHTML(lastStory.subtitle || 'Una piccola luce è rimasta accesa e può guidare la prossima esperienza.')}`
+: `Il mondo di ${escapeHTML(profile.name)} è ancora tutto da aprire. La prima storia creerà la prima luce, il primo luogo e il primo ricordo.`;
 
 const continueIcon = lastStory ? (lastStory.icon || avatarFor(profile.age)) : avatarFor(profile.age);
 
@@ -521,15 +526,15 @@ content.innerHTML = `
 
 <div class="avatar-card">
 <div class="avatar">${avatarFor(profile.age)}</div>
-<h2>${profile.name}</h2>
-<div class="meta">${ageLabel(profile.age)}</div>
+<h2>${escapeHTML(profile.name)}</h2>
+<div class="meta">${escapeHTML(ageLabel(profile.age))}</div>
 </div>
 
 <div class="hero-copy">
-<h1>Bentornato nel mondo di ${profile.name}</h1>
+<h1>Bentornato nel mondo di ${escapeHTML(profile.name)}</h1>
 <p>
 Questo è il suo spazio narrativo personale: storie, oggetti simbolici, viaggi, rituali e piccole esperienze che crescono nel tempo.  
-FABLEA userà ${toneFor(profile)}
+FABLEA userà ${escapeHTML(toneFor(profile))}
 </p>
 <div class="tags">${tags}</div>
 </div>
@@ -556,14 +561,14 @@ FABLEA userà ${toneFor(profile)}
 <h3>Tesori trovati</h3>
 <p>Piccoli oggetti simbolici che rendono il mondo familiare e danno continuità alle esperienze.</p>
 <div class="treasures">
-${treasures.map(item => `<span class="treasure">${item}</span>`).join('')}
+${treasures.map(item => `<span class="treasure">${escapeHTML(item)}</span>`).join('')}
 </div>
 </div>
 
 <div class="card">
 <div class="card-icon">📖</div>
 <h3>Storie vissute</h3>
-<p>${profile.name} ha già vissuto <strong>${storyCount}</strong> esperienze FABLEA su questo dispositivo.</p>
+<p>${escapeHTML(profile.name)} ha già vissuto <strong>${storyCount}</strong> esperienze FABLEA su questo dispositivo.</p>
 <div class="treasures">
 <span class="treasure">${storyCount ? '✨ Mondo attivo' : '🌱 Mondo nuovo'}</span>
 <span class="treasure">${lastStory ? '📌 Ultimo viaggio salvato' : '📖 Prima storia da creare'}</span>
@@ -607,7 +612,7 @@ ${lastStory ? 'Una piccola luce è rimasta accesa dall’ultimo viaggio. Può di
 <h3>Missione creativa</h3>
 <p>Una piccola idea per portare la storia fuori dallo schermo, con mani e fantasia.</p>
 <div class="actions" style="justify-content:flex-start;margin-top:20px;">
-<a class="button secondary" href="/manualita.html">Crea con le mani</a>
+<button class="button secondary" onclick="startExperience('Missione creativa')">Inizia</button>
 </div>
 </div>
 

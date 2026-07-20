@@ -243,8 +243,7 @@ Aggiungi uno o più bambini. FABLEA userà ogni profilo per adattare storie, imm
 </div>
 
 <div class="note">
-Per ora i dati restano salvati solo su questo dispositivo.  
-Nessun account reale, nessun pagamento, nessun dato inviato a server.
+Per ora profili e preferenze restano salvati su questo dispositivo. Se scegli di generare l’audio, il testo della storia può essere inviato al servizio vocale ElevenLabs per creare la narrazione. Nessun account reale o pagamento viene creato da questo prototipo.
 </div>
 
 <div class="nav">
@@ -298,9 +297,12 @@ container.innerHTML = '<span class="profile-pill">Nessun profilo ancora</span>';
 return;
 }
 
-container.innerHTML = profiles.map(profile =>
-`<span class="profile-pill">${profile.name} • ${ageLabel(profile.age)}</span>`
-).join('');
+container.replaceChildren(...profiles.map(profile => {
+const pill = document.createElement('span');
+pill.className = 'profile-pill';
+pill.textContent = `${profile.name} • ${ageLabel(profile.age)}`;
+return pill;
+}));
 }
 
 function saveProfile(){
