@@ -1,5 +1,4 @@
 import fs from 'node:fs';
-import path from 'node:path';
 
 const coreFiles = [
   'index.html',
@@ -14,10 +13,10 @@ const coreFiles = [
   'about.html'
 ];
 
-const css = fs.readFileSync('assets/css/fablea.css', 'utf8');
+const css = fs.readFileSync('assets/css/fablea.css','utf8');
 const defined = new Set([...css.matchAll(/\.([A-Za-z_][\w-]*)/g)].map(match => match[1]));
 
-// Dynamic/template classes that are intentionally generated or represented by a base selector.
+// Runtime modifiers represented by shared base selectors.
 const allowedDynamic = new Set([
   'active',
   'primary',
@@ -31,27 +30,42 @@ const allowedDynamic = new Set([
   'age-11-12'
 ]);
 
-const used = new Map();
+// JavaScript hooks receive their visual treatment from another class on the same node.
+const behaviorHooks = new Set([
+  'delete-child',
+  'delete-story',
+  'enter-child',
+  'quick-mode',
+  'reopen-story',
+  'select-child'
+]);
 
-for (const file of coreFiles) {
-  const html = fs.readFileSync(file, 'utf8');
-  for (const match of html.matchAll(/class\s*=\s*(["'`])([\s\S]*?)\1/g)) {
+// Semantic text marker intentionally inherits the surrounding label typography.
+const inheritedSemantic = new Set(['muted']);
+
+const used = new Map();
+for(const file of coreFiles){
+  const html = fs.readFileSync(file,'utf8');
+  for(const match of html.matchAll(/class\s*=\s*(["'`])([\s\S]*?)\1/g)){
     const raw = match[2];
-    if (raw.includes('${')) continue;
-    for (const className of raw.split(/\s+/).filter(Boolean)) {
-      if (!used.has(className)) used.set(className, new Set());
+    if(raw.includes('${')) continue;
+    for(const className of raw.split(/\s+/).filter(Boolean)){
+      if(!used.has(className)) used.set(className,new Set());
       used.get(className).add(file);
     }
   }
 }
 
 const missing = [...used.keys()]
-  .filter(className => !defined.has(className) && !allowedDynamic.has(className))
+  .filter(className => !defined.has(className))
+  .filter(className => !allowedDynamic.has(className))
+  .filter(className => !behaviorHooks.has(className))
+  .filter(className => !inheritedSemantic.has(className))
   .sort();
 
-if (missing.length) {
-  console.error('Classi statiche significative senza stile condiviso:');
-  for (const className of missing) {
+if(missing.length){
+  console.error('Classi statiche significative senza stile condiviso o documentazione:');
+  for(const className of missing){
     console.error(`- ${className}: ${[...used.get(className)].join(', ')}`);
   }
   process.exit(1);
