@@ -11,7 +11,7 @@
   <script src="/assets/js/fablea-profile.js"></script>
   <script defer src="/assets/js/fablea-unified-ui.js"></script>
 </head>
-<body class="fablea-page fablea-product" data-world="Magia">
+<body class="fablea-page fablea-product" data-world="FABLEA">
   <main class="page">
     <div class="top">
       <a class="brand" href="/index.html">FABLEA</a>
@@ -85,7 +85,10 @@
       const profiles = F.getProfiles();
       const activeId = localStorage.getItem(F.KEYS.selected);
       const activeProfile = profiles.find(item => item.id === activeId) || profiles[0];
-      if(activeProfile && window.FableaUnifiedUI) window.FableaUnifiedUI.applyProfile(activeProfile);
+      if(window.FableaUnifiedUI){
+        if(activeProfile) window.FableaUnifiedUI.applyProfile(activeProfile);
+        else window.FableaUnifiedUI.applyWorld(window.FableaUnifiedUI.NEUTRAL_WORLD || 'FABLEA');
+      }
 
       if(!profiles.length){
         area.innerHTML = '<div class="empty"><div class="empty-icon">✨</div><h2>Nessun profilo creato</h2><p>Crea il primo mondo personale FABLEA.</p><a class="button primary" href="/onboarding.html">Crea profilo bambino</a></div>';
