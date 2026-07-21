@@ -8,136 +8,95 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/fablea.css">
-  <link rel="stylesheet" href="/assets/css/fablea-shell.css">
   <link rel="stylesheet" href="/assets/css/fablea-unified.css">
-  <link rel="stylesheet" href="/assets/css/fablea-child-home.css">
-  <link rel="stylesheet" href="/assets/css/fablea-living-world.css">
-  <link rel="stylesheet" href="/assets/css/fablea-navigation-flow.css">
-  <script src="/assets/js/fablea-ui.js"></script>
-  <script src="/assets/js/fablea-grammar.js"></script>
+  <link rel="stylesheet" href="/assets/css/fablea-beta.css">
   <script src="/assets/js/fablea-profile.js"></script>
-  <script src="/stories-v2/age-2-4.js"></script>
-  <script src="/stories-v2/age-5-7.js"></script>
-  <script src="/stories-v2/age-8-10.js"></script>
-  <script src="/stories-v2/age-11-12.js"></script>
-  <script src="/stories-v2/index.js"></script>
-  <script src="/assets/js/fablea-story-engine.js"></script>
-  <script src="/assets/js/fablea-shell.js"></script>
   <script src="/assets/js/fablea-companion.js"></script>
   <script src="/assets/js/fablea-companion-moods.js"></script>
-  <script defer src="/assets/js/fablea-unified-ui.js"></script>
+  <script src="/assets/js/fablea-world-art.js"></script>
+  <script src="/assets/js/fablea-beta-state.js"></script>
 </head>
-<body class="fablea-product child-home-page" data-world="FABLEA">
-  <div class="shell-page">
-    <header class="shell-top">
-      <a class="brand" href="/child-hub.html">FABLEA</a>
-      <div class="shell-meta"><span id="worldName"></span><a class="profile-link" href="/profile.html">Profili</a></div>
+<body class="beta-page">
+  <div class="beta-frame">
+    <header class="beta-top">
+      <a class="beta-brand" href="/child-hub.html">FABLEA</a>
+      <div class="beta-pill" id="worldLabel">La sua Casa</div>
+      <nav class="beta-nav" aria-label="Navigazione della Casa">
+        <a href="/world.html">Mondo</a>
+        <a href="/profile.html">Profili</a>
+        <a class="always" href="/parent-area.html">Area genitore</a>
+      </nav>
     </header>
-    <main class="shell-main child-home-main" id="root"></main>
-    <div id="dock"></div>
+
+    <main id="root"></main>
   </div>
 
   <script>
     (() => {
       'use strict';
       const F = window.FableaProfile;
-      const S = window.FableaShell;
+      const B = window.FableaBetaState;
       const C = window.FableaCompanion;
       const M = window.FableaCompanionMood;
       const root = document.getElementById('root');
       let profile = F.getSelectedProfile();
-
       if(!profile){
-        root.innerHTML = `<section class="empty-state"><div class="eyebrow">Prima di iniziare</div><h1>Crea il primo mondo.</h1><p>FABLEA ha bisogno di un profilo bambino per tenere separate storie, attività, compagni e scoperte.</p><a class="profile-link" href="/onboarding.html">Crea profilo</a></section>`;
+        root.innerHTML = `<section class="beta-card beta-today"><div class="beta-eyebrow">Prima di iniziare</div><h1>Crea il primo mondo.</h1><p class="beta-lead">Ogni bambino ha bisogno di una Casa separata per storie, attività e ricordi.</p><div class="beta-actions"><a class="beta-button primary" href="/onboarding.html">Crea profilo</a></div></section>`;
         return;
       }
-
       if(C) profile = C.ensureProfile(profile) || profile;
-      const presentation = S.applyProfile(profile);
-      const prepared = F.readJSON(F.KEYS.prepared,null);
-      const lastStory = S.lastStory(profile);
-      const companion = S.companionName(profile);
+      const continuity = B.reconcile(profile);
+      const recommendation = continuity.recommendation;
+      const summary = B.summary(profile);
+      const artifact = summary.artifact;
       const welcome = new URLSearchParams(location.search).get('welcome') === '1';
-      const activityState = F.readJSON('fableaActivityProgress',{});
-      const activityProgress = activityState[profile.id] || {play:0,learn:0,visits:0,lastSkills:[]};
-      document.getElementById('worldName').textContent = presentation.place;
-      document.getElementById('dock').innerHTML = S.renderDock('continue');
-
-      let continueLabel = 'Una storia è già pronta';
-      let continueTitle = `${presentation.place} aspetta la prima avventura`;
-      let continueMeta = 'Può iniziare quando ne avrete voglia.';
-      let continueAction = '<a class="home-continue-action" href="/discover.html">Scegli una storia</a>';
-      let continueIcon = '📚';
-
-      if(prepared && prepared.childId === profile.id){
-        continueLabel = 'Prima storia preparata';
-        continueTitle = prepared.title;
-        continueMeta = prepared.subtitle || 'È pronta nella Biblioteca.';
-        continueAction = '<a class="home-continue-action" href="/story-result.html?prepared=1">Leggiamo</a>';
-        continueIcon = prepared.icon || '📖';
-      }else if(lastStory){
-        continueLabel = 'Riprendiamo da qui';
-        continueTitle = lastStory.title;
-        continueMeta = `Pagina ${(lastStory.resumePage || 0) + 1} di ${lastStory.pages.length} · ${lastStory.duration}`;
-        continueAction = '<button class="home-continue-action" id="resumeStory" type="button">Continua</button>';
-        continueIcon = lastStory.icon || '📖';
-      }
-
-      const ageActivity = ({
-        '2-4':'suoni, forme e prime parole',
-        '5-7':'lettere, sillabe e piccoli enigmi',
-        '8-10':'logica, comprensione e scoperte',
-        '11-12':'misteri, strategia e idee da costruire'
-      }[profile.age] || 'giochi e scoperte');
+      document.body.dataset.world = profile.primaryWorld || 'FABLEA';
+      document.getElementById('worldLabel').textContent = profile.primaryWorld;
 
       const traces = [];
-      if(lastStory) traces.push(`<span class="home-trace"><strong>Storia:</strong> ${S.escapeHTML(lastStory.title)}</span>`);
-      if(Number(activityProgress.play || 0)) traces.push(`<span class="home-trace"><strong>Giochi:</strong> ${Number(activityProgress.play)} percorsi</span>`);
-      if(Number(activityProgress.learn || 0)) traces.push(`<span class="home-trace"><strong>Scoperte:</strong> ${Number(activityProgress.learn)} percorsi</span>`);
-      for(const skill of (Array.isArray(activityProgress.lastSkills) ? activityProgress.lastSkills.slice(0,3) : [])) traces.push(`<span class="home-trace">${S.escapeHTML(skill)}</span>`);
+      if(summary.storyCount) traces.push(`${summary.storyCount} ${summary.storyCount === 1 ? 'storia vissuta' : 'storie vissute'}`);
+      if(summary.activityCount) traces.push(`${summary.activityCount} ${summary.activityCount === 1 ? 'percorso' : 'percorsi'}`);
+      summary.skills.slice(0,3).forEach(skill => traces.push(skill));
 
       root.innerHTML = `
-        <section class="home-welcome">
-          <div class="home-copy">
-            <div class="eyebrow">${welcome ? 'La sua Casa è pronta' : `Oggi nel mondo di ${S.escapeHTML(profile.name)}`}</div>
-            <h1>Cosa facciamo oggi?</h1>
-            <p>Qui non vive una sola storia. Si può leggere, inventare, giocare e scoprire. Ogni esperienza lascia una traccia nel suo mondo.</p>
-            ${traces.length ? `<div class="home-traces" aria-label="Tracce recenti">${traces.join('')}</div>` : ''}
-          </div>
+        <section class="beta-child-hero">
+          <article class="beta-card beta-today">
+            <div class="beta-today-content">
+              <div class="beta-eyebrow">${F.escapeHTML(recommendation.eyebrow)}</div>
+              <div class="beta-today-icon" aria-hidden="true">${F.escapeHTML(recommendation.icon)}</div>
+              <h1>${F.escapeHTML(recommendation.title)}</h1>
+              <p class="beta-lead">${F.escapeHTML(recommendation.description)}</p>
+              <div class="beta-actions"><a class="beta-button primary" href="${F.escapeHTML(recommendation.href)}">${F.escapeHTML(recommendation.action)}</a><a class="beta-button secondary" href="/world.html">Guarda cosa è cambiato</a></div>
+              ${traces.length ? `<div class="beta-trace-strip">${traces.map(trace => `<span class="beta-trace">${F.escapeHTML(trace)}</span>`).join('')}</div>` : ''}
+            </div>
+          </article>
 
-          <aside class="companion-home-stage" aria-label="Compagno di ${S.escapeHTML(profile.name)}">
-            <div class="companion-home-art" id="homeCompanion" data-companion-expression="${welcome ? 'happy' : 'calm'}"></div>
-            <div class="companion-home-speech"><strong>${S.escapeHTML(companion)} è qui.</strong><span id="homeCompanionLine">${S.escapeHTML(M ? M.line('home',welcome ? 'happy' : 'calm') : 'Scegliamo insieme da dove iniziare.')}</span></div>
+          <aside class="beta-card beta-companion-panel">
+            <div>
+              <div class="beta-eyebrow" style="color:#f1d596">${welcome ? 'La Casa è pronta' : `Nel mondo di ${F.escapeHTML(profile.name)}`}</div>
+              <h2 style="font:700 2.8rem/1 'Cormorant Garamond',serif;margin:10px 0">${F.escapeHTML(profile.favoriteCompanion || 'Il suo compagno')}</h2>
+            </div>
+            <div class="beta-companion-panel-art" id="homeCompanion"></div>
+            <p id="companionLine">${F.escapeHTML(M ? M.line('home',welcome ? 'happy' : 'calm') : 'Scegliamo insieme da dove iniziare.')}</p>
           </aside>
         </section>
 
-        <nav class="home-doors living-home-map" aria-label="Luoghi principali della Casa FABLEA">
-          <a class="home-room read" href="/discover.html"><span class="home-room-icon">📖</span><strong>Leggiamo</strong><span>Storie FABLEA, continuazioni e racconti preferiti.</span><small>Biblioteca →</small></a>
-          <a class="home-room create" href="/story.html"><span class="home-room-icon">✨</span><strong>Inventiamo</strong><span>Una nuova avventura costruita insieme al compagno.</span><small>Officina →</small></a>
-          <a class="home-room play" href="/play.html"><span class="home-room-icon">🧩</span><strong>Giochiamo</strong><span>${S.escapeHTML(ageActivity)} senza sembrare compiti.</span><small>Sentiero →</small></a>
-          <a class="home-room learn" href="/learn.html"><span class="home-room-icon">🔭</span><strong>Scopriamo</strong><span>Lettere, parole, natura, numeri e domande da esplorare.</span><small>Laboratorio →</small></a>
+        <nav class="beta-room-grid" aria-label="Stanze della Casa">
+          <a class="beta-card beta-room" href="/discover.html"><span class="beta-room-icon">📖</span><div><h2>Leggiamo</h2><p>Storie originali, classici e racconti già iniziati.</p><small>Entra nella Biblioteca →</small></div></a>
+          <a class="beta-card beta-room" href="/story.html"><span class="beta-room-icon">✨</span><div><h2>Inventiamo</h2><p>Una nuova avventura dal mondo, da un momento o da un’idea.</p><small>Entra nell’Officina →</small></div></a>
+          <a class="beta-card beta-room" href="/play.html"><span class="beta-room-icon">🧩</span><div><h2>Giochiamo</h2><p>Parole, memoria e logica senza voti né classifiche.</p><small>Segui il Sentiero →</small></div></a>
+          <a class="beta-card beta-room" href="/learn.html"><span class="beta-room-icon">🔭</span><div><h2>Scopriamo</h2><p>Natura, numeri, linguaggio e domande da esplorare.</p><small>Apri il Laboratorio →</small></div></a>
         </nav>
 
-        <article class="home-continue">
-          <div class="home-continue-icon">${S.escapeHTML(continueIcon)}</div>
-          <div class="home-continue-copy"><small>${S.escapeHTML(continueLabel)}</small><strong>${S.escapeHTML(continueTitle)}</strong><small>${S.escapeHTML(continueMeta)}</small></div>
-          ${continueAction}
-        </article>
-
-        <section class="world-room-map">
-          <div class="room-map-head"><div><div class="eyebrow">Il suo mondo cresce</div><h2>Nuovi luoghi stanno prendendo forma</h2></div><p>Questi ambienti diventeranno esperienze complete soltanto quando saranno davvero utili e ben costruiti.</p></div>
-          <div class="room-grid">
-            <article class="room-card future"><span class="room-badge">In crescita</span><strong>🎨 Atelier</strong><span>Disegni, personaggi e oggetti del mondo.</span></article>
-            <article class="room-card future"><span class="room-badge">In crescita</span><strong>🔢 Torre dei numeri</strong><span>Quantità e problemi dentro piccole missioni.</span></article>
-            <article class="room-card future"><span class="room-badge">In crescita</span><strong>🗺️ Giardino delle lettere</strong><span>Parole che diventano luoghi e creature.</span></article>
-            <article class="room-card future"><span class="room-badge">In crescita</span><strong>🧺 Stanza dei ricordi</strong><span>Oggetti, decisioni e momenti delle avventure.</span></article>
-          </div>
-        </section>`;
+        ${artifact ? `<section class="beta-card beta-world-change">
+          <div class="beta-artifact" aria-hidden="true">${F.escapeHTML(artifact.icon)}</div>
+          <div><div class="beta-eyebrow">Il mondo è cambiato</div><h3>${F.escapeHTML(artifact.title)}</h3><p>${F.escapeHTML(artifact.consequence)}</p></div>
+          <a class="beta-button secondary" href="/world.html">Apri la Stanza dei ricordi</a>
+        </section>` : `<section class="beta-card beta-world-change"><div class="beta-artifact">⌂</div><div><div class="beta-eyebrow">La Casa è pronta</div><h3>Il primo ricordo deve ancora arrivare.</h3><p>Una storia o un percorso lasceranno qui una traccia visibile.</p></div><a class="beta-button secondary" href="/discover.html">Scegli la prima storia</a></section>`}
+      `;
 
       if(M) M.mount('#homeCompanion',profile,welcome ? 'happy' : 'calm');
       else if(C) C.mount('#homeCompanion',profile);
-      const resumeButton = document.getElementById('resumeStory');
-      if(resumeButton && lastStory) resumeButton.addEventListener('click',() => S.openSavedStory(lastStory));
     })();
   </script>
 </body>
