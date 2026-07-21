@@ -1,5 +1,6 @@
 const MAX_TEXT_LENGTH = 12000;
 const MAX_CHUNK_LENGTH = 2400;
+const MAX_CHUNKS = 6;
 const MIN_TEXT_LENGTH = 1;
 
 const VOICE_SETTINGS = {
@@ -9,9 +10,44 @@ const VOICE_SETTINGS = {
   use_speaker_boost: true
 };
 
+function applySecurityHeaders(res) {
+  res.setHeader("Cache-Control", "no-store, max-age=0");
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("Referrer-Policy", "no-referrer");
+  res.setHeader("Cross-Origin-Resource-Policy", "same-origin");
+  res.setHeader("Vary", "Origin");
+}
+
 function sendJson(res, status, payload) {
+  applySecurityHeaders(res);
   res.setHeader("Content-Type", "application/json; charset=utf-8");
   return res.status(status).json(payload);
+}
+
+function firstHeader(value) {
+  return String(value || "").split(",")[0].trim();
+}
+
+function isSameOriginRequest(req) {
+  const fetchSite = firstHeader(req.headers?.["sec-fetch-site"]);
+  if (fetchSite && !["same-origin", "same-site", "none"].includes(fetchSite)) return false;
+
+  const origin = firstHeader(req.headers?.origin);
+  if (!origin) return true;
+
+  const host = firstHeader(req.headers?.["x-forwarded-host"] || req.headers?.host);
+  if (!host) return false;
+
+  try {
+    return new URL(origin).host === host;
+  } catch (_error) {
+    return false;
+  }
+}
+
+function acceptsJson(req) {
+  const contentType = firstHeader(req.headers?.["content-type"]).toLowerCase();
+  return contentType.startsWith("application/json");
 }
 
 function validateText(value) {
@@ -69,9 +105,7 @@ function splitTextIntoChunks(text) {
       }
     }
 
-    if (current) {
-      chunks.push(current.trim());
-    }
+    if (current) chunks.push(current.trim());
   }
 
   return chunks.filter(Boolean);
@@ -92,18 +126,25 @@ async function synthesizeChunk({ apiKey, voiceId, text }) {
     })
   });
 
-  if (!response.ok) {
-    throw new Error("TTS_PROVIDER_ERROR");
-  }
-
+  if (!response.ok) throw new Error("TTS_PROVIDER_ERROR");
   return Buffer.from(await response.arrayBuffer());
 }
 
 export default async function handler(req, res) {
   try {
+    applySecurityHeaders(res);
+
     if (req.method !== "POST") {
       res.setHeader("Allow", "POST");
       return sendJson(res, 405, { error: "Metodo non consentito. Usa POST." });
+    }
+
+    if (!isSameOriginRequest(req)) {
+      return sendJson(res, 403, { error: "Richiesta non autorizzata." });
+    }
+
+    if (!acceptsJson(req)) {
+      return sendJson(res, 415, { error: "Formato della richiesta non supportato." });
     }
 
     const apiKey = process.env.ELEVENLABS_API_KEY;
@@ -119,7 +160,7 @@ export default async function handler(req, res) {
     }
 
     const chunks = splitTextIntoChunks(validation.text);
-    if (!chunks.length || chunks.some(chunk => chunk.length > MAX_CHUNK_LENGTH)) {
+    if (!chunks.length || chunks.length > MAX_CHUNKS || chunks.some(chunk => chunk.length > MAX_CHUNK_LENGTH)) {
       return sendJson(res, 400, { error: "Il testo non può essere preparato per l’audio." });
     }
 
@@ -128,8 +169,8 @@ export default async function handler(req, res) {
       buffers.push(await synthesizeChunk({ apiKey, voiceId, text: chunk }));
     }
 
+    applySecurityHeaders(res);
     res.setHeader("Content-Type", "audio/mpeg");
-    res.setHeader("Cache-Control", "no-store");
     res.setHeader("X-Fablea-TTS-Chunks", String(chunks.length));
     return res.status(200).send(Buffer.concat(buffers));
   } catch (error) {
@@ -138,4 +179,4 @@ export default async function handler(req, res) {
   }
 }
 
-export { splitTextIntoChunks, validateText };
+export { acceptsJson, isSameOriginRequest, splitTextIntoChunks, validateText };
