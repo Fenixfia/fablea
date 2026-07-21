@@ -65,10 +65,10 @@ assert(first.safety.commercialProfiling === false,'profilazione commerciale non 
 
 const legacy = V3.toLegacy(first);
 assert(legacy.profileId === profile.id && legacy.scenario === 'Dinosauri','fallback legacy non coerente');
-V3.save(first);
+const persisted = V3.buildAndSave(profile,input,{worldState:state,persistWorldState:false});
 const saved = JSON.parse(localStorage.getItem(V3.STORAGE_KEY));
 const qa = JSON.parse(localStorage.getItem(V3.QA_STORAGE_KEY));
-assert(saved.id === first.id,'richiesta V3 non salvata');
+assert(saved.id === persisted.id && persisted.id === first.id,'richiesta V3 non salvata');
 assert(!Object.prototype.hasOwnProperty.call(qa,'name'),'snapshot QA espone il nome');
 assert(qa.valid === true,'snapshot QA non segnala validità');
 
