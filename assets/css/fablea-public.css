@@ -148,8 +148,17 @@ body.fablea-public .story-thread{
 }
 body.fablea-public .home-visual p{
   z-index:4;
-  color:#fffaf2;
-  text-shadow:0 2px 18px rgba(65,44,66,.42);
+  width:min(100%,340px);
+  margin:0;
+  padding:16px 18px;
+  border:1px solid rgba(96,68,91,.13);
+  border-radius:20px;
+  color:#513d50;
+  background:rgba(255,250,243,.80);
+  box-shadow:0 14px 34px rgba(77,55,75,.14);
+  backdrop-filter:blur(12px);
+  text-shadow:none;
+  font-weight:650;
 }
 
 body.fablea-public .quote{
@@ -169,4 +178,5 @@ body.fablea-public .footer{color:var(--fablea-muted)}
   body.fablea-public .home-copy .menu{justify-content:center}
   body.fablea-public .home-copy{text-align:center}
   body.fablea-public .home-visual{min-height:330px}
+  body.fablea-public .home-visual p{width:100%;padding:14px 15px}
 }
