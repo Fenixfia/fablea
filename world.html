@@ -23,7 +23,7 @@
   <script src="/assets/js/fablea-shell.js"></script>
   <script defer src="/assets/js/fablea-unified-ui.js"></script>
 </head>
-<body class="fablea-product" data-world="Magia">
+<body class="fablea-product" data-world="FABLEA">
   <div class="shell-page">
     <header class="shell-top">
       <a class="brand" href="/child-hub.html">FABLEA</a>
@@ -57,6 +57,13 @@
       const decisions = worldState ? (worldState.decisions || []).slice(0,4) : [];
       const relationships = worldState ? (worldState.relationships || []).slice(0,3) : [];
       const recent = stories.slice(-4).reverse();
+      const allActivityProgress = F.readJSON('fableaActivityProgress',{});
+      const activityProgress = allActivityProgress[profile.id] || {};
+      const activityJourneys = Array.isArray(activityProgress.journeys) ? activityProgress.journeys : [];
+      const activitySkills = [...new Set(activityJourneys.flatMap(journey => Array.isArray(journey.skills) ? journey.skills : []))].slice(-8).reverse();
+      const lastActivityJourney = activityJourneys[activityJourneys.length - 1] || null;
+      const playJourneys = activityJourneys.filter(journey => journey.mode === 'play').length;
+      const learnJourneys = activityJourneys.filter(journey => journey.mode === 'learn').length;
       document.getElementById('worldName').textContent = presentation.place;
       document.getElementById('dock').innerHTML = S.renderDock('world');
 
@@ -64,7 +71,7 @@
         <header class="content-head">
           <div class="eyebrow">Il mondo di ${S.escapeHTML(profile.name)}</div>
           <h1>${S.escapeHTML(presentation.place)}</h1>
-          <p>${S.escapeHTML(presentation.promise)} Qui restano le tracce che possono rendere più vive le storie future.</p>
+          <p>${S.escapeHTML(presentation.promise)} Qui restano le tracce che possono rendere più vive le storie e le attività future.</p>
           ${worldState && worldState.lastConsequence ? `<p><strong>L’ultima storia ha lasciato questo segno:</strong> ${S.escapeHTML(worldState.lastConsequence)}</p>` : ''}
         </header>
 
@@ -72,7 +79,7 @@
           <article class="world-panel">
             <div class="eyebrow">Compagno principale</div>
             <h2>${S.escapeHTML(companion)}</h2>
-            <p>È la presenza che accompagna ${S.escapeHTML(profile.name)} nelle scelte e torna nelle storie successive senza ricominciare ogni volta da zero.</p>
+            <p>È la presenza che accompagna ${S.escapeHTML(profile.name)} nelle scelte e torna nelle storie e nei percorsi senza ricominciare ogni volta da zero.</p>
             <div class="trace-list"><span class="trace">${S.escapeHTML(presentation.companionIcon)} Compagno</span><span class="trace">${S.escapeHTML(F.ageLabel(profile.age))}</span><span class="trace">${S.escapeHTML(profile.duration)}</span></div>
           </article>
 
@@ -92,6 +99,20 @@
             <div class="eyebrow">Rituali condivisi</div>
             <h2>${(memory.rituals || []).length} ricordi attivi</h2>
             <p>${(memory.rituals || []).length ? 'Questi gesti possono tornare alla fine di nuove storie quando sono davvero pertinenti.' : 'I rituali conservati appariranno qui, senza classifiche o premi.'}</p>
+          </article>
+
+          <article class="world-panel">
+            <div class="eyebrow">Percorsi esplorati</div>
+            <h2>${activityJourneys.length} esperienze</h2>
+            ${activityJourneys.length
+              ? `<p>${playJourneys} nel Sentiero dei giochi e ${learnJourneys} nel Laboratorio delle scoperte.</p><div class="trace-list">${activitySkills.map(skill => `<span class="trace">${S.escapeHTML(skill)}</span>`).join('')}</div>`
+              : '<p>Giochiamo e Scopriamo lasceranno qui capacità, domande e piccole missioni, senza voti né confronto.</p>'}
+          </article>
+
+          <article class="world-panel">
+            <div class="eyebrow">FABLEA fuori dallo schermo</div>
+            <h2>${lastActivityJourney && lastActivityJourney.mission ? 'Una missione da provare' : 'Il mondo reale aspetta'}</h2>
+            <p>${lastActivityJourney && lastActivityJourney.mission ? S.escapeHTML(lastActivityJourney.mission) : 'Dopo un percorso apparirà una proposta breve da fare, osservare o raccontare lontano dal telefono.'}</p>
           </article>
 
           <article class="world-panel">

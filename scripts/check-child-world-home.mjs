@@ -11,6 +11,7 @@ const createChild = read('create-child.html');
 const play = read('play.html');
 const learn = read('learn.html');
 const activities = read('assets/js/fablea-activities.js');
+const activityCatalog = read('assets/js/fablea-activity-catalog.js');
 const companion = read('assets/js/fablea-companion.js');
 const unified = read('assets/js/fablea-unified-ui.js');
 const story = read('story.html');
@@ -37,8 +38,14 @@ expect(!onboarding.includes('Apri la prima storia'),'Onboarding: la prima storia
 
 expect(play.includes('data-activity="play"'),'Giochiamo: modalità attività mancante');
 expect(learn.includes('data-activity="learn"'),'Scopriamo: modalità attività mancante');
+expect(play.includes('/assets/js/fablea-activity-catalog.js') && learn.includes('/assets/js/fablea-activity-catalog.js'),'Attività: catalogo editoriale non caricato');
+const activityContext = {window:{}};
+vm.createContext(activityContext);
+if(activityCatalog) vm.runInContext(activityCatalog,activityContext,{filename:'assets/js/fablea-activity-catalog.js'});
+const catalog = activityContext.window.FableaActivityCatalog && activityContext.window.FableaActivityCatalog.all();
 for(const age of ['2-4','5-7','8-10','11-12']){
-  expect(activities.includes(`'${age}':[`) || activities.includes(`'${age}': [`),`Attività: fascia ${age} non coperta`);
+  expect(catalog && catalog.play && Array.isArray(catalog.play[age]) && catalog.play[age].length >= 8,`Attività Giochiamo: fascia ${age} non coperta`);
+  expect(catalog && catalog.learn && Array.isArray(catalog.learn[age]) && catalog.learn[age].length >= 8,`Attività Scopriamo: fascia ${age} non coperta`);
 }
 expect(activities.includes("const STORAGE_KEY = 'fableaActivityProgress'"),'Attività: progressi separati non persistenti');
 expect(activities.includes('progressState[profile.id]'),'Attività: progressi non separati per profilo');
@@ -71,4 +78,4 @@ if(errors.length){
   errors.forEach(error => console.error(`- ${error}`));
   process.exit(1);
 }
-console.log('Child world home check passed: Casa viva, compagno persistente, attività per età, Libro vivo e navigazione non sovrapposta coperti.');
+console.log('Child world home check passed: Casa viva, compagno persistente, catalogo attività per età, Libro vivo e navigazione non sovrapposta coperti.');
