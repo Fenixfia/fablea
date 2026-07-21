@@ -50,6 +50,14 @@ const createChild = read('create-child.html');
 if(onboarding !== createChild) errors.push('onboarding.html e create-child.html non sono più identici');
 if(!onboarding.includes('placeholder="Es. Leo"')) errors.push('onboarding: placeholder fittizio standard mancante');
 
+const profilePage = read('profile.html');
+const unifiedUI = read('assets/js/fablea-unified-ui.js');
+if(!profilePage.includes('data-world="FABLEA"')) errors.push('profile.html: stato iniziale neutro mancante');
+if(!profilePage.includes("applyWorld(window.FableaUnifiedUI.NEUTRAL_WORLD || 'FABLEA')")) errors.push('profile.html: ritorno neutro dopo eliminazione ultimo profilo mancante');
+if(!unifiedUI.includes("const NEUTRAL_WORLD = 'FABLEA'")) errors.push('fablea-unified-ui.js: fallback neutro non dichiarato');
+if(!unifiedUI.includes("'--sky-1':'#68746f'")) errors.push('fablea-unified-ui.js: palette neutra FABLEA mancante');
+if(unifiedUI.includes("const next = world || 'Magia'")) errors.push('fablea-unified-ui.js: Magia ancora usata come fallback globale');
+
 const oldOnly = [...productPages,...publicPages].filter(file => {
   const html = read(file);
   return html.includes('/assets/css/fablea.css') && !html.includes('/assets/css/fablea-unified.css');
