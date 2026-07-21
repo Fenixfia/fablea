@@ -6,14 +6,20 @@ const coreFiles = [
   'create-child.html',
   'profile.html',
   'child-hub.html',
+  'discover.html',
   'story.html',
   'story-result.html',
+  'world.html',
   'library.html',
   'manualita.html',
   'about.html'
 ];
 
-const css = fs.readFileSync('assets/css/fablea.css','utf8');
+const cssFiles = [
+  'assets/css/fablea.css',
+  'assets/css/fablea-shell.css'
+].filter(file => fs.existsSync(file));
+const css = cssFiles.map(file => fs.readFileSync(file,'utf8')).join('\n');
 const defined = new Set([...css.matchAll(/\.([A-Za-z_][\w-]*)/g)].map(match => match[1]));
 
 // Runtime modifiers represented by shared base selectors.
@@ -71,4 +77,4 @@ if(missing.length){
   process.exit(1);
 }
 
-console.log(`CSS class audit passed: ${used.size} classi statiche coperte o documentate.`);
+console.log(`CSS class audit passed: ${used.size} classi statiche coperte o documentate in ${cssFiles.length} fogli condivisi.`);
