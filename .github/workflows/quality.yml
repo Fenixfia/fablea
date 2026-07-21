@@ -64,6 +64,24 @@ jobs:
         if: steps.smoke.outcome == 'failure'
         run: exit 1
 
+      - name: V3 narrative request checks
+        id: v3
+        continue-on-error: true
+        run: npm run check:v3 > v3-narrative.log 2>&1
+
+      - name: Upload V3 diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v3-narrative-report
+          path: v3-narrative.log
+          if-no-files-found: error
+          retention-days: 3
+
+      - name: Stop on V3 failure
+        if: steps.v3.outcome == 'failure'
+        run: exit 1
+
       - name: Shared CSS class audit
         id: css
         continue-on-error: true
