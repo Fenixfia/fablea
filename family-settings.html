@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>FABLEA | Dati e famiglia</title>
+  <link rel="stylesheet" href="/assets/css/fablea.css">
+  <link rel="stylesheet" href="/assets/css/fablea-shell.css">
+  <link rel="stylesheet" href="/assets/css/fablea-unified.css">
+  <link rel="stylesheet" href="/assets/css/fablea-family-settings.css">
+  <script src="/assets/js/fablea-ui.js"></script>
+  <script src="/assets/js/fablea-profile.js"></script>
+  <script src="/assets/js/fablea-data-control.js"></script>
+  <script defer src="/assets/js/fablea-unified-ui.js"></script>
+</head>
+<body class="fablea-page fablea-product family-settings-page" data-world="FABLEA">
+  <main class="page">
+    <div class="top">
+      <a class="brand" href="/index.html">FABLEA</a>
+      <div class="badge">Dati e famiglia</div>
+      <a class="back" href="/profile.html">Profili</a>
+    </div>
+
+    <div class="settings-layout">
+      <section class="settings-intro">
+        <div class="privacy-mark" aria-hidden="true">⌂</div>
+        <div class="kicker">Controllo genitore</div>
+        <h1>I dati della famiglia restano sotto il vostro controllo.</h1>
+        <p>Questa versione conserva profili, storie e memoria sul dispositivo che stai usando. Da qui puoi vedere quanto è salvato, esportarne una copia o cancellare tutto.</p>
+      </section>
+
+      <div class="settings-stack">
+        <section class="settings-card">
+          <div class="kicker">Su questo dispositivo</div>
+          <h2>Archivio locale FABLEA</h2>
+          <p id="storageDescription">Sto controllando i dati presenti…</p>
+          <div class="data-stats" aria-live="polite">
+            <div class="data-stat"><strong id="profileCount">0</strong><span>profili</span></div>
+            <div class="data-stat"><strong id="storyCount">0</strong><span>storie salvate</span></div>
+            <div class="data-stat"><strong id="storageSize">0 B</strong><span>spazio approssimativo</span></div>
+          </div>
+        </section>
+
+        <section class="settings-card">
+          <div class="kicker">Copia personale</div>
+          <h2>Esporta i dati</h2>
+          <p>Scarica un file con i dati FABLEA presenti in questo browser. Il file può contenere nomi, preferenze, storie e ricordi: conservalo in un luogo privato.</p>
+          <div class="settings-actions">
+            <button class="button primary" id="exportButton" type="button">Scarica una copia</button>
+          </div>
+          <div class="status-line" id="exportStatus" aria-live="polite"></div>
+        </section>
+
+        <section class="settings-card">
+          <div class="kicker">Protezione attuale</div>
+          <h2>Che cosa è già protetto</h2>
+          <ul class="security-list">
+            <li>I dati non vengono sincronizzati automaticamente con un account o un database FABLEA.</li>
+            <li>L’API voce riceve il testo soltanto quando viene premuto il pulsante di ascolto.</li>
+            <li>Le pagine non possono essere incorporate dentro siti esterni.</li>
+            <li>Camera, microfono, posizione e pagamenti non sono autorizzati dal sito.</li>
+          </ul>
+          <p class="settings-note">Account genitore, database cifrato, backup e ripristino faranno parte della fase precedente alla beta pubblica.</p>
+        </section>
+
+        <section class="settings-card danger-card">
+          <div class="kicker">Cancellazione</div>
+          <h2>Rimuovi tutto da questo dispositivo</h2>
+          <p>Questa operazione elimina profili, storie, memoria, preferenze e avanzamento salvati nel browser. Non può essere annullata.</p>
+          <div class="settings-actions">
+            <button class="button danger-button" id="showDeleteButton" type="button">Avvia cancellazione</button>
+          </div>
+          <div class="delete-confirm" id="deleteConfirm" hidden>
+            <label for="deletePhrase">Scrivi CANCELLA per confermare</label>
+            <input id="deletePhrase" autocomplete="off" inputmode="text">
+            <button class="button danger-button" id="deleteButton" type="button" disabled>Cancella tutti i dati</button>
+          </div>
+          <div class="status-line" id="deleteStatus" aria-live="polite"></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      'use strict';
+      const D = window.FableaDataControl;
+      const profileCount = document.getElementById('profileCount');
+      const storyCount = document.getElementById('storyCount');
+      const storageSize = document.getElementById('storageSize');
+      const storageDescription = document.getElementById('storageDescription');
+      const exportButton = document.getElementById('exportButton');
+      const exportStatus = document.getElementById('exportStatus');
+      const showDeleteButton = document.getElementById('showDeleteButton');
+      const deleteConfirm = document.getElementById('deleteConfirm');
+      const deletePhrase = document.getElementById('deletePhrase');
+      const deleteButton = document.getElementById('deleteButton');
+      const deleteStatus = document.getElementById('deleteStatus');
+
+      function renderSummary(){
+        const summary = D.summary();
+        profileCount.textContent = String(summary.profileCount);
+        storyCount.textContent = String(summary.storyCount);
+        storageSize.textContent = D.formatBytes(summary.approximateBytes);
+        storageDescription.textContent = summary.hasData
+          ? `FABLEA ha trovato ${summary.localKeyCount + summary.sessionKeyCount} gruppi di dati nel browser.`
+          : 'Non risultano dati FABLEA salvati in questo browser.';
+        exportButton.disabled = !summary.hasData;
+        return summary;
+      }
+
+      exportButton.addEventListener('click',() => {
+        exportStatus.textContent = '';
+        try{
+          D.exportData();
+          exportStatus.textContent = 'Copia preparata. Controlla i download del dispositivo.';
+        }catch(_error){
+          exportStatus.textContent = 'Non è stato possibile creare il file. Riprova da questo browser.';
+          exportStatus.classList.add('error');
+        }
+      });
+
+      showDeleteButton.addEventListener('click',() => {
+        deleteConfirm.hidden = false;
+        showDeleteButton.disabled = true;
+        deletePhrase.focus();
+      });
+
+      deletePhrase.addEventListener('input',() => {
+        deleteButton.disabled = deletePhrase.value.trim().toUpperCase() !== 'CANCELLA';
+      });
+
+      deleteButton.addEventListener('click',() => {
+        if(deletePhrase.value.trim().toUpperCase() !== 'CANCELLA') return;
+        D.purgeAll();
+        deleteStatus.textContent = 'Tutti i dati FABLEA sono stati rimossi da questo browser.';
+        deleteConfirm.hidden = true;
+        renderSummary();
+        setTimeout(() => location.replace('/profile.html?data=deleted'),700);
+      });
+
+      renderSummary();
+    })();
+  </script>
+</body>
+</html>
