@@ -2,10 +2,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check:js": "node --check api/tts.js && node --check assets/js/fablea-ui.js && node --check assets/js/fablea-profile.js && node --check assets/js/fablea-grammar.js && node --check assets/js/fablea-story-engine.js && node --check assets/js/fablea-shell.js",
+    "check:js": "node --check api/tts.js && node --check assets/js/fablea-ui.js && node --check assets/js/fablea-profile.js && node --check assets/js/fablea-grammar.js && node --check assets/js/fablea-story-engine.js && node --check assets/js/fablea-shell.js && node --check assets/js/fablea-world-state-v3.js && node --check assets/js/fablea-story-variables-v3.js && node --check assets/js/fablea-story-engine-v3.js && node --check assets/js/fablea-world-effects-v3.js",
     "check:css-classes": "node scripts/check-css-classes.mjs",
     "check:stories": "node scripts/check-story-quality.mjs",
     "check:smoke": "node scripts/functional-smoke.mjs",
-    "test": "npm run check:js && npm run check:stories && npm run check:smoke && npm run check:css-classes"
+    "check:v3": "node scripts/check-v3.mjs",
+    "test": "npm run check:js && npm run check:stories && npm run check:smoke && npm run check:v3 && npm run check:css-classes"
   }
 }
