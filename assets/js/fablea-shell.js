@@ -19,6 +19,11 @@
     scoperta:'Scoperta'
   };
 
+  const COLLECTION_LABELS = {
+    original:'Originale FABLEA',
+    classic:'Classico rinarrato'
+  };
+
   function escapeHTML(value){
     return global.FableaProfile
       ? global.FableaProfile.escapeHTML(value)
@@ -55,9 +60,25 @@
       .replace(/{{[^}]+}}/g, 'qualcosa di inatteso');
   }
 
-  function storiesFor(profile){
+  function originalsFor(profile){
     const catalog = global.FableaStoryEngine ? global.FableaStoryEngine.catalog() : [];
+    return catalog.filter(story => !profile || story.age === profile.age).map(story => ({...story,collection:story.collection || 'original'}));
+  }
+
+  function classicsFor(profile){
+    const catalog = Array.isArray(global.FABLEA_CLASSICS_V1) ? global.FABLEA_CLASSICS_V1 : [];
     return catalog.filter(story => !profile || story.age === profile.age);
+  }
+
+  function storiesFor(profile, options = {}){
+    const collection = options.collection || 'original';
+    if(collection === 'classic') return classicsFor(profile);
+    if(collection === 'all') return [...originalsFor(profile),...classicsFor(profile)];
+    return originalsFor(profile);
+  }
+
+  function catalogStoryById(profile,id){
+    return storiesFor(profile,{collection:'all'}).find(story => story.id === id) || null;
   }
 
   function savedFor(profile){
@@ -82,10 +103,11 @@
 
   function openCatalogStory(profile, story, duration){
     if(!profile || !story || !global.FableaStoryEngine) return false;
+    const scenario = story.defaultWorld || profile.primaryWorld;
     let built = global.FableaStoryEngine.buildStory(profile,{
       story,
       duration:duration || profile.duration,
-      scenario:profile.primaryWorld,
+      scenario,
       family:story.family,
       mood:(story.moods && story.moods[0]) || ''
     });
@@ -98,9 +120,9 @@
           family:story.family,
           mood:(story.moods && story.moods[0]) || '',
           duration:duration || profile.duration,
-          scenario:profile.primaryWorld,
+          scenario,
           editorialStoryId:story.id,
-          source:'editorial-catalog'
+          source:story.collection === 'classic' ? 'classic-catalog' : 'editorial-catalog'
         });
         built = global.FableaStoryEngineV3.apply(built,requestV3);
       }
@@ -126,23 +148,32 @@
   }
 
   function familyLabel(family){
-    return FAMILY_LABELS[family] || 'Storia Fablea';
+    return FAMILY_LABELS[family] || 'Storia FABLEA';
+  }
+
+  function collectionLabel(collection){
+    return COLLECTION_LABELS[collection] || COLLECTION_LABELS.original;
   }
 
   global.FableaShell = {
     WORLD_PRESENTATION,
     FAMILY_LABELS,
+    COLLECTION_LABELS,
     escapeHTML,
     presentation,
     applyProfile,
     companionName,
     previewTemplate,
+    originalsFor,
+    classicsFor,
     storiesFor,
+    catalogStoryById,
     savedFor,
     lastStory,
     openSavedStory,
     openCatalogStory,
     renderDock,
-    familyLabel
+    familyLabel,
+    collectionLabel
   };
 })(window);
