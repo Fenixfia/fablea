@@ -14,6 +14,10 @@
   <script src="/stories-v2/age-11-12.js"></script>
   <script src="/stories-v2/index.js"></script>
   <script src="/assets/js/fablea-story-engine.js"></script>
+  <script src="/assets/js/fablea-world-state-v3.js"></script>
+  <script src="/assets/js/fablea-story-variables-v3.js"></script>
+  <script src="/assets/js/fablea-story-engine-v3.js"></script>
+  <script src="/assets/js/fablea-world-effects-v3.js"></script>
 </head>
 <body class="fablea-page theme-night" data-theme="night">
   <main class="stage">
@@ -65,6 +69,7 @@
       <p id="ritualText"></p>
       <p><strong>Tesoro:</strong> <span id="treasureText"></span></p>
       <p><strong>Attività:</strong> <span id="activity"></span></p>
+      <p id="worldConsequence" hidden><strong>Nel mondo:</strong> <span id="worldConsequenceText"></span></p>
       <button class="button primary" id="saveRitualBtn" type="button">Conserva nel suo mondo</button>
     </section>
 
@@ -77,9 +82,13 @@
   <script>
     const F = FableaProfile;
     const E = FableaStoryEngine;
+    const V3 = window.FableaStoryVariablesV3;
+    const E3 = window.FableaStoryEngineV3;
+    const W3Effects = window.FableaWorldEffectsV3;
     const params = new URLSearchParams(location.search);
     let profile = F.getSelectedProfile();
     const request = F.readJSON('fableaStoryData', {});
+    const requestV3 = V3 ? F.readJSON(V3.STORAGE_KEY, null) : null;
     const current = F.readJSON('fableaCurrentStory', null);
     const prepared = F.readJSON(F.KEYS.prepared, null);
     const reopenMode = localStorage.getItem('fableaReopenStory') === 'true';
@@ -103,6 +112,8 @@
         duration: request.duration || profile.duration,
         experience: request.family || ''
       });
+      const validV3 = requestV3 && V3 && V3.validate(requestV3).valid && requestV3.profile && requestV3.profile.id === profile.id;
+      if(validV3 && E3) story = E3.apply(story,requestV3);
     }
 
     profile = story.profileSnapshot || profile || {id:story.childId,name:story.child,age:story.age,gender:story.gender};
@@ -119,7 +130,7 @@
     mainTitle.textContent = story.title;
     mainSubtitle.textContent = story.subtitle || '';
     mainKicker.textContent = `${story.child} • ${F.ageLabel(story.age)}`;
-    storyMeta.innerHTML = [story.world, story.duration, story.family, `${story.wordCount || E.words(story.text)} parole`, story.companion]
+    storyMeta.innerHTML = [story.world, story.duration, story.family, `${story.wordCount || E.words(story.text)} parole`, story.companion, story.v3 ? 'Il mondo continua' : '']
       .filter(Boolean)
       .map(item => `<span>${F.escapeHTML(item)}</span>`)
       .join('');
@@ -127,11 +138,20 @@
     ritualText.textContent = story.ritual;
     treasureText.textContent = story.treasure;
     activity.textContent = story.activity;
+    if(story.v3Consequences && story.v3Consequences.summary){
+      worldConsequence.hidden = false;
+      worldConsequenceText.textContent = story.v3Consequences.summary;
+      saveRitualBtn.textContent = 'Conserva e fai crescere il mondo';
+    }
 
     function render({persist=true} = {}){
       const page = pages[pageIndex];
       title.textContent = page.scene || `Scena ${pageIndex + 1}`;
-      kicker.textContent = pageIndex === 0 ? 'La storia comincia' : `Scena ${pageIndex + 1}`;
+      kicker.textContent = page.v3Role === 'continuity' ? 'Il mondo ricorda'
+        : page.v3Role === 'turning-point' ? 'La svolta'
+          : page.v3Role === 'choice' ? 'La vostra scelta'
+            : page.v3Role === 'consequence' ? 'Ciò che resta'
+              : pageIndex === 0 ? 'La storia comincia' : `Scena ${pageIndex + 1}`;
       text.classList.add('fade');
       setTimeout(() => {
         text.textContent = page.text;
@@ -205,8 +225,9 @@
         lastActivity:story.activity,
         resume:null
       });
+      if(W3Effects) W3Effects.commit(profile,story);
       saveRitualBtn.disabled = true;
-      saveRitualBtn.textContent = 'Conservato nel suo mondo ✓';
+      saveRitualBtn.textContent = story.v3Consequences ? 'Il mondo è cresciuto ✓' : 'Conservato nel suo mondo ✓';
     });
 
     render({persist:false});
