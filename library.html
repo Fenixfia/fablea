@@ -3,13 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>FABLEA | Libreria</title>
+  <title>FABLEA | Le mie storie</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/fablea.css">
   <link rel="stylesheet" href="/assets/css/fablea-shell.css">
   <link rel="stylesheet" href="/assets/css/fablea-unified.css">
+  <link rel="stylesheet" href="/assets/css/fablea-library.css">
   <script src="/assets/js/fablea-ui.js"></script>
   <script src="/assets/js/fablea-grammar.js"></script>
   <script src="/assets/js/fablea-profile.js"></script>
@@ -18,11 +19,14 @@
   <script src="/stories-v2/age-8-10.js"></script>
   <script src="/stories-v2/age-11-12.js"></script>
   <script src="/stories-v2/index.js"></script>
+  <script src="/stories-classics/catalog.js"></script>
+  <script src="/stories-classics/catalog-expansion.js"></script>
+  <script src="/assets/js/fablea-classic-art.js"></script>
   <script src="/assets/js/fablea-story-engine.js"></script>
   <script src="/assets/js/fablea-shell.js"></script>
   <script defer src="/assets/js/fablea-unified-ui.js"></script>
 </head>
-<body class="fablea-product" data-world="Magia">
+<body class="fablea-product library-page" data-world="FABLEA">
   <div class="shell-page">
     <header class="shell-top">
       <a class="brand" href="/child-hub.html">FABLEA</a>
@@ -38,15 +42,17 @@
       const F = window.FableaProfile;
       const E = window.FableaStoryEngine;
       const S = window.FableaShell;
+      const A = window.FableaClassicArt;
       const profile = F.getSelectedProfile();
       const root = document.getElementById('root');
+      let activeCollection = 'all';
 
       if(!profile){
         root.innerHTML = `<section class="empty-state"><h1>Prima scegli un profilo.</h1><p>Ogni bambino ha una Libreria separata.</p><a class="profile-link" href="/profile.html">Vai ai profili</a></section>`;
         return;
       }
 
-      const presentation = S.applyProfile(profile);
+      S.applyProfile(profile);
       document.getElementById('worldName').textContent = `Libreria di ${profile.name}`;
       document.getElementById('dock').innerHTML = S.renderDock('library');
 
@@ -54,30 +60,56 @@
         return S.savedFor(profile).sort((a,b) => String(b.createdAt || '').localeCompare(String(a.createdAt || '')));
       }
 
+      function sourceLine(story){
+        if(story.collection !== 'classic') return '';
+        const source = story.source || {};
+        return `<div class="editorial-source"><strong>Classico rinarrato${source.author ? ` · ${S.escapeHTML(source.author)}` : ''}</strong>${source.originalTitle ? S.escapeHTML(source.originalTitle) : 'Opera nel pubblico dominio'} · versione FABLEA.</div>`;
+      }
+
+      function coverMarkup(story){
+        if(A && typeof A.render === 'function' && story.collection === 'classic') return A.render(story);
+        return `<span class="editorial-cover-icon">${S.escapeHTML(story.icon || '📖')}</span>`;
+      }
+
       function render(){
         const saved = stories();
+        const visible = saved.filter(story => activeCollection === 'all' || (story.collection || 'original') === activeCollection);
         root.innerHTML = `
-          <header class="content-head">
+          <header class="library-hero">
             <div class="eyebrow">Libreria personale</div>
             <h1>Le storie che il mondo ricorda.</h1>
-            <p>Ogni volume conserva il compagno, il mondo, la durata e la pagina raggiunta nel momento in cui è stato vissuto.</p>
+            <p>Ogni volume conserva il compagno, il mondo, la durata e la pagina raggiunta. Originali, classici rinarrati e storie inventate restano tutti nello stesso luogo personale.</p>
           </header>
-          ${saved.length ? `<section class="story-grid">${saved.map(story => {
+
+          <nav class="collection-tabs" aria-label="Filtra la Libreria personale">
+            <button class="collection-tab ${activeCollection === 'all' ? 'active' : ''}" type="button" data-saved-collection="all">Tutte</button>
+            <button class="collection-tab ${activeCollection === 'original' ? 'active' : ''}" type="button" data-saved-collection="original">Originali e create</button>
+            <button class="collection-tab ${activeCollection === 'classic' ? 'active' : ''}" type="button" data-saved-collection="classic">Classici rinarrati</button>
+          </nav>
+
+          ${visible.length ? `<section class="editorial-grid">${visible.map(story => {
             const pageCount = Array.isArray(story.pages) ? story.pages.length : 0;
             const resumePage = Math.min((Number(story.resumePage) || 0) + 1,pageCount || 1);
-            return `<article class="story-card">
-              <div class="story-cover" aria-hidden="true">${S.escapeHTML(story.icon || presentation.icon)}</div>
-              <div class="story-body">
-                <div class="story-meta">${S.escapeHTML(S.familyLabel(story.family))} · ${S.escapeHTML(story.duration || '')}</div>
+            const collection = story.collection || 'original';
+            return `<article class="editorial-card" data-collection="${S.escapeHTML(collection)}">
+              <div class="editorial-cover" aria-hidden="true">${coverMarkup(story)}</div>
+              <div class="editorial-body">
+                <div class="editorial-kicker">${S.escapeHTML(S.collectionLabel(collection))} · ${S.escapeHTML(S.familyLabel(story.family))}</div>
                 <h2>${S.escapeHTML(story.title)}</h2>
                 <p>${S.escapeHTML(story.subtitle || '')}</p>
-                <div class="trace-list"><span class="trace">${S.escapeHTML(story.world || profile.primaryWorld)}</span>${pageCount ? `<span class="trace">Pagina ${resumePage}/${pageCount}</span>` : ''}</div>
+                ${sourceLine(story)}
+                <div class="trace-list"><span class="trace">${S.escapeHTML(story.world || profile.primaryWorld)}</span>${pageCount ? `<span class="trace">Pagina ${resumePage}/${pageCount}</span>` : ''}<span class="trace">${S.escapeHTML(story.duration || '')}</span></div>
                 <div class="story-actions"><button class="open-story" type="button" data-open-id="${S.escapeHTML(story.id)}">Riapri</button><button type="button" data-delete-id="${S.escapeHTML(story.id)}">Elimina</button></div>
               </div>
             </article>`;
-          }).join('')}</section>` : `<section class="empty-state"><div class="eyebrow">La prima pagina è ancora bianca</div><h2>Nessuna storia salvata.</h2><p>Apri una Storia Fablea oppure creane una nuova insieme al compagno.</p><a class="profile-link" href="/discover.html">Scopri le storie</a></section>`}
-        `;
+          }).join('')}</section>` : `<section class="empty-state"><div class="eyebrow">La prima pagina è ancora bianca</div><h2>Nessuna storia in questa sezione.</h2><p>Apri un originale FABLEA, scegli un classico rinarrato oppure inventane una nuova insieme al compagno.</p></section>`}
 
+          <aside class="personal-library-shortcut"><div><strong>La Biblioteca continua a crescere.</strong><br><span>Ora contiene sedici classici rinarrati, oltre agli originali e alle storie create.</span></div><a href="/discover.html?collection=classic">Scopri i classici</a></aside>`;
+
+        document.querySelectorAll('[data-saved-collection]').forEach(button => button.addEventListener('click',() => {
+          activeCollection = button.dataset.savedCollection;
+          render();
+        }));
         document.querySelectorAll('[data-open-id]').forEach(button => button.addEventListener('click',() => {
           S.openSavedStory(stories().find(story => story.id === button.dataset.openId));
         }));

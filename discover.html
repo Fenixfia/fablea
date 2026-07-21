@@ -3,13 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>FABLEA | Scopri</title>
+  <title>FABLEA | Biblioteca</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/fablea.css">
   <link rel="stylesheet" href="/assets/css/fablea-shell.css">
   <link rel="stylesheet" href="/assets/css/fablea-unified.css">
+  <link rel="stylesheet" href="/assets/css/fablea-library.css">
   <script src="/assets/js/fablea-ui.js"></script>
   <script src="/assets/js/fablea-grammar.js"></script>
   <script src="/assets/js/fablea-profile.js"></script>
@@ -18,6 +19,9 @@
   <script src="/stories-v2/age-8-10.js"></script>
   <script src="/stories-v2/age-11-12.js"></script>
   <script src="/stories-v2/index.js"></script>
+  <script src="/stories-classics/catalog.js"></script>
+  <script src="/stories-classics/catalog-expansion.js"></script>
+  <script src="/assets/js/fablea-classic-art.js"></script>
   <script src="/assets/js/fablea-story-engine.js"></script>
   <script src="/assets/js/fablea-world-state-v3.js"></script>
   <script src="/assets/js/fablea-story-variables-v3.js"></script>
@@ -25,7 +29,7 @@
   <script src="/assets/js/fablea-shell.js"></script>
   <script defer src="/assets/js/fablea-unified-ui.js"></script>
 </head>
-<body class="fablea-product" data-world="Magia">
+<body class="fablea-product library-page" data-world="FABLEA">
   <div class="shell-page">
     <header class="shell-top">
       <a class="brand" href="/child-hub.html">FABLEA</a>
@@ -40,52 +44,91 @@
       'use strict';
       const F = window.FableaProfile;
       const S = window.FableaShell;
+      const A = window.FableaClassicArt;
       const profile = F.getSelectedProfile();
       const root = document.getElementById('root');
+      const params = new URLSearchParams(location.search);
+      let activeCollection = params.get('collection') === 'classic' ? 'classic' : 'original';
       let activeFamily = 'all';
       let selectedDuration = profile ? profile.duration : 'Breve';
 
       if(!profile){
-        root.innerHTML = `<section class="empty-state"><h1>Prima scegli un profilo.</h1><p>Il catalogo cambia con l’età e con il mondo del bambino.</p><a class="profile-link" href="/profile.html">Vai ai profili</a></section>`;
+        root.innerHTML = `<section class="empty-state"><h1>Prima scegli un profilo.</h1><p>La Biblioteca cambia con l’età e mantiene separati i percorsi di ogni bambino.</p><a class="profile-link" href="/profile.html">Vai ai profili</a></section>`;
         return;
       }
 
-      const presentation = S.applyProfile(profile);
-      document.getElementById('worldName').textContent = `${presentation.place} · ${F.ageLabel(profile.age)}`;
+      S.applyProfile(profile);
+      document.getElementById('worldName').textContent = `Biblioteca · ${F.ageLabel(profile.age)}`;
       document.getElementById('dock').innerHTML = S.renderDock('discover');
 
+      function sourceMarkup(story){
+        if(story.collection !== 'classic' || !story.source) return '';
+        return `<div class="editorial-source"><strong>${S.escapeHTML(story.source.author)} · ${S.escapeHTML(story.source.originalTitle)}</strong>${S.escapeHTML(story.source.origin)}<br>Rinarrato integralmente da FABLEA da un’opera nel pubblico dominio.</div>`;
+      }
+
+      function coverMarkup(story){
+        if(A && typeof A.render === 'function') return A.render(story);
+        return `<span class="editorial-cover-icon">${S.escapeHTML(story.cover && story.cover.icon || '📖')}</span>`;
+      }
+
       function render(){
-        const stories = S.storiesFor(profile).filter(story => activeFamily === 'all' || story.family === activeFamily);
+        const available = S.storiesFor(profile,{collection:activeCollection});
+        const stories = available.filter(story => activeFamily === 'all' || story.family === activeFamily);
+        const isClassic = activeCollection === 'classic';
         root.innerHTML = `
-          <header class="content-head">
-            <div class="eyebrow">Storie Fablea · ${S.escapeHTML(F.ageLabel(profile.age))}</div>
-            <h1>Quattro porte, non cento scelte.</h1>
-            <p>Ogni storia è già scritta e curata. Quando la apri, entra nel mondo di ${S.escapeHTML(profile.name)}, può ricordare ciò che è successo e lasciare una traccia per il futuro.</p>
+          <header class="library-hero">
+            <div class="eyebrow">Biblioteca di ${S.escapeHTML(profile.name)}</div>
+            <h1>${isClassic ? 'Le storie che attraversano il tempo.' : 'Storie nate dentro FABLEA.'}</h1>
+            <p>${isClassic
+              ? 'Fiabe e racconti celebri riscritti da zero per l’età del bambino, con il suo compagno accanto e senza copiare traduzioni o versioni moderne.'
+              : `Racconti originali, curati per ${S.escapeHTML(F.ageLabel(profile.age))}, che possono entrare nel mondo personale e lasciare conseguenze nelle avventure successive.`}</p>
           </header>
 
-          <div class="eyebrow">Atmosfera</div>
-          <div class="filter-row" id="familyFilters">
-            ${[['all','Tutte'],['avventura','Avventura'],['calma-sera','Calma'],['emozioni','Emozioni'],['scoperta','Scoperta']].map(([value,label]) => `<button class="filter-chip ${value === activeFamily ? 'active' : ''}" type="button" data-family="${value}">${label}</button>`).join('')}
-          </div>
+          <nav class="collection-tabs" aria-label="Collane della Biblioteca">
+            <button class="collection-tab ${activeCollection === 'original' ? 'active' : ''}" type="button" data-collection="original">Originali FABLEA</button>
+            <button class="collection-tab ${activeCollection === 'classic' ? 'active' : ''}" type="button" data-collection="classic">Classici rinarrati</button>
+            <a class="collection-tab" href="/library.html">Le mie storie</a>
+          </nav>
 
-          <div class="eyebrow">Durata</div>
-          <div class="filter-row" id="durationFilters">
-            ${F.DURATIONS.map(duration => `<button class="filter-chip ${duration === selectedDuration ? 'active' : ''}" type="button" data-duration="${duration}">${duration}</button>`).join('')}
-          </div>
+          <section class="library-controls">
+            <div class="library-filter-group">
+              <div class="eyebrow">Atmosfera</div>
+              <div class="filter-row" id="familyFilters">
+                ${[['all','Tutte'],['avventura','Avventura'],['calma-sera','Calma'],['emozioni','Emozioni'],['scoperta','Scoperta']].map(([value,label]) => `<button class="filter-chip ${value === activeFamily ? 'active' : ''}" type="button" data-family="${value}">${label}</button>`).join('')}
+              </div>
+              <div class="eyebrow">Durata</div>
+              <div class="filter-row" id="durationFilters">
+                ${F.DURATIONS.map(duration => `<button class="filter-chip ${duration === selectedDuration ? 'active' : ''}" type="button" data-duration="${duration}">${duration}</button>`).join('')}
+              </div>
+            </div>
+            <div class="library-note">${isClassic
+              ? 'La trama e i personaggi provengono dall’opera originale. Testi, dialoghi, struttura per età e illustrazioni sono creazioni FABLEA.'
+              : 'Ogni storia originale può ricordare scelte, oggetti e personaggi del mondo personale.'}</div>
+          </section>
 
-          <section class="story-grid" aria-live="polite">
+          <section class="editorial-grid" aria-live="polite">
             ${stories.map(story => `
-              <article class="story-card">
-                <div class="story-cover" aria-hidden="true">${S.escapeHTML(story.cover && story.cover.icon || presentation.icon)}</div>
-                <div class="story-body">
-                  <div class="story-meta">${S.escapeHTML(S.familyLabel(story.family))} · ${S.escapeHTML(selectedDuration)}</div>
+              <article class="editorial-card" data-collection="${S.escapeHTML(story.collection || 'original')}">
+                <div class="editorial-cover" aria-hidden="true">${coverMarkup(story)}</div>
+                <div class="editorial-body">
+                  <div class="editorial-kicker">${S.escapeHTML(S.collectionLabel(story.collection || 'original'))} · ${S.escapeHTML(S.familyLabel(story.family))}</div>
                   <h2>${S.escapeHTML(S.previewTemplate(story.title,profile))}</h2>
                   <p>${S.escapeHTML(S.previewTemplate(story.subtitle,profile))}</p>
-                  <div class="story-actions"><button class="open-story" type="button" data-story-id="${S.escapeHTML(story.id)}">Apri nel mio mondo</button></div>
+                  ${sourceMarkup(story)}
+                  <div class="editorial-actions"><button class="open-story" type="button" data-story-id="${S.escapeHTML(story.id)}">Apri nel Libro vivo</button><span class="editorial-age">${S.escapeHTML(selectedDuration)}</span></div>
                 </div>
-              </article>`).join('')}
-          </section>`;
+              </article>`).join('') || `<section class="empty-state"><h2>Nessuna storia in questa atmosfera.</h2><p>Prova un filtro diverso.</p></section>`}
+          </section>
 
+          ${isClassic ? `<aside class="classics-manifest"><div class="classics-manifest-icon">📜</div><div><strong>Un classico, non una copia.</strong><p>FABLEA usa opere nel pubblico dominio come punto di partenza culturale. Non riproduce traduzioni editoriali recenti, illustrazioni celebri o adattamenti cinematografici.</p></div></aside>` : ''}
+          <aside class="personal-library-shortcut"><div><strong>Le storie già vissute sono altrove.</strong><br><span>La Libreria personale conserva pagina, mondo, compagno e data.</span></div><a href="/library.html">Apri le mie storie</a></aside>`;
+
+        document.querySelectorAll('[data-collection]').forEach(button => button.addEventListener('click',() => {
+          activeCollection = button.dataset.collection;
+          activeFamily = 'all';
+          history.replaceState(null,'',`/discover.html?collection=${activeCollection}`);
+          render();
+        }));
         document.querySelectorAll('[data-family]').forEach(button => button.addEventListener('click',() => {
           activeFamily = button.dataset.family;
           render();
@@ -95,7 +138,7 @@
           render();
         }));
         document.querySelectorAll('[data-story-id]').forEach(button => button.addEventListener('click',() => {
-          const story = S.storiesFor(profile).find(item => item.id === button.dataset.storyId);
+          const story = S.catalogStoryById(profile,button.dataset.storyId);
           S.openCatalogStory(profile,story,selectedDuration);
         }));
       }

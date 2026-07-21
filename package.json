@@ -2,7 +2,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check:js": "node --check api/tts.js && node --check assets/js/fablea-ui.js && node --check assets/js/fablea-profile.js && node --check assets/js/fablea-grammar.js && node --check assets/js/fablea-story-engine.js && node --check assets/js/fablea-shell.js && node --check assets/js/fablea-unified-ui.js && node --check assets/js/fablea-page-turn.js && node --check assets/js/fablea-data-control.js && node --check assets/js/fablea-guided-creator.js && node --check assets/js/fablea-companion.js && node --check assets/js/fablea-companion-moods.js && node --check assets/js/fablea-live-book-polish.js && node --check assets/js/fablea-activities.js && node --check assets/js/fablea-world-state-v3.js && node --check assets/js/fablea-story-variables-v3.js && node --check assets/js/fablea-story-engine-v3.js && node --check assets/js/fablea-world-effects-v3.js",
+    "check:js": "node --check api/tts.js && node --check assets/js/fablea-ui.js && node --check assets/js/fablea-profile.js && node --check assets/js/fablea-grammar.js && node --check assets/js/fablea-story-engine.js && node --check assets/js/fablea-shell.js && node --check assets/js/fablea-unified-ui.js && node --check assets/js/fablea-page-turn.js && node --check assets/js/fablea-data-control.js && node --check assets/js/fablea-guided-creator.js && node --check assets/js/fablea-companion.js && node --check assets/js/fablea-companion-moods.js && node --check assets/js/fablea-live-book-polish.js && node --check assets/js/fablea-activities.js && node --check assets/js/fablea-world-state-v3.js && node --check assets/js/fablea-story-variables-v3.js && node --check assets/js/fablea-story-engine-v3.js && node --check assets/js/fablea-world-effects-v3.js && node --check stories-classics/catalog.js && node --check stories-classics/catalog-expansion.js && node --check assets/js/fablea-classic-art.js",
     "check:css-classes": "node scripts/check-css-classes.mjs",
     "check:visual": "node scripts/check-visual-system.mjs",
     "check:page-turn": "node scripts/check-page-turn.mjs",
@@ -10,9 +10,10 @@
     "check:creator": "node scripts/check-guided-creator.mjs",
     "check:home": "node scripts/check-child-world-home.mjs",
     "check:living": "node scripts/check-living-world.mjs",
+    "check:classics": "node scripts/check-classics-library.mjs",
     "check:stories": "node scripts/check-story-quality.mjs",
     "check:smoke": "node scripts/functional-smoke.mjs",
     "check:v3": "node scripts/check-v3.mjs",
-    "test": "npm run check:js && npm run check:stories && npm run check:smoke && npm run check:v3 && npm run check:css-classes && npm run check:visual && npm run check:page-turn && npm run check:security && npm run check:creator && npm run check:home && npm run check:living"
+    "test": "npm run check:js && npm run check:stories && npm run check:smoke && npm run check:v3 && npm run check:css-classes && npm run check:visual && npm run check:page-turn && npm run check:security && npm run check:creator && npm run check:home && npm run check:living && npm run check:classics"
   }
 }
