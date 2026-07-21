@@ -46,6 +46,26 @@
     });
   }
 
+  function loadLiveBookEnhancements(){
+    if(!document.body.classList.contains('live-book')) return;
+
+    if(!document.querySelector('link[data-fablea-page-turn]')){
+      const stylesheet = document.createElement('link');
+      stylesheet.rel = 'stylesheet';
+      stylesheet.href = '/assets/css/fablea-page-turn.css';
+      stylesheet.dataset.fableaPageTurn = 'true';
+      document.head.appendChild(stylesheet);
+    }
+
+    if(!document.querySelector('script[data-fablea-page-turn]')){
+      const script = document.createElement('script');
+      script.src = '/assets/js/fablea-page-turn.js';
+      script.defer = true;
+      script.dataset.fableaPageTurn = 'true';
+      document.head.appendChild(script);
+    }
+  }
+
   function init(){
     if(document.body.classList.contains('fablea-public')){
       normalizeTop();
@@ -54,10 +74,11 @@
     applyProfile();
     bindWorldSelector();
     normalizeTop();
+    loadLiveBookEnhancements();
   }
 
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded',init,{once:true});
   else init();
 
-  global.FableaUnifiedUI = {applyWorld,applyProfile,selectedProfile};
+  global.FableaUnifiedUI = {applyWorld,applyProfile,selectedProfile,loadLiveBookEnhancements};
 })(window);
