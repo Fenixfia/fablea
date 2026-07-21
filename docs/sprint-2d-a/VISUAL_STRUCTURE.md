@@ -1,152 +1,122 @@
 # FABLEA — Struttura visiva ufficiale
 
-## Obiettivo
+## Principio centrale
 
-FABLEA deve apparire semplice al primo sguardo, profonda durante l’uso e coerente in ogni schermata.
+FABLEA deve mostrare poco, ricordare molto e aprire profondità soltanto quando serve.
 
-La complessità del motore narrativo non deve diventare complessità dell’interfaccia.
-
----
-
-# 1. Gerarchia principale
-
-La casa narrativa mostra nell’ordine:
-
-1. **Oggi** — storia da continuare o azione più pertinente;
-2. **Nuova esperienza** — Storie Fablea / Crea una storia;
-3. **Per voi oggi** — massimo tre proposte pertinenti;
-4. **Il tuo mondo** — luoghi, personaggi e tracce;
-5. **Libreria** — accessibile ma non dominante;
-6. **Spazio genitore** — separato e discreto.
-
-Non devono comparire contemporaneamente più di due CTA primarie nella parte iniziale della schermata.
+La complessità del prodotto non deve essere esposta nella Home interna.
 
 ---
 
-# 2. Navigazione
+# 1. Due superfici differenti
+
+## Homepage pubblica
+
+È una pagina editoriale e descrittiva destinata agli adulti che non conoscono ancora FABLEA.
+
+Può spiegare:
+
+1. promessa;
+2. funzionamento;
+3. Storie Fablea e creazione guidata;
+4. memoria del mondo;
+5. ruolo della famiglia;
+6. prova e prezzo.
+
+## Casa narrativa interna
+
+Non è una landing, una dashboard o un catalogo.
+
+È una singola scena personale che mostra soltanto:
+
+1. storia da riprendere;
+2. cambiamento recente del mondo;
+3. accesso a Storie Fablea;
+4. accesso a Crea una storia;
+5. navigazione verso Mondo e Libreria.
+
+Nessuna lista, statistica o sezione commerciale deve comparire nella casa narrativa.
+
+---
+
+# 2. Architettura della Home interna
+
+La Home deve funzionare come una soglia.
+
+- una sola scena visiva dominante;
+- una sola azione primaria: continuare;
+- due azioni secondarie equivalenti: Storie Fablea e Crea una storia;
+- una sola informazione di memoria recente;
+- nessuno scroll necessario su desktop;
+- scroll minimo e naturale su mobile;
+- catalogo, creatore e Libro vivo aperti come superfici dedicate;
+- Mondo e Libreria su pagine proprie.
+
+La Home non deve contenere anteprime di tutte le funzioni.
+
+---
+
+# 3. Navigazione
 
 Desktop e tablet:
 
 - Oggi;
 - Storie;
 - Il tuo mondo;
+- Libreria;
 - Spazio genitore separato.
 
 Mobile:
 
-- barra inferiore con Oggi, Storie e Mondo;
-- Spazio genitore nell’intestazione;
-- massimo tre destinazioni principali.
-
-La navigazione non deve diventare un menu di funzioni.
+- barra inferiore con Oggi, Storie, Mondo e Libreria;
+- accesso genitore nell’intestazione;
+- nessun menu aggiuntivo nello spazio bambino.
 
 ---
 
-# 3. Linguaggio visivo
+# 4. Linguaggio visivo
 
 ## Fuori dalla storia
 
-- fondo caldo e materico;
-- superfici chiare;
-- tipografia editoriale per i titoli;
-- tipografia semplice per controlli e testi;
+- fondo caldo e materico nella homepage pubblica;
+- ambiente scuro e atmosferico nella casa narrativa;
+- tipografia editoriale per titoli;
+- tipografia semplice per controlli;
 - verde profondo come colore istituzionale;
-- ombre leggere;
-- bordi sottili;
-- composizione ordinata ma non rigida.
+- ottone e menta come accenti limitati;
+- decorazione subordinata alla gerarchia.
 
 ## Dentro la storia
 
-- fondo scuro e immersivo;
-- luce e profondità controllate;
-- scena + pagina;
+- Libro vivo dedicato;
+- scena e pagina;
 - controlli ridotti;
-- apertura in overlay o modalità dedicata;
-- nessuna distrazione esterna.
-
-Il passaggio deve sembrare l’apertura di un mondo, non il cambio verso un’altra applicazione.
-
----
-
-# 4. Componenti ammessi
-
-Sistema essenziale:
-
-- una card principale;
-- card secondaria;
-- card storia;
-- card memoria;
-- pulsante primario;
-- pulsante secondario;
-- chip di selezione;
-- Libro vivo;
-- navigazione principale;
-- barra mobile.
-
-Non introdurre nuove varianti senza una necessità reale.
+- nessuna navigazione esterna visibile;
+- modalità notte e audio integrate senza dominare.
 
 ---
 
 # 5. Regole di semplicità
 
-- massimo tre storie consigliate nella Home;
-- massimo tre elementi visibili per la memoria;
-- un solo titolo forte per sezione;
-- una sola azione primaria per card;
-- niente dashboard numeriche;
-- niente badge di rarità;
-- niente griglie infinite;
-- niente caroselli automatici;
-- niente icone decorative senza funzione;
-- niente gradienti multipli fuori dal Libro vivo;
-- niente testi lunghi nell’interfaccia bambino.
-
-La Libreria può contenere più materiale, ma deve usare filtri semplici e progressivi.
+- nessuna griglia di card nella Home interna;
+- nessuna sezione “consigliati” nella Home interna;
+- nessuna dashboard numerica;
+- nessun badge, livello o rarità;
+- nessun carosello automatico;
+- nessuna icona decorativa senza funzione;
+- una sola azione primaria per superficie;
+- massimo una memoria recente mostrata nella Home;
+- massimo quattro destinazioni nella navigazione bambino;
+- catalogo e memoria completi solo nelle pagine dedicate.
 
 ---
 
-# 6. Spaziatura e ritmo
+# 6. Test decisivo
 
-- griglia base da 8 px;
-- spazio tra sezioni: 56–72 px;
-- spazio interno card: 24–32 px;
-- raggio card: 16–30 px;
-- touch target minimo: 44 px;
-- larghezza contenuto desktop: circa 1180 px;
-- nessun contenuto attaccato ai bordi su mobile.
+Quando la casa narrativa si apre, il bambino deve percepire:
 
-Il vuoto è parte dell’identità di FABLEA.
+> Sono tornato nel mio mondo.
 
----
+Non deve percepire:
 
-# 7. Tipografia
-
-- serif editoriale per H1, H2 e titoli narrativi;
-- sans-serif leggibile per UI, metadati e testi di supporto;
-- massimo tre livelli gerarchici visibili per schermata;
-- testo narrativo nel Libro vivo più ampio e arioso;
-- 11–12 anni con estetica più matura, senza cambiare la struttura.
-
----
-
-# 8. Struttura responsive
-
-Mobile non è una compressione del desktop.
-
-Su iPhone:
-
-- una colonna;
-- azioni a larghezza adeguata;
-- barra inferiore;
-- Libro vivo a schermo intero;
-- scheda Continua prima di tutto;
-- memoria ridotta a tre card verticali;
-- nessun overflow orizzontale.
-
----
-
-# 9. Principio finale
-
-> FABLEA deve mostrare poco, ricordare molto e aprire profondità soltanto quando serve.
-
-Ogni elemento futuro deve dimostrare di migliorare orientamento, comprensione o bellezza. In caso contrario non entra nell’interfaccia.
+> Sono entrato nella homepage di un’app con molte funzioni.
