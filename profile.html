@@ -2,23 +2,27 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>FABLEA | Profili</title>
   <link rel="stylesheet" href="/assets/css/fablea.css">
+  <link rel="stylesheet" href="/assets/css/fablea-shell.css">
+  <link rel="stylesheet" href="/assets/css/fablea-unified.css">
   <script src="/assets/js/fablea-ui.js"></script>
   <script src="/assets/js/fablea-profile.js"></script>
+  <script defer src="/assets/js/fablea-unified-ui.js"></script>
 </head>
-<body class="fablea-page">
+<body class="fablea-page fablea-product" data-world="Magia">
   <main class="page">
     <div class="top">
-      <a class="back" href="/index.html">← Home</a>
+      <a class="brand" href="/index.html">FABLEA</a>
       <div class="badge">Profili famiglia</div>
-      <a class="back" href="/onboarding.html">＋ Aggiungi</a>
+      <a class="back" href="/onboarding.html">Aggiungi</a>
     </div>
 
     <section class="hero">
+      <div class="kicker">Mondi separati, stessa famiglia</div>
       <h1>Chi entra oggi in FABLEA?</h1>
-      <p class="intro">Ogni profilo conserva un mondo, una voce grammaticale, preferenze e memoria indipendenti.</p>
+      <p class="intro">Ogni profilo conserva un mondo, un compagno, preferenze e memoria indipendenti. Cambiare bambino non mescola mai storie o ricordi.</p>
     </section>
 
     <div id="profileArea"></div>
@@ -28,15 +32,25 @@
     const F = FableaProfile;
     const area = document.getElementById('profileArea');
     const worldIcons = {
-      Dinosauri:'🦕', Mare:'🌊', Animali:'🦊', Spazio:'🚀', Magia:'✨', Foresta:'🌲',
-      'Regni e castelli':'🏰', 'Misteri e scoperte':'🔎'
+      Dinosauri:'🦕',Mare:'🌊',Animali:'🦊',Spazio:'🚀',Magia:'✨',Foresta:'🌲',
+      'Regni e castelli':'🏰','Misteri e scoperte':'🔎'
     };
     const styleLabels = {calm:'calmo',adventurous:'avventuroso',funny:'divertente',mysterious:'misterioso',emotional:'emotivo'};
 
-    function selectChild(id, enter = true){
+    function selectChild(id,enter = true){
       F.setSelectedProfile(id);
+      const profile = F.getProfiles().find(item => item.id === id);
+      if(profile && window.FableaUnifiedUI) window.FableaUnifiedUI.applyProfile(profile);
       if(enter) location.href = '/child-hub.html';
       else renderProfiles();
+    }
+
+    function removeFromObjectStorage(key,id){
+      const state = F.readJSON(key,{});
+      if(state && typeof state === 'object' && !Array.isArray(state)){
+        delete state[id];
+        F.writeJSON(key,state);
+      }
     }
 
     function deleteChild(id){
@@ -45,16 +59,20 @@
       if(!profile || !confirm(`Eliminare il profilo di ${profile.name} e la sua memoria locale?`)) return;
 
       F.saveProfiles(profiles.filter(item => item.id !== id));
-      const saved = F.readJSON(F.KEYS.saved, []).filter(story => story.childId !== id);
-      F.writeJSON(F.KEYS.saved, saved);
-      const state = F.readJSON(F.KEYS.memory, {});
-      delete state[id];
-      F.writeJSON(F.KEYS.memory, state);
+      const saved = F.readJSON(F.KEYS.saved,[]).filter(story => story.childId !== id);
+      F.writeJSON(F.KEYS.saved,saved);
+      removeFromObjectStorage(F.KEYS.memory,id);
+      removeFromObjectStorage('fableaWorldStateV3',id);
 
-      const current = F.readJSON('fableaCurrentStory', null);
+      const current = F.readJSON('fableaCurrentStory',null);
       if(current && current.childId === id) localStorage.removeItem('fableaCurrentStory');
-      const prepared = F.readJSON(F.KEYS.prepared, null);
+      const prepared = F.readJSON(F.KEYS.prepared,null);
       if(prepared && prepared.childId === id) localStorage.removeItem(F.KEYS.prepared);
+      const requestV3 = F.readJSON('fableaStoryRequestV3',null);
+      if(requestV3 && requestV3.profile && requestV3.profile.id === id){
+        localStorage.removeItem('fableaStoryRequestV3');
+        localStorage.removeItem('fableaStoryRequestV3QA');
+      }
       if(localStorage.getItem(F.KEYS.selected) === id){
         localStorage.removeItem(F.KEYS.selected);
         const next = F.getProfiles()[0];
@@ -66,18 +84,21 @@
     function renderProfiles(){
       const profiles = F.getProfiles();
       const activeId = localStorage.getItem(F.KEYS.selected);
+      const activeProfile = profiles.find(item => item.id === activeId) || profiles[0];
+      if(activeProfile && window.FableaUnifiedUI) window.FableaUnifiedUI.applyProfile(activeProfile);
+
       if(!profiles.length){
-        area.innerHTML = '<div class="empty"><div class="empty-icon">✨</div><h2>Nessun profilo creato</h2><p>Crea il primo mondo personale FABLEA.</p><a class="button" href="/onboarding.html">Crea profilo bambino</a></div>';
+        area.innerHTML = '<div class="empty"><div class="empty-icon">✨</div><h2>Nessun profilo creato</h2><p>Crea il primo mondo personale FABLEA.</p><a class="button primary" href="/onboarding.html">Crea profilo bambino</a></div>';
         return;
       }
 
       area.innerHTML = `<div class="grid">${profiles.map(profile => {
         const active = profile.id === activeId;
-        return `<article class="child ${active ? 'active' : ''}">
+        return `<article class="child ${active ? 'active' : ''}" data-profile-world="${F.escapeHTML(profile.primaryWorld)}">
           ${active ? '<div class="selected-badge">Profilo selezionato</div>' : ''}
           <div class="avatar">${worldIcons[profile.primaryWorld] || '✨'}</div>
           <h2>${F.escapeHTML(profile.name)}</h2>
-          <div class="meta">${F.escapeHTML(F.ageLabel(profile.age))} • ${F.escapeHTML(profile.primaryWorld)}</div>
+          <div class="meta">${F.escapeHTML(F.ageLabel(profile.age))} · ${F.escapeHTML(profile.primaryWorld)}</div>
           <p>${F.escapeHTML(F.genderLabel(profile.gender))} · stile ${F.escapeHTML(styleLabels[profile.storyStyle] || profile.storyStyle)} · durata ${F.escapeHTML(profile.duration)}</p>
           <div class="tags">
             <span class="tag">${F.escapeHTML(profile.support)}</span>
@@ -92,9 +113,9 @@
         </article>`;
       }).join('')}</div>`;
 
-      area.querySelectorAll('.enter-child').forEach(button => button.addEventListener('click', () => selectChild(button.dataset.childId, true)));
-      area.querySelectorAll('.select-child').forEach(button => button.addEventListener('click', () => selectChild(button.dataset.childId, false)));
-      area.querySelectorAll('.delete-child').forEach(button => button.addEventListener('click', () => deleteChild(button.dataset.childId)));
+      area.querySelectorAll('.enter-child').forEach(button => button.addEventListener('click',() => selectChild(button.dataset.childId,true)));
+      area.querySelectorAll('.select-child').forEach(button => button.addEventListener('click',() => selectChild(button.dataset.childId,false)));
+      area.querySelectorAll('.delete-child').forEach(button => button.addEventListener('click',() => deleteChild(button.dataset.childId)));
     }
 
     renderProfiles();
