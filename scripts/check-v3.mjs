@@ -21,13 +21,17 @@ for(const file of [
   'stories-v2/index.js',
   'assets/js/fablea-story-engine.js',
   'assets/js/fablea-world-state-v3.js',
-  'assets/js/fablea-story-variables-v3.js'
+  'assets/js/fablea-story-variables-v3.js',
+  'assets/js/fablea-story-engine-v3.js',
+  'assets/js/fablea-world-effects-v3.js'
 ]) vm.runInContext(fs.readFileSync(file,'utf8'),context,{filename:file});
 
 const F = window.FableaProfile;
 const E = window.FableaStoryEngine;
 const W = window.FableaWorldStateV3;
 const V3 = window.FableaStoryVariablesV3;
+const E3 = window.FableaStoryEngineV3;
+const Effects = window.FableaWorldEffectsV3;
 const assert = (condition,message) => { if(!condition) throw new Error(message); };
 
 const profile = F.saveProfile({
@@ -52,7 +56,7 @@ assert(state.openThreads.length === 1,'filo aperto legacy non migrato');
 
 const input = {
   mode:'continue',family:'avventura',mood:'Curiosità e voglia di scoprire',duration:'Media',
-  scenario:'Dinosauri',continueStoryId:storyA.id,source:'test'
+  scenario:'Dinosauri',continueStoryId:storyA.id,solution:'observation',ending:'open-thread',source:'test'
 };
 const first = V3.build(profile,input,{worldState:state,persistWorldState:false});
 const second = V3.build(profile,input,{worldState:state,persistWorldState:false});
@@ -72,6 +76,31 @@ assert(saved.id === persisted.id && persisted.id === first.id,'richiesta V3 non 
 assert(!Object.prototype.hasOwnProperty.call(qa,'name'),'snapshot QA espone il nome');
 assert(qa.valid === true,'snapshot QA non segnala validità');
 
+const baseNext = E.buildStory(profile,{family:'avventura',scenario:'Dinosauri',duration:'Breve',mood:'Curiosità e voglia di scoprire'});
+const enriched = E3.apply(baseNext,first);
+assert(enriched.v3 && enriched.v3.requestId === first.id,'adattamento V3 non marcato');
+assert(enriched.pages.length === baseNext.pages.length + 1,'scena di svolta V3 non inserita');
+assert(enriched.pages[0].text.includes(storyA.title),'continuità con la storia precedente non visibile');
+assert(enriched.pages.some(page => page.v3Role === 'turning-point' && page.scene === 'Il dettaglio che mancava'),'soluzione osservativa non applicata');
+assert(enriched.pages.at(-1).v3Role === 'consequence','finale V3 non applicato');
+assert(enriched.v3Consequences.openThreads.length === 1,'filo futuro non creato');
+assert(enriched.wordCount > baseNext.wordCount,'testo V3 non ha modificato la storia');
+assert(E3.apply(enriched,first).pages.length === enriched.pages.length,'adattamento V3 duplicato alla riapertura');
+
+const coCreateRequest = V3.build(profile,{mode:'cocreate',scenario:'Dinosauri',duration:'Breve',ending:'choice',coCreateChoices:3},{worldState:state,persistWorldState:false});
+const coCreated = E3.apply(baseNext,coCreateRequest);
+const choicePage = coCreated.pages.find(page => page.v3Role === 'choice');
+assert(choicePage && choicePage.choices.length === 3,'scelta co-creata non inserita');
+
+const familyRequest = V3.build(profile,{mode:'family',scenario:'Dinosauri',duration:'Breve',presentWith:['mamma','nonno']},{worldState:state,persistWorldState:false});
+const familyStory = E3.apply(baseNext,familyRequest);
+assert(familyStory.pages[0].text.includes('mamma') && familyStory.pages[0].text.includes('nonno'),'partecipanti familiari non entrano nella storia');
+
+const committed = Effects.commit(profile,enriched);
+assert(committed.openThreads.some(thread => thread.sourceStoryId === enriched.id),'conseguenza aperta non salvata nel mondo');
+assert(committed.decisions.length > 0,'decisione narrativa non salvata');
+assert(committed.relationships.length > 0,'relazione col compagno non salvata');
+
 assert(Object.keys(V3.MODES).length >= 9,'modalità V3 incomplete');
 for(const mode of Object.keys(V3.MODES)){
   const request = V3.build(profile,{mode,scenario:'Dinosauri',duration:'Breve'},{worldState:state,persistWorldState:false});
@@ -82,4 +111,11 @@ const secondState = W.get(secondProfile,{legacyMemory:{treasures:['frammento ste
 assert(secondState.childId !== state.childId,'stato V3 condiviso tra profili');
 assert(!secondState.objects.includes('ambra antica'),'memoria V3 contaminata tra profili');
 
-console.log('V3 check completato: schema, determinismo, modalità, sicurezza, memoria selettiva, fallback v2 e separazione profili.');
+const player = fs.readFileSync('story-result.html','utf8');
+const discover = fs.readFileSync('discover.html','utf8');
+const world = fs.readFileSync('world.html','utf8');
+assert(player.includes('E3.apply') && player.includes('W3Effects.commit'),'Libro vivo non applica o non conserva il V3');
+assert(discover.includes('fablea-story-engine-v3.js'),'catalogo editoriale non carica il V3');
+assert(world.includes('Fili ancora aperti') && world.includes('Cose che il mondo ricorda'),'Mondo non mostra le conseguenze V3');
+
+console.log('V3 check completato: schema, memoria selettiva, continuità visibile, svolta, finali, co-creazione, conseguenze persistenti, fallback v2 e separazione profili.');
