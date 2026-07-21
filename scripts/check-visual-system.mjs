@@ -25,10 +25,12 @@ for(const file of publicPages){
 
 const childHub = read('child-hub.html');
 const childHomeCss = read('assets/css/fablea-child-home.css');
+const livingCss = read('assets/css/fablea-living-world.css');
 if(!childHub.includes('/assets/css/fablea-child-home.css')) errors.push('child-hub.html: livello visivo della Casa FABLEA non caricato');
-if(!childHub.includes('class="home-welcome"') || !childHub.includes('class="home-doors"')) errors.push('child-hub.html: struttura Casa FABLEA mancante');
-if(!childHomeCss.includes('grid-template-columns:repeat(4')) errors.push('Casa FABLEA: quattro porte desktop non impaginate');
-if(!childHomeCss.includes('@media(max-width:640px)')) errors.push('Casa FABLEA: layout smartphone mancante');
+if(!childHub.includes('class="home-welcome"') || !childHub.includes('class="home-doors')) errors.push('child-hub.html: struttura Casa FABLEA mancante');
+if(!childHub.includes('living-home-map') || !livingCss.includes('.living-home-map')) errors.push('child-hub.html: mappa viva della Casa mancante');
+if(!childHomeCss.includes('grid-template-columns:repeat(4') && !livingCss.includes('grid-template-columns:repeat(4')) errors.push('Casa FABLEA: quattro porte desktop non impaginate');
+if(!childHomeCss.includes('@media(max-width:640px)') && !livingCss.includes('@media(max-width:640px)')) errors.push('Casa FABLEA: layout smartphone mancante');
 
 const onboarding = read('onboarding.html');
 const createChild = read('create-child.html');
