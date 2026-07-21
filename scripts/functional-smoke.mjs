@@ -73,21 +73,26 @@ const createChild = fs.readFileSync('create-child.html','utf8');
 const creator = fs.readFileSync('story.html','utf8');
 const guidedCreator = fs.readFileSync('assets/js/fablea-guided-creator.js','utf8');
 const player = fs.readFileSync('story-result.html','utf8');
+const unified = fs.readFileSync('assets/js/fablea-unified-ui.js','utf8');
+const betaState = fs.readFileSync('assets/js/fablea-beta-state.js','utf8');
 const hub = fs.readFileSync('child-hub.html','utf8');
 const discover = fs.readFileSync('discover.html','utf8');
 const worldPage = fs.readFileSync('world.html','utf8');
 const library = fs.readFileSync('library.html','utf8');
 const play = fs.readFileSync('play.html','utf8');
 const learn = fs.readFileSync('learn.html','utf8');
+const parent = fs.readFileSync('parent-area.html','utf8');
 
+assert(onboarding === createChild,'i due ingressi di creazione profilo non coincidono');
 assert(onboarding.includes('F.KEYS.prepared') && onboarding.includes("location.assign('/child-hub.html?welcome=1')"),'onboarding non prepara la storia o non entra nella Casa');
-assert(createChild.includes('F.KEYS.prepared') && createChild.includes("location.assign('/child-hub.html?welcome=1')"),'create-child non prepara la storia o non entra nella Casa');
 for(const [fileName,html] of [['onboarding.html',onboarding],['create-child.html',createChild]]){
   assert(html.includes("const nameInput = document.getElementById('name')"),`${fileName}: riferimento esplicito al campo nome mancante`);
-  assert(html.includes("const formEl = document.getElementById('profileForm')"),`${fileName}: riferimento esplicito al form mancante`);
+  assert(html.includes("const form = document.getElementById('profileForm')"),`${fileName}: riferimento esplicito al form mancante`);
   assert(!/\bname\.value\b/.test(html),`${fileName}: collisione con window.name reintrodotta`);
-  assert(html.includes("formEl.addEventListener('submit'"),`${fileName}: submit handler non collegato al form reale`);
+  assert(html.includes("form.addEventListener('submit'"),`${fileName}: submit handler non collegato al form reale`);
   assert(html.includes('companionVisual'),`${fileName}: compagno visuale non salvato`);
+  assert(html.includes('data-stage="1"') && html.includes('data-stage="2"') && html.includes('data-stage="3"'),`${fileName}: onboarding in tre passaggi mancante`);
+  assert(html.includes('<option value="" selected disabled>Seleziona</option>') && html.includes('>Maschio<') && html.includes('>Femmina<'),`${fileName}: campo Sesso non conforme`);
 }
 assert(creator.includes('id="guidedCreator"') && creator.includes('/assets/js/fablea-guided-creator.js'),'story creator guidato non caricato');
 assert(creator.includes('data-fablea-companion'),'story creator non mostra il compagno persistente');
@@ -95,13 +100,17 @@ assert(guidedCreator.includes('Da questo momento') && guidedCreator.includes('Da
 assert(guidedCreator.includes('V3.buildAndSave(profile,input)'),'creator guidato non collegato al V3');
 assert(player.includes("fetch('/api/tts'") && player.includes('fableaReopenStory'),'contratto TTS o riapertura mancanti');
 assert(player.includes('resumePage') && player.includes('Conserva nel suo mondo'),'ripresa o memoria rituale mancanti');
+assert(unified.includes('/assets/js/fablea-story-continuity.js'),'Libro vivo non carica il ponte verso la prossima attività');
 assert(hub.includes('Leggiamo') && hub.includes('Inventiamo') && hub.includes('Giochiamo') && hub.includes('Scopriamo'),'Casa FABLEA incompleta');
+assert(hub.includes('recommendation') && hub.includes('Il mondo è cambiato'),'Casa non usa la proposta contestuale o la traccia visuale');
 assert(play.includes('data-activity="play"') && learn.includes('data-activity="learn"'),'ambienti gioco o scoperta mancanti');
-for(const [fileName,html,active] of [['child-hub.html',hub,'continue'],['discover.html',discover,'discover'],['world.html',worldPage,'world'],['library.html',library,'library']]){
-  assert(html.includes('/assets/js/fablea-shell.js'),`${fileName}: helper shell mancante`);
-  assert(html.includes(`S.renderDock('${active}')`),`${fileName}: destinazione dock errata`);
-}
+assert(play.includes('fablea-activity-route.js') && learn.includes('fablea-activity-route.js'),'attività non apribili da una storia');
 assert(discover.includes('S.openCatalogStory') && discover.includes('data-story-id'),'Scopri non apre storie editoriali reali');
-assert(worldPage.includes('F.getMemory(profile)') && worldPage.includes('S.savedFor(profile)'),'Mondo non legge memoria e storie reali');
+assert(discover.includes('beta-editorial-details') && !discover.includes('editorial-source'),'Biblioteca bambino non separa i dettagli editoriali');
+assert(worldPage.includes('B.summary(profile)') && worldPage.includes('B.activity(profile)'),'Mondo non legge memoria e attività integrate');
+assert(worldPage.includes('beta-continuity') && worldPage.includes('Stanza dei ricordi'),'Mondo non mostra continuità e ricordi');
+assert(library.includes('/assets/js/fablea-shell.js') && library.includes("S.renderDock('library')"),'Libreria personale non conserva la shell');
+assert(parent.includes('Crea un PIN locale') && parent.includes('Non è una pagella'),'Area genitore o principio non competitivo mancanti');
+assert(betaState.includes('function recommendation(') && betaState.includes('function artifact('),'motore beta di continuità incompleto');
 
-console.log('Smoke completato: profili, Casa FABLEA, compagno illustrato, attività per età, storie, creator V3, memoria e TTS.');
+console.log('Smoke completato: profili, onboarding breve, Casa contestuale, compagno, attività, storie, creator V3, continuità, area genitore e TTS.');

@@ -10,6 +10,7 @@ const engine = read('assets/js/fablea-activities.js');
 const play = read('play.html');
 const learn = read('learn.html');
 const world = read('world.html');
+const betaState = read('assets/js/fablea-beta-state.js');
 const css = read('assets/css/fablea-activities.css');
 
 const context = {window:{}};
@@ -50,6 +51,7 @@ for(const [fileName,html] of [['play.html',play],['learn.html',learn]]){
   expect(html.includes('/assets/js/fablea-activity-catalog.js'),`${fileName}: catalogo non caricato`);
   expect(html.indexOf('fablea-activity-catalog.js') < html.indexOf('fablea-activities.js'),`${fileName}: ordine script errato`);
   expect(html.includes('Scegli il percorso'),`${fileName}: ingresso ai percorsi mancante`);
+  expect(html.includes('fablea-activity-route.js'),`${fileName}: ingresso diretto da una storia mancante`);
 }
 
 expect(engine.includes("const SESSION_SIZE = 4"),'Motore: sessione da quattro tappe mancante');
@@ -61,8 +63,8 @@ expect(engine.includes('FABLEA fuori dallo schermo') && engine.includes('mission
 expect(engine.includes('Nessun voto e nessuna classifica'),'Motore: principio non competitivo mancante');
 expect(!/leaderboard|punteggio|classifica generale|confronta con/i.test(catalogCode),'Catalogo: meccanica competitiva rilevata');
 
-expect(world.includes("F.readJSON('fableaActivityProgress',{})"),'Mondo: avanzamento attività non letto');
-expect(world.includes('Percorsi esplorati') && world.includes('FABLEA fuori dallo schermo'),'Mondo: tracce delle attività incomplete');
+expect(betaState.includes("read('fableaActivityProgress',{})") && world.includes('B.activity(profile)'),'Mondo: avanzamento attività non collegato alla memoria integrata');
+expect(world.includes('Capacità incontrate') && world.includes('Fuori dallo schermo'),'Mondo: tracce delle attività incomplete');
 expect(css.includes('.activity-route-grid') && css.includes('.activity-order') && css.includes('.activity-real-mission'),'CSS: nuovi percorsi o interazioni non stilizzati');
 expect(css.includes('@media(max-width:390px)'),'CSS: adattamento per iPhone stretti mancante');
 

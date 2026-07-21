@@ -1,0 +1,35 @@
+name: FABLEA integrated beta quality
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  integrated-beta:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install
+        run: npm install --ignore-scripts
+
+      - name: JavaScript syntax
+        run: npm run check:js
+
+      - name: Integrated beta product audit
+        run: npm run check:beta
+
+      - name: Functional smoke
+        run: npm run check:smoke
+
+      - name: Security baseline
+        run: npm run check:security

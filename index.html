@@ -3,116 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>FABLEA | Un mondo che cresce</title>
+  <title>FABLEA | Il mondo personale che cresce</title>
+  <meta name="description" content="Un mondo personale nel quale ogni bambino può leggere, inventare, giocare e scoprire. Le esperienze continuano e lasciano tracce.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/fablea.css">
   <link rel="stylesheet" href="/assets/css/fablea-unified.css">
   <link rel="stylesheet" href="/assets/css/fablea-public.css">
-  <script src="/assets/js/fablea-ui.js"></script>
+  <link rel="stylesheet" href="/assets/css/fablea-beta.css">
+  <script src="/assets/js/fablea-profile.js"></script>
+  <script src="/assets/js/fablea-beta-state.js"></script>
 </head>
-<body class="fablea-public">
-  <main class="home-shell">
-    <section class="home-copy">
-      <div class="badge">Storie, pensiero e tempo condiviso</div>
+<body class="beta-page">
+  <div class="beta-frame">
+    <header class="beta-top">
+      <a class="beta-brand" href="/index.html">FABLEA</a>
+      <nav class="beta-nav" aria-label="Navigazione principale">
+        <a href="#ecosistema">Ecosistema</a>
+        <a href="#famiglia">Per la famiglia</a>
+        <a href="#prezzi">Prezzi</a>
+        <a class="always" href="/profile.html">Profili</a>
+      </nav>
+    </header>
 
-      <div class="cast-wordmark" role="img" aria-label="FABLEA, un mondo abitato da personaggi e storie">
-        <span class="cast-letter">F</span>
-        <span class="cast-letter">A</span>
-        <span class="cast-letter">B</span>
-        <span class="cast-letter">L</span>
-        <span class="cast-letter">E</span>
-        <span class="cast-letter">A</span>
+    <main>
+      <section class="beta-public-hero beta-public-hero--compact">
+        <div class="beta-public-copy">
+          <h1 class="beta-display">Un mondo personale per crescere, creare e imparare.</h1>
+          <p class="beta-lead">Storie, gioco, creatività e scoperte si incontrano in un unico spazio che conosce il bambino e cresce insieme a lui.</p>
+          <div class="beta-actions">
+            <a class="beta-button primary" id="primaryCta" href="/onboarding.html">Inizia 15 giorni di prova</a>
+            <a class="beta-button secondary" href="#ecosistema">Scopri FABLEA</a>
+          </div>
+          <p class="beta-note" id="trialNote">Prova completa di 15 giorni. Poi 5,99 € al mese oppure 59,90 € l’anno.</p>
+        </div>
+        <aside class="beta-world-demo beta-world-demo--compact beta-portal-scene" aria-label="Anteprima dell’ecosistema FABLEA">
+          <div class="beta-sky-trail" aria-hidden="true"></div>
+          <div class="beta-portal" aria-hidden="true"><span></span></div>
+          <div class="beta-scene-path" aria-hidden="true"></div>
+          <div class="beta-demo-core"><small>Il suo mondo</small><strong>Ogni esperienza apre una nuova strada.</strong><p>Storie · creatività · gioco · scoperte</p></div>
+        </aside>
+      </section>
 
-        <span class="cast-character cast-princess" aria-hidden="true">
-          <svg viewBox="0 0 90 110" focusable="false">
-            <path class="character-shadow" d="M17 96c14-8 42-8 56 0"/>
-            <path class="dress" d="M45 48c-12 12-20 27-23 46h46c-3-19-11-34-23-46Z"/>
-            <circle class="skin" cx="45" cy="34" r="15"/>
-            <path class="hair" d="M29 34c0-19 33-24 34 1-7-3-10-10-12-16-4 8-12 13-22 15Z"/>
-            <path class="crown" d="M32 17l6-10 7 9 8-10 6 12Z"/>
-            <path class="detail" d="M38 34h1m12 0h1M41 42c3 2 6 2 9 0"/>
-            <path class="wand" d="M66 49l13-18m-5-2 10 4m-3-8-4 11"/>
-          </svg>
-        </span>
+      <section class="beta-section beta-section--compact" id="ecosistema">
+        <div class="beta-section-head">
+          <div class="beta-eyebrow">Un unico ecosistema</div>
+          <h2 class="beta-title">Non soltanto fiabe.</h2>
+          <p class="beta-lead">Le storie sono la porta d’ingresso. Intorno vivono creatività, gioco, conoscenza e, in futuro, un aiuto protetto per la scuola.</p>
+        </div>
+        <div class="beta-ecosystem-grid">
+          <article class="beta-card beta-feature beta-feature--stories"><div class="beta-feature-icon">01</div><h3>Storie</h3><p>Leggere, ascoltare e vivere racconti adatti all’età.</p></article>
+          <article class="beta-card beta-feature beta-feature--create"><div class="beta-feature-icon">02</div><h3>Crea</h3><p>Inventare personaggi, mondi e nuove avventure.</p></article>
+          <article class="beta-card beta-feature beta-feature--play"><div class="beta-feature-icon">03</div><h3>Gioca</h3><p>Allenare parole, logica e memoria senza classifiche.</p></article>
+          <article class="beta-card beta-feature beta-feature--learn"><div class="beta-feature-icon">04</div><h3>Impara</h3><p>Esplorare natura, numeri, linguaggio e curiosità.</p></article>
+          <article class="beta-card beta-feature beta-feature--future"><div><span class="beta-pill">In sviluppo</span><div class="beta-feature-icon">✎</div><h3>Scuola</h3><p>Un aiuto a casa che spiega e guida, senza fare i compiti al posto del bambino.</p></div></article>
+        </div>
+      </section>
 
-        <span class="cast-character cast-dino" aria-hidden="true">
-          <svg viewBox="0 0 110 90" focusable="false">
-            <path class="character-shadow" d="M17 77c23-7 57-6 78 1"/>
-            <path class="dino-body" d="M31 62c0-24 18-39 41-31 13 5 17 17 11 27-8 14-36 16-52 4Z"/>
-            <path class="dino-body" d="M75 37c9-16 26-17 29-7 3 9-7 18-23 20"/>
-            <path class="dino-body" d="M33 55 10 69c12 1 22-1 31-7"/>
-            <path class="dino-spike" d="M43 31l5-10 7 9 7-10 6 11"/>
-            <circle class="dino-spot" cx="48" cy="48" r="4"/>
-            <circle class="dino-spot" cx="62" cy="57" r="3"/>
-            <circle class="eye" cx="91" cy="31" r="2.5"/>
-            <path class="detail" d="M92 40c4 2 7 2 10 0"/>
-          </svg>
-        </span>
+      <section class="beta-card beta-family-strip" id="famiglia">
+        <div><div class="beta-eyebrow">Pensato per la famiglia</div><h2>Il bambino esplora. Il genitore mantiene il controllo.</h2></div>
+        <p>Ogni bambino segue un percorso personale, mentre il genitore accompagna l’esperienza e ne gestisce con semplicità preferenze e progressi.</p>
+      </section>
 
-        <span class="cast-character cast-robot" aria-hidden="true">
-          <svg viewBox="0 0 88 108" focusable="false">
-            <path class="character-shadow" d="M14 97c17-7 44-7 61 0"/>
-            <path class="robot-head" d="M20 20h48v37H20z"/>
-            <path class="robot-body" d="M27 61h34v31H27z"/>
-            <path class="robot-limb" d="M20 67 8 81m60-14 12 14M35 92l-5 10m23-10 5 10"/>
-            <path class="antenna" d="M44 20V9"/>
-            <circle class="robot-light" cx="44" cy="6" r="4"/>
-            <circle class="robot-eye" cx="33" cy="38" r="4"/>
-            <circle class="robot-eye" cx="55" cy="38" r="4"/>
-            <path class="detail" d="M35 48h18M37 70h14v10H37z"/>
-          </svg>
-        </span>
+      <section class="beta-section beta-section--compact" id="prezzi">
+        <div class="beta-section-head"><div class="beta-eyebrow">Una sola qualità completa</div><h2 class="beta-title">Semplice, senza livelli artificiali.</h2></div>
+        <div class="beta-pricing beta-pricing--compact">
+          <article class="beta-card beta-price-card"><div class="beta-pill">Mensile</div><div class="beta-price">5,99 € <small>al mese</small></div></article>
+          <article class="beta-card beta-price-card"><div class="beta-pill">Annuale</div><div class="beta-price">59,90 € <small>all’anno</small></div></article>
+        </div>
+      </section>
+    </main>
 
-        <span class="cast-character cast-fairy" aria-hidden="true">
-          <svg viewBox="0 0 100 112" focusable="false">
-            <path class="fairy-wing" d="M42 46C19 25 10 51 34 65M58 46c23-21 32 5 8 19"/>
-            <circle class="skin" cx="50" cy="32" r="13"/>
-            <path class="hair" d="M37 32c1-18 29-20 29 2-9-4-13-10-15-16-3 8-7 12-14 14Z"/>
-            <path class="fairy-dress" d="M50 45 35 82h30Z"/>
-            <path class="detail" d="M45 32h1m8 0h1M46 39c3 2 5 2 8 0"/>
-            <path class="fairy-wand" d="M66 59 83 40m-2-6v12m-6-6h12"/>
-            <circle class="fairy-light" cx="84" cy="39" r="7"/>
-          </svg>
-        </span>
-      </div>
-
-      <h1 class="hero-question">Che storia facciamo oggi?</h1>
-      <div class="subtitle">Una già pronta, una tutta nuova o la continuazione di ieri.</div>
-      <div class="description">In FABLEA personaggi, luoghi e avventure crescono insieme al bambino. Il mondo ricorda ciò che è successo e domani può ripartire proprio da lì.</div>
-      <div class="actions">
-        <a class="button" id="primaryCta" href="/create-child.html">Entra nel suo mondo</a>
-        <a class="button secondary" id="switchExplorer" href="/profile.html" hidden>Cambia profilo</a>
-      </div>
-      <div class="menu" aria-label="Navigazione principale">
-        <a href="/profile.html">Profili</a>
-        <a href="/library.html">Libreria</a>
-        <a href="/about.html">Manifesto</a>
-      </div>
-    </section>
-
-    <section class="home-visual" aria-label="Il libro-mondo FABLEA">
-      <div class="moon-orbit"></div>
-      <div class="story-thread"></div>
-      <p>Qui vivono le storie già raccontate. E quelle che devono ancora nascere.</p>
-    </section>
-
-    <div class="footer">Per bambini da 2 a 12 anni · Una sola qualità completa · Nessuna pubblicità</div>
-  </main>
+    <footer class="beta-top" style="border-top:1px solid var(--beta-line);margin-top:34px">
+      <span class="beta-note">FABLEA · Prototipo beta locale</span>
+      <nav class="beta-nav"><a class="always" href="/family-settings.html">Dati e sicurezza</a><a class="always" href="/parent-area.html">Area genitore</a></nav>
+    </footer>
+  </div>
 
   <script>
-    function getProfiles(){
-      try{return JSON.parse(localStorage.getItem('fableaChildProfiles') || '[]');}catch(_error){return [];}
-    }
-    const profiles = getProfiles();
-    const selectedId = localStorage.getItem('fableaSelectedChildId');
-    const selected = profiles.find(profile => profile.id === selectedId) || profiles[0];
-    const cta = document.getElementById('primaryCta');
-    const switcher = document.getElementById('switchExplorer');
-    if(selected){
-      localStorage.setItem('fableaSelectedChildId',selected.id);
-      cta.href = '/child-hub.html';
-      cta.textContent = `Continua con ${selected.name || 'il mondo scelto'}`;
-      switcher.hidden = false;
-    }
+    (() => {
+      const B = window.FableaBetaState;
+      const F = window.FableaProfile;
+      const selected = F && F.getSelectedProfile ? F.getSelectedProfile() : null;
+      const cta = document.getElementById('primaryCta');
+      const note = document.getElementById('trialNote');
+      const trial = B && B.trialStatus ? B.trialStatus() : null;
+      if(selected){
+        cta.href = '/child-hub.html';
+        cta.textContent = `Continua con ${selected.name || 'il mondo scelto'}`;
+      }
+      if(trial && !trial.active) note.textContent = 'La prova locale è terminata. Il checkout non è ancora attivo in questa beta.';
+      else if(trial) note.textContent = `${trial.remainingDays} giorni di prova completa rimasti su questo dispositivo. Poi 5,99 € al mese oppure 59,90 € l’anno.`;
+    })();
   </script>
 </body>
 </html>

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>FABLEA | Area genitore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/fablea.css">
+  <link rel="stylesheet" href="/assets/css/fablea-unified.css">
+  <link rel="stylesheet" href="/assets/css/fablea-beta.css">
+  <script src="/assets/js/fablea-profile.js"></script>
+  <script src="/assets/js/fablea-beta-state.js"></script>
+  <script src="/assets/js/fablea-platform-adapters.js"></script>
+</head>
+<body class="beta-page">
+  <div class="beta-frame">
+    <header class="beta-top">
+      <a class="beta-brand" href="/index.html">FABLEA</a>
+      <div class="beta-pill">Area genitore</div>
+      <nav class="beta-nav"><a href="/profile.html">Profili</a><a href="/family-settings.html">Dati</a><a class="always" href="/child-hub.html">Casa</a></nav>
+    </header>
+    <main id="root"></main>
+  </div>
+
+  <script>
+    (() => {
+      'use strict';
+      const F = window.FableaProfile;
+      const B = window.FableaBetaState;
+      const P = window.FableaPlatform;
+      const root = document.getElementById('root');
+      let selectedId = localStorage.getItem(F.KEYS.selected) || (F.getProfiles()[0] && F.getProfiles()[0].id) || '';
+
+      function gate(){
+        const hasPin = B.hasParentPin();
+        root.innerHTML = `<section class="beta-card beta-parent-gate">
+          <div class="beta-eyebrow">Controllo adulto sul dispositivo</div>
+          <h1 class="beta-title">${hasPin ? 'Inserisci il PIN.' : 'Crea un PIN locale.'}</h1>
+          <p class="beta-lead">${hasPin ? 'Serve per separare quest’area dalla Casa del bambino.' : 'Scegli da 4 a 6 cifre. Il PIN protegge soltanto l’accesso su questo browser: non è ancora un account genitore.'}</p>
+          <div class="beta-pin-row"><input id="parentPin" type="password" inputmode="numeric" maxlength="6" autocomplete="off" aria-label="PIN genitore"><button class="beta-button primary" id="pinAction" type="button">${hasPin ? 'Entra' : 'Crea PIN'}</button></div>
+          <p class="beta-note" id="pinStatus" aria-live="polite"></p>
+        </section>`;
+        const input = document.getElementById('parentPin');
+        const status = document.getElementById('pinStatus');
+        document.getElementById('pinAction').addEventListener('click',async () => {
+          try{
+            const pin = input.value.trim();
+            const valid = hasPin ? await B.verifyParentPin(pin) : await B.setParentPin(pin);
+            if(!valid){status.textContent = 'PIN non corretto.';return;}
+            sessionStorage.setItem('fableaParentUnlocked','1');
+            renderDashboard();
+          }catch(error){status.textContent = error.message || 'Non è stato possibile usare il PIN.';}
+        });
+        input.addEventListener('keydown',event => {if(event.key === 'Enter') document.getElementById('pinAction').click();});
+        input.focus();
+      }
+
+      function selectedProfile(){return F.getProfiles().find(item => item.id === selectedId) || F.getProfiles()[0] || null;}
+
+      function renderDashboard(){
+        const profiles = F.getProfiles();
+        if(!profiles.length){
+          root.innerHTML = `<section class="beta-card beta-parent-gate"><h1 class="beta-title">Nessun profilo creato.</h1><p class="beta-lead">Crea il primo mondo per aprire il riepilogo familiare.</p><a class="beta-button primary" href="/onboarding.html">Crea profilo</a></section>`;
+          return;
+        }
+        const profile = selectedProfile();
+        selectedId = profile.id;
+        F.setSelectedProfile(profile.id);
+        const summary = B.summary(profile);
+        const trial = B.trialStatus();
+        const capabilities = B.capabilities();
+        const styleLabels = {calm:'Calmo',adventurous:'Avventuroso',funny:'Divertente',mysterious:'Misterioso',emotional:'Emotivo'};
+        const interests = new Set(Array.isArray(profile.interests) ? profile.interests : []);
+
+        root.innerHTML = `
+          <section class="beta-parent-layout">
+            <aside class="beta-card beta-parent-sidebar">
+              <div class="beta-eyebrow">Famiglia</div>
+              <h1 style="font:700 2.7rem/1 'Cormorant Garamond',serif;margin:10px 0">Profili</h1>
+              <div class="beta-parent-profile-list">${profiles.map(item => `<button class="beta-parent-profile ${item.id === profile.id ? 'active' : ''}" type="button" data-profile-id="${F.escapeHTML(item.id)}">${F.escapeHTML(item.name)} · ${F.escapeHTML(F.ageLabel(item.age))}</button>`).join('')}</div>
+              <div class="beta-actions"><a class="beta-button secondary" href="/onboarding.html">＋ Aggiungi profilo</a><button class="beta-button secondary" id="lockParent" type="button">Blocca area</button></div>
+              <p class="beta-note">Il PIN è un filtro locale. Account e autenticazione reale arriveranno prima della beta pubblica.</p>
+            </aside>
+
+            <section class="beta-card beta-parent-main">
+              <div class="beta-eyebrow">Riepilogo di ${F.escapeHTML(profile.name)}</div>
+              <h1 class="beta-title">Ciò che sta esplorando.</h1>
+              <p class="beta-lead">Non è una pagella: mostra soltanto esperienze, interessi e capacità incontrate.</p>
+
+              <div class="beta-stat-grid">
+                <div class="beta-stat"><strong>${summary.storyCount}</strong><span>storie vissute</span></div>
+                <div class="beta-stat"><strong>${summary.activityCount}</strong><span>percorsi completati</span></div>
+                <div class="beta-stat"><strong>${summary.playCount}</strong><span>sentieri di gioco</span></div>
+                <div class="beta-stat"><strong>${summary.learnCount}</strong><span>laboratori</span></div>
+              </div>
+
+              <section class="beta-parent-section">
+                <h2>Capacità incontrate</h2>
+                <div class="beta-trace-strip">${summary.skills.length ? summary.skills.map(skill => `<span class="beta-trace">${F.escapeHTML(skill)}</span>`).join('') : '<span class="beta-note">Nessun percorso ancora completato.</span>'}</div>
+                ${summary.lastMission ? `<p class="beta-note"><strong>Ultima missione fuori dallo schermo:</strong> ${F.escapeHTML(summary.lastMission)}</p>` : ''}
+              </section>
+
+              <section class="beta-parent-section">
+                <h2>Preferenze del mondo</h2>
+                <form id="preferencesForm">
+                  <div class="beta-form-grid">
+                    <div class="beta-field"><label for="duration">Durata abituale</label><select id="duration">${F.DURATIONS.map(value => `<option ${value === profile.duration ? 'selected' : ''}>${F.escapeHTML(value)}</option>`).join('')}</select></div>
+                    <div class="beta-field"><label for="storyStyle">Stile narrativo</label><select id="storyStyle">${Object.entries(styleLabels).map(([value,label]) => `<option value="${value}" ${value === profile.storyStyle ? 'selected' : ''}>${label}</option>`).join('')}</select></div>
+                    <div class="beta-field wide"><label for="support">Che cosa dovrebbe sostenere FABLEA?</label><select id="support">${F.SUPPORTS.map(value => `<option ${value === profile.support ? 'selected' : ''}>${F.escapeHTML(value)}</option>`).join('')}</select></div>
+                    <div class="beta-field wide"><label>Interessi secondari</label><div class="beta-filter-row">${F.WORLDS.filter(world => world !== profile.primaryWorld).map(world => `<button class="beta-filter ${interests.has(world) ? 'active' : ''}" type="button" data-interest="${F.escapeHTML(world)}" aria-pressed="${interests.has(world)}">${F.escapeHTML(world)}</button>`).join('')}</div></div>
+                  </div>
+                  <div class="beta-actions"><button class="beta-button primary" type="submit">Salva preferenze</button><span class="beta-note" id="preferenceStatus" aria-live="polite"></span></div>
+                </form>
+              </section>
+
+              <section class="beta-parent-section">
+                <h2>Prova e abbonamento</h2>
+                <p class="beta-lead" style="font-size:1rem">${trial.active ? `${trial.remainingDays} giorni di prova completa rimasti su questo dispositivo.` : 'La prova locale risulta terminata.'}</p>
+                <div class="beta-trace-strip"><span class="beta-trace">${trial.monthlyPrice} / mese</span><span class="beta-trace">${trial.annualPrice} / anno</span></div>
+                <button class="beta-button secondary" type="button" disabled>Checkout non ancora attivo</button>
+              </section>
+
+              <section class="beta-parent-section">
+                <h2>Stato della piattaforma</h2>
+                <div class="beta-capability-list">
+                  ${Object.values(capabilities).filter(item => item && item.label).map(item => `<div class="beta-capability"><span>${F.escapeHTML(item.label)}</span><span class="${item.enabled ? 'beta-status-on' : 'beta-status-off'}">${item.enabled ? 'Attivo' : 'Da collegare'}</span></div>`).join('')}
+                </div>
+                <div class="beta-actions"><a class="beta-button secondary" href="/family-settings.html">Esporta o cancella dati</a><a class="beta-button secondary" href="/profile.html">Gestisci profili</a></div>
+              </section>
+            </section>
+          </section>`;
+
+        root.querySelectorAll('[data-profile-id]').forEach(button => button.addEventListener('click',() => {selectedId = button.dataset.profileId;renderDashboard();}));
+        root.querySelectorAll('[data-interest]').forEach(button => button.addEventListener('click',() => {
+          const value = button.dataset.interest;
+          if(interests.has(value)) interests.delete(value); else interests.add(value);
+          button.classList.toggle('active',interests.has(value));
+          button.setAttribute('aria-pressed',String(interests.has(value)));
+        }));
+        document.getElementById('preferencesForm').addEventListener('submit',event => {
+          event.preventDefault();
+          F.saveProfile({...profile,duration:document.getElementById('duration').value,storyStyle:document.getElementById('storyStyle').value,support:document.getElementById('support').value,interests:[...interests],updatedAt:new Date().toISOString()});
+          document.getElementById('preferenceStatus').textContent = 'Preferenze salvate.';
+          B.reconcile(profile);
+        });
+        document.getElementById('lockParent').addEventListener('click',() => {sessionStorage.removeItem('fableaParentUnlocked');gate();});
+      }
+
+      B.migrate();
+      if(P) P.describe();
+      if(sessionStorage.getItem('fableaParentUnlocked') === '1') renderDashboard(); else gate();
+    })();
+  </script>
+</body>
+</html>

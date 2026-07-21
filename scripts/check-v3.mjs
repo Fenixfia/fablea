@@ -116,6 +116,7 @@ const discover = fs.readFileSync('discover.html','utf8');
 const world = fs.readFileSync('world.html','utf8');
 assert(player.includes('E3.apply') && player.includes('W3Effects.commit'),'Libro vivo non applica o non conserva il V3');
 assert(discover.includes('fablea-story-engine-v3.js'),'catalogo editoriale non carica il V3');
-assert(world.includes('Fili ancora aperti') && world.includes('Cose che il mondo ricorda'),'Mondo non mostra le conseguenze V3');
+assert(world.includes('Fili ancora aperti') && world.includes('Scelte ricordate'),'Mondo non mostra le conseguenze V3');
+assert(world.includes('beta-continuity') && world.includes('Stanza dei ricordi'),'Mondo non collega conseguenze, ricordi e prossima porta');
 
 console.log('V3 check completato: schema, memoria selettiva, continuità visibile, svolta, finali, co-creazione, conseguenze persistenti, fallback v2 e separazione profili.');

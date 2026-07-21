@@ -7,29 +7,28 @@
   <link rel="stylesheet" href="/assets/css/fablea.css">
   <link rel="stylesheet" href="/assets/css/fablea-shell.css">
   <link rel="stylesheet" href="/assets/css/fablea-unified.css">
+  <link rel="stylesheet" href="/assets/css/fablea-beta.css">
   <script src="/assets/js/fablea-ui.js"></script>
   <script src="/assets/js/fablea-profile.js"></script>
   <script defer src="/assets/js/fablea-unified-ui.js"></script>
 </head>
-<body class="fablea-page fablea-product" data-world="FABLEA">
-  <main class="page">
-    <div class="top">
-      <a class="brand" href="/index.html">FABLEA</a>
-      <div class="badge">Profili famiglia</div>
-      <a class="back" href="/onboarding.html">Aggiungi</a>
-    </div>
+<body class="beta-page beta-profile-page" data-world="FABLEA">
+  <div class="beta-frame">
+    <header class="beta-top">
+      <a class="beta-brand" href="/index.html">FABLEA</a>
+      <div class="beta-pill">Famiglia</div>
+      <nav class="beta-nav"><a href="/family-settings.html">Impostazioni</a><a class="always beta-button secondary" href="/onboarding.html">＋ Aggiungi</a></nav>
+    </header>
 
-    <section class="hero">
-      <div class="kicker">Mondi separati, stessa famiglia</div>
-      <h1>Chi entra oggi in FABLEA?</h1>
-      <p class="intro">Ogni profilo conserva un mondo, un compagno, preferenze e memoria indipendenti. Cambiare bambino non mescola mai storie o ricordi.</p>
-      <div class="actions">
-        <a class="button secondary" href="/family-settings.html">Dati e famiglia</a>
-      </div>
-    </section>
-
-    <div id="profileArea"></div>
-  </main>
+    <main>
+      <section class="beta-profile-intro">
+        <div class="beta-eyebrow">Ogni bambino, il suo mondo</div>
+        <h1 class="beta-title">Scegli chi entra.</h1>
+        <p class="beta-lead">Storie, attività e ricordi restano personali. Se c’è un solo profilo, puoi entrare direttamente nella sua Casa.</p>
+      </section>
+      <div id="profileArea"></div>
+    </main>
+  </div>
 
   <script>
     const F = FableaProfile;
@@ -95,30 +94,28 @@
       }
 
       if(!profiles.length){
-        area.innerHTML = '<div class="empty"><div class="empty-icon">✨</div><h2>Nessun profilo creato</h2><p>Crea il primo mondo personale FABLEA.</p><a class="button primary" href="/onboarding.html">Crea profilo bambino</a></div>';
+        area.innerHTML = '<section class="beta-card beta-profile-empty"><div class="beta-eyebrow">La prima porta</div><h2>Crea il primo mondo.</h2><p>Servono solo pochi passaggi per preparare una Casa personale.</p><a class="beta-button primary" href="/onboarding.html">Crea il primo profilo</a></section>';
         return;
       }
 
-      area.innerHTML = `<div class="grid">${profiles.map(profile => {
+      area.innerHTML = `<div class="beta-profile-grid">${profiles.map(profile => {
         const active = profile.id === activeId;
-        return `<article class="child ${active ? 'active' : ''}" data-profile-world="${F.escapeHTML(profile.primaryWorld)}">
-          ${active ? '<div class="selected-badge">Profilo selezionato</div>' : ''}
-          <div class="avatar">${worldIcons[profile.primaryWorld] || '✨'}</div>
-          <h2>${F.escapeHTML(profile.name)}</h2>
-          <div class="meta">${F.escapeHTML(F.ageLabel(profile.age))} · ${F.escapeHTML(profile.primaryWorld)}</div>
-          <p>${F.escapeHTML(sexLabel(profile.gender))} · stile ${F.escapeHTML(styleLabels[profile.storyStyle] || profile.storyStyle)} · durata ${F.escapeHTML(profile.duration)}</p>
-          <div class="tags">
-            <span class="tag">${F.escapeHTML(profile.support)}</span>
-            ${(profile.interests || []).map(item => `<span class="tag">${F.escapeHTML(item)}</span>`).join('')}
-            ${profile.favoriteCompanion ? `<span class="tag">Compagno: ${F.escapeHTML(profile.favoriteCompanion)}</span>` : ''}
+        return `<article class="beta-card beta-profile-card ${active ? 'active' : ''}" data-profile-world="${F.escapeHTML(profile.primaryWorld)}">
+          <div class="beta-profile-glow" aria-hidden="true"></div>
+          <div class="beta-profile-head">
+            <div class="beta-profile-avatar">${worldIcons[profile.primaryWorld] || '✨'}</div>
+            ${active ? '<div class="beta-pill">In uso</div>' : ''}
           </div>
-          <div class="child-actions">
-            <button class="small-button enter-child" type="button" data-child-id="${F.escapeHTML(profile.id)}">Entra nel mondo</button>
-            ${active ? '' : `<button class="small-button small-secondary select-child" type="button" data-child-id="${F.escapeHTML(profile.id)}">Seleziona</button>`}
-            <button class="text-danger delete-child" type="button" data-child-id="${F.escapeHTML(profile.id)}">Elimina…</button>
+          <div class="beta-eyebrow">${F.escapeHTML(F.ageLabel(profile.age))} · ${F.escapeHTML(profile.primaryWorld)}</div>
+          <h2>${F.escapeHTML(profile.name)}</h2>
+          <p>${profile.favoriteCompanion ? `Con ${F.escapeHTML(profile.favoriteCompanion)}, il suo compagno.` : 'Il suo mondo personale è pronto.'}</p>
+          <div class="beta-profile-actions">
+            <button class="beta-button primary enter-child" type="button" data-child-id="${F.escapeHTML(profile.id)}">Entra nella Casa</button>
+            ${active ? '' : `<button class="beta-button secondary select-child" type="button" data-child-id="${F.escapeHTML(profile.id)}">Imposta come attivo</button>`}
+            <button class="beta-profile-manage delete-child" type="button" data-child-id="${F.escapeHTML(profile.id)}">Elimina profilo</button>
           </div>
         </article>`;
-      }).join('')}</div>`;
+      }).join('')}<a class="beta-profile-add" href="/onboarding.html"><span>＋</span><strong>Aggiungi un bambino</strong><small>Crea un nuovo mondo personale</small></a></div>`;
 
       area.querySelectorAll('.enter-child').forEach(button => button.addEventListener('click',() => selectChild(button.dataset.childId,true)));
       area.querySelectorAll('.select-child').forEach(button => button.addEventListener('click',() => selectChild(button.dataset.childId,false)));

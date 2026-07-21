@@ -1,13 +1,13 @@
 import fs from 'node:fs';
 
 const coreFiles = [
-  'index.html','onboarding.html','create-child.html','profile.html','family-settings.html','child-hub.html',
+  'index.html','onboarding.html','create-child.html','profile.html','family-settings.html','parent-area.html','child-hub.html',
   'discover.html','story.html','story-result.html','world.html','library.html','manualita.html','play.html','learn.html','about.html'
 ];
 
 const cssFiles = [
   'assets/css/fablea.css','assets/css/fablea-shell.css','assets/css/fablea-unified.css','assets/css/fablea-public.css',
-  'assets/css/fablea-mobile-emotion.css','assets/css/fablea-page-turn.css','assets/css/fablea-onboarding.css',
+  'assets/css/fablea-beta.css','assets/css/fablea-mobile-emotion.css','assets/css/fablea-page-turn.css','assets/css/fablea-onboarding.css',
   'assets/css/fablea-family-settings.css','assets/css/fablea-guided-creator.css','assets/css/fablea-guided-creator-mobile.css',
   'assets/css/fablea-child-home.css','assets/css/fablea-companion.css','assets/css/fablea-activities.css',
   'assets/css/fablea-living-world.css','assets/css/fablea-integrated-navigation.css','assets/css/fablea-navigation-flow.css',
