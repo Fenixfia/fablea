@@ -26,7 +26,8 @@ const profiles = read('profile.html');
 expect(home.includes('Un mondo personale per crescere, creare e imparare'),'Home beta: promessa ecosistema mancante');
 for(const label of ['Storie','Crea','Gioca','Impara','Scuola']) expect(home.includes(`>${label}<`),`Home beta: ambiente ${label} mancante`);
 expect(home.includes('15 giorni') && home.includes('5,99 €') && home.includes('59,90 €'),'Home beta: prova o prezzi approvati mancanti');
-expect(home.includes('nessuna pubblicità'),'Home beta: assenza pubblicità non dichiarata');
+expect(!home.includes('2–12 anni · nessuna pubblicità'),'Home beta: vecchia pillola commerciale ancora presente');
+expect(home.includes('Ogni bambino segue un percorso personale'),'Home beta: messaggio famiglia positivo assente');
 
 // 2. Three-step onboarding, required sex, advanced preferences moved away.
 expect(onboarding === createChild,'Onboarding beta: i due ingressi di creazione profilo non coincidono');
