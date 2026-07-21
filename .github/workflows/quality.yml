@@ -135,3 +135,21 @@ jobs:
       - name: Stop on tactile Live Book failure
         if: steps.page_turn.outcome == 'failure'
         run: exit 1
+
+      - name: Data security baseline
+        id: security
+        continue-on-error: true
+        run: npm run check:security > security-baseline.log 2>&1
+
+      - name: Upload security diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-baseline-report
+          path: security-baseline.log
+          if-no-files-found: error
+          retention-days: 3
+
+      - name: Stop on security failure
+        if: steps.security.outcome == 'failure'
+        run: exit 1
