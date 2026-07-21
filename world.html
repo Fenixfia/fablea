@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>FABLEA | Il tuo mondo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/fablea.css">
+  <link rel="stylesheet" href="/assets/css/fablea-shell.css">
+  <script src="/assets/js/fablea-ui.js"></script>
+  <script src="/assets/js/fablea-grammar.js"></script>
+  <script src="/assets/js/fablea-profile.js"></script>
+  <script src="/stories-v2/age-2-4.js"></script>
+  <script src="/stories-v2/age-5-7.js"></script>
+  <script src="/stories-v2/age-8-10.js"></script>
+  <script src="/stories-v2/age-11-12.js"></script>
+  <script src="/stories-v2/index.js"></script>
+  <script src="/assets/js/fablea-story-engine.js"></script>
+  <script src="/assets/js/fablea-shell.js"></script>
+</head>
+<body>
+  <div class="shell-page">
+    <header class="shell-top">
+      <a class="brand" href="/child-hub.html">FABLEA</a>
+      <div class="shell-meta"><span id="worldName"></span><a class="profile-link" href="/profile.html">Profili</a></div>
+    </header>
+    <main class="shell-main" id="root"></main>
+    <div id="dock"></div>
+  </div>
+
+  <script>
+    (function(){
+      'use strict';
+      const F = window.FableaProfile;
+      const S = window.FableaShell;
+      const profile = F.getSelectedProfile();
+      const root = document.getElementById('root');
+
+      if(!profile){
+        root.innerHTML = `<section class="empty-state"><h1>Questo mondo non è ancora nato.</h1><p>Crea o seleziona un profilo bambino.</p><a class="profile-link" href="/profile.html">Vai ai profili</a></section>`;
+        return;
+      }
+
+      const presentation = S.applyProfile(profile);
+      const memory = F.getMemory(profile);
+      const stories = S.savedFor(profile);
+      const companion = S.companionName(profile);
+      const visitedWorlds = [...new Set(stories.map(story => story.world).filter(Boolean))];
+      const recent = stories.slice(-4).reverse();
+      document.getElementById('worldName').textContent = presentation.place;
+      document.getElementById('dock').innerHTML = S.renderDock('world');
+
+      root.innerHTML = `
+        <header class="content-head">
+          <div class="eyebrow">Il mondo di ${S.escapeHTML(profile.name)}</div>
+          <h1>${S.escapeHTML(presentation.place)}</h1>
+          <p>${S.escapeHTML(presentation.promise)} Qui restano soltanto le tracce che possono rendere più vive le storie future.</p>
+        </header>
+
+        <section class="world-grid">
+          <article class="world-panel">
+            <div class="eyebrow">Compagno principale</div>
+            <h2>${S.escapeHTML(companion)}</h2>
+            <p>È la presenza che accompagna ${S.escapeHTML(profile.name)} nelle scelte e può tornare nelle storie successive senza ricominciare ogni volta da zero.</p>
+            <div class="trace-list"><span class="trace">${S.escapeHTML(presentation.companionIcon)} Compagno</span><span class="trace">${S.escapeHTML(F.ageLabel(profile.age))}</span><span class="trace">${S.escapeHTML(profile.duration)}</span></div>
+          </article>
+
+          <article class="world-panel">
+            <div class="eyebrow">Mondi attraversati</div>
+            <h2>${visitedWorlds.length || 1} luoghi narrativi</h2>
+            <div class="trace-list">${(visitedWorlds.length ? visitedWorlds : [profile.primaryWorld]).map(world => `<span class="trace">${S.escapeHTML(world)}</span>`).join('')}</div>
+          </article>
+
+          <article class="world-panel">
+            <div class="eyebrow">Tesori custoditi</div>
+            <h2>${(memory.treasures || []).length} tracce</h2>
+            ${(memory.treasures || []).length ? `<div class="trace-list">${memory.treasures.map(item => `<span class="trace">${S.escapeHTML(item)}</span>`).join('')}</div>` : '<p>Il primo tesoro apparirà quando una storia lascerà qualcosa di importante nel mondo.</p>'}
+          </article>
+
+          <article class="world-panel">
+            <div class="eyebrow">Rituali condivisi</div>
+            <h2>${(memory.rituals || []).length} ricordi attivi</h2>
+            <p>${(memory.rituals || []).length ? 'Questi gesti possono tornare alla fine di nuove storie quando sono davvero pertinenti.' : 'I rituali conservati appariranno qui, senza classifiche o premi.'}</p>
+          </article>
+        </section>
+
+        <section class="content-head" style="padding-top:52px">
+          <div class="eyebrow">Ultime tracce</div>
+          <h2 style="font-size:clamp(2.7rem,5vw,4.7rem);margin-top:10px">Le storie che hanno cambiato il mondo.</h2>
+        </section>
+
+        ${recent.length ? `<section class="story-grid">${recent.map(story => `
+          <article class="story-card">
+            <div class="story-cover" aria-hidden="true">${S.escapeHTML(story.icon || presentation.icon)}</div>
+            <div class="story-body">
+              <div class="story-meta">${S.escapeHTML(S.familyLabel(story.family))} · ${S.escapeHTML(story.duration)}</div>
+              <h2>${S.escapeHTML(story.title)}</h2>
+              <p>${S.escapeHTML(story.subtitle || 'Una traccia conservata nel mondo personale.')}</p>
+              <div class="story-actions"><button class="open-story" type="button" data-saved-id="${S.escapeHTML(story.id)}">Riapri</button></div>
+            </div>
+          </article>`).join('')}</section>` : `<section class="empty-state"><div class="eyebrow">Ancora nessuna traccia</div><h2>Il mondo aspetta la prima storia.</h2><p>Apri una Storia Fablea oppure creane una nuova insieme al compagno.</p><a class="profile-link" href="/discover.html">Scopri le storie</a></section>`}
+      `;
+
+      document.querySelectorAll('[data-saved-id]').forEach(button => button.addEventListener('click',() => {
+        const story = stories.find(item => item.id === button.dataset.savedId);
+        S.openSavedStory(story);
+      }));
+    })();
+  </script>
+</body>
+</html>
