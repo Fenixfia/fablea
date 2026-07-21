@@ -51,64 +51,96 @@
     });
   }
 
-  function loadIntegratedNavigation(){
-    if(document.body.classList.contains('fablea-public')) return;
-    if(document.querySelector('link[data-fablea-integrated-navigation]')) return;
+  function ensureStyle(href,attribute){
+    if(document.querySelector(`link[${attribute}]`)) return;
     const stylesheet = document.createElement('link');
     stylesheet.rel = 'stylesheet';
-    stylesheet.href = '/assets/css/fablea-integrated-navigation.css';
-    stylesheet.dataset.fableaIntegratedNavigation = 'true';
+    stylesheet.href = href;
+    stylesheet.setAttribute(attribute,'true');
     document.head.appendChild(stylesheet);
+  }
+
+  function ensureScript(src,attribute,onload){
+    const existing = document.querySelector(`script[${attribute}]`);
+    if(existing){
+      if(onload && existing.dataset.loaded === 'true') onload();
+      else if(onload) existing.addEventListener('load',onload,{once:true});
+      return existing;
+    }
+    const script = document.createElement('script');
+    script.src = src;
+    script.defer = true;
+    script.setAttribute(attribute,'true');
+    script.addEventListener('load',() => {
+      script.dataset.loaded = 'true';
+      if(onload) onload();
+    },{once:true});
+    document.head.appendChild(script);
+    return script;
+  }
+
+  function loadIntegratedNavigation(){
+    if(document.body.classList.contains('fablea-public')) return;
+    ensureStyle('/assets/css/fablea-integrated-navigation.css','data-fablea-integrated-navigation');
+  }
+
+  function loadLivingWorldEnhancements(){
+    if(document.body.classList.contains('fablea-public')) return;
+    ensureStyle('/assets/css/fablea-living-world.css','data-fablea-living-world');
   }
 
   function loadLiveBookEnhancements(){
     if(!document.body.classList.contains('live-book')) return;
-    if(!document.querySelector('link[data-fablea-page-turn]')){
-      const stylesheet = document.createElement('link');
-      stylesheet.rel = 'stylesheet';stylesheet.href = '/assets/css/fablea-page-turn.css';stylesheet.dataset.fableaPageTurn = 'true';
-      document.head.appendChild(stylesheet);
-    }
-    if(!document.querySelector('script[data-fablea-page-turn]')){
-      const script = document.createElement('script');
-      script.src = '/assets/js/fablea-page-turn.js';script.defer = true;script.dataset.fableaPageTurn = 'true';
-      document.head.appendChild(script);
-    }
+    ensureStyle('/assets/css/fablea-page-turn.css','data-fablea-page-turn');
+    ensureScript('/assets/js/fablea-page-turn.js','data-fablea-page-turn');
   }
 
   function mountCompanions(){
     if(!global.FableaCompanion) return;
     const profile = global.FableaCompanion.ensureProfile(selectedProfile()) || selectedProfile();
     if(!profile) return;
-    document.querySelectorAll('[data-fablea-companion]').forEach(element => global.FableaCompanion.mount(element,profile));
+    document.querySelectorAll('[data-fablea-companion]').forEach(element => {
+      if(global.FableaCompanionMood) global.FableaCompanionMood.mount(element,profile,element.dataset.companionExpression || 'calm');
+      else global.FableaCompanion.mount(element,profile);
+    });
     if(document.body.classList.contains('live-book')){
       const illustration = document.getElementById('illustration');
       if(illustration && !illustration.querySelector('.story-companion-visual')){
         const holder = document.createElement('div');
         holder.className = 'story-companion-visual';
         holder.setAttribute('aria-hidden','true');
+        holder.dataset.companionExpression = 'calm';
         illustration.appendChild(holder);
-        global.FableaCompanion.mount(holder,profile);
+        if(global.FableaCompanionMood) global.FableaCompanionMood.mount(holder,profile,'calm');
+        else global.FableaCompanion.mount(holder,profile);
       }
     }
   }
 
+  function loadLiveBookPolish(){
+    if(!document.body.classList.contains('live-book')) return;
+    ensureScript('/assets/js/fablea-live-book-polish.js','data-fablea-live-book-polish');
+  }
+
+  function afterCompanionReady(){
+    if(global.FableaCompanionMood){mountCompanions();loadLiveBookPolish();return;}
+    ensureScript('/assets/js/fablea-companion-moods.js','data-fablea-companion-moods',() => {
+      mountCompanions();
+      loadLiveBookPolish();
+    });
+  }
+
   function loadCompanionEnhancements(){
     if(document.body.classList.contains('fablea-public')) return;
-    if(!document.querySelector('link[data-fablea-companion]')){
-      const stylesheet = document.createElement('link');
-      stylesheet.rel = 'stylesheet';stylesheet.href = '/assets/css/fablea-companion.css';stylesheet.dataset.fableaCompanion = 'true';
-      document.head.appendChild(stylesheet);
-    }
-    if(global.FableaCompanion){mountCompanions();return;}
-    if(document.querySelector('script[data-fablea-companion]')) return;
-    const script = document.createElement('script');
-    script.src = '/assets/js/fablea-companion.js';script.defer = true;script.dataset.fableaCompanion = 'true';script.addEventListener('load',mountCompanions,{once:true});
-    document.head.appendChild(script);
+    ensureStyle('/assets/css/fablea-companion.css','data-fablea-companion');
+    if(global.FableaCompanion){afterCompanionReady();return;}
+    ensureScript('/assets/js/fablea-companion.js','data-fablea-companion',afterCompanionReady);
   }
 
   function init(){
     if(document.body.classList.contains('fablea-public')){normalizeTop();return;}
     loadIntegratedNavigation();
+    loadLivingWorldEnhancements();
     applyProfile();
     bindWorldSelector();
     normalizeTop();
@@ -119,5 +151,5 @@
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded',init,{once:true});
   else init();
 
-  global.FableaUnifiedUI = {NEUTRAL_WORLD,applyWorld,applyProfile,selectedProfile,loadIntegratedNavigation,loadLiveBookEnhancements,loadCompanionEnhancements,mountCompanions};
+  global.FableaUnifiedUI = {NEUTRAL_WORLD,applyWorld,applyProfile,selectedProfile,loadIntegratedNavigation,loadLivingWorldEnhancements,loadLiveBookEnhancements,loadCompanionEnhancements,mountCompanions};
 })(window);
