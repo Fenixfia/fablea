@@ -31,7 +31,7 @@ expect(activity.includes("setCompanion(correct ? 'happy' : 'encouraging')"),'Att
 expect(play.includes('data-companion-expression="curious"') && learn.includes('data-companion-expression="curious"'),'Attività: stato iniziale curioso del compagno mancante');
 
 expect(polish.includes('live-book-cover'),'Libro vivo: copertina introduttiva mancante');
-expect(polish.includes('data-scene-role'),'Libro vivo: ruolo della scena non sincronizzato');
+expect(polish.includes('dataset.sceneRole'),'Libro vivo: ruolo della scena non sincronizzato');
 expect(polish.includes("M.decorate(sceneCompanion"),'Libro vivo: compagno non reagisce alla scena');
 expect(livingCss.includes('.live-book-cover') && livingCss.includes('.story-companion-visual'),'Libro vivo: stile copertina o integrazione compagno mancante');
 expect(unified.includes('/assets/js/fablea-live-book-polish.js'),'Sistema unificato: polish Libro vivo non caricato');
