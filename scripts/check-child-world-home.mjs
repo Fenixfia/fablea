@@ -14,27 +14,36 @@ const activities = read('assets/js/fablea-activities.js');
 const activityCatalog = read('assets/js/fablea-activity-catalog.js');
 const companion = read('assets/js/fablea-companion.js');
 const unified = read('assets/js/fablea-unified-ui.js');
+const betaState = read('assets/js/fablea-beta-state.js');
 const story = read('story.html');
-const homeCss = read('assets/css/fablea-child-home.css');
-const livingCss = read('assets/css/fablea-living-world.css');
+const betaCss = read('assets/css/fablea-beta.css');
 const activityCss = read('assets/css/fablea-activities.css');
 const navigationCss = read('assets/css/fablea-integrated-navigation.css');
+const parent = read('parent-area.html');
 
 for(const [label,href] of [['Leggiamo','/discover.html'],['Inventiamo','/story.html'],['Giochiamo','/play.html'],['Scopriamo','/learn.html']]){
   expect(home.includes(`>${label}<`) && home.includes(`href="${href}"`),`Casa FABLEA: porta ${label} mancante o non collegata`);
 }
 expect(home.includes('id="homeCompanion"'),'Casa FABLEA: compagno centrale mancante');
-expect(home.includes('living-home-map') && home.includes('Nuovi luoghi stanno prendendo forma'),'Casa FABLEA: mappa viva o ambienti futuri mancanti');
-expect(home.includes('/assets/css/fablea-child-home.css'),'Casa FABLEA: foglio stile dedicato mancante');
-expect(homeCss.includes('grid-template-columns:repeat(4') || livingCss.includes('grid-template-columns:repeat(4'),'Casa FABLEA: quattro porte desktop non impaginate');
-expect(homeCss.includes('@media(max-width:640px)') || livingCss.includes('@media(max-width:640px)'),'Casa FABLEA: adattamento smartphone mancante');
+expect(home.includes('beta-today') && home.includes('recommendation'),'Casa FABLEA: proposta contestuale Oggi per te mancante');
+expect(home.includes('Il mondo è cambiato') && home.includes('Stanza dei ricordi'),'Casa FABLEA: traccia visibile del mondo mancante');
+expect(!home.includes('In crescita') && !home.includes('Nuovi luoghi stanno prendendo forma'),'Casa FABLEA: stanze future ancora mostrate al bambino');
+expect(home.includes('/parent-area.html'),'Casa FABLEA: accesso adulto non separato');
+expect(betaCss.includes('.beta-room-grid') && betaCss.includes('grid-template-columns:repeat(4'),'Casa FABLEA: quattro porte desktop non impaginate');
+expect(betaCss.includes('@media(max-width:640px)') && betaCss.includes('@media(max-width:390px)'),'Casa FABLEA: adattamento smartphone incompleto');
+expect(!betaCss.includes('position:fixed'),'Casa FABLEA: elemento fisso potenzialmente sovrapposto');
+expect(betaState.includes('function recommendation(') && betaState.includes('function artifact('),'Casa FABLEA: motore contestuale o artefatti mancanti');
 
 expect(onboarding === createChild,'I due percorsi di creazione profilo non sono identici');
-expect(onboarding.includes('Crea la sua Casa FABLEA'),'Onboarding: destinazione Casa non dichiarata');
+for(const stage of ['data-stage="1"','data-stage="2"','data-stage="3"']) expect(onboarding.includes(stage),`Onboarding: ${stage} mancante`);
 expect(onboarding.includes("location.assign('/child-hub.html?welcome=1')"),'Onboarding: ingresso diretto nella Casa mancante');
 expect(onboarding.includes('companionVisual'),'Onboarding: compagno visuale non salvato');
 expect(onboarding.includes('id="companionPreview"'),'Onboarding: anteprima del compagno mancante');
+expect(onboarding.includes('<label for="gender">Sesso</label>'),'Onboarding: campo Sesso mancante');
+expect(onboarding.includes('<option value="" selected disabled>Seleziona</option>') && onboarding.includes('>Maschio<') && onboarding.includes('>Femmina<'),'Onboarding: opzioni Sesso non conformi');
 expect(!onboarding.includes('Apri la prima storia'),'Onboarding: la prima storia è ancora imposta come destinazione');
+expect(!onboarding.includes('id="support"') && !onboarding.includes('id="duration"') && !onboarding.includes('id="storyStyle"'),'Onboarding: preferenze avanzate non spostate nell’area genitore');
+expect(parent.includes('id="support"') && parent.includes('id="duration"') && parent.includes('id="storyStyle"'),'Area genitore: preferenze avanzate mancanti');
 
 expect(play.includes('data-activity="play"'),'Giochiamo: modalità attività mancante');
 expect(learn.includes('data-activity="learn"'),'Scopriamo: modalità attività mancante');
@@ -68,6 +77,7 @@ expect(story.includes('data-fablea-companion'),'Creator: compagno persistente no
 expect(unified.includes('story-companion-visual'),'Libro vivo: compagno non aggiunto accanto alla storia');
 expect(unified.includes('/assets/js/fablea-companion.js'),'Sistema unificato: caricamento del compagno mancante');
 expect(unified.includes('/assets/css/fablea-integrated-navigation.css'),'Sistema unificato: navigazione integrata non caricata');
+expect(unified.includes('/assets/js/fablea-story-continuity.js'),'Sistema unificato: ponte storia-attività non caricato');
 expect(navigationCss.includes('position:relative!important'),'Navigazione: barre non riportate nel flusso della pagina');
 expect(navigationCss.includes('.fablea-product .explore-dock'),'Navigazione: dock inferiore non coperto');
 expect(!navigationCss.includes('.explore-dock{\n  position:fixed'),'Navigazione: dock inferiore nuovamente sovrapposto');
@@ -78,4 +88,4 @@ if(errors.length){
   errors.forEach(error => console.error(`- ${error}`));
   process.exit(1);
 }
-console.log('Child world home check passed: Casa viva, compagno persistente, catalogo attività per età, Libro vivo e navigazione non sovrapposta coperti.');
+console.log('Child world home check passed: Casa contestuale, compagno persistente, onboarding breve, attività per età e navigazione non sovrapposta coperti.');
