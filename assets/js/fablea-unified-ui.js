@@ -51,6 +51,16 @@
     });
   }
 
+  function loadIntegratedNavigation(){
+    if(document.body.classList.contains('fablea-public')) return;
+    if(document.querySelector('link[data-fablea-integrated-navigation]')) return;
+    const stylesheet = document.createElement('link');
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href = '/assets/css/fablea-integrated-navigation.css';
+    stylesheet.dataset.fableaIntegratedNavigation = 'true';
+    document.head.appendChild(stylesheet);
+  }
+
   function loadLiveBookEnhancements(){
     if(!document.body.classList.contains('live-book')) return;
     if(!document.querySelector('link[data-fablea-page-turn]')){
@@ -98,6 +108,7 @@
 
   function init(){
     if(document.body.classList.contains('fablea-public')){normalizeTop();return;}
+    loadIntegratedNavigation();
     applyProfile();
     bindWorldSelector();
     normalizeTop();
@@ -108,5 +119,5 @@
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded',init,{once:true});
   else init();
 
-  global.FableaUnifiedUI = {NEUTRAL_WORLD,applyWorld,applyProfile,selectedProfile,loadLiveBookEnhancements,loadCompanionEnhancements,mountCompanions};
+  global.FableaUnifiedUI = {NEUTRAL_WORLD,applyWorld,applyProfile,selectedProfile,loadIntegratedNavigation,loadLiveBookEnhancements,loadCompanionEnhancements,mountCompanions};
 })(window);
