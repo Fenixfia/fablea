@@ -20,6 +20,8 @@
   <script src="/stories-v2/age-11-12.js"></script>
   <script src="/stories-v2/index.js"></script>
   <script src="/stories-classics/catalog.js"></script>
+  <script src="/stories-classics/catalog-expansion.js"></script>
+  <script src="/assets/js/fablea-classic-art.js"></script>
   <script src="/assets/js/fablea-story-engine.js"></script>
   <script src="/assets/js/fablea-world-state-v3.js"></script>
   <script src="/assets/js/fablea-story-variables-v3.js"></script>
@@ -42,6 +44,7 @@
       'use strict';
       const F = window.FableaProfile;
       const S = window.FableaShell;
+      const A = window.FableaClassicArt;
       const profile = F.getSelectedProfile();
       const root = document.getElementById('root');
       const params = new URLSearchParams(location.search);
@@ -54,13 +57,18 @@
         return;
       }
 
-      const presentation = S.applyProfile(profile);
+      S.applyProfile(profile);
       document.getElementById('worldName').textContent = `Biblioteca · ${F.ageLabel(profile.age)}`;
       document.getElementById('dock').innerHTML = S.renderDock('discover');
 
       function sourceMarkup(story){
         if(story.collection !== 'classic' || !story.source) return '';
         return `<div class="editorial-source"><strong>${S.escapeHTML(story.source.author)} · ${S.escapeHTML(story.source.originalTitle)}</strong>${S.escapeHTML(story.source.origin)}<br>Rinarrato integralmente da FABLEA da un’opera nel pubblico dominio.</div>`;
+      }
+
+      function coverMarkup(story){
+        if(A && typeof A.render === 'function') return A.render(story);
+        return `<span class="editorial-cover-icon">${S.escapeHTML(story.cover && story.cover.icon || '📖')}</span>`;
       }
 
       function render(){
@@ -101,7 +109,7 @@
           <section class="editorial-grid" aria-live="polite">
             ${stories.map(story => `
               <article class="editorial-card" data-collection="${S.escapeHTML(story.collection || 'original')}">
-                <div class="editorial-cover" aria-hidden="true"><span class="editorial-cover-icon">${S.escapeHTML(story.cover && story.cover.icon || presentation.icon)}</span></div>
+                <div class="editorial-cover" aria-hidden="true">${coverMarkup(story)}</div>
                 <div class="editorial-body">
                   <div class="editorial-kicker">${S.escapeHTML(S.collectionLabel(story.collection || 'original'))} · ${S.escapeHTML(S.familyLabel(story.family))}</div>
                   <h2>${S.escapeHTML(S.previewTemplate(story.title,profile))}</h2>
