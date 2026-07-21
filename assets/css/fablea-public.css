@@ -31,8 +31,7 @@ body.fablea-public::before{
 body.fablea-public .home-shell,
 body.fablea-public main.page{
   border-color:var(--fablea-line);
-  background:
-    linear-gradient(145deg,rgba(255,253,248,.94),rgba(250,242,239,.84));
+  background:linear-gradient(145deg,rgba(255,253,248,.94),rgba(250,242,239,.84));
   box-shadow:0 30px 90px rgba(91,66,82,.14);
   backdrop-filter:blur(18px);
 }
@@ -98,6 +97,99 @@ body.fablea-public .menu a:hover{color:#8d6a35}
 body.fablea-public .home-copy .actions,
 body.fablea-public .home-copy .menu{justify-content:flex-start}
 
+/* The public FABLEA signature is a word inhabited by its recurring companions. */
+body.fablea-public .cast-wordmark{
+  position:relative;
+  width:min(100%,720px);
+  min-height:clamp(126px,18vw,178px);
+  margin:12px 0 2px;
+  display:flex;
+  align-items:flex-end;
+  gap:clamp(1px,.6vw,7px);
+  isolation:isolate;
+}
+body.fablea-public .cast-wordmark::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  left:2%;
+  right:4%;
+  bottom:12%;
+  height:34%;
+  border-radius:50%;
+  background:radial-gradient(ellipse,rgba(141,119,159,.17),transparent 66%);
+  filter:blur(8px);
+}
+body.fablea-public .cast-letter{
+  position:relative;
+  z-index:2;
+  display:block;
+  color:var(--fablea-ink);
+  font:700 clamp(4.45rem,10.4vw,8.3rem)/.72 var(--font-display);
+  letter-spacing:-.075em;
+  text-shadow:0 9px 24px rgba(91,66,82,.13),0 2px 0 rgba(255,255,255,.72);
+  transform-origin:center bottom;
+}
+body.fablea-public .cast-letter:nth-child(2){color:#7c668b}
+body.fablea-public .cast-letter:nth-child(3){color:#4d3d51}
+body.fablea-public .cast-letter:nth-child(5){color:#9b7845}
+body.fablea-public .cast-letter:nth-child(6){color:#785f82}
+body.fablea-public .cast-character{
+  position:absolute;
+  z-index:4;
+  display:block;
+  filter:drop-shadow(0 13px 13px rgba(76,50,73,.18));
+  transform-origin:center bottom;
+  pointer-events:none;
+}
+body.fablea-public .cast-character svg{width:100%;height:100%;overflow:visible}
+body.fablea-public .cast-character path,
+body.fablea-public .cast-character circle,
+body.fablea-public .cast-character rect{
+  vector-effect:non-scaling-stroke;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+body.fablea-public .cast-princess{width:clamp(54px,7vw,82px);height:clamp(70px,9vw,104px);left:-1%;top:1%;animation:castPrincess 5s ease-in-out infinite}
+body.fablea-public .cast-dino{width:clamp(67px,9vw,108px);height:clamp(57px,7.4vw,88px);left:32%;bottom:42%;animation:castDino 4.8s ease-in-out infinite}
+body.fablea-public .cast-robot{width:clamp(50px,6.3vw,74px);height:clamp(65px,8.2vw,96px);left:55%;bottom:5%;animation:castRobot 4.4s ease-in-out infinite}
+body.fablea-public .cast-fairy{width:clamp(55px,7.1vw,84px);height:clamp(67px,8.5vw,102px);right:0;top:0;animation:castFairy 4.2s ease-in-out infinite}
+
+body.fablea-public .character-shadow{fill:none;stroke:rgba(70,46,69,.18);stroke-width:5}
+body.fablea-public .skin{fill:#f4cdb8;stroke:#6c5167;stroke-width:2.4}
+body.fablea-public .hair{fill:#6c506d;stroke:#554052;stroke-width:2.2}
+body.fablea-public .crown{fill:#edc86d;stroke:#986f35;stroke-width:2.2}
+body.fablea-public .dress{fill:#c8a6cb;stroke:#6d526f;stroke-width:2.4}
+body.fablea-public .wand{fill:none;stroke:#a87d39;stroke-width:3}
+body.fablea-public .detail{fill:none;stroke:#5f465c;stroke-width:2.1}
+body.fablea-public .dino-body{fill:#8fbba2;stroke:#486d5b;stroke-width:2.7}
+body.fablea-public .dino-spike{fill:#e2b66d;stroke:#8c6b3c;stroke-width:2.1}
+body.fablea-public .dino-spot{fill:#5e8f74;stroke:none}
+body.fablea-public .eye{fill:#3f3344;stroke:none}
+body.fablea-public .robot-head{fill:#c9b7d7;stroke:#66556f;stroke-width:2.7}
+body.fablea-public .robot-body{fill:#ead29c;stroke:#8d6f3f;stroke-width:2.7}
+body.fablea-public .robot-limb,body.fablea-public .antenna{fill:none;stroke:#66556f;stroke-width:4}
+body.fablea-public .robot-light{fill:#e7aa6f;stroke:#8d633d;stroke-width:2}
+body.fablea-public .robot-eye{fill:#66556f;stroke:none}
+body.fablea-public .fairy-wing{fill:rgba(255,253,246,.72);stroke:#967faa;stroke-width:2.4}
+body.fablea-public .fairy-dress{fill:#e4b7c0;stroke:#815c76;stroke-width:2.5}
+body.fablea-public .fairy-wand{fill:none;stroke:#9b713a;stroke-width:2.8}
+body.fablea-public .fairy-light{fill:#f8dda0;stroke:#bd8e45;stroke-width:1.8;filter:drop-shadow(0 0 7px #f4cf76)}
+
+body.fablea-public .hero-question{
+  max-width:690px;
+  margin:8px 0 12px;
+  color:var(--fablea-ink);
+  font-size:clamp(2.45rem,5.4vw,4.8rem);
+  line-height:.95;
+  letter-spacing:-.045em;
+}
+body.fablea-public .hero-question+.subtitle{
+  max-width:650px;
+  font-size:clamp(1.25rem,2.4vw,1.8rem);
+  line-height:1.16;
+}
+
 body.fablea-public .home-visual{
   min-height:520px;
   border-color:rgba(85,62,86,.14);
@@ -117,8 +209,7 @@ body.fablea-public .home-visual::before{
   bottom:-17%;
   height:53%;
   border-radius:50% 50% 0 0;
-  background:
-    linear-gradient(165deg,rgba(116,91,116,.62),rgba(92,75,101,.82));
+  background:linear-gradient(165deg,rgba(116,91,116,.62),rgba(92,75,101,.82));
   box-shadow:0 -22px 60px rgba(255,234,204,.18);
 }
 body.fablea-public .home-visual::after{
@@ -130,8 +221,7 @@ body.fablea-public .home-visual::after{
   left:21%;
   bottom:10%;
   border-radius:46% 46% 18% 18%;
-  background:
-    linear-gradient(90deg,rgba(255,250,239,.94) 0 48%,rgba(238,226,231,.96) 52% 100%);
+  background:linear-gradient(90deg,rgba(255,250,239,.94) 0 48%,rgba(238,226,231,.96) 52% 100%);
   clip-path:polygon(0 22%,47% 0,50% 8%,53% 0,100% 22%,92% 100%,52% 78%,48% 78%,8% 100%);
   box-shadow:0 18px 42px rgba(69,48,71,.26);
 }
@@ -173,10 +263,27 @@ body.fablea-public .section{
 body.fablea-public .section h2{font-size:clamp(2.1rem,4vw,3.4rem)}
 body.fablea-public .footer{color:var(--fablea-muted)}
 
+@keyframes castPrincess{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-5px) rotate(1deg)}}
+@keyframes castDino{0%,100%{transform:translateX(0) rotate(-1deg)}50%{transform:translateX(5px) rotate(2deg)}}
+@keyframes castRobot{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes castFairy{0%,100%{transform:translate3d(0,0,0) rotate(2deg)}50%{transform:translate3d(-5px,-8px,0) rotate(-3deg)}}
+
 @media(max-width:700px){
   body.fablea-public .home-copy .actions,
   body.fablea-public .home-copy .menu{justify-content:center}
   body.fablea-public .home-copy{text-align:center}
+  body.fablea-public .cast-wordmark{width:min(100%,480px);margin:14px auto 3px;justify-content:center;min-height:116px}
+  body.fablea-public .cast-letter{font-size:clamp(4.15rem,21.5vw,6rem)}
+  body.fablea-public .cast-princess{left:0;top:0}
+  body.fablea-public .cast-dino{left:31%;bottom:42%}
+  body.fablea-public .cast-robot{left:57%;bottom:4%}
+  body.fablea-public .cast-fairy{right:-1%;top:2%}
+  body.fablea-public .hero-question{margin:12px auto 10px;font-size:clamp(2.65rem,13vw,4rem)}
+  body.fablea-public .hero-question+.subtitle{margin-inline:auto;font-size:1.25rem}
   body.fablea-public .home-visual{min-height:330px}
   body.fablea-public .home-visual p{width:100%;padding:14px 15px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  body.fablea-public .cast-character{animation:none!important}
 }
