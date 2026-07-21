@@ -1,58 +1,55 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FABLEA</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="/assets/css/fablea.css">
-<script src="/assets/js/fablea-ui.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>FABLEA | Un mondo che cresce</title>
+  <link rel="stylesheet" href="/assets/css/fablea.css">
+  <link rel="stylesheet" href="/assets/css/fablea-unified.css">
+  <script src="/assets/js/fablea-ui.js"></script>
 </head>
+<body class="fablea-public">
+  <main class="home-shell">
+    <section class="home-copy">
+      <div class="badge">Storie, pensiero e tempo condiviso</div>
+      <h1 class="wordmark">FABLEA</h1>
+      <div class="subtitle">Un mondo che cresce con ogni bambino.</div>
+      <div class="description">FABLEA non offre soltanto storie. Costruisce un ambiente narrativo personale che amplia immaginazione, linguaggio, consapevolezza e capacità di pensare, senza pubblicità o meccaniche manipolative.</div>
+      <div class="actions">
+        <a class="button" id="primaryCta" href="/create-child.html">Crea il primo mondo</a>
+        <a class="button secondary" id="switchExplorer" href="/profile.html" hidden>Cambia profilo</a>
+      </div>
+      <div class="menu" aria-label="Navigazione principale">
+        <a href="/profile.html">Profili</a>
+        <a href="/library.html">Libreria</a>
+        <a href="/about.html">Manifesto</a>
+      </div>
+    </section>
 
-<body class="fablea-page">
+    <section class="home-visual" aria-label="Il libro-mondo FABLEA">
+      <div class="moon-orbit"></div>
+      <div class="story-thread"></div>
+      <p>Il compagno, i luoghi e le scelte restano accesi. La storia successiva non ricomincia da zero.</p>
+    </section>
 
-<main class="home-shell">
-<section class="home-copy">
-<div class="badge">The quiet imagination project</div>
-<h1 class="wordmark">FABLEA</h1>
-<div class="subtitle">Un mondo personale che ricorda e cresce con ogni bambino.</div>
-<div class="description">FABLEA accompagna immaginazione calma, scoperta ed emozioni con storie pensate per il ritmo familiare: voce, memoria locale e piccoli rituali senza iperstimolazione.</div>
-<div class="actions">
-<a class="button" id="primaryCta" href="/create-child.html">Crea il primo mondo</a>
-<a class="button secondary" id="switchExplorer" href="/onboarding.html" hidden>Cambia esploratore</a>
-</div>
-<div class="menu" aria-label="Navigazione principale">
-<a href="/onboarding.html">Profili</a>
-<a href="/library.html">Libreria</a>
-<a href="/about.html">Manifesto</a>
-</div>
-</section>
-<section class="home-visual scene-night" aria-label="Piccolo mondo narrativo FABLEA">
-<div class="moon-orbit"></div>
-<div class="story-thread"></div>
-<p>Un filo di storie, tesori e rituali resta acceso per domani.</p>
-</section>
-<div class="footer">Audio-first • Low stimulation • Immaginazione evolutiva • Esperienze 2–12 anni</div>
-</main>
+    <div class="footer">Per bambini da 2 a 12 anni · Una sola qualità completa · Nessuna pubblicità</div>
+  </main>
 
-<script>
-function getProfiles(){
-try{return JSON.parse(localStorage.getItem('fableaChildProfiles') || '[]');}catch(_){return [];}
-}
-const profiles = getProfiles();
-const selectedId = localStorage.getItem('fableaSelectedChildId');
-const selected = profiles.find(profile => profile.id === selectedId) || profiles[0];
-const cta = document.getElementById('primaryCta');
-const switcher = document.getElementById('switchExplorer');
-if(selected){
-localStorage.setItem('fableaSelectedChildId', selected.id);
-cta.href = '/child-hub.html';
-cta.innerText = `Continua con ${selected.name || 'il mondo scelto'}`;
-switcher.hidden = false;
-}
-</script>
-
+  <script>
+    function getProfiles(){
+      try{return JSON.parse(localStorage.getItem('fableaChildProfiles') || '[]');}catch(_error){return [];}
+    }
+    const profiles = getProfiles();
+    const selectedId = localStorage.getItem('fableaSelectedChildId');
+    const selected = profiles.find(profile => profile.id === selectedId) || profiles[0];
+    const cta = document.getElementById('primaryCta');
+    const switcher = document.getElementById('switchExplorer');
+    if(selected){
+      localStorage.setItem('fableaSelectedChildId',selected.id);
+      cta.href = '/child-hub.html';
+      cta.textContent = `Continua con ${selected.name || 'il mondo scelto'}`;
+      switcher.hidden = false;
+    }
+  </script>
 </body>
 </html>
