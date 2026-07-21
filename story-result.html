@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/assets/css/fablea.css">
   <link rel="stylesheet" href="/assets/css/fablea-shell.css">
   <link rel="stylesheet" href="/assets/css/fablea-unified.css">
+  <link rel="stylesheet" href="/assets/css/fablea-page-turn.css" data-fablea-page-turn>
   <script src="/assets/js/fablea-ui.js"></script>
   <script src="/assets/js/fablea-grammar.js"></script>
   <script src="/assets/js/fablea-profile.js"></script>
@@ -21,6 +22,7 @@
   <script src="/assets/js/fablea-story-engine-v3.js"></script>
   <script src="/assets/js/fablea-world-effects-v3.js"></script>
   <script defer src="/assets/js/fablea-unified-ui.js"></script>
+  <script defer src="/assets/js/fablea-page-turn.js" data-fablea-page-turn></script>
 </head>
 <body class="fablea-page fablea-product live-book" data-world="Magia">
   <main class="stage">
@@ -37,23 +39,28 @@
       <div class="meta" id="storyMeta"></div>
     </section>
 
-    <section class="book">
-      <div class="illustration" id="illustration" aria-hidden="true">
-        <div class="scene-art" id="sceneArt">✨</div>
+    <section class="book" aria-label="Libro illustrato FABLEA">
+      <div class="page-sheet" id="pageSheet" data-density="normal">
+        <div class="illustration" id="illustration" aria-hidden="true">
+          <div class="book-story-name" id="bookStoryName"></div>
+          <div class="scene-art" id="sceneArt">✨</div>
+        </div>
+        <article class="page-card" aria-live="polite">
+          <div class="page-copy">
+            <div class="kicker" id="kicker">Scena narrativa</div>
+            <h2 class="story-title" id="title"></h2>
+            <div class="text" id="text"></div>
+            <div class="page-status">
+              <div class="counter" id="counter"></div>
+              <div class="progress" aria-label="Avanzamento storia"><div class="progress-fill" id="progressFill"></div></div>
+            </div>
+          </div>
+          <div class="controls">
+            <button class="button" id="prev" type="button">← Pagina precedente</button>
+            <button class="button primary" id="next" type="button">Pagina successiva →</button>
+          </div>
+        </article>
       </div>
-      <article class="page-card" aria-live="polite">
-        <div>
-          <div class="kicker" id="kicker">Scena narrativa</div>
-          <h2 class="story-title" id="title"></h2>
-          <div class="text" id="text"></div>
-          <div class="counter" id="counter"></div>
-          <div class="progress" aria-label="Avanzamento storia"><div class="progress-fill" id="progressFill"></div></div>
-        </div>
-        <div class="controls">
-          <button class="button" id="prev" type="button">← Pagina precedente</button>
-          <button class="button primary" id="next" type="button">Pagina successiva →</button>
-        </div>
-      </article>
     </section>
 
     <section class="audio-zone">
@@ -137,6 +144,8 @@
     const mainSubtitleEl = document.getElementById('mainSubtitle');
     const mainKickerEl = document.getElementById('mainKicker');
     const storyMetaEl = document.getElementById('storyMeta');
+    const pageSheetEl = document.getElementById('pageSheet');
+    const bookStoryNameEl = document.getElementById('bookStoryName');
     const sceneArtEl = document.getElementById('sceneArt');
     const ritualTextEl = document.getElementById('ritualText');
     const treasureTextEl = document.getElementById('treasureText');
@@ -165,6 +174,7 @@
       .filter(Boolean)
       .map(item => `<span>${F.escapeHTML(item)}</span>`)
       .join('');
+    bookStoryNameEl.textContent = story.title;
     sceneArtEl.textContent = story.icon || '✨';
     ritualTextEl.textContent = story.ritual;
     treasureTextEl.textContent = story.treasure;
@@ -175,8 +185,16 @@
       saveRitualButton.textContent = 'Conserva e fai crescere il mondo';
     }
 
+    function densityFor(text){
+      const length = String(text || '').trim().length;
+      if(length > 720) return 'extra-dense';
+      if(length > 470) return 'dense';
+      return 'normal';
+    }
+
     function render({persist = true} = {}){
       const page = pages[pageIndex];
+      pageSheetEl.dataset.density = densityFor(page.text);
       titleEl.textContent = page.scene || `Scena ${pageIndex + 1}`;
       kickerEl.textContent = page.v3Role === 'continuity' ? 'Il mondo ricorda'
         : page.v3Role === 'turning-point' ? 'La svolta'
