@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/assets/css/fablea.css">
   <link rel="stylesheet" href="/assets/css/fablea-shell.css">
   <link rel="stylesheet" href="/assets/css/fablea-unified.css">
+  <link rel="stylesheet" href="/assets/css/fablea-onboarding.css">
   <script src="/assets/js/fablea-ui.js"></script>
   <script src="/assets/js/fablea-grammar.js"></script>
   <script src="/assets/js/fablea-profile.js"></script>
@@ -18,7 +19,7 @@
   <script src="/assets/js/fablea-story-engine.js"></script>
   <script defer src="/assets/js/fablea-unified-ui.js"></script>
 </head>
-<body class="fablea-page fablea-product" data-world="Magia">
+<body class="fablea-page fablea-product onboarding-page" data-world="Magia">
   <main class="card">
     <div class="top">
       <a class="brand" href="/index.html">FABLEA</a>
@@ -44,14 +45,14 @@
         <option value="11-12">11–12 anni</option>
       </select>
 
-      <label for="gender">Genere grammaticale</label>
-      <select id="gender" name="gender">
-        <option value="male">Maschile</option>
-        <option value="female">Femminile</option>
-        <option value="neutral">Forma neutra</option>
-        <option value="unspecified">Preferisco non specificarlo</option>
-      </select>
-      <p class="note">Serve esclusivamente per accordi naturali nel testo. Non associa temi, colori o attività a un genere.</p>
+      <label id="sexLabel">Sesso</label>
+      <div class="sex-choice-grid" role="group" aria-labelledby="sexLabel" aria-describedby="sexNote sexError">
+        <button class="sex-choice" type="button" data-sex="male" aria-pressed="false"><span class="sex-symbol" aria-hidden="true">♂</span> Maschio</button>
+        <button class="sex-choice" type="button" data-sex="female" aria-pressed="false"><span class="sex-symbol" aria-hidden="true">♀</span> Femmina</button>
+      </div>
+      <input id="gender" name="gender" type="hidden" value="">
+      <p class="note" id="sexNote">Serve per gli accordi naturali della lingua italiana. Mondi, colori, passioni e compagni restano liberi.</p>
+      <p class="error" id="sexError" hidden>Scegli Maschio o Femmina per continuare.</p>
 
       <label for="primaryWorld">Mondo principale</label>
       <select id="primaryWorld" name="primaryWorld"></select>
@@ -96,7 +97,9 @@
       const formEl = document.getElementById('profileForm');
       const nameInput = document.getElementById('name');
       const ageSelect = document.getElementById('age');
-      const genderSelect = document.getElementById('gender');
+      const genderInput = document.getElementById('gender');
+      const sexChoiceButtons = [...document.querySelectorAll('.sex-choice')];
+      const sexErrorEl = document.getElementById('sexError');
       const primaryWorldSelect = document.getElementById('primaryWorld');
       const interestsContainer = document.getElementById('interests');
       const companionInput = document.getElementById('favoriteCompanion');
@@ -115,10 +118,17 @@
       primaryWorldSelect.innerHTML = F.WORLDS.map(world => `<option>${F.escapeHTML(world)}</option>`).join('');
       supportSelect.innerHTML = F.SUPPORTS.map(item => `<option>${F.escapeHTML(item)}</option>`).join('');
 
+      sexChoiceButtons.forEach(button => {
+        button.addEventListener('click',() => {
+          genderInput.value = button.dataset.sex;
+          sexChoiceButtons.forEach(choice => choice.setAttribute('aria-pressed',String(choice === button)));
+          sexErrorEl.hidden = true;
+        });
+      });
+
       function renderInterests(){
         const primary = primaryWorldSelect.value;
         selectedInterests.delete(primary);
-        document.body.dataset.world = primary;
         interestsContainer.innerHTML = F.WORLDS
           .filter(world => world !== primary)
           .map(world => `<button class="choice ${selectedInterests.has(world) ? 'active' : ''}" type="button" data-value="${F.escapeHTML(world)}" aria-pressed="${selectedInterests.has(world)}">${F.escapeHTML(world)}</button>`)
@@ -144,6 +154,11 @@
           nameInput.setAttribute('aria-invalid','true');
           return;
         }
+        if(!['male','female'].includes(genderInput.value)){
+          sexErrorEl.hidden = false;
+          sexChoiceButtons[0].focus();
+          return;
+        }
 
         nameInput.removeAttribute('aria-invalid');
         submitButton.disabled = true;
@@ -155,7 +170,7 @@
             id:`child-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,
             name:childName,
             age:ageSelect.value,
-            gender:genderSelect.value,
+            gender:genderInput.value,
             primaryWorld:primaryWorldSelect.value,
             interests:[...selectedInterests],
             favoriteCompanion:companionInput.value.trim(),
