@@ -1,0 +1,176 @@
+/* FABLEA Live Book — tactile page turning */
+.live-book .book{
+  position:relative;
+  perspective:1800px;
+  transform-style:preserve-3d;
+  isolation:isolate;
+  overflow:visible;
+}
+.live-book .book::before{
+  content:"";
+  position:absolute;
+  z-index:4;
+  top:18px;
+  bottom:18px;
+  left:calc(37.5% - 1px);
+  width:2px;
+  border-radius:999px;
+  background:linear-gradient(180deg,transparent,rgba(68,46,61,.2) 15%,rgba(68,46,61,.34) 50%,rgba(68,46,61,.18) 84%,transparent);
+  box-shadow:-10px 0 24px rgba(27,17,25,.12),10px 0 24px rgba(255,255,255,.11);
+  pointer-events:none;
+}
+.live-book .page-card{
+  --page-turn-x:0;
+  --page-turn-angle:0deg;
+  --page-turn-shadow:0;
+  position:relative;
+  z-index:3;
+  transform-origin:left center;
+  transform:rotateY(var(--page-turn-angle)) translateX(calc(var(--page-turn-x) * 1px));
+  backface-visibility:hidden;
+  will-change:transform,filter;
+  filter:drop-shadow(calc(var(--page-turn-shadow) * -24px) 8px calc(18px + var(--page-turn-shadow) * 34px) rgba(46,29,42,.22));
+  transition:transform .46s cubic-bezier(.2,.75,.2,1),filter .46s ease;
+  touch-action:pan-y;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.live-book .page-card::before{
+  content:"";
+  position:absolute;
+  z-index:5;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  opacity:var(--page-turn-shadow);
+  background:linear-gradient(90deg,rgba(52,33,48,.24),transparent 18%,transparent 72%,rgba(255,255,255,.48));
+  mix-blend-mode:multiply;
+}
+.live-book .page-card::after{
+  content:"";
+  position:absolute;
+  z-index:6;
+  top:0;
+  right:0;
+  width:72px;
+  height:72px;
+  border-radius:0 var(--unified-radius-lg) 0 100%;
+  pointer-events:none;
+  opacity:.42;
+  background:linear-gradient(225deg,rgba(255,255,255,.86),rgba(225,210,202,.32) 42%,transparent 44%);
+  box-shadow:-8px 9px 18px rgba(57,37,52,.09);
+  transition:opacity .2s ease,transform .2s ease;
+}
+.live-book .page-card.page-dragging{
+  transition:none;
+  cursor:grabbing;
+}
+.live-book .page-card.page-dragging::after{
+  opacity:.82;
+  transform:scale(1.08);
+}
+.live-book .page-card.page-turn-next{
+  animation:fableaPageNext .62s cubic-bezier(.38,.02,.2,1) both;
+}
+.live-book .page-card.page-turn-prev{
+  animation:fableaPagePrev .62s cubic-bezier(.38,.02,.2,1) both;
+}
+.live-book .page-card.page-settle{
+  animation:fableaPageSettle .38s cubic-bezier(.2,.75,.2,1) both;
+}
+.live-book .page-turn-hint{
+  position:absolute;
+  z-index:20;
+  right:24px;
+  bottom:22px;
+  display:none;
+  align-items:center;
+  gap:9px;
+  min-height:44px;
+  padding:10px 14px;
+  border:1px solid rgba(87,67,83,.13);
+  border-radius:999px;
+  color:#513d50;
+  background:rgba(255,250,243,.88);
+  box-shadow:0 14px 36px rgba(57,37,52,.17);
+  backdrop-filter:blur(12px);
+  font-size:.76rem;
+  font-weight:800;
+  pointer-events:none;
+  animation:fableaHint 4.8s ease both;
+}
+.live-book .page-turn-hint span{
+  display:inline-block;
+  font-size:1.15rem;
+  animation:fableaHintHand 1.4s ease-in-out 2;
+}
+.live-book .page-edge-button{
+  position:absolute;
+  z-index:15;
+  top:50%;
+  width:52px;
+  height:72px;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  color:white;
+  background:rgba(5,14,18,.66);
+  backdrop-filter:blur(16px);
+  box-shadow:0 16px 42px rgba(0,0,0,.24);
+  transform:translateY(-50%);
+  cursor:pointer;
+  transition:transform .18s ease,opacity .18s ease,background .18s ease;
+}
+.live-book .page-edge-button:hover{transform:translateY(-50%) scale(1.04);background:rgba(5,14,18,.82)}
+.live-book .page-edge-button:disabled{opacity:.22;cursor:default}
+.live-book .page-edge-button.prev-edge{left:-26px}
+.live-book .page-edge-button.next-edge{right:-26px}
+
+@keyframes fableaPageNext{
+  0%{transform:rotateY(0);filter:drop-shadow(0 8px 18px rgba(46,29,42,.14));opacity:1}
+  52%{transform:rotateY(-82deg) translateX(-7%);filter:drop-shadow(-34px 12px 42px rgba(46,29,42,.34));opacity:.72}
+  53%{transform:rotateY(72deg) translateX(5%);opacity:.35}
+  100%{transform:rotateY(0);filter:drop-shadow(0 8px 18px rgba(46,29,42,.14));opacity:1}
+}
+@keyframes fableaPagePrev{
+  0%{transform:rotateY(0);filter:drop-shadow(0 8px 18px rgba(46,29,42,.14));opacity:1}
+  52%{transform:rotateY(82deg) translateX(7%);filter:drop-shadow(34px 12px 42px rgba(46,29,42,.34));opacity:.72}
+  53%{transform:rotateY(-72deg) translateX(-5%);opacity:.35}
+  100%{transform:rotateY(0);filter:drop-shadow(0 8px 18px rgba(46,29,42,.14));opacity:1}
+}
+@keyframes fableaPageSettle{
+  from{transform:rotateY(var(--page-turn-angle)) translateX(calc(var(--page-turn-x) * 1px))}
+  to{transform:rotateY(0) translateX(0)}
+}
+@keyframes fableaHint{
+  0%{opacity:0;transform:translateY(10px)}
+  12%,72%{opacity:1;transform:none}
+  100%{opacity:0;transform:translateY(6px);visibility:hidden}
+}
+@keyframes fableaHintHand{
+  0%,100%{transform:translateX(0)}
+  50%{transform:translateX(-10px)}
+}
+
+@media(max-width:900px){
+  .live-book .book::before{display:none}
+  .live-book .page-edge-button{display:none}
+}
+@media(max-width:700px){
+  .live-book .book{perspective:1350px}
+  .live-book .page-card{
+    transform-origin:left center;
+    border-radius:24px 18px 18px 24px;
+    box-shadow:inset 12px 0 22px rgba(83,61,75,.07),0 20px 58px rgba(0,0,0,.2);
+  }
+  .live-book .page-card::after{width:58px;height:58px;border-radius:0 18px 0 100%}
+  .live-book .page-turn-hint{display:flex;right:15px;bottom:16px}
+  .live-book .controls{margin-top:12px}
+  .live-book .controls .button{min-height:50px}
+}
+@media(prefers-reduced-motion:reduce){
+  .live-book .page-card{transition:none!important;transform:none!important;filter:none!important}
+  .live-book .page-card.page-turn-next,.live-book .page-card.page-turn-prev,.live-book .page-card.page-settle{animation:none!important}
+  .live-book .page-turn-hint{display:none!important}
+}
