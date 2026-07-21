@@ -9,15 +9,19 @@ const script = read('assets/js/fablea-page-turn.js');
 const css = read('assets/css/fablea-page-turn.css');
 
 if(!/body[^>]+class=["'][^"']*live-book/.test(html)) errors.push('story-result.html: classe live-book mancante');
+if(!html.includes('class="page-sheet"') || !html.includes('class="illustration"') || !html.includes('class="page-card"')) errors.push('story-result.html: foglio illustrato unificato incompleto');
 if(!html.includes('id="prev"') || !html.includes('id="next"')) errors.push('story-result.html: controlli pagina mancanti');
-if(!ui.includes('/assets/css/fablea-page-turn.css')) errors.push('fablea-unified-ui.js: caricamento CSS page-turn mancante');
-if(!ui.includes('/assets/js/fablea-page-turn.js')) errors.push('fablea-unified-ui.js: caricamento JS page-turn mancante');
-if(!script.includes("['touch','pen']")) errors.push('fablea-page-turn.js: gesto touch/pen non limitato esplicitamente');
-if(!script.includes("touch-action") && !css.includes('touch-action:pan-y')) errors.push('page-turn: scorrimento verticale non preservato');
-if(!script.includes('pointermove') || !script.includes('pointerup')) errors.push('fablea-page-turn.js: ciclo del gesto incompleto');
+if(!html.includes('/assets/css/fablea-page-turn.css') || !html.includes('/assets/js/fablea-page-turn.js')) errors.push('story-result.html: caricamento diretto del page-turn mancante');
+if(!html.includes('data-fablea-page-turn')) errors.push('story-result.html: protezione anti-doppio caricamento mancante');
+if(!ui.includes('/assets/css/fablea-page-turn.css') || !ui.includes('/assets/js/fablea-page-turn.js')) errors.push('fablea-unified-ui.js: fallback page-turn mancante');
+if(!script.includes('touchstart') || !script.includes('touchmove') || !script.includes('touchend')) errors.push('fablea-page-turn.js: ciclo touch Safari incompleto');
+if(!script.includes("event.pointerType !== 'pen'")) errors.push('fablea-page-turn.js: fallback penna mancante');
+if(!css.includes('touch-action:pan-y pinch-zoom')) errors.push('page-turn: scorrimento verticale e zoom non preservati');
 if(!script.includes('fableaPageTurnHintSeen')) errors.push('fablea-page-turn.js: suggerimento one-shot mancante');
 if(!css.includes('@media(prefers-reduced-motion:reduce)')) errors.push('fablea-page-turn.css: reduced motion non gestito');
-if(!css.includes('.page-edge-button')) errors.push('fablea-page-turn.css: pulsanti desktop laterali mancanti');
+if(!css.includes('.page-edge-button')) errors.push('fablea-page-turn.css: pulsanti laterali mancanti');
+if(!css.includes('env(safe-area-inset-bottom)')) errors.push('fablea-page-turn.css: safe area mobile non gestita');
+if(!css.includes('data-density="dense"') || !html.includes('densityFor')) errors.push('Live Book: adattamento alla lunghezza del testo mancante');
 if(!css.includes('perspective:')) errors.push('fablea-page-turn.css: profondità della pagina mancante');
 
 if(errors.length){
@@ -26,4 +30,4 @@ if(errors.length){
   process.exit(1);
 }
 
-console.log('Live Book page-turn check passed: touch, pulsanti desktop, scorrimento verticale, accessibilità e reduced motion coperti.');
+console.log('Live Book page-turn check passed: foglio illustrato unico, touch Safari, densità testo, safe area, pulsanti e reduced motion coperti.');
