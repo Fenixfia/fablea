@@ -16,6 +16,7 @@ const unified = read('assets/js/fablea-unified-ui.js');
 const story = read('story.html');
 const homeCss = read('assets/css/fablea-child-home.css');
 const activityCss = read('assets/css/fablea-activities.css');
+const navigationCss = read('assets/css/fablea-integrated-navigation.css');
 
 for(const [label,href] of [['Leggiamo','/discover.html'],['Inventiamo','/story.html'],['Giochiamo','/play.html'],['Scopriamo','/learn.html']]){
   expect(home.includes(`>${label}<`) && home.includes(`href="${href}"`),`Casa FABLEA: porta ${label} mancante o non collegata`);
@@ -58,10 +59,15 @@ expect(C.render({favoriteCompanion:'Orso',primaryWorld:'Foresta',id:'same-child'
 expect(story.includes('data-fablea-companion'),'Creator: compagno persistente non montato');
 expect(unified.includes('story-companion-visual'),'Libro vivo: compagno non aggiunto accanto alla storia');
 expect(unified.includes('/assets/js/fablea-companion.js'),'Sistema unificato: caricamento del compagno mancante');
+expect(unified.includes('/assets/css/fablea-integrated-navigation.css'),'Sistema unificato: navigazione integrata non caricata');
+expect(navigationCss.includes('position:relative!important'),'Navigazione: barre non riportate nel flusso della pagina');
+expect(navigationCss.includes('.fablea-product .explore-dock'),'Navigazione: dock inferiore non coperto');
+expect(!navigationCss.includes('.explore-dock{\n  position:fixed'),'Navigazione: dock inferiore nuovamente sovrapposto');
+expect(navigationCss.includes('padding:18px 16px 26px!important'),'Navigazione: spazio mobile non corretto dopo la rimozione della testata fissa');
 
 if(errors.length){
   console.error('Child world home check failed:');
   errors.forEach(error => console.error(`- ${error}`));
   process.exit(1);
 }
-console.log('Child world home check passed: Casa, compagno persistente, attività per età e Libro vivo coperti.');
+console.log('Child world home check passed: Casa, compagno persistente, attività per età, Libro vivo e navigazione non sovrapposta coperti.');
