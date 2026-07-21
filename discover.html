@@ -18,6 +18,9 @@
   <script src="/stories-v2/age-11-12.js"></script>
   <script src="/stories-v2/index.js"></script>
   <script src="/assets/js/fablea-story-engine.js"></script>
+  <script src="/assets/js/fablea-world-state-v3.js"></script>
+  <script src="/assets/js/fablea-story-variables-v3.js"></script>
+  <script src="/assets/js/fablea-story-engine-v3.js"></script>
   <script src="/assets/js/fablea-shell.js"></script>
 </head>
 <body>
@@ -55,7 +58,7 @@
           <header class="content-head">
             <div class="eyebrow">Storie Fablea · ${S.escapeHTML(F.ageLabel(profile.age))}</div>
             <h1>Quattro porte, non cento scelte.</h1>
-            <p>Ogni storia è già scritta e curata. Quando la apri, FABLEA la porta nel mondo di ${S.escapeHTML(profile.name)}, con il suo compagno e la durata che scegli.</p>
+            <p>Ogni storia è già scritta e curata. Quando la apri, entra nel mondo di ${S.escapeHTML(profile.name)}, può ricordare ciò che è successo e lasciare una traccia per il futuro.</p>
           </header>
 
           <div class="eyebrow">Atmosfera</div>
@@ -76,7 +79,7 @@
                   <div class="story-meta">${S.escapeHTML(S.familyLabel(story.family))} · ${S.escapeHTML(selectedDuration)}</div>
                   <h2>${S.escapeHTML(S.previewTemplate(story.title,profile))}</h2>
                   <p>${S.escapeHTML(S.previewTemplate(story.subtitle,profile))}</p>
-                  <div class="story-actions"><button class="open-story" type="button" data-story-id="${S.escapeHTML(story.id)}">Apri la storia</button></div>
+                  <div class="story-actions"><button class="open-story" type="button" data-story-id="${S.escapeHTML(story.id)}">Apri nel mio mondo</button></div>
                 </div>
               </article>`).join('')}
           </section>`;
