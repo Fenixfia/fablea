@@ -4,6 +4,7 @@ const productPages = [
   'onboarding.html',
   'create-child.html',
   'profile.html',
+  'family-settings.html',
   'child-hub.html',
   'discover.html',
   'story.html',
@@ -68,6 +69,13 @@ if(!profilePage.includes("applyWorld(window.FableaUnifiedUI.NEUTRAL_WORLD || 'FA
 if(!unifiedUI.includes("const NEUTRAL_WORLD = 'FABLEA'")) errors.push('fablea-unified-ui.js: fallback neutro non dichiarato');
 if(!unifiedUI.includes("'--sky-1':'#68746f'")) errors.push('fablea-unified-ui.js: palette neutra FABLEA mancante');
 if(unifiedUI.includes("const next = world || 'Magia'")) errors.push('fablea-unified-ui.js: Magia ancora usata come fallback globale');
+
+const familySettings = read('family-settings.html');
+const familySettingsCss = read('assets/css/fablea-family-settings.css');
+if(!familySettings.includes('/assets/css/fablea-family-settings.css')) errors.push('family-settings.html: foglio stile dedicato non caricato');
+if(!familySettings.includes('class="settings-layout"')) errors.push('family-settings.html: layout desktop mancante');
+if(!familySettingsCss.includes('grid-template-columns:minmax(280px,.72fr) minmax(0,1.28fr)')) errors.push('family settings: impaginazione desktop a due colonne mancante');
+if(!familySettingsCss.includes('@media(max-width:900px)')) errors.push('family settings: adattamento tablet/mobile mancante');
 
 const oldOnly = [...productPages,...publicPages].filter(file => {
   const html = read(file);
