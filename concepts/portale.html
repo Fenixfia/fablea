@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FABLEA — Portale dei mondi</title>
+  <style>
+    :root{
+      --night:#0f1719;
+      --night-2:#162326;
+      --panel:#1d2f31;
+      --panel-soft:#243a3c;
+      --line:rgba(225,240,231,.15);
+      --text:#f4f6ef;
+      --muted:#acbbb3;
+      --mint:#9cd6ba;
+      --sun:#e8c77a;
+      --coral:#d58b79;
+      --sky:#85b8d0;
+      --shadow:0 30px 80px rgba(0,0,0,.35);
+      --radius:30px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--night);color:var(--text);font-family:Inter,Arial,sans-serif;line-height:1.5}
+    a,button{font:inherit}
+    button{cursor:pointer}
+    .shell{max-width:1200px;margin:auto;padding:24px}
+    .topbar{position:sticky;top:0;z-index:30;background:rgba(15,23,25,.82);backdrop-filter:blur(22px);border-bottom:1px solid var(--line)}
+    .topbar-inner{max-width:1200px;margin:auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{color:var(--text);text-decoration:none;font-weight:800;letter-spacing:.14em;display:flex;align-items:center;gap:12px}
+    .brand-core{width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 50% 50%,var(--mint) 0 14%,rgba(156,214,186,.26) 15% 34%,rgba(156,214,186,.08) 35% 58%,transparent 59%);box-shadow:0 0 35px rgba(156,214,186,.24)}
+    nav{display:flex;gap:8px;flex-wrap:wrap}
+    nav a{color:var(--muted);text-decoration:none;padding:9px 13px;border-radius:999px;font-size:.88rem}
+    nav a:hover,nav a:focus-visible{background:rgba(255,255,255,.07);color:var(--text);outline:none}
+    section{padding:74px 0;border-bottom:1px solid var(--line)}
+    .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.74rem;color:var(--mint);font-weight:800}
+    h1,h2,h3{margin:0 0 18px;line-height:1.02}
+    h1{font-size:clamp(3.2rem,8vw,7rem);max-width:930px;font-weight:650}
+    h2{font-size:clamp(2.3rem,5vw,4.4rem);font-weight:650}
+    h3{font-size:1.5rem}
+    p{margin:0 0 18px}
+    .lead{font-size:clamp(1.1rem,2vw,1.45rem);max-width:720px;color:var(--muted)}
+    .button-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+    .btn{border:0;border-radius:999px;min-height:48px;padding:14px 22px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;font-weight:800}
+    .btn-primary{background:var(--mint);color:#10201b}
+    .btn-primary:hover{filter:brightness(1.05)}
+    .btn-secondary{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.24)}
+    .hero{min-height:780px;display:grid;grid-template-columns:1fr 1fr;gap:38px;align-items:center;position:relative}
+    .hero-copy{padding:34px 0;position:relative;z-index:2}
+    .hero-stage{min-height:650px;position:relative;display:grid;place-items:center;overflow:hidden}
+    .orbital{position:absolute;border-radius:50%;border:1px solid rgba(156,214,186,.18)}
+    .orbital.one{width:610px;height:610px}
+    .orbital.two{width:470px;height:470px}
+    .orbital.three{width:320px;height:320px}
+    .portal{width:250px;height:360px;border-radius:50% 50% 44% 44% / 44% 44% 56% 56%;background:radial-gradient(ellipse at 50% 45%,rgba(232,199,122,.94) 0 8%,rgba(133,184,208,.7) 25%,rgba(99,127,115,.62) 44%,rgba(20,35,38,.18) 70%,transparent 73%);box-shadow:0 0 80px rgba(133,184,208,.28),inset 0 0 40px rgba(255,255,255,.18);position:relative}
+    .portal:before{content:"";position:absolute;left:50%;bottom:44px;transform:translateX(-50%);width:122px;height:112px;border-radius:48% 48% 18% 18%;background:linear-gradient(180deg,#334f47,#182729)}
+    .portal:after{content:"";position:absolute;left:50%;bottom:38px;transform:translateX(-50%);width:40px;height:76px;border-radius:20px 20px 8px 8px;background:#101b1d;box-shadow:-54px 25px 0 -12px #101b1d,54px 25px 0 -12px #101b1d}
+    .world-chip{position:absolute;padding:11px 16px;border-radius:999px;background:rgba(29,47,49,.86);border:1px solid var(--line);backdrop-filter:blur(10px);font-size:.82rem;color:var(--muted);box-shadow:var(--shadow)}
+    .world-chip strong{color:var(--text)}
+    .chip-a{top:105px;left:28px}.chip-b{top:168px;right:10px}.chip-c{bottom:114px;left:48px}.chip-d{bottom:72px;right:46px}
+    .signal{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--sun);box-shadow:0 0 22px var(--sun)}
+    .signal.s1{top:150px;left:150px}.signal.s2{right:130px;top:270px}.signal.s3{left:210px;bottom:120px}
+    .statement{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:38px}
+    .statement article{border-top:1px solid var(--line);padding-top:22px}
+    .statement-number{color:var(--mint);font-weight:800;margin-bottom:10px}
+    .screen-frame{background:#091113;padding:12px;border-radius:40px;box-shadow:var(--shadow);margin-top:36px;border:1px solid rgba(255,255,255,.08)}
+    .screen{min-height:670px;border-radius:30px;overflow:hidden;background:var(--night-2);position:relative}
+    .screen-grid{display:grid;grid-template-columns:.95fr 1.05fr;min-height:670px}
+    .screen-copy{padding:64px}
+    .visual-field{position:relative;background:radial-gradient(circle at 52% 42%,rgba(232,199,122,.28),transparent 18%),radial-gradient(circle at 48% 45%,rgba(133,184,208,.3),transparent 34%),linear-gradient(160deg,#243a3c,#122023 70%)}
+    .visual-field:before{content:"";position:absolute;left:8%;right:8%;bottom:-18%;height:58%;border-radius:50% 50% 0 0;background:#304f45;box-shadow:inset 0 22px 50px rgba(255,255,255,.04)}
+    .visual-field:after{content:"";position:absolute;width:120px;height:120px;border-radius:50%;background:#e8c77a;right:18%;top:14%;box-shadow:0 0 65px rgba(232,199,122,.24)}
+    .screen-label{display:inline-flex;padding:8px 12px;border-radius:999px;border:1px solid var(--line);color:var(--mint);font-size:.78rem}
+    .screen-title{font-size:clamp(2.7rem,5vw,4.8rem);margin-top:24px}
+    .screen-sub{color:var(--muted);max-width:520px}
+    .metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:34px}
+    .metric{padding:16px;border-radius:18px;background:rgba(255,255,255,.045);border:1px solid var(--line)}
+    .metric strong{display:block;font-size:1.35rem;color:var(--text)}
+    .metric span{font-size:.78rem;color:var(--muted)}
+    .onboarding{display:grid;grid-template-columns:1fr 1fr;min-height:670px}
+    .onboard-scene{position:relative;background:linear-gradient(180deg,#263d3f,#142225);overflow:hidden}
+    .ring{position:absolute;border-radius:50%;border:1px solid rgba(156,214,186,.2)}
+    .ring.r1{width:500px;height:500px;left:-120px;top:90px}.ring.r2{width:340px;height:340px;left:-40px;top:170px}
+    .world-core{position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#e8c77a,#75a38d 44%,#263f42 70%);left:120px;top:210px;box-shadow:0 0 70px rgba(133,184,208,.22)}
+    .onboard-panel{padding:54px;display:flex;flex-direction:column}
+    .progress-row{display:flex;gap:8px;margin:22px 0 34px}
+    .progress-row span{height:4px;flex:1;border-radius:999px;background:rgba(255,255,255,.1)}
+    .progress-row span.done,.progress-row span.active{background:var(--mint)}
+    .choice-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:24px 0 30px}
+    .choice{min-height:120px;padding:18px;text-align:left;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.035);color:var(--text)}
+    .choice.selected{border-color:var(--mint);background:rgba(156,214,186,.1);box-shadow:inset 0 0 0 1px rgba(156,214,186,.25)}
+    .choice small{display:block;color:var(--muted);margin-top:6px}
+    .hub{background:linear-gradient(150deg,#18292b,#0f1b1d)}
+    .hub-top{padding:24px 30px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+    .profile-chip{display:flex;align-items:center;gap:12px}
+    .avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--mint),var(--sky));color:#10201b;font-weight:900}
+    .hub-body{padding:34px;display:grid;grid-template-columns:1.35fr .65fr;gap:22px}
+    .main-journey{min-height:460px;border-radius:28px;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 30%,rgba(232,199,122,.32),transparent 20%),linear-gradient(155deg,#2d4b46,#172729 72%);padding:34px;border:1px solid var(--line)}
+    .main-journey:before{content:"";position:absolute;left:5%;right:0;bottom:-21%;height:62%;border-radius:50% 50% 0 0;background:#385b50}
+    .main-journey:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:13%;top:16%;border:1px solid rgba(255,255,255,.24);box-shadow:0 0 48px rgba(232,199,122,.18)}
+    .journey-copy{position:relative;z-index:2;max-width:560px}
+    .journey-copy h3{font-size:2.6rem;max-width:500px}
+    .meta{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.84rem;margin:18px 0 26px}
+    .stack{display:grid;gap:16px}
+    .panel{border:1px solid var(--line);border-radius:22px;padding:22px;background:rgba(255,255,255,.035)}
+    .panel h3{font-size:1.18rem}
+    .memory-line{height:1px;background:linear-gradient(90deg,var(--mint),transparent);margin:16px 0}
+    .memory-list{display:grid;gap:12px;color:var(--muted);font-size:.9rem}
+    .memory-list span:before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--sun);margin-right:10px;box-shadow:0 0 12px rgba(232,199,122,.42)}
+    .book-stage{min-height:720px;background:radial-gradient(circle at 50% 43%,rgba(133,184,208,.22),transparent 28%),#081012;display:grid;place-items:center;padding:48px}
+    .reader{width:min(980px,100%);min-height:580px;border-radius:30px;overflow:hidden;background:#122022;border:1px solid var(--line);box-shadow:0 40px 100px rgba(0,0,0,.46);position:relative}
+    .reader-scene{height:270px;position:relative;background:radial-gradient(circle at 78% 25%,rgba(232,199,122,.48),transparent 12%),linear-gradient(160deg,#34544c,#152629 72%);overflow:hidden}
+    .reader-scene:before{content:"";position:absolute;left:-8%;right:-8%;bottom:-38%;height:86%;border-radius:50% 50% 0 0;background:#42675a}
+    .reader-scene:after{content:"";position:absolute;width:52%;height:150px;border:3px solid rgba(232,199,122,.48);border-color:rgba(232,199,122,.48) transparent transparent transparent;border-radius:50%;left:17%;bottom:-6%;transform:rotate(-8deg)}
+    .reader-copy{padding:40px 64px 34px}
+    .reader-copy h3{font-size:2rem}
+    .story-text{font-family:Georgia,"Times New Roman",serif;font-size:1.1rem;line-height:1.72;color:#edf2eb;max-width:760px}
+    .reader-controls{display:flex;align-items:center;gap:14px;margin-top:28px}
+    .round{width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.04);color:var(--text)}
+    .timeline{height:4px;background:rgba(255,255,255,.11);border-radius:999px;flex:1;overflow:hidden}
+    .timeline span{display:block;width:42%;height:100%;background:var(--mint)}
+    .mode-label{font-size:.78rem;color:var(--muted)}
+    .compare-note{margin-top:32px;max-width:780px;border:1px solid var(--line);background:rgba(255,255,255,.035);padding:24px 28px;border-radius:20px;color:var(--muted)}
+    .compare-note strong{color:var(--text)}
+    footer{padding:44px 0 70px;color:var(--muted);font-size:.9rem}
+    @media(max-width:920px){
+      .hero,.screen-grid,.onboarding,.hub-body{grid-template-columns:1fr}
+      .hero{min-height:auto}
+      .hero-stage{min-height:540px}
+      .statement{grid-template-columns:1fr}
+      .visual-field{min-height:420px}
+      .onboard-scene{min-height:400px}
+      .metric-row{grid-template-columns:1fr}
+    }
+    @media(max-width:580px){
+      .shell{padding:18px}
+      .topbar-inner{padding:12px 18px}
+      nav{display:none}
+      section{padding:48px 0}
+      h1{font-size:3.35rem}
+      .hero-stage{min-height:440px}
+      .portal{width:190px;height:280px}
+      .orbital.one{width:410px;height:410px}.orbital.two{width:320px;height:320px}.orbital.three{width:230px;height:230px}
+      .world-chip{font-size:.72rem;padding:9px 12px}
+      .chip-a{top:60px;left:8px}.chip-b{top:120px;right:0}.chip-c{bottom:88px;left:6px}.chip-d{bottom:38px;right:8px}
+      .screen-copy,.onboard-panel{padding:36px 26px}
+      .choice-grid{grid-template-columns:1fr}
+      .hub-body{padding:18px}
+      .main-journey{padding:24px;min-height:500px}
+      .journey-copy h3{font-size:2rem}
+      .book-stage{padding:12px}
+      .reader-copy{padding:32px 26px}
+      .reader-scene{height:230px}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#home"><span class="brand-core" aria-hidden="true"></span>FABLEA</a>
+      <nav aria-label="Sezioni del prototipo"><a href="#home">Home</a><a href="#onboarding">Onboarding</a><a href="#hub">Child Hub</a><a href="#book">Libro vivo</a></nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home">
+      <div class="shell hero">
+        <div class="hero-copy">
+          <div class="eyebrow">Direzione B — Portale dei mondi</div>
+          <h1>Ogni storia apre qualcosa che resta.</h1>
+          <p class="lead">FABLEA riconosce il bambino, ricorda ciò che ha vissuto e trasforma ogni racconto in un passaggio verso un mondo più profondo.</p>
+          <div class="button-row"><a class="btn btn-primary" href="#onboarding">Inizia il primo mondo</a><a class="btn btn-secondary" href="#book">Entra nel Libro vivo</a></div>
+          <div class="statement">
+            <article><div class="statement-number">01</div><h3>Un mondo personale</h3><p>Non un catalogo: un luogo che cambia con ogni esperienza.</p></article>
+            <article><div class="statement-number">02</div><h3>Una mente più ampia</h3><p>Curiosità, immaginazione ed emozioni dentro storie vere.</p></article>
+            <article><div class="statement-number">03</div><h3>Una famiglia presente</h3><p>Domande e attività che continuano fuori dallo schermo.</p></article>
+          </div>
+        </div>
+        <div class="hero-stage" aria-label="Portale visivo verso mondi narrativi">
+          <div class="orbital one"></div><div class="orbital two"></div><div class="orbital three"></div>
+          <div class="portal"></div>
+          <div class="world-chip chip-a"><strong>Valle delle impronte</strong><br>luogo ricordato</div>
+          <div class="world-chip chip-b"><strong>Custode</strong><br>compagno ricorrente</div>
+          <div class="world-chip chip-c"><strong>Promessa aperta</strong><br>conseguenza futura</div>
+          <div class="world-chip chip-d"><strong>Capitolo II</strong><br>pronto da continuare</div>
+          <span class="signal s1"></span><span class="signal s2"></span><span class="signal s3"></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="onboarding">
+      <div class="shell">
+        <div class="eyebrow">Onboarding guidato</div>
+        <h2>Il mondo prende forma mentre lo scegli.</h2>
+        <p class="lead">Ogni passaggio mostra immediatamente ciò che sta nascendo, senza l’aspetto di un questionario.</p>
+        <div class="screen-frame">
+          <div class="screen onboarding">
+            <div class="onboard-scene"><div class="ring r1"></div><div class="ring r2"></div><div class="world-core"></div></div>
+            <div class="onboard-panel">
+              <div class="eyebrow">Passaggio 3 di 6</div>
+              <div class="progress-row" aria-label="Progresso onboarding"><span class="done"></span><span class="done"></span><span class="active"></span><span></span><span></span><span></span></div>
+              <h3 style="font-size:2.45rem">Quale mondo deve diventare casa?</h3>
+              <p style="color:var(--muted)">Sarà il centro delle prime avventure. Gli altri mondi resteranno raggiungibili senza perdere memoria e continuità.</p>
+              <div class="choice-grid">
+                <button class="choice selected" type="button"><strong>Dinosauri</strong><small>Valli antiche, impronte e creature da comprendere</small></button>
+                <button class="choice" type="button"><strong>Mare</strong><small>Isole, correnti, profondità e incontri inattesi</small></button>
+                <button class="choice" type="button"><strong>Spazio</strong><small>Pianeti, segnali, stazioni e domande immense</small></button>
+                <button class="choice" type="button"><strong>Misteri</strong><small>Indizi, luoghi nascosti e problemi da osservare</small></button>
+              </div>
+              <div class="button-row"><button class="btn btn-secondary" type="button">Indietro</button><button class="btn btn-primary" type="button">Continua</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="hub">
+      <div class="shell">
+        <div class="eyebrow">Casa narrativa</div>
+        <h2>La storia aperta domina. Il resto del mondo resta in orbita.</h2>
+        <p class="lead">Il Child Hub diventa un ambiente immersivo con una priorità chiara: continuare ciò che conta oggi.</p>
+        <div class="screen-frame">
+          <div class="screen hub">
+            <div class="hub-top"><a class="brand" href="#home"><span class="brand-core"></span>FABLEA</a><div class="profile-chip"><span class="avatar">A</span><span><strong>Profilo di test</strong><br><small style="color:var(--muted)">5–7 anni · Dinosauri</small></span></div></div>
+            <div class="hub-body">
+              <article class="main-journey">
+                <div class="journey-copy">
+                  <div class="eyebrow">Grande avventura aperta</div>
+                  <h3>Il sentiero oltre il Lago delle Impronte</h3>
+                  <div class="meta"><span>Capitolo 2 di 5</span><span>·</span><span>12 minuti</span><span>·</span><span>Custode delle impronte</span></div>
+                  <p style="color:var(--muted)">Una traccia sconosciuta è comparsa dopo la pioggia. Prima di seguirla, il mondo aspetta una nuova decisione.</p>
+                  <div class="button-row"><button class="btn btn-primary" type="button">Continua il viaggio</button><button class="btn btn-secondary" type="button">Un’altra esperienza per oggi</button></div>
+                </div>
+              </article>
+              <div class="stack">
+                <aside class="panel"><div class="eyebrow">Consigliata ora</div><h3>Momento calma</h3><p style="color:var(--muted)">Sei minuti nella Valle Silenziosa con personaggi già conosciuti.</p><button class="btn btn-secondary" type="button">Prepara la storia</button></aside>
+                <aside class="panel"><div class="eyebrow">Il mondo ricorda</div><div class="memory-line"></div><div class="memory-list"><span>La piuma color rame</span><span>Il ponte riparato</span><span>Una promessa ancora aperta</span></div></aside>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="book">
+      <div class="shell">
+        <div class="eyebrow">Libro vivo</div>
+        <h2>Una scena immersiva, poi soltanto voce e testo.</h2>
+        <p class="lead">L’interfaccia si riduce al minimo. La storia entra in primo piano senza imitare un videogioco o moltiplicare gli stimoli.</p>
+        <div class="screen-frame">
+          <div class="screen book-stage">
+            <article class="reader" aria-label="Pagina del Libro vivo">
+              <div class="reader-scene"></div>
+              <div class="reader-copy">
+                <div class="eyebrow">Capitolo II · La traccia nuova</div>
+                <h3>La pioggia aveva cambiato la valle</h3>
+                <div class="story-text"><p>Al mattino, le felci trattenevano gocce grandi come perle. Sul terreno compariva un’impronta che nessuno aveva mai visto prima.</p><p>Il Custode si chinò senza toccarla. «Non dobbiamo indovinare in fretta», disse. «Prima osserviamo ciò che la valle ci sta raccontando.»</p></div>
+                <div class="reader-controls"><button class="round" type="button" aria-label="Pagina precedente">←</button><button class="round" type="button" aria-label="Ascolta la pagina">▷</button><div class="timeline" aria-label="Progresso 42 per cento"><span></span></div><span class="mode-label">Lettura + ascolto</span><button class="round" type="button" aria-label="Pagina successiva">→</button></div>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="compare-note"><strong>Carattere della direzione:</strong> immersivo, contemporaneo e profondo. La memoria appare come segnali e connessioni del mondo. L’interfaccia si riduce durante la lettura.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="shell">Prototipo concettuale Sprint 2D-A · Nessun dato reale · Nessuna modifica al prodotto corrente</div></footer>
+
+  <script>
+    document.querySelectorAll('.choice').forEach((button)=>{
+      button.addEventListener('click',()=>{
+        document.querySelectorAll('.choice').forEach((item)=>item.classList.remove('selected'));
+        button.classList.add('selected');
+      });
+    });
+  </script>
+</body>
+</html>

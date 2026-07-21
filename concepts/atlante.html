@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FABLEA — Atlante delle meraviglie</title>
+  <style>
+    :root{
+      --ink:#26332d;
+      --muted:#6c776f;
+      --paper:#f4efe4;
+      --paper-2:#ebe1cf;
+      --line:#cbbfa9;
+      --forest:#345d4d;
+      --forest-dark:#203c33;
+      --gold:#b78744;
+      --berry:#864f58;
+      --cream:#fffaf0;
+      --shadow:0 18px 55px rgba(55,45,30,.14);
+      --radius:28px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:Georgia,"Times New Roman",serif;line-height:1.55}
+    button,a{font:inherit}
+    button{cursor:pointer}
+    .shell{max-width:1180px;margin:auto;padding:24px}
+    .topbar{position:sticky;top:0;z-index:20;background:rgba(244,239,228,.92);backdrop-filter:blur(18px);border-bottom:1px solid rgba(120,104,77,.18)}
+    .topbar-inner{max-width:1180px;margin:auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);font-weight:700;letter-spacing:.12em}
+    .brand-mark{width:38px;height:38px;border:1px solid var(--forest);border-radius:50%;display:grid;place-items:center;position:relative}
+    .brand-mark:before,.brand-mark:after{content:"";position:absolute;background:var(--forest);border-radius:50%}
+    .brand-mark:before{width:14px;height:14px}
+    .brand-mark:after{width:4px;height:28px;transform:rotate(38deg)}
+    nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    nav a{color:var(--ink);text-decoration:none;padding:9px 13px;border-radius:999px;font-family:Arial,sans-serif;font-size:.88rem}
+    nav a:hover,nav a:focus-visible{background:var(--paper-2);outline:none}
+    section{padding:72px 0;border-bottom:1px solid rgba(110,90,60,.16)}
+    .eyebrow{font-family:Arial,sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:.75rem;color:var(--forest);font-weight:700}
+    h1,h2,h3{line-height:1.05;margin:0 0 18px}
+    h1{font-size:clamp(3rem,8vw,6.6rem);max-width:900px;font-weight:500}
+    h2{font-size:clamp(2.2rem,5vw,4.3rem);font-weight:500}
+    h3{font-size:1.55rem;font-weight:500}
+    p{margin:0 0 18px}
+    .lead{font-size:clamp(1.15rem,2.2vw,1.55rem);max-width:700px;color:#445049}
+    .button-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+    .btn{border:0;border-radius:999px;padding:14px 22px;min-height:48px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;font-family:Arial,sans-serif;font-weight:700}
+    .btn-primary{background:var(--forest);color:white}
+    .btn-primary:hover{background:var(--forest-dark)}
+    .btn-secondary{background:transparent;color:var(--forest);border:1px solid var(--forest)}
+    .hero{min-height:760px;display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center;position:relative}
+    .hero-copy{padding:40px 0}
+    .atlas-stage{position:relative;min-height:590px}
+    .map-sheet{position:absolute;inset:20px 4px 30px 20px;background:var(--cream);border:1px solid #d2c4ac;border-radius:14px;box-shadow:var(--shadow);transform:rotate(2.5deg);overflow:hidden}
+    .map-sheet:before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 20% 25%,rgba(52,93,77,.11) 0 3px,transparent 4px),radial-gradient(circle at 73% 58%,rgba(134,79,88,.12) 0 4px,transparent 5px),linear-gradient(115deg,transparent 0 48%,rgba(183,135,68,.16) 49% 50%,transparent 51%);background-size:74px 74px,94px 94px,100% 100%}
+    .map-line{position:absolute;border:2px dashed rgba(52,93,77,.55);border-color:rgba(52,93,77,.55) transparent transparent transparent;border-radius:50%;width:310px;height:210px;left:110px;top:170px;transform:rotate(18deg)}
+    .map-title{position:absolute;left:46px;top:38px;font-size:1.75rem}
+    .map-note{position:absolute;right:34px;bottom:38px;max-width:220px;font-family:Arial,sans-serif;font-size:.86rem;color:var(--muted);transform:rotate(-3deg)}
+    .seal{position:absolute;right:36px;top:72px;width:94px;height:94px;border-radius:50%;display:grid;place-items:center;background:var(--berry);color:white;font-family:Arial,sans-serif;text-align:center;font-size:.72rem;letter-spacing:.08em;transform:rotate(9deg)}
+    .specimen{position:absolute;width:190px;background:#efe4ca;border:1px solid #bcae91;border-radius:10px;padding:16px;box-shadow:0 16px 35px rgba(60,45,22,.14);left:-8px;bottom:38px;transform:rotate(-5deg)}
+    .specimen-shape{height:120px;border-radius:50% 45% 52% 40%;background:linear-gradient(145deg,#718d6f,#344e3d);position:relative;overflow:hidden}
+    .specimen-shape:before{content:"";position:absolute;width:100px;height:18px;background:#9db18e;border-radius:50%;transform:rotate(25deg);left:34px;top:38px}
+    .specimen p{font-family:Arial,sans-serif;font-size:.78rem;margin:10px 0 0;color:#5a645d}
+    .ribbon{position:absolute;right:-12px;bottom:8px;background:var(--gold);color:#fff7e8;padding:11px 18px;transform:rotate(-2deg);font-family:Arial,sans-serif;font-size:.8rem;letter-spacing:.08em}
+    .principles{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:36px}
+    .principle{padding:26px 0;border-top:1px solid var(--line)}
+    .principle-num{font-family:Arial,sans-serif;color:var(--gold);font-weight:700;margin-bottom:14px}
+    .screen-frame{background:#d8cdb9;padding:14px;border-radius:38px;box-shadow:var(--shadow);margin-top:34px}
+    .screen{background:var(--cream);border-radius:28px;overflow:hidden;min-height:660px;position:relative}
+    .screen-grid{display:grid;grid-template-columns:1.08fr .92fr;min-height:660px}
+    .screen-copy{padding:68px}
+    .screen-art{background:#dfe6d3;position:relative;overflow:hidden}
+    .screen-art:before{content:"";position:absolute;width:520px;height:520px;border-radius:50%;background:#98aa78;left:-110px;bottom:-220px}
+    .screen-art:after{content:"";position:absolute;width:420px;height:420px;border-radius:50%;background:#53755e;right:-190px;top:-160px}
+    .mountain{position:absolute;bottom:0;width:100%;height:48%;background:linear-gradient(145deg,transparent 0 34%,#49614d 35% 55%,transparent 56%),linear-gradient(35deg,transparent 0 38%,#738870 39% 58%,transparent 59%)}
+    .screen-badge{display:inline-flex;border:1px solid var(--line);padding:8px 12px;border-radius:999px;font-family:Arial,sans-serif;font-size:.78rem;color:var(--forest)}
+    .screen-title{font-size:clamp(2.5rem,5vw,4.7rem);margin-top:26px;max-width:520px}
+    .screen-sub{font-family:Arial,sans-serif;color:var(--muted);max-width:500px;font-size:1rem}
+    .onboarding-layout{display:grid;grid-template-columns:310px 1fr;gap:24px;margin-top:36px}
+    .steps{border-right:1px solid var(--line);padding-right:28px}
+    .step{display:flex;gap:14px;padding:16px 0;font-family:Arial,sans-serif;color:var(--muted)}
+    .step.active{color:var(--forest);font-weight:700}
+    .step-index{width:30px;height:30px;border-radius:50%;border:1px solid currentColor;display:grid;place-items:center;flex:0 0 auto}
+    .form-panel{padding:16px 36px 36px}
+    .choice-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:24px 0 32px}
+    .choice{border:1px solid var(--line);background:#fffaf0;border-radius:18px;min-height:130px;padding:18px;text-align:left;color:var(--ink)}
+    .choice.selected{border:2px solid var(--forest);background:#edf1e7}
+    .choice-symbol{width:42px;height:42px;border-radius:50%;background:var(--paper-2);margin-bottom:20px;display:grid;place-items:center;font-family:Arial,sans-serif;color:var(--forest);font-weight:700}
+    .choice strong{display:block;margin-bottom:6px}
+    .choice small{font-family:Arial,sans-serif;color:var(--muted)}
+    .hub{background:#e9e3d5}
+    .hub-head{display:flex;align-items:center;justify-content:space-between;padding:24px 34px;border-bottom:1px solid rgba(90,75,50,.13)}
+    .profile-chip{display:flex;align-items:center;gap:12px;font-family:Arial,sans-serif}
+    .avatar{width:42px;height:42px;border-radius:50%;background:var(--forest);color:white;display:grid;place-items:center;font-weight:700}
+    .hub-body{padding:38px;display:grid;grid-template-columns:1.25fr .75fr;gap:24px}
+    .journey{background:#fffaf0;border:1px solid #d0c4ad;border-radius:24px;padding:34px;min-height:420px;position:relative;overflow:hidden}
+    .journey:after{content:"";position:absolute;width:330px;height:330px;border:1px dashed rgba(52,93,77,.28);border-radius:50%;right:-90px;bottom:-100px}
+    .journey h3{font-size:2.4rem;max-width:520px}
+    .journey-meta{display:flex;gap:12px;flex-wrap:wrap;font-family:Arial,sans-serif;color:var(--muted);font-size:.86rem;margin:20px 0 28px}
+    .map-mini{position:absolute;right:34px;bottom:32px;width:210px;height:150px;border:1px solid var(--line);border-radius:50%;transform:rotate(-7deg);background:radial-gradient(circle at 35% 45%,#789069 0 9px,transparent 10px),radial-gradient(circle at 70% 70%,#b78744 0 8px,transparent 9px),#efe8d8}
+    .side-stack{display:grid;gap:18px}
+    .side-panel{background:#fffaf0;border:1px solid #d0c4ad;border-radius:22px;padding:24px}
+    .side-panel h3{font-size:1.25rem}
+    .memory-list{display:grid;gap:12px;font-family:Arial,sans-serif;font-size:.9rem}
+    .memory-item{display:flex;align-items:center;gap:10px}
+    .memory-dot{width:11px;height:11px;border-radius:50%;background:var(--gold)}
+    .book-stage{background:#28352f;padding:54px;min-height:720px;display:grid;place-items:center}
+    .book{width:min(920px,100%);display:grid;grid-template-columns:1fr 1fr;background:#f8f1df;border-radius:18px;box-shadow:0 30px 90px rgba(0,0,0,.36);overflow:hidden;min-height:550px;position:relative}
+    .book:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(transparent,#b9aa8e 12%,#b9aa8e 88%,transparent)}
+    .book-art{padding:48px;background:#d9e2cc;position:relative;overflow:hidden}
+    .book-art .moon{position:absolute;width:110px;height:110px;border-radius:50%;background:#f4d9a6;right:45px;top:44px}
+    .book-art .land{position:absolute;left:-20%;right:-20%;bottom:-15%;height:58%;border-radius:50% 50% 0 0;background:#58705d}
+    .book-art .path{position:absolute;width:55%;height:210px;border:5px solid #cbb581;border-color:#cbb581 transparent transparent transparent;border-radius:50%;left:18%;bottom:4%;transform:rotate(-14deg)}
+    .book-page{padding:56px 58px;display:flex;flex-direction:column}
+    .chapter{font-family:Arial,sans-serif;text-transform:uppercase;letter-spacing:.13em;color:var(--berry);font-size:.72rem}
+    .book-page h3{font-size:2rem;margin-top:16px}
+    .story-text{font-size:1.06rem;color:#3e473f;flex:1}
+    .book-controls{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:26px;font-family:Arial,sans-serif}
+    .round{width:48px;height:48px;border-radius:50%;border:1px solid var(--forest);background:transparent;color:var(--forest)}
+    .progress{flex:1;height:4px;background:#d6cbb6;border-radius:999px;overflow:hidden}
+    .progress span{display:block;width:42%;height:100%;background:var(--forest)}
+    .compare-note{background:#fffaf0;border-left:4px solid var(--gold);padding:24px 28px;margin-top:32px;max-width:760px}
+    footer{padding:44px 0 70px;font-family:Arial,sans-serif;color:var(--muted);font-size:.9rem}
+    @media(max-width:900px){
+      .hero,.screen-grid,.hub-body{grid-template-columns:1fr}
+      .hero{min-height:auto}
+      .atlas-stage{min-height:520px}
+      .principles{grid-template-columns:1fr}
+      .onboarding-layout{grid-template-columns:1fr}
+      .steps{border-right:0;border-bottom:1px solid var(--line);padding:0 0 18px;display:flex;overflow:auto}
+      .step{min-width:150px}
+      .choice-grid{grid-template-columns:repeat(2,1fr)}
+      .screen-copy{padding:42px 30px}
+      .screen-art{min-height:390px}
+      .book{grid-template-columns:1fr}
+      .book:before{display:none}
+      .book-art{min-height:330px}
+      .book-stage{padding:24px}
+    }
+    @media(max-width:560px){
+      .shell{padding:18px}
+      .topbar-inner{padding:12px 18px;align-items:flex-start}
+      nav{display:none}
+      section{padding:48px 0}
+      h1{font-size:3.2rem}
+      .atlas-stage{min-height:430px}
+      .specimen{width:150px}
+      .choice-grid{grid-template-columns:1fr}
+      .form-panel{padding:10px}
+      .hub-body{padding:20px}
+      .journey{padding:24px;min-height:470px}
+      .map-mini{right:18px;bottom:18px;width:170px}
+      .book-stage{padding:12px}
+      .book-page{padding:34px 28px}
+      .book-art{min-height:270px}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#home"><span class="brand-mark" aria-hidden="true"></span>FABLEA</a>
+      <nav aria-label="Sezioni del prototipo">
+        <a href="#home">Home</a><a href="#onboarding">Onboarding</a><a href="#hub">Child Hub</a><a href="#book">Libro vivo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home">
+      <div class="shell hero">
+        <div class="hero-copy">
+          <div class="eyebrow">Direzione A — Atlante delle meraviglie</div>
+          <h1>Un mondo che cresce, pagina dopo pagina.</h1>
+          <p class="lead">FABLEA trasforma ogni storia in una traccia del mondo personale del bambino: luoghi, compagni, scelte, domande e ricordi da continuare insieme.</p>
+          <div class="button-row">
+            <a class="btn btn-primary" href="#onboarding">Inizia il primo mondo</a>
+            <a class="btn btn-secondary" href="#book">Apri il Libro vivo</a>
+          </div>
+          <div class="principles">
+            <div class="principle"><div class="principle-num">01</div><h3>Ricorda</h3><p>Il mondo conserva personaggi, luoghi e decisioni.</p></div>
+            <div class="principle"><div class="principle-num">02</div><h3>Espande</h3><p>Ogni storia apre domande, idee e attività fuori dallo schermo.</p></div>
+            <div class="principle"><div class="principle-num">03</div><h3>Unisce</h3><p>Il genitore accompagna senza trasformarsi in amministratore.</p></div>
+          </div>
+        </div>
+        <div class="atlas-stage" aria-label="Anteprima illustrata di un atlante narrativo">
+          <div class="map-sheet">
+            <div class="map-title">La Valle delle Felci Alte</div>
+            <div class="map-line"></div>
+            <div class="seal">MONDO<br>IN CRESCITA</div>
+            <div class="map-note">Qui è stata trovata una piuma color rame. Il sentiero verso il lago resta ancora chiuso.</div>
+          </div>
+          <div class="specimen"><div class="specimen-shape"></div><p>Compagno ricorrente — Custode delle impronte</p></div>
+          <div class="ribbon">Capitolo successivo disponibile</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="onboarding">
+      <div class="shell">
+        <div class="eyebrow">Onboarding guidato</div>
+        <h2>Non un modulo. L’inizio di un atlante personale.</h2>
+        <p class="lead">Ogni scelta costruisce la prima pagina del mondo, senza chiedere due volte ciò che FABLEA già conosce.</p>
+        <div class="screen-frame">
+          <div class="screen onboarding-layout">
+            <aside class="steps" aria-label="Avanzamento onboarding">
+              <div class="step"><span class="step-index">1</span><span>Identità</span></div>
+              <div class="step"><span class="step-index">2</span><span>Età e grammatica</span></div>
+              <div class="step active"><span class="step-index">3</span><span>Mondo principale</span></div>
+              <div class="step"><span class="step-index">4</span><span>Interessi</span></div>
+              <div class="step"><span class="step-index">5</span><span>Compagno e stile</span></div>
+              <div class="step"><span class="step-index">6</span><span>Conferma</span></div>
+            </aside>
+            <div class="form-panel">
+              <div class="eyebrow">Passaggio 3 di 6</div>
+              <h3 style="font-size:2.4rem;margin-top:14px">Quale mondo deve diventare casa?</h3>
+              <p>Questo sarà il punto di partenza. Altri mondi potranno essere visitati senza perdere la continuità.</p>
+              <div class="choice-grid">
+                <button class="choice selected" type="button"><span class="choice-symbol">D</span><strong>Dinosauri</strong><small>Valli, impronte e creature antiche</small></button>
+                <button class="choice" type="button"><span class="choice-symbol">M</span><strong>Mare</strong><small>Isole, profondità e correnti</small></button>
+                <button class="choice" type="button"><span class="choice-symbol">S</span><strong>Spazio</strong><small>Pianeti, stazioni e segnali</small></button>
+                <button class="choice" type="button"><span class="choice-symbol">F</span><strong>Foresta</strong><small>Sentieri, animali e segreti</small></button>
+              </div>
+              <div class="button-row"><button class="btn btn-secondary" type="button">Indietro</button><button class="btn btn-primary" type="button">Continua</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="hub">
+      <div class="shell">
+        <div class="eyebrow">Casa narrativa</div>
+        <h2>Il mondo personale sostituisce la dashboard.</h2>
+        <p class="lead">La grande avventura è al centro. Tesori, luoghi e compagni sono memoria visibile, non badge da collezionare.</p>
+        <div class="screen-frame">
+          <div class="screen hub">
+            <div class="hub-head">
+              <a class="brand" href="#home"><span class="brand-mark" aria-hidden="true"></span>FABLEA</a>
+              <div class="profile-chip"><span class="avatar">A</span><span><strong>Profilo di test</strong><br><small>5–7 anni · Dinosauri</small></span></div>
+            </div>
+            <div class="hub-body">
+              <article class="journey">
+                <div class="eyebrow">Grande avventura aperta</div>
+                <h3>Il sentiero oltre il Lago delle Impronte</h3>
+                <div class="journey-meta"><span>Capitolo 2 di 5</span><span>·</span><span>12 minuti</span><span>·</span><span>Con il Custode delle impronte</span></div>
+                <p>La pioggia ha rivelato una nuova traccia. Prima di seguirla, qualcuno dovrà decidere che cosa portare con sé.</p>
+                <div class="button-row"><button class="btn btn-primary" type="button">Continua il viaggio</button><button class="btn btn-secondary" type="button">Una storia diversa per oggi</button></div>
+                <div class="map-mini" aria-hidden="true"></div>
+              </article>
+              <div class="side-stack">
+                <aside class="side-panel"><div class="eyebrow">Oggi</div><h3>Momento calma</h3><p>Una storia breve nella Valle Silenziosa, usando personaggi già conosciuti.</p><button class="btn btn-secondary" type="button">Prepara 6 minuti</button></aside>
+                <aside class="side-panel"><div class="eyebrow">Il mondo ricorda</div><div class="memory-list"><div class="memory-item"><span class="memory-dot"></span>La piuma color rame</div><div class="memory-item"><span class="memory-dot"></span>Il ponte riparato</div><div class="memory-item"><span class="memory-dot"></span>Una promessa al piccolo triceratopo</div></div></aside>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="book">
+      <div class="shell">
+        <div class="eyebrow">Libro vivo</div>
+        <h2>Un libro digitale che conserva il silenzio della lettura.</h2>
+        <p class="lead">L’interfaccia scompare. La scena, il testo e la voce occupano il centro; il rituale arriva soltanto alla fine.</p>
+        <div class="screen-frame">
+          <div class="screen book-stage">
+            <article class="book" aria-label="Pagina del Libro vivo">
+              <div class="book-art"><div class="moon"></div><div class="land"></div><div class="path"></div></div>
+              <div class="book-page">
+                <div class="chapter">Capitolo II · La traccia nuova</div>
+                <h3>La pioggia aveva cambiato la valle</h3>
+                <div class="story-text">
+                  <p>Al mattino, le felci trattenevano gocce grandi come perle. Sul terreno compariva un’impronta che nessuno aveva mai visto prima.</p>
+                  <p>Il Custode si chinò senza toccarla. «Non dobbiamo indovinare in fretta», disse. «Prima osserviamo ciò che la valle ci sta raccontando.»</p>
+                </div>
+                <div class="book-controls"><button class="round" type="button" aria-label="Pagina precedente">←</button><button class="round" type="button" aria-label="Ascolta la pagina">▷</button><div class="progress" aria-label="Progresso 42 per cento"><span></span></div><button class="round" type="button" aria-label="Pagina successiva">→</button></div>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="compare-note"><strong>Carattere della direzione:</strong> editoriale, caldo e materico. La memoria appare come mappa, traccia e oggetto narrativo. La tecnologia resta discreta.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="shell">Prototipo concettuale Sprint 2D-A · Nessun dato reale · Nessuna modifica al prodotto corrente</div></footer>
+
+  <script>
+    document.querySelectorAll('.choice').forEach((button)=>{
+      button.addEventListener('click',()=>{
+        document.querySelectorAll('.choice').forEach((item)=>item.classList.remove('selected'));
+        button.classList.add('selected');
+      });
+    });
+  </script>
+</body>
+</html>
