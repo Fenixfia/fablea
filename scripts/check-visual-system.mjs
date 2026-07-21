@@ -47,8 +47,19 @@ if(unifiedIndex < 0 || emotionIndex < 0 || emotionIndex < unifiedIndex){
 
 const onboarding = read('onboarding.html');
 const createChild = read('create-child.html');
+const onboardingCss = read('assets/css/fablea-onboarding.css');
 if(onboarding !== createChild) errors.push('onboarding.html e create-child.html non sono più identici');
 if(!onboarding.includes('placeholder="Es. Leo"')) errors.push('onboarding: placeholder fittizio standard mancante');
+if(!onboarding.includes('/assets/css/fablea-onboarding.css')) errors.push('onboarding: foglio stile dedicato non caricato');
+if(!onboarding.includes('class="onboarding-layout"') || !onboarding.includes('class="form-grid"')) errors.push('onboarding: impaginazione desktop strutturata mancante');
+if(!onboarding.includes('<label for="gender">Sesso</label>')) errors.push('onboarding: etichetta Sesso mancante');
+if(!onboarding.includes('<option value="male">Maschio</option>') || !onboarding.includes('<option value="female">Femmina</option>')) errors.push('onboarding: opzioni Maschio/Femmina incomplete');
+if(onboarding.includes('Forma neutra') || onboarding.includes('Preferisco non specificarlo') || onboarding.includes('Genere grammaticale')) errors.push('onboarding: vecchie opzioni o diciture ancora presenti');
+if(!onboarding.includes("!['male','female'].includes(genderSelect.value)")) errors.push('onboarding: validazione Maschio/Femmina mancante');
+if(!onboarding.includes('data-world="FABLEA"')) errors.push('onboarding: palette neutra iniziale mancante');
+if(onboarding.includes('document.body.dataset.world = primary')) errors.push('onboarding: il mondo scelto altera ancora lo sfondo durante la compilazione');
+if(!onboardingCss.includes('grid-template-columns:minmax(300px,.72fr) minmax(620px,1.28fr)')) errors.push('onboarding: layout desktop a due colonne mancante');
+if(!onboardingCss.includes('@media(max-width:900px)')) errors.push('onboarding: breakpoint tablet/mobile mancante');
 
 const profilePage = read('profile.html');
 const unifiedUI = read('assets/js/fablea-unified-ui.js');
