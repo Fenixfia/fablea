@@ -1,0 +1,84 @@
+/* FABLEA product navigation — part of the page, never over the content */
+.fablea-product .shell-top,
+.fablea-product .top{
+  position:relative!important;
+  top:auto!important;
+  left:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  transform:none!important;
+  z-index:12;
+  box-shadow:none;
+}
+
+.fablea-product .shell-top{
+  margin:10px clamp(12px,3vw,32px) 20px;
+}
+
+.fablea-product .top{
+  margin:0 0 clamp(22px,4vw,40px);
+}
+
+.fablea-product #dock{
+  position:relative;
+  z-index:3;
+  width:100%;
+  clear:both;
+}
+
+.fablea-product .explore-dock{
+  position:relative!important;
+  left:auto!important;
+  right:auto!important;
+  top:auto!important;
+  bottom:auto!important;
+  transform:none!important;
+  width:min(810px,calc(100% - 32px));
+  margin:24px auto calc(18px + env(safe-area-inset-bottom));
+  box-shadow:0 14px 38px rgba(0,0,0,.16);
+}
+
+.fablea-product .shell-main,
+.fablea-product main.card,
+.fablea-product main.page,
+.fablea-product .stage,
+.fablea-product .creator-page{
+  padding-bottom:32px!important;
+}
+
+.fablea-product.child-home-page{
+  padding-bottom:0!important;
+}
+
+@media(max-width:700px){
+  .fablea-product main.card,
+  .fablea-product main.page,
+  .fablea-product .stage{
+    padding:18px 16px 26px!important;
+  }
+
+  .fablea-product .creator-page{
+    padding-top:12px!important;
+    padding-bottom:26px!important;
+  }
+
+  .fablea-product .shell-top{
+    min-height:58px;
+    margin:8px 10px 16px;
+  }
+
+  .fablea-product .top{
+    min-height:56px;
+    margin:0 0 20px;
+  }
+
+  .fablea-product .explore-dock{
+    width:calc(100% - 20px);
+    margin:18px auto calc(10px + env(safe-area-inset-bottom));
+    border-radius:21px;
+  }
+
+  .fablea-product .dock-link{
+    min-height:58px;
+  }
+}
