@@ -189,3 +189,21 @@ jobs:
       - name: Stop on child world home failure
         if: steps.home.outcome == 'failure'
         run: exit 1
+
+      - name: Living world coherence
+        id: living
+        continue-on-error: true
+        run: npm run check:living > living-world.log 2>&1
+
+      - name: Upload living world diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: living-world-report
+          path: living-world.log
+          if-no-files-found: error
+          retention-days: 3
+
+      - name: Stop on living world failure
+        if: steps.living.outcome == 'failure'
+        run: exit 1
