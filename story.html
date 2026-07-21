@@ -9,9 +9,11 @@
   <link rel="stylesheet" href="/assets/css/fablea-unified.css">
   <link rel="stylesheet" href="/assets/css/fablea-guided-creator.css">
   <link rel="stylesheet" href="/assets/css/fablea-guided-creator-mobile.css">
+  <link rel="stylesheet" href="/assets/css/fablea-companion.css">
   <script src="/assets/js/fablea-ui.js"></script>
   <script src="/assets/js/fablea-grammar.js"></script>
   <script src="/assets/js/fablea-profile.js"></script>
+  <script src="/assets/js/fablea-companion.js"></script>
   <script src="/stories-v2/age-2-4.js"></script>
   <script src="/stories-v2/age-5-7.js"></script>
   <script src="/stories-v2/age-8-10.js"></script>
@@ -26,40 +28,20 @@
 </head>
 <body class="fablea-page fablea-product guided-creator-page" data-world="FABLEA">
   <main class="creator-page">
-    <div class="top">
-      <a class="brand" href="/child-hub.html">FABLEA</a>
-      <div class="badge">Crea una storia</div>
-      <a class="back" href="/profile.html">Profili</a>
-    </div>
-
+    <div class="top"><a class="brand" href="/child-hub.html">FABLEA</a><div class="badge">Crea una storia</div><a class="back" href="/child-hub.html">Casa</a></div>
     <div class="creator-layout">
       <aside class="creator-stage" aria-label="Compagno e mondo della storia">
-        <div class="creator-progress" aria-label="Avanzamento creazione storia">
-          <div class="creator-progress-track" aria-hidden="true"><span class="creator-progress-bar" id="creatorProgressBar"></span></div>
-          <div class="creator-progress-label" id="creatorProgressLabel">Inizio</div>
-        </div>
-
-        <div class="creator-world-art" aria-hidden="true">
-          <span class="creator-sun"></span>
-          <span class="creator-planet"></span>
-          <span class="creator-sparkles"></span>
-          <span class="creator-horizon"></span>
-          <span class="creator-landmark"></span>
-        </div>
-
+        <div class="creator-progress" aria-label="Avanzamento creazione storia"><div class="creator-progress-track" aria-hidden="true"><span class="creator-progress-bar" id="creatorProgressBar"></span></div><div class="creator-progress-label" id="creatorProgressLabel">Inizio</div></div>
+        <div class="creator-world-art" aria-hidden="true"><span class="creator-sun"></span><span class="creator-planet"></span><span class="creator-sparkles"></span><span class="creator-horizon"></span><span class="creator-landmark"></span></div>
         <div class="creator-companion-wrap" aria-live="polite">
-          <div class="creator-companion" id="creatorCompanionIcon" aria-hidden="true">✨</div>
-          <div class="creator-speech">
-            <strong id="creatorCompanionLine">Che storia facciamo oggi?</strong>
-            <span id="creatorCompanionHint">Il compagno FABLEA è pronto.</span>
-          </div>
+          <div class="creator-companion-portrait" data-fablea-companion aria-hidden="true"></div>
+          <div class="creator-companion-world-icon" id="creatorCompanionIcon" aria-hidden="true">✨</div>
+          <div class="creator-speech"><strong id="creatorCompanionLine">Che storia facciamo oggi?</strong><span id="creatorCompanionHint">Il compagno FABLEA è pronto.</span></div>
         </div>
       </aside>
-
       <section class="creator-panel" id="guidedCreator" aria-live="polite"></section>
     </div>
   </main>
-
   <div id="dock"></div>
 </body>
 </html>
