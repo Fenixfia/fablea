@@ -130,6 +130,7 @@
       console.warn('Personalizzazione V3 editoriale non disponibile, uso la versione v2.',error);
     }
 
+    built = {...built,collection:story.collection || 'original',source:story.source || null};
     global.FableaStoryEngine.saveStory(built);
     localStorage.setItem('fableaReopenStory','true');
     location.href = '/story-result.html';
