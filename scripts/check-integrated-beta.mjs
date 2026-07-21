@@ -22,8 +22,8 @@ const play = read('play.html');
 const learn = read('learn.html');
 
 // 1. Public promise and approved business model.
-expect(home.includes('Il mondo personale che cresce con tuo figlio'),'Home beta: promessa principale mancante');
-for(const label of ['Leggiamo','Inventiamo','Giochiamo','Scopriamo']) expect(home.includes(`>${label}<`),`Home beta: ambiente ${label} mancante`);
+expect(home.includes('Un mondo personale per crescere, creare e imparare'),'Home beta: promessa ecosistema mancante');
+for(const label of ['Storie','Crea','Gioca','Impara','Scuola']) expect(home.includes(`>${label}<`),`Home beta: ambiente ${label} mancante`);
 expect(home.includes('15 giorni') && home.includes('5,99 €') && home.includes('59,90 €'),'Home beta: prova o prezzi approvati mancanti');
 expect(home.includes('nessuna pubblicità'),'Home beta: assenza pubblicità non dichiarata');
 
@@ -35,10 +35,10 @@ expect(onboarding.includes('>Maschio<') && onboarding.includes('>Femmina<'),'Onb
 expect(!onboarding.includes('id="support"') && !onboarding.includes('id="duration"') && !onboarding.includes('id="storyStyle"'),'Onboarding beta: preferenze avanzate non rimosse');
 expect(onboarding.includes('beta-world-picker') && onboarding.includes('FableaWorldArt'),'Onboarding beta: scelta visuale del mondo mancante');
 
-// 3. Casa focused on one recommendation and only real rooms.
-expect(casa.includes('beta-today') && casa.includes('recommendation'),'Casa beta: proposta Oggi per te non contestuale');
+// 3. Casa focused on one contextual recommendation, real rooms and a clearly labelled future school area.
+expect(casa.includes('beta-today') && casa.includes('recommendation') && casa.includes('Continua il tuo viaggio'),'Casa beta: invito contestuale mancante');
 for(const label of ['Leggiamo','Inventiamo','Giochiamo','Scopriamo']) expect(casa.includes(`>${label}<`),`Casa beta: stanza ${label} mancante`);
-expect(!casa.includes('In crescita') && !casa.includes('Nuovi luoghi stanno prendendo forma'),'Casa beta: stanze future ancora visibili');
+expect(!casa.includes('In crescita') && !casa.includes('Nuovi luoghi stanno prendendo forma') && casa.includes('beta-room--future') && casa.includes('In sviluppo'),'Casa beta: area Scuola futura non dichiarata correttamente');
 expect(casa.includes('Il mondo è cambiato') && casa.includes('Stanza dei ricordi'),'Casa beta: cambiamento del mondo non visibile');
 
 // 4. Story -> artifact -> activity -> world continuity.
