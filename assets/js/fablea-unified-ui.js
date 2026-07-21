@@ -1,6 +1,8 @@
 (function(global){
   'use strict';
 
+  const NEUTRAL_WORLD = 'FABLEA';
+
   function selectedProfile(){
     try{
       return global.FableaProfile && global.FableaProfile.getSelectedProfile
@@ -12,7 +14,7 @@
   }
 
   function applyWorld(world){
-    const next = world || 'Magia';
+    const next = world || NEUTRAL_WORLD;
     document.body.dataset.world = next;
     return next;
   }
@@ -80,5 +82,5 @@
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded',init,{once:true});
   else init();
 
-  global.FableaUnifiedUI = {applyWorld,applyProfile,selectedProfile,loadLiveBookEnhancements};
+  global.FableaUnifiedUI = {NEUTRAL_WORLD,applyWorld,applyProfile,selectedProfile,loadLiveBookEnhancements};
 })(window);
