@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>FABLEA | La sua Casa</title>
+  <title>FABLEA | Il suo mondo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
   <div class="beta-frame">
     <header class="beta-top">
       <a class="beta-brand" href="/child-hub.html">FABLEA</a>
-      <div class="beta-pill" id="worldLabel">La sua Casa</div>
+      <div class="beta-pill" id="worldLabel">Il suo mondo</div>
       <nav class="beta-nav" aria-label="Navigazione della Casa">
         <a href="/world.html">Mondo</a>
         <a href="/profile.html">Profili</a>
@@ -62,11 +62,11 @@
         <section class="beta-child-hero">
           <article class="beta-card beta-today">
             <div class="beta-today-content">
-              <div class="beta-eyebrow">${F.escapeHTML(recommendation.eyebrow)}</div>
+              <div class="beta-eyebrow">Continua il tuo viaggio</div>
               <div class="beta-today-icon" aria-hidden="true">${F.escapeHTML(recommendation.icon)}</div>
               <h1>${F.escapeHTML(recommendation.title)}</h1>
               <p class="beta-lead">${F.escapeHTML(recommendation.description)}</p>
-              <div class="beta-actions"><a class="beta-button primary" href="${F.escapeHTML(recommendation.href)}">${F.escapeHTML(recommendation.action)}</a><a class="beta-button secondary" href="/world.html">Guarda cosa è cambiato</a></div>
+              <div class="beta-actions"><a class="beta-button primary" href="${F.escapeHTML(recommendation.href)}">${F.escapeHTML(recommendation.action)}</a><a class="beta-button secondary" href="/world.html">Esplora il tuo mondo</a></div>
               ${traces.length ? `<div class="beta-trace-strip">${traces.map(trace => `<span class="beta-trace">${F.escapeHTML(trace)}</span>`).join('')}</div>` : ''}
             </div>
           </article>
@@ -81,11 +81,12 @@
           </aside>
         </section>
 
-        <nav class="beta-room-grid" aria-label="Stanze della Casa">
+        <nav class="beta-room-grid" aria-label="Esperienze FABLEA">
           <a class="beta-card beta-room" href="/discover.html"><span class="beta-room-icon">📖</span><div><h2>Leggiamo</h2><p>Storie originali, classici e racconti già iniziati.</p><small>Entra nella Biblioteca →</small></div></a>
           <a class="beta-card beta-room" href="/story.html"><span class="beta-room-icon">✨</span><div><h2>Inventiamo</h2><p>Una nuova avventura dal mondo, da un momento o da un’idea.</p><small>Entra nell’Officina →</small></div></a>
           <a class="beta-card beta-room" href="/play.html"><span class="beta-room-icon">🧩</span><div><h2>Giochiamo</h2><p>Parole, memoria e logica senza voti né classifiche.</p><small>Segui il Sentiero →</small></div></a>
           <a class="beta-card beta-room" href="/learn.html"><span class="beta-room-icon">🔭</span><div><h2>Scopriamo</h2><p>Natura, numeri, linguaggio e domande da esplorare.</p><small>Apri il Laboratorio →</small></div></a>
+                  <div class="beta-card beta-room beta-room--future" aria-disabled="true"><span class="beta-room-icon">✎</span><div><span class="beta-pill">In sviluppo</span><h2>Scuola</h2><p>Spiegazioni ed esercizi guidati per il lavoro a casa.</p><small>Il genitore mantiene il controllo</small></div></div>
         </nav>
 
         ${artifact ? `<section class="beta-card beta-world-change">
