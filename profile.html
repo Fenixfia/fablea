@@ -36,6 +36,7 @@
       'Regni e castelli':'🏰','Misteri e scoperte':'🔎'
     };
     const styleLabels = {calm:'calmo',adventurous:'avventuroso',funny:'divertente',mysterious:'misterioso',emotional:'emotivo'};
+    const sexLabel = value => value === 'male' ? 'Maschio' : value === 'female' ? 'Femmina' : 'Sesso da aggiornare';
 
     function selectChild(id,enter = true){
       F.setSelectedProfile(id);
@@ -102,7 +103,7 @@
           <div class="avatar">${worldIcons[profile.primaryWorld] || '✨'}</div>
           <h2>${F.escapeHTML(profile.name)}</h2>
           <div class="meta">${F.escapeHTML(F.ageLabel(profile.age))} · ${F.escapeHTML(profile.primaryWorld)}</div>
-          <p>${F.escapeHTML(F.genderLabel(profile.gender))} · stile ${F.escapeHTML(styleLabels[profile.storyStyle] || profile.storyStyle)} · durata ${F.escapeHTML(profile.duration)}</p>
+          <p>${F.escapeHTML(sexLabel(profile.gender))} · stile ${F.escapeHTML(styleLabels[profile.storyStyle] || profile.storyStyle)} · durata ${F.escapeHTML(profile.duration)}</p>
           <div class="tags">
             <span class="tag">${F.escapeHTML(profile.support)}</span>
             ${(profile.interests || []).map(item => `<span class="tag">${F.escapeHTML(item)}</span>`).join('')}
