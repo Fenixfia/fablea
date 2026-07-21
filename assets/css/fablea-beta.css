@@ -24,3 +24,37 @@
 @media(max-width:640px){.beta-frame{width:min(100% - 22px,1240px);padding-top:10px}.beta-top{align-items:flex-start}.beta-nav{justify-content:flex-end;gap:8px}.beta-nav a:not(.always){display:none}.beta-public-hero{padding:34px 0 50px}.beta-display{font-size:3.7rem}.beta-world-demo{min-height:480px;padding:18px}.beta-demo-house{margin-top:66px}.beta-section{padding:48px 0}.beta-feature-grid,.beta-room-grid,.beta-loop,.beta-continuity,.beta-story-grid,.beta-world-grid,.beta-pricing,.beta-stat-grid{grid-template-columns:1fr}.beta-form-grid,.beta-companion-builder{grid-template-columns:1fr}.beta-world-picker{grid-template-columns:1fr 1fr}.beta-world-choice{min-height:155px}.beta-world-choice .fablea-world-art{height:104px}.beta-onboarding{padding:20px}.beta-child-hero{gap:12px}.beta-today{min-height:360px}.beta-today h1{font-size:3.5rem}.beta-room{min-height:175px}.beta-world-change{grid-template-columns:auto 1fr}.beta-world-change .beta-button{grid-column:1/-1}.beta-library-head{display:block}.beta-library-tools{display:block}.beta-filter-row{margin-top:12px}.beta-story-body p{min-height:0}.beta-pin-row{flex-direction:column}.beta-parent-sidebar,.beta-parent-main{padding:20px}}
 @media(max-width:390px){.beta-world-picker{grid-template-columns:1fr}.beta-world-choice{display:grid;grid-template-columns:125px 1fr;min-height:105px}.beta-world-choice .fablea-world-art{height:105px}.beta-world-choice strong{align-self:center}.beta-button{width:100%}.beta-actions .beta-button{width:auto}.beta-form-actions .beta-button{width:100%}}
 @media(prefers-reduced-motion:reduce){.beta-floating-artifact{animation:none}.beta-room{transition:none}}
+
+/* Quiet visual direction — ecosystem redesign */
+:root{--beta-ink:#403b43;--beta-copy:#716b72;--beta-paper:#f8f5f0;--beta-panel:rgba(255,255,255,.72);--beta-line:rgba(64,59,67,.10);--beta-plum:#817487;--beta-sage:#a8b5a5;--beta-gold:#c8ac78;--beta-blush:#d9c7c3;--beta-radius:22px;--beta-shadow:0 12px 34px rgba(64,54,66,.07)}
+.beta-page{background:radial-gradient(circle at 10% 4%,rgba(218,211,226,.34),transparent 28%),radial-gradient(circle at 92% 18%,rgba(224,213,192,.30),transparent 26%),linear-gradient(150deg,#faf8f4,#f4f1ee 58%,#efedf1)}
+.beta-card{backdrop-filter:blur(10px)}
+.beta-public-hero--compact{padding:42px 0 54px;min-height:min(720px,calc(100vh - 90px))}
+.beta-public-hero--compact .beta-display{font-size:clamp(3rem,6vw,5.8rem);line-height:.88}
+.beta-world-demo--compact{min-height:440px;background:linear-gradient(155deg,#ded8e2,#d9e0d7);color:var(--beta-ink);display:grid;place-items:center}
+.beta-world-demo--compact::before{background:radial-gradient(circle,rgba(255,250,237,.8),transparent 68%)}
+.beta-demo-core{position:relative;z-index:2;width:min(320px,82%);padding:36px 28px;border:1px solid rgba(64,59,67,.09);border-radius:26px;background:rgba(255,255,255,.76);text-align:center;box-shadow:0 18px 45px rgba(64,54,66,.09)}
+.beta-demo-core small{display:block;text-transform:uppercase;letter-spacing:.12em;font-weight:800;color:#766b78}
+.beta-demo-core strong{display:block;font:700 2.35rem/1 "Cormorant Garamond",serif;margin:14px 0}
+.beta-demo-core p{color:var(--beta-copy);margin:0}
+.beta-demo-orbit{position:absolute;inset:24px;display:flex;align-items:flex-start;justify-content:space-between;font-size:1.5rem}
+.beta-demo-orbit span:nth-child(2),.beta-demo-orbit span:nth-child(4){align-self:flex-end}
+.beta-section--compact{padding:54px 0}
+.beta-ecosystem-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.beta-feature{min-height:180px;padding:22px}
+.beta-feature-icon{margin-bottom:16px}
+.beta-feature--future{grid-column:1/-1;min-height:150px;background:linear-gradient(120deg,rgba(230,224,232,.7),rgba(229,232,225,.72))}
+.beta-feature--future>div{display:grid;grid-template-columns:auto auto 1fr;gap:14px 20px;align-items:center}
+.beta-feature--future .beta-pill{grid-column:1/-1;width:max-content}.beta-feature--future .beta-feature-icon{margin:0}.beta-feature--future h3,.beta-feature--future p{margin:0}
+.beta-family-strip{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center;padding:28px 32px}
+.beta-family-strip h2{font:700 clamp(2rem,4vw,3.2rem)/.95 "Cormorant Garamond",serif;margin:8px 0 0}.beta-family-strip p{color:var(--beta-copy);line-height:1.6}
+.beta-pricing--compact .beta-price-card{padding:24px}.beta-pricing--compact .beta-price{font-size:3.2rem;margin-bottom:0}
+.beta-child-hero{grid-template-columns:minmax(0,1.45fr) minmax(220px,.55fr);gap:12px}
+.beta-today{min-height:300px;padding:clamp(24px,4vw,40px)}.beta-today h1{font-size:clamp(2.8rem,5vw,4.8rem)}
+.beta-companion-panel{padding:20px;background:linear-gradient(150deg,#dcd6e1,#d7dfd5);color:var(--beta-ink)}
+.beta-companion-panel p{color:var(--beta-copy)}.beta-companion-panel-art{min-height:170px}.beta-companion-panel .fablea-companion-svg{max-height:175px}
+.beta-room-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.beta-room{min-height:180px;padding:20px}.beta-room h2{font-size:1.75rem;margin:14px 0 7px}
+.beta-room--future{opacity:.72;border-style:dashed;box-shadow:none;cursor:default}.beta-room--future:hover{transform:none}
+@media(max-width:980px){.beta-ecosystem-grid{grid-template-columns:repeat(2,1fr)}.beta-room-grid{grid-template-columns:repeat(2,1fr)}.beta-room--future{grid-column:1/-1}}
+@media(max-width:640px){.beta-public-hero--compact{min-height:auto;padding:26px 0 38px}.beta-world-demo--compact{min-height:310px}.beta-section--compact{padding:38px 0}.beta-ecosystem-grid{grid-template-columns:1fr 1fr}.beta-feature{min-height:155px}.beta-feature--future{grid-column:1/-1}.beta-feature--future>div{grid-template-columns:auto 1fr}.beta-feature--future p{grid-column:1/-1}.beta-family-strip{grid-template-columns:1fr;padding:24px}.beta-child-hero{grid-template-columns:1fr}.beta-companion-panel{display:grid;grid-template-columns:1fr auto;min-height:0}.beta-companion-panel-art{min-height:110px}.beta-companion-panel .fablea-companion-svg{max-width:110px;max-height:110px}.beta-companion-panel p{grid-column:1/-1}.beta-room-grid{grid-template-columns:1fr 1fr}.beta-room{min-height:150px;padding:17px}.beta-room p{font-size:.88rem}.beta-world-change{margin-top:12px}}
+@media(max-width:390px){.beta-ecosystem-grid,.beta-room-grid{grid-template-columns:1fr}.beta-room--future{grid-column:auto}}
