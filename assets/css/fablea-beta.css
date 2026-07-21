@@ -80,3 +80,19 @@
 .beta-companion-panel{position:relative;z-index:1;background:transparent;color:#fff}.beta-companion-panel p{color:#f3dfd5}.beta-companion-panel .beta-eyebrow{color:#f5ce83!important}
 .beta-room-grid{gap:12px;margin-top:16px}.beta-room{border:0;box-shadow:0 13px 34px rgba(77,43,70,.1)}.beta-room--stories{background:linear-gradient(150deg,#fff1d5,#f5c991)}.beta-room--create{background:linear-gradient(150deg,#f6dedb,#eaa08d)}.beta-room--play{background:linear-gradient(150deg,#e8ddf0,#bfa5d0)}.beta-room--learn{background:linear-gradient(150deg,#dcebdd,#91b8a1)}.beta-room--future{background:rgba(255,250,239,.58);border:1px dashed rgba(69,43,77,.22)}
 @media(max-width:640px){.beta-portal-scene{border-radius:28px}.beta-portal{width:142px;height:190px;top:38%}.beta-portal-scene .beta-demo-core{margin-bottom:16px}.beta-child-hero{padding:8px;border-radius:28px}.beta-journey-gate{border-radius:22px}.beta-room-grid{gap:10px}}
+
+/* Family profiles — same warm language as Home and Casa */
+.beta-profile-intro{max-width:760px;padding:54px 0 32px}.beta-profile-intro .beta-title{margin-bottom:12px}
+.beta-profile-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+.beta-profile-card{position:relative;min-height:360px;padding:26px;overflow:hidden;display:flex;flex-direction:column;isolation:isolate}
+.beta-profile-card.active{border-color:rgba(227,181,95,.6);box-shadow:0 20px 55px rgba(112,64,86,.17)}
+.beta-profile-glow{position:absolute;z-index:-1;width:230px;height:230px;right:-90px;top:-90px;border-radius:50%;background:radial-gradient(circle,#f5c66f 0,#e99b83 45%,transparent 70%);opacity:.48}
+.beta-profile-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:38px}
+.beta-profile-avatar{width:76px;height:76px;border-radius:27px;display:grid;place-items:center;font-size:2.4rem;background:linear-gradient(145deg,#fff0c8,#efb66b);box-shadow:0 12px 28px rgba(132,77,55,.18)}
+.beta-profile-card h2{font:700 2.8rem/.95 "Cormorant Garamond",serif;margin:10px 0 8px}.beta-profile-card>p{color:var(--beta-copy);line-height:1.5;margin:0 0 24px}
+.beta-profile-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:auto}.beta-profile-manage{width:100%;min-height:38px;border:0;background:transparent;color:#885563;text-align:left;font:750 .78rem Manrope,sans-serif;cursor:pointer;padding:8px 3px}
+.beta-profile-add{min-height:360px;border:1px dashed rgba(69,43,77,.25);border-radius:var(--beta-radius);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;text-decoration:none;background:rgba(255,250,239,.42);color:var(--beta-copy);transition:background .18s ease,transform .18s ease}
+.beta-profile-add:hover,.beta-profile-add:focus-visible{background:rgba(255,250,239,.75);transform:translateY(-3px);outline:none}.beta-profile-add span{font-size:2.4rem;color:var(--beta-gold)}.beta-profile-add strong{font:700 2rem/1 "Cormorant Garamond",serif;color:var(--beta-ink);margin:16px 0 7px}.beta-profile-add small{font-size:.82rem}
+.beta-profile-empty{max-width:720px;padding:36px}.beta-profile-empty h2{font:700 3rem/.95 "Cormorant Garamond",serif;margin:12px 0}.beta-profile-empty p{color:var(--beta-copy);margin-bottom:24px}
+@media(max-width:900px){.beta-profile-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.beta-profile-intro{padding:34px 0 22px}.beta-profile-intro .beta-title{font-size:3.35rem}.beta-profile-grid{grid-template-columns:1fr}.beta-profile-card,.beta-profile-add{min-height:310px}.beta-profile-actions .beta-button{width:100%}}

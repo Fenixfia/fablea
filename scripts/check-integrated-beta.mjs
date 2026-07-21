@@ -20,6 +20,7 @@ const storyContinuity = read('assets/js/fablea-story-continuity.js');
 const productionDoc = read('docs/architecture/PRODUCTION_FOUNDATION.md');
 const play = read('play.html');
 const learn = read('learn.html');
+const profiles = read('profile.html');
 
 // 1. Public promise and approved business model.
 expect(home.includes('Un mondo personale per crescere, creare e imparare'),'Home beta: promessa ecosistema mancante');
@@ -40,6 +41,12 @@ expect(casa.includes('beta-today') && casa.includes('recommendation') && casa.in
 for(const label of ['Leggiamo','Inventiamo','Giochiamo','Scopriamo']) expect(casa.includes(`>${label}<`),`Casa beta: stanza ${label} mancante`);
 expect(!casa.includes('In crescita') && !casa.includes('Nuovi luoghi stanno prendendo forma') && casa.includes('beta-room--future') && casa.includes('In sviluppo'),'Casa beta: area Scuola futura non dichiarata correttamente');
 expect(casa.includes('Il mondo è cambiato') && casa.includes('Stanza dei ricordi'),'Casa beta: cambiamento del mondo non visibile');
+expect(!betaState.includes('Oggi per te'),'Casa beta: è tornata la dicitura promozionale “Oggi per te”');
+
+// 3b. Family switcher belongs to the same product and never exposes a demo profile.
+expect(profiles.includes('beta-profile-page') && profiles.includes('Scegli chi entra.'),'Profili beta: pagina non allineata a Home e Casa');
+expect(profiles.includes('Entra nella Casa') && profiles.includes('Aggiungi un bambino'),'Profili beta: azioni familiari poco chiare');
+expect(!profiles.includes('Federico') && !profiles.includes('Profilo di test'),'Profili beta: dati demo inseriti nella pagina');
 
 // 4. Story -> artifact -> activity -> world continuity.
 expect(betaState.includes('function artifact(') && betaState.includes('function relatedActivity(') && betaState.includes('function recommendation('),'Continuità beta: motore incompleto');

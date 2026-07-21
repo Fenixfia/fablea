@@ -167,7 +167,7 @@
       return {kind:'prepared',eyebrow:'Una storia è pronta',title:prepared.title,description:prepared.subtitle || 'La prima porta è già aperta.',href:'/story-result.html?prepared=1',action:'Apri il Libro vivo',icon:prepared.icon || '📖'};
     }
     if(!story){
-      return {kind:'first',eyebrow:'Oggi per te',title:'Apriamo la prima porta',description:'Una storia scelta per la sua età darà al mondo il primo ricordo.',href:'/discover.html',action:'Scegli una storia',icon:'🚪'};
+      return {kind:'first',eyebrow:'La prima porta',title:'Apriamo il suo viaggio',description:'Una storia scelta per la sua età darà al mondo il primo ricordo.',href:'/discover.html',action:'Scegli una storia',icon:'🚪'};
     }
 
     const storyAt = storyTimestamp(story);
