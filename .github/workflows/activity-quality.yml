@@ -1,0 +1,41 @@
+name: FABLEA activity quality
+
+on:
+  pull_request:
+    paths:
+      - 'assets/js/fablea-activity-catalog.js'
+      - 'assets/js/fablea-activities.js'
+      - 'assets/css/fablea-activities.css'
+      - 'play.html'
+      - 'learn.html'
+      - 'world.html'
+      - 'scripts/check-activity-worlds.mjs'
+      - 'package.json'
+      - '.github/workflows/activity-quality.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  activities:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install
+        run: npm install --ignore-scripts
+      - name: JavaScript syntax
+        run: npm run check:js
+      - name: Adaptive activity worlds
+        run: npm run check:activities
+      - name: Living world integration
+        run: npm run check:living
+      - name: Shared CSS audit
+        run: npm run check:css-classes
+      - name: Security baseline
+        run: npm run check:security
