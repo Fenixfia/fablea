@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="/assets/css/fablea-shell.css">
   <link rel="stylesheet" href="/assets/css/fablea-unified.css">
   <link rel="stylesheet" href="/assets/css/fablea-activities.css">
+  <link rel="stylesheet" href="/assets/css/fablea-living-world.css">
+  <link rel="stylesheet" href="/assets/css/fablea-navigation-flow.css">
   <script src="/assets/js/fablea-ui.js"></script>
   <script src="/assets/js/fablea-profile.js"></script>
   <script src="/stories-v2/age-2-4.js"></script>
@@ -18,6 +20,7 @@
   <script src="/assets/js/fablea-story-engine.js"></script>
   <script src="/assets/js/fablea-shell.js"></script>
   <script src="/assets/js/fablea-companion.js"></script>
+  <script src="/assets/js/fablea-companion-moods.js"></script>
   <script defer src="/assets/js/fablea-unified-ui.js"></script>
   <script defer src="/assets/js/fablea-activities.js"></script>
 </head>
@@ -25,7 +28,7 @@
   <div class="activity-shell">
     <header class="shell-top"><a class="brand" href="/child-hub.html">FABLEA</a><div class="shell-meta"><span>Laboratorio delle scoperte</span><a class="profile-link" href="/child-hub.html">Casa</a></div></header>
     <main class="activity-main">
-      <aside class="activity-scene"><div class="activity-scene-copy"><div class="eyebrow" id="activityKicker"></div><h1 id="activityTitle"></h1><p id="activityIntro"></p></div><div class="activity-companion" id="activityCompanion"></div><div class="activity-bubble"><strong>Il compagno dice</strong><span id="activityBubble"></span></div></aside>
+      <aside class="activity-scene"><div class="activity-scene-copy"><div class="eyebrow" id="activityKicker"></div><h1 id="activityTitle"></h1><p id="activityIntro"></p></div><div class="activity-companion" id="activityCompanion" data-companion-expression="curious"></div><div class="activity-bubble"><strong>Il compagno dice</strong><span id="activityBubble"></span></div></aside>
       <section class="activity-panel"><div class="activity-progress"><div class="activity-progress-track"><div class="activity-progress-fill" id="activityProgressFill"></div></div><span class="activity-progress-label" id="activityProgressLabel">1 di 3</span></div><div id="activityRoot"></div></section>
     </main>
     <div id="dock"></div>

@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="/assets/css/fablea-shell.css">
   <link rel="stylesheet" href="/assets/css/fablea-unified.css">
   <link rel="stylesheet" href="/assets/css/fablea-child-home.css">
+  <link rel="stylesheet" href="/assets/css/fablea-living-world.css">
+  <link rel="stylesheet" href="/assets/css/fablea-navigation-flow.css">
   <script src="/assets/js/fablea-ui.js"></script>
   <script src="/assets/js/fablea-grammar.js"></script>
   <script src="/assets/js/fablea-profile.js"></script>
@@ -22,6 +24,7 @@
   <script src="/assets/js/fablea-story-engine.js"></script>
   <script src="/assets/js/fablea-shell.js"></script>
   <script src="/assets/js/fablea-companion.js"></script>
+  <script src="/assets/js/fablea-companion-moods.js"></script>
   <script defer src="/assets/js/fablea-unified-ui.js"></script>
 </head>
 <body class="fablea-product child-home-page" data-world="FABLEA">
@@ -40,6 +43,7 @@
       const F = window.FableaProfile;
       const S = window.FableaShell;
       const C = window.FableaCompanion;
+      const M = window.FableaCompanionMood;
       const root = document.getElementById('root');
       let profile = F.getSelectedProfile();
 
@@ -54,6 +58,8 @@
       const lastStory = S.lastStory(profile);
       const companion = S.companionName(profile);
       const welcome = new URLSearchParams(location.search).get('welcome') === '1';
+      const activityState = F.readJSON('fableaActivityProgress',{});
+      const activityProgress = activityState[profile.id] || {play:0,learn:0,visits:0,lastSkills:[]};
       document.getElementById('worldName').textContent = presentation.place;
       document.getElementById('dock').innerHTML = S.renderDock('continue');
 
@@ -84,26 +90,33 @@
         '11-12':'misteri, strategia e idee da costruire'
       }[profile.age] || 'giochi e scoperte');
 
+      const traces = [];
+      if(lastStory) traces.push(`<span class="home-trace"><strong>Storia:</strong> ${S.escapeHTML(lastStory.title)}</span>`);
+      if(Number(activityProgress.play || 0)) traces.push(`<span class="home-trace"><strong>Giochi:</strong> ${Number(activityProgress.play)} percorsi</span>`);
+      if(Number(activityProgress.learn || 0)) traces.push(`<span class="home-trace"><strong>Scoperte:</strong> ${Number(activityProgress.learn)} percorsi</span>`);
+      for(const skill of (Array.isArray(activityProgress.lastSkills) ? activityProgress.lastSkills.slice(0,3) : [])) traces.push(`<span class="home-trace">${S.escapeHTML(skill)}</span>`);
+
       root.innerHTML = `
         <section class="home-welcome">
           <div class="home-copy">
             <div class="eyebrow">${welcome ? 'La sua Casa è pronta' : `Oggi nel mondo di ${S.escapeHTML(profile.name)}`}</div>
             <h1>Cosa facciamo oggi?</h1>
-            <p>Qui non vive una sola storia. Si può leggere, inventare, giocare e scoprire. Ogni attività lascia una piccola traccia nel suo mondo.</p>
-
-            <div class="home-doors" aria-label="Attività principali">
-              <a class="home-door read" href="/discover.html"><span class="home-door-icon">📖</span><div><strong>Leggiamo</strong><span>Storie FABLEA, continuazioni e racconti preferiti.</span></div><small>Biblioteca →</small></a>
-              <a class="home-door create" href="/story.html"><span class="home-door-icon">✨</span><div><strong>Inventiamo</strong><span>Una nuova avventura costruita insieme al compagno.</span></div><small>Officina →</small></a>
-              <a class="home-door play" href="/play.html"><span class="home-door-icon">🧩</span><div><strong>Giochiamo</strong><span>${S.escapeHTML(ageActivity)} senza sembrare compiti.</span></div><small>Sentiero →</small></a>
-              <a class="home-door learn" href="/learn.html"><span class="home-door-icon">🔭</span><div><strong>Scopriamo</strong><span>Lettere, parole, natura, numeri e domande da esplorare.</span></div><small>Laboratorio →</small></a>
-            </div>
+            <p>Qui non vive una sola storia. Si può leggere, inventare, giocare e scoprire. Ogni esperienza lascia una traccia nel suo mondo.</p>
+            ${traces.length ? `<div class="home-traces" aria-label="Tracce recenti">${traces.join('')}</div>` : ''}
           </div>
 
           <aside class="companion-home-stage" aria-label="Compagno di ${S.escapeHTML(profile.name)}">
-            <div class="companion-home-art" id="homeCompanion"></div>
-            <div class="companion-home-speech"><strong>${S.escapeHTML(companion)} è qui.</strong><span>Può accompagnare ogni storia, gioco e scoperta mantenendo lo stesso aspetto.</span></div>
+            <div class="companion-home-art" id="homeCompanion" data-companion-expression="${welcome ? 'happy' : 'calm'}"></div>
+            <div class="companion-home-speech"><strong>${S.escapeHTML(companion)} è qui.</strong><span id="homeCompanionLine">${S.escapeHTML(M ? M.line('home',welcome ? 'happy' : 'calm') : 'Scegliamo insieme da dove iniziare.')}</span></div>
           </aside>
         </section>
+
+        <nav class="home-doors living-home-map" aria-label="Luoghi principali della Casa FABLEA">
+          <a class="home-room read" href="/discover.html"><span class="home-room-icon">📖</span><strong>Leggiamo</strong><span>Storie FABLEA, continuazioni e racconti preferiti.</span><small>Biblioteca →</small></a>
+          <a class="home-room create" href="/story.html"><span class="home-room-icon">✨</span><strong>Inventiamo</strong><span>Una nuova avventura costruita insieme al compagno.</span><small>Officina →</small></a>
+          <a class="home-room play" href="/play.html"><span class="home-room-icon">🧩</span><strong>Giochiamo</strong><span>${S.escapeHTML(ageActivity)} senza sembrare compiti.</span><small>Sentiero →</small></a>
+          <a class="home-room learn" href="/learn.html"><span class="home-room-icon">🔭</span><strong>Scopriamo</strong><span>Lettere, parole, natura, numeri e domande da esplorare.</span><small>Laboratorio →</small></a>
+        </nav>
 
         <article class="home-continue">
           <div class="home-continue-icon">${S.escapeHTML(continueIcon)}</div>
@@ -112,12 +125,8 @@
         </article>
 
         <section class="world-room-map">
-          <div class="room-map-head"><div><div class="eyebrow">Il suo mondo cresce</div><h2>Gli ambienti della Casa FABLEA</h2></div><p>I primi quattro sono già visitabili. Gli altri diventeranno esperienze complete nelle prossime espansioni.</p></div>
+          <div class="room-map-head"><div><div class="eyebrow">Il suo mondo cresce</div><h2>Nuovi luoghi stanno prendendo forma</h2></div><p>Questi ambienti diventeranno esperienze complete soltanto quando saranno davvero utili e ben costruiti.</p></div>
           <div class="room-grid">
-            <article class="room-card available"><span class="room-badge">Aperta</span><strong>📚 Biblioteca</strong><span>Storie curate, salvate e da continuare.</span></article>
-            <article class="room-card available"><span class="room-badge">Aperta</span><strong>✨ Officina</strong><span>Idee che diventano nuove avventure.</span></article>
-            <article class="room-card available"><span class="room-badge">Aperto</span><strong>🧩 Sentiero dei giochi</strong><span>Attività intelligenti adatte alla sua età.</span></article>
-            <article class="room-card available"><span class="room-badge">Aperto</span><strong>🔭 Laboratorio</strong><span>Lettere, logica, natura e scoperte.</span></article>
             <article class="room-card future"><span class="room-badge">In crescita</span><strong>🎨 Atelier</strong><span>Disegni, personaggi e oggetti del mondo.</span></article>
             <article class="room-card future"><span class="room-badge">In crescita</span><strong>🔢 Torre dei numeri</strong><span>Quantità e problemi dentro piccole missioni.</span></article>
             <article class="room-card future"><span class="room-badge">In crescita</span><strong>🗺️ Giardino delle lettere</strong><span>Parole che diventano luoghi e creature.</span></article>
@@ -125,7 +134,8 @@
           </div>
         </section>`;
 
-      if(C) C.mount('#homeCompanion',profile);
+      if(M) M.mount('#homeCompanion',profile,welcome ? 'happy' : 'calm');
+      else if(C) C.mount('#homeCompanion',profile);
       const resumeButton = document.getElementById('resumeStory');
       if(resumeButton && lastStory) resumeButton.addEventListener('click',() => S.openSavedStory(lastStory));
     })();

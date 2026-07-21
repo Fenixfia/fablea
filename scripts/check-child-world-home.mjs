@@ -15,6 +15,7 @@ const companion = read('assets/js/fablea-companion.js');
 const unified = read('assets/js/fablea-unified-ui.js');
 const story = read('story.html');
 const homeCss = read('assets/css/fablea-child-home.css');
+const livingCss = read('assets/css/fablea-living-world.css');
 const activityCss = read('assets/css/fablea-activities.css');
 const navigationCss = read('assets/css/fablea-integrated-navigation.css');
 
@@ -22,10 +23,10 @@ for(const [label,href] of [['Leggiamo','/discover.html'],['Inventiamo','/story.h
   expect(home.includes(`>${label}<`) && home.includes(`href="${href}"`),`Casa FABLEA: porta ${label} mancante o non collegata`);
 }
 expect(home.includes('id="homeCompanion"'),'Casa FABLEA: compagno centrale mancante');
-expect(home.includes('Gli ambienti della Casa FABLEA'),'Casa FABLEA: mappa degli ambienti mancante');
+expect(home.includes('living-home-map') && home.includes('Nuovi luoghi stanno prendendo forma'),'Casa FABLEA: mappa viva o ambienti futuri mancanti');
 expect(home.includes('/assets/css/fablea-child-home.css'),'Casa FABLEA: foglio stile dedicato mancante');
-expect(homeCss.includes('grid-template-columns:repeat(4'),'Casa FABLEA: quattro porte desktop non impaginate');
-expect(homeCss.includes('@media(max-width:640px)'),'Casa FABLEA: adattamento smartphone mancante');
+expect(homeCss.includes('grid-template-columns:repeat(4') || livingCss.includes('grid-template-columns:repeat(4'),'Casa FABLEA: quattro porte desktop non impaginate');
+expect(homeCss.includes('@media(max-width:640px)') || livingCss.includes('@media(max-width:640px)'),'Casa FABLEA: adattamento smartphone mancante');
 
 expect(onboarding === createChild,'I due percorsi di creazione profilo non sono identici');
 expect(onboarding.includes('Crea la sua Casa FABLEA'),'Onboarding: destinazione Casa non dichiarata');
@@ -70,4 +71,4 @@ if(errors.length){
   errors.forEach(error => console.error(`- ${error}`));
   process.exit(1);
 }
-console.log('Child world home check passed: Casa, compagno persistente, attività per età, Libro vivo e navigazione non sovrapposta coperti.');
+console.log('Child world home check passed: Casa viva, compagno persistente, attività per età, Libro vivo e navigazione non sovrapposta coperti.');
