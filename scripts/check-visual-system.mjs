@@ -5,7 +5,7 @@ const productPages = [
   'story.html','story-result.html','world.html','library.html','manualita.html','play.html','learn.html'
 ];
 const publicPages = ['index.html','about.html'];
-const betaPages = new Set(['index.html','onboarding.html','create-child.html','parent-area.html','child-hub.html','discover.html','world.html']);
+const betaPages = new Set(['index.html','onboarding.html','create-child.html','profile.html','parent-area.html','child-hub.html','discover.html','world.html']);
 const errors = [];
 const read = file => fs.existsSync(file) ? fs.readFileSync(file,'utf8') : (errors.push(`${file}: file mancante`),'');
 
