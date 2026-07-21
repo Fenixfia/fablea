@@ -1,10 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>FABLEA | Libreria</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/fablea.css">
+  <link rel="stylesheet" href="/assets/css/fablea-shell.css">
   <script src="/assets/js/fablea-ui.js"></script>
   <script src="/assets/js/fablea-grammar.js"></script>
   <script src="/assets/js/fablea-profile.js"></script>
@@ -14,108 +18,79 @@
   <script src="/stories-v2/age-11-12.js"></script>
   <script src="/stories-v2/index.js"></script>
   <script src="/assets/js/fablea-story-engine.js"></script>
+  <script src="/assets/js/fablea-shell.js"></script>
 </head>
-<body class="fablea-page theme-night" data-theme="night">
-  <main class="page">
-    <div class="top">
-      <a class="back" href="/child-hub.html">← Mondo bambino</a>
-      <div class="badge">Libreria personale</div>
-      <a class="back" href="/profile.html">Cambia profilo</a>
-    </div>
-
-    <section class="hero" id="libraryHero"></section>
-    <section id="savedSection"></section>
-    <section>
-      <h2 class="section-title">Storie editoriali disponibili</h2>
-      <p class="section-desc">Il motore sceglierà tra queste storie adattandole al mondo e al momento del bambino.</p>
-      <div id="catalog"></div>
-    </section>
-  </main>
+<body>
+  <div class="shell-page">
+    <header class="shell-top">
+      <a class="brand" href="/child-hub.html">FABLEA</a>
+      <div class="shell-meta"><span id="worldName"></span><a class="profile-link" href="/profile.html">Profili</a></div>
+    </header>
+    <main class="shell-main" id="root"></main>
+    <div id="dock"></div>
+  </div>
 
   <script>
-    const F = FableaProfile;
-    const E = FableaStoryEngine;
-    const profile = F.getSelectedProfile();
+    (function(){
+      'use strict';
+      const F = window.FableaProfile;
+      const E = window.FableaStoryEngine;
+      const S = window.FableaShell;
+      const profile = F.getSelectedProfile();
+      const root = document.getElementById('root');
 
-    if(!profile){
-      libraryHero.innerHTML = '<h1>Nessun profilo selezionato.</h1><p class="intro">Seleziona un bambino per aprire la sua libreria.</p><a class="button" href="/profile.html">Vai ai profili</a>';
-      savedSection.innerHTML = '';
-      catalog.innerHTML = '';
-    }else{
-      if(window.FableaUI) window.FableaUI.applyAge(document.body, profile.age);
-      libraryHero.innerHTML = `
-        <div class="kicker">${F.escapeHTML(profile.name)} • ${F.escapeHTML(profile.primaryWorld)}</div>
-        <h1>Le storie che il suo mondo ricorda.</h1>
-        <p class="intro">Ogni storia conserva il profilo, il mondo, il compagno e la pagina raggiunta nel momento in cui è stata vissuta.</p>`;
-
-      function allSaved(){
-        return E.savedStories()
-          .filter(story => story.childId === profile.id || (!story.childId && story.child === profile.name))
-          .sort((a,b) => String(b.createdAt || '').localeCompare(String(a.createdAt || '')));
+      if(!profile){
+        root.innerHTML = `<section class="empty-state"><h1>Prima scegli un profilo.</h1><p>Ogni bambino ha una Libreria separata.</p><a class="profile-link" href="/profile.html">Vai ai profili</a></section>`;
+        return;
       }
 
-      function renderSaved(){
-        const stories = allSaved();
-        savedSection.innerHTML = `
-          <h2 class="section-title">Storie vissute</h2>
-          ${stories.length ? `<div class="grid">${stories.map(story => {
+      const presentation = S.applyProfile(profile);
+      document.getElementById('worldName').textContent = `Libreria di ${profile.name}`;
+      document.getElementById('dock').innerHTML = S.renderDock('library');
+
+      function stories(){
+        return S.savedFor(profile).sort((a,b) => String(b.createdAt || '').localeCompare(String(a.createdAt || '')));
+      }
+
+      function render(){
+        const saved = stories();
+        root.innerHTML = `
+          <header class="content-head">
+            <div class="eyebrow">Libreria personale</div>
+            <h1>Le storie che il mondo ricorda.</h1>
+            <p>Ogni volume conserva il compagno, il mondo, la durata e la pagina raggiunta nel momento in cui è stato vissuto.</p>
+          </header>
+          ${saved.length ? `<section class="story-grid">${saved.map(story => {
             const pageCount = Array.isArray(story.pages) ? story.pages.length : 0;
-            const resumePage = Math.min((Number(story.resumePage) || 0) + 1, pageCount || 1);
-            return `<article class="saved-card">
-              <div class="cover"><span class="card-icon">${F.escapeHTML(story.icon || '✨')}</span></div>
-              <div class="kicker">${F.escapeHTML(story.family || 'storia')} • ${F.escapeHTML(story.duration || '')}</div>
-              <h2>${F.escapeHTML(story.title)}</h2>
-              <p>${F.escapeHTML(story.subtitle || '')}</p>
-              <div class="tags">
-                <span class="tag">${F.escapeHTML(story.world || story.theme || profile.primaryWorld)}</span>
-                <span class="tag">${story.wordCount || E.words(story.text)} parole</span>
-                ${pageCount ? `<span class="tag">Riprendi da ${resumePage}/${pageCount}</span>` : ''}
-              </div>
-              <div class="actions">
-                <button class="button secondary reopen-story" type="button" data-story-id="${F.escapeHTML(story.id)}">Riapri</button>
-                <button class="text-danger delete-story" type="button" data-story-id="${F.escapeHTML(story.id)}">Elimina</button>
+            const resumePage = Math.min((Number(story.resumePage) || 0) + 1,pageCount || 1);
+            return `<article class="story-card">
+              <div class="story-cover" aria-hidden="true">${S.escapeHTML(story.icon || presentation.icon)}</div>
+              <div class="story-body">
+                <div class="story-meta">${S.escapeHTML(S.familyLabel(story.family))} · ${S.escapeHTML(story.duration || '')}</div>
+                <h2>${S.escapeHTML(story.title)}</h2>
+                <p>${S.escapeHTML(story.subtitle || '')}</p>
+                <div class="trace-list"><span class="trace">${S.escapeHTML(story.world || profile.primaryWorld)}</span>${pageCount ? `<span class="trace">Pagina ${resumePage}/${pageCount}</span>` : ''}</div>
+                <div class="story-actions"><button class="open-story" type="button" data-open-id="${S.escapeHTML(story.id)}">Riapri</button><button type="button" data-delete-id="${S.escapeHTML(story.id)}">Elimina</button></div>
               </div>
             </article>`;
-          }).join('')}</div>` : '<div class="empty"><div class="empty-icon">📖</div><h3>Nessuna storia vissuta ancora</h3><p>La prima storia salvata comparirà qui con il punto di ripresa.</p><a class="button" href="/story.html">Crea una storia</a></div>'}`;
+          }).join('')}</section>` : `<section class="empty-state"><div class="eyebrow">La prima pagina è ancora bianca</div><h2>Nessuna storia salvata.</h2><p>Apri una Storia Fablea oppure creane una nuova insieme al compagno.</p><a class="profile-link" href="/discover.html">Scopri le storie</a></section>`}
+        `;
 
-        savedSection.querySelectorAll('.reopen-story').forEach(button => {
-          button.addEventListener('click', () => {
-            const story = allSaved().find(item => item.id === button.dataset.storyId);
-            if(!story) return;
-            localStorage.setItem('fableaCurrentStory', JSON.stringify(story));
-            localStorage.setItem('fableaReopenStory', 'true');
-            location.href = '/story-result.html';
-          });
-        });
-
-        savedSection.querySelectorAll('.delete-story').forEach(button => {
-          button.addEventListener('click', () => {
-            if(!confirm('Eliminare questa storia dalla libreria?')) return;
-            const next = E.savedStories().filter(item => item.id !== button.dataset.storyId);
-            localStorage.setItem(F.KEYS.saved, JSON.stringify(next));
-            const current = F.readJSON('fableaCurrentStory', null);
-            if(current && current.id === button.dataset.storyId) localStorage.removeItem('fableaCurrentStory');
-            renderSaved();
-          });
-        });
+        document.querySelectorAll('[data-open-id]').forEach(button => button.addEventListener('click',() => {
+          S.openSavedStory(stories().find(story => story.id === button.dataset.openId));
+        }));
+        document.querySelectorAll('[data-delete-id]').forEach(button => button.addEventListener('click',() => {
+          if(!confirm('Eliminare questa storia dalla Libreria?')) return;
+          const next = E.savedStories().filter(story => story.id !== button.dataset.deleteId);
+          localStorage.setItem(F.KEYS.saved,JSON.stringify(next));
+          const current = F.readJSON('fableaCurrentStory',null);
+          if(current && current.id === button.dataset.deleteId) localStorage.removeItem('fableaCurrentStory');
+          render();
+        }));
       }
 
-      const context = E.contextFor(profile, profile.primaryWorld, {});
-      const available = E.catalog().filter(story => story.age === profile.age);
-      catalog.innerHTML = `<div class="grid">${available.map(story => {
-        const title = FableaGrammar.apply(story.title, profile, context);
-        const subtitle = FableaGrammar.apply(story.subtitle, profile, context);
-        return `<article class="card">
-          <div class="card-icon">${F.escapeHTML(story.cover && story.cover.icon || '✨')}</div>
-          <div class="kicker">${F.escapeHTML(story.family)}</div>
-          <h2>${F.escapeHTML(title)}</h2>
-          <p>${F.escapeHTML(subtitle)}</p>
-          <div class="tags"><span class="tag">${story.pages.length} scene</span><span class="tag">${F.escapeHTML(profile.primaryWorld)}</span></div>
-        </article>`;
-      }).join('')}</div>`;
-
-      renderSaved();
-    }
+      render();
+    })();
   </script>
 </body>
 </html>
