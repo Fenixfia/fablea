@@ -6,15 +6,15 @@
   const QA_STORAGE_KEY = 'fableaStoryRequestV3QA';
 
   const MODES = {
-    moment:{label:'Partiamo dal momento',family:'emozioni',tone:'warm',pace:'balanced',suspense:'low',ending:'closed-soft'},
-    world:{label:'Partiamo dal tuo mondo',family:'avventura',tone:'wonder',pace:'balanced',suspense:'medium',ending:'open-thread'},
-    idea:{label:'Partiamo da un’idea',family:'avventura',tone:'wonder',pace:'dynamic',suspense:'medium',ending:'closed'},
-    continue:{label:'Continua una storia',family:'avventura',tone:'continuous',pace:'balanced',suspense:'medium',ending:'open-thread'},
-    bedtime:{label:'Buonanotte',family:'calma-sera',tone:'gentle',pace:'slow',suspense:'none',ending:'closed-soft'},
-    family:{label:'Storia in famiglia',family:'emozioni',tone:'warm',pace:'balanced',suspense:'low',ending:'closed'},
-    prepare:{label:'Prepariamoci a qualcosa',family:'emozioni',tone:'reassuring',pace:'slow',suspense:'low',ending:'closed-soft'},
-    discovery:{label:'Scoperta',family:'scoperta',tone:'curious',pace:'balanced',suspense:'low',ending:'question'},
-    cocreate:{label:'Crea insieme',family:'avventura',tone:'playful',pace:'dynamic',suspense:'medium',ending:'choice'}
+    moment:{label:'Partiamo dal momento',family:'emozioni',tone:'warm',pace:'balanced',suspense:'low',solution:'conversation',ending:'closed-soft'},
+    world:{label:'Partiamo dal tuo mondo',family:'avventura',tone:'wonder',pace:'balanced',suspense:'medium',solution:'mixed',ending:'open-thread'},
+    idea:{label:'Partiamo da un’idea',family:'avventura',tone:'wonder',pace:'dynamic',suspense:'medium',solution:'creativity',ending:'closed'},
+    continue:{label:'Continua una storia',family:'avventura',tone:'continuous',pace:'balanced',suspense:'medium',solution:'mixed',ending:'open-thread'},
+    bedtime:{label:'Buonanotte',family:'calma-sera',tone:'gentle',pace:'slow',suspense:'none',solution:'observation',ending:'closed-soft'},
+    family:{label:'Storia in famiglia',family:'emozioni',tone:'warm',pace:'balanced',suspense:'low',solution:'cooperation',ending:'closed'},
+    prepare:{label:'Prepariamoci a qualcosa',family:'emozioni',tone:'reassuring',pace:'slow',suspense:'low',solution:'courage',ending:'closed-soft'},
+    discovery:{label:'Scoperta',family:'scoperta',tone:'curious',pace:'balanced',suspense:'low',solution:'observation',ending:'question'},
+    cocreate:{label:'Crea insieme',family:'avventura',tone:'playful',pace:'dynamic',suspense:'medium',solution:'creativity',ending:'choice'}
   };
 
   const ALLOWED = {
@@ -90,7 +90,7 @@
       dialogue:oneOf(input.dialogue,['light','balanced','rich'],'balanced'),
       description:oneOf(input.description,['light','balanced','rich'],'balanced'),
       suspense:oneOf(input.suspense,ALLOWED.suspense,preset.suspense),
-      solution:oneOf(input.solution,ALLOWED.solution,mode === 'discovery' ? 'observation' : mode === 'moment' ? 'conversation' : 'mixed'),
+      solution:oneOf(input.solution,ALLOWED.solution,preset.solution),
       ending:oneOf(input.ending,ALLOWED.ending,preset.ending),
       ritualRequested:Boolean(input.ritualRequested || mode === 'bedtime' || mode === 'moment'),
       activityRequested:Boolean(input.activityRequested || mode === 'discovery' || mode === 'family'),
@@ -197,6 +197,8 @@
       duration:request.today.duration,
       world:request.world.scenario,
       family:request.narrative.family,
+      solution:request.narrative.solution,
+      ending:request.narrative.ending,
       memoryTypes:(request.world.selectedMemory || []).map(item => item.type),
       avoidThemeCount:(request.safety.avoidThemes || []).length,
       valid:validate(request).valid
