@@ -82,6 +82,7 @@
 @media(max-width:640px){.beta-portal-scene{border-radius:28px}.beta-portal{width:142px;height:190px;top:38%}.beta-portal-scene .beta-demo-core{margin-bottom:16px}.beta-child-hero{padding:8px;border-radius:28px}.beta-journey-gate{border-radius:22px}.beta-room-grid{gap:10px}}
 
 /* Family profiles — same warm language as Home and Casa */
+.beta-profile-page{min-height:100vh}
 .beta-profile-intro{max-width:760px;padding:54px 0 32px}.beta-profile-intro .beta-title{margin-bottom:12px}
 .beta-profile-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
 .beta-profile-card{position:relative;min-height:360px;padding:26px;overflow:hidden;display:flex;flex-direction:column;isolation:isolate}
