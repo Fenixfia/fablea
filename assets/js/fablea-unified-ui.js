@@ -2,6 +2,16 @@
   'use strict';
 
   const NEUTRAL_WORLD = 'FABLEA';
+  const NEUTRAL_TOKENS = {
+    '--accent':'#ead7a3',
+    '--accent-2':'#b9a7b8',
+    '--sky-1':'#68746f',
+    '--sky-2':'#35413f',
+    '--land-1':'#756b73',
+    '--land-2':'#34343a',
+    '--portal-1':'#fff3d5',
+    '--portal-2':'#c7b5c8'
+  };
 
   function selectedProfile(){
     try{
@@ -16,6 +26,10 @@
   function applyWorld(world){
     const next = world || NEUTRAL_WORLD;
     document.body.dataset.world = next;
+    for(const [property,value] of Object.entries(NEUTRAL_TOKENS)){
+      if(next === NEUTRAL_WORLD) document.body.style.setProperty(property,value);
+      else document.body.style.removeProperty(property);
+    }
     return next;
   }
 
