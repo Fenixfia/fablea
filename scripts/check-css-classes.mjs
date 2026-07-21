@@ -32,6 +32,7 @@ const allowedDynamic = new Set([
   'selected',
   'theme-night',
   'scene-night',
+  'live-book',
   'age-2-4',
   'age-5-7',
   'age-8-10',
