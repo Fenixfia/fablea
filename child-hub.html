@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/fablea.css">
   <link rel="stylesheet" href="/assets/css/fablea-shell.css">
+  <link rel="stylesheet" href="/assets/css/fablea-mobile-emotion.css">
   <script src="/assets/js/fablea-ui.js"></script>
   <script src="/assets/js/fablea-grammar.js"></script>
   <script src="/assets/js/fablea-profile.js"></script>
@@ -34,7 +35,6 @@
     (function(){
       'use strict';
       const F = window.FableaProfile;
-      const E = window.FableaStoryEngine;
       const S = window.FableaShell;
       const root = document.getElementById('root');
       const profile = F.getSelectedProfile();
@@ -69,7 +69,12 @@
         continueAction = '<button id="resumeStory" type="button">Continua</button>';
       }
 
+      const whisper = lastStory
+        ? `Da quando siete passati di qui, ${presentation.place} conserva una nuova traccia.`
+        : `${presentation.place} si sta accendendo per il vostro primo ingresso.`;
+
       root.innerHTML = `
+        <div class="mobile-arrival" aria-hidden="true"><div><small>Stai tornando in</small><strong>${S.escapeHTML(presentation.place)}</strong></div></div>
         <section class="hero-grid">
           <div class="hero-copy">
             <div class="eyebrow">Oggi nel mondo di ${S.escapeHTML(profile.name)}</div>
@@ -83,6 +88,8 @@
           </div>
 
           <div class="world-scene" aria-label="${S.escapeHTML(presentation.place)}">
+            <div class="world-whisper">${S.escapeHTML(whisper)}</div>
+            <div class="ambient-motes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
             <div class="portal" aria-hidden="true"></div>
             <div class="land" aria-hidden="true"></div>
             <article class="companion-card">
