@@ -17,7 +17,8 @@ const coreFiles = [
 
 const cssFiles = [
   'assets/css/fablea.css',
-  'assets/css/fablea-shell.css'
+  'assets/css/fablea-shell.css',
+  'assets/css/fablea-mobile-emotion.css'
 ].filter(file => fs.existsSync(file));
 const css = cssFiles.map(file => fs.readFileSync(file,'utf8')).join('\n');
 const defined = new Set([...css.matchAll(/\.([A-Za-z_][\w-]*)/g)].map(match => match[1]));
