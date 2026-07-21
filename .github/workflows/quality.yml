@@ -171,3 +171,21 @@ jobs:
       - name: Stop on guided creator failure
         if: steps.creator.outcome == 'failure'
         run: exit 1
+
+      - name: Child world home and companions
+        id: home
+        continue-on-error: true
+        run: npm run check:home > child-world-home.log 2>&1
+
+      - name: Upload child world home diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: child-world-home-report
+          path: child-world-home.log
+          if-no-files-found: error
+          retention-days: 3
+
+      - name: Stop on child world home failure
+        if: steps.home.outcome == 'failure'
+        run: exit 1
