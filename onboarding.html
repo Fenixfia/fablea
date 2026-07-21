@@ -77,94 +77,127 @@
         <option value="emotional">Emotivo</option>
       </select>
 
-      <button class="button primary" type="submit">Salva e prepara la prima storia</button>
+      <button class="button primary" id="submitProfile" type="submit">Salva e prepara la prima storia</button>
     </form>
 
     <div id="summary" aria-live="polite"></div>
   </main>
 
   <script>
-    const F = FableaProfile;
-    const E = FableaStoryEngine;
-    const selectedInterests = new Set();
+    (() => {
+      'use strict';
 
-    primaryWorld.innerHTML = F.WORLDS.map(world => `<option>${F.escapeHTML(world)}</option>`).join('');
-    support.innerHTML = F.SUPPORTS.map(item => `<option>${F.escapeHTML(item)}</option>`).join('');
+      const F = window.FableaProfile;
+      const E = window.FableaStoryEngine;
+      const formEl = document.getElementById('profileForm');
+      const nameInput = document.getElementById('name');
+      const ageSelect = document.getElementById('age');
+      const genderSelect = document.getElementById('gender');
+      const primaryWorldSelect = document.getElementById('primaryWorld');
+      const interestsContainer = document.getElementById('interests');
+      const companionInput = document.getElementById('favoriteCompanion');
+      const supportSelect = document.getElementById('support');
+      const durationSelect = document.getElementById('duration');
+      const storyStyleSelect = document.getElementById('storyStyle');
+      const summaryEl = document.getElementById('summary');
+      const submitButton = document.getElementById('submitProfile');
+      const selectedInterests = new Set();
 
-    function renderInterests(){
-      const primary = primaryWorld.value;
-      selectedInterests.delete(primary);
-      interests.innerHTML = F.WORLDS
-        .filter(world => world !== primary)
-        .map(world => `<button class="choice ${selectedInterests.has(world) ? 'active' : ''}" type="button" data-value="${F.escapeHTML(world)}" aria-pressed="${selectedInterests.has(world)}">${F.escapeHTML(world)}</button>`)
-        .join('');
-      interests.querySelectorAll('.choice').forEach(button => {
-        button.addEventListener('click', () => {
-          const value = button.dataset.value;
-          if(selectedInterests.has(value)) selectedInterests.delete(value);
-          else selectedInterests.add(value);
-          renderInterests();
-        });
-      });
-    }
-
-    primaryWorld.addEventListener('change', renderInterests);
-    renderInterests();
-
-    profileForm.addEventListener('submit', event => {
-      event.preventDefault();
-      const childName = name.value.trim();
-      if(!childName){
-        name.focus();
-        alert('Inserisci il nome del bambino.');
+      if(!F || !E || !formEl){
+        summaryEl.innerHTML = '<div class="error-box">FABLEA non è riuscita a caricare il modulo del profilo. Ricarica la pagina e riprova.</div>';
         return;
       }
 
-      const profile = F.saveProfile({
-        id: `child-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,
-        name: childName,
-        age: age.value,
-        gender: gender.value,
-        primaryWorld: primaryWorld.value,
-        interests: [...selectedInterests],
-        favoriteCompanion: favoriteCompanion.value.trim(),
-        support: support.value,
-        duration: duration.value,
-        storyStyle: storyStyle.value,
-        createdAt: new Date().toISOString(),
-        schemaVersion: 2
+      primaryWorldSelect.innerHTML = F.WORLDS.map(world => `<option>${F.escapeHTML(world)}</option>`).join('');
+      supportSelect.innerHTML = F.SUPPORTS.map(item => `<option>${F.escapeHTML(item)}</option>`).join('');
+
+      function renderInterests(){
+        const primary = primaryWorldSelect.value;
+        selectedInterests.delete(primary);
+        interestsContainer.innerHTML = F.WORLDS
+          .filter(world => world !== primary)
+          .map(world => `<button class="choice ${selectedInterests.has(world) ? 'active' : ''}" type="button" data-value="${F.escapeHTML(world)}" aria-pressed="${selectedInterests.has(world)}">${F.escapeHTML(world)}</button>`)
+          .join('');
+        interestsContainer.querySelectorAll('.choice').forEach(button => {
+          button.addEventListener('click', () => {
+            const value = button.dataset.value;
+            if(selectedInterests.has(value)) selectedInterests.delete(value);
+            else selectedInterests.add(value);
+            renderInterests();
+          });
+        });
+      }
+
+      primaryWorldSelect.addEventListener('change', renderInterests);
+      renderInterests();
+
+      formEl.addEventListener('submit', event => {
+        event.preventDefault();
+        const childName = nameInput.value.trim();
+        if(!childName){
+          nameInput.focus();
+          alert('Inserisci il nome del bambino.');
+          return;
+        }
+
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sto preparando il suo mondo…';
+        summaryEl.innerHTML = '';
+
+        try{
+          const profile = F.saveProfile({
+            id: `child-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,
+            name: childName,
+            age: ageSelect.value,
+            gender: genderSelect.value,
+            primaryWorld: primaryWorldSelect.value,
+            interests: [...selectedInterests],
+            favoriteCompanion: companionInput.value.trim(),
+            support: supportSelect.value,
+            duration: durationSelect.value,
+            storyStyle: storyStyleSelect.value,
+            createdAt: new Date().toISOString(),
+            schemaVersion: 2
+          });
+
+          const request = {
+            profileId: profile.id,
+            scenario: profile.primaryWorld,
+            family: 'avventura',
+            mood: 'Curiosità e voglia di scoprire',
+            duration: profile.duration,
+            firstStory: true
+          };
+          const preparedStory = E.buildStory(profile, request);
+          localStorage.setItem(F.KEYS.prepared, JSON.stringify(preparedStory));
+          localStorage.setItem('fableaStoryData', JSON.stringify(request));
+
+          summaryEl.innerHTML = `
+            <section class="profile-note">
+              <div class="kicker">Il mondo è pronto</div>
+              <h2>${F.escapeHTML(profile.name)} entra in ${F.escapeHTML(profile.primaryWorld)}</h2>
+              <p>Prima storia proposta: <strong>${F.escapeHTML(preparedStory.title)}</strong></p>
+              <p>${F.escapeHTML(preparedStory.subtitle)}</p>
+              <div class="tags">
+                <span class="tag">${F.escapeHTML(F.ageLabel(profile.age))}</span>
+                <span class="tag">${F.escapeHTML(profile.duration)}</span>
+                <span class="tag">${preparedStory.wordCount} parole</span>
+              </div>
+              <div class="actions">
+                <a class="button primary" href="/story-result.html?prepared=1">Apri la prima storia</a>
+                <a class="button secondary" href="/child-hub.html">Entra nel suo mondo</a>
+              </div>
+            </section>`;
+          summaryEl.scrollIntoView({behavior:'smooth', block:'start'});
+        }catch(error){
+          console.error('Profile creation failed', error);
+          summaryEl.innerHTML = `<div class="error-box"><strong>Il profilo non è stato creato.</strong><br>${F.escapeHTML(error && error.message ? error.message : 'Riprova tra poco.')}</div>`;
+        }finally{
+          submitButton.disabled = false;
+          submitButton.textContent = 'Salva e prepara la prima storia';
+        }
       });
-
-      const request = {
-        profileId: profile.id,
-        scenario: profile.primaryWorld,
-        family: 'avventura',
-        mood: 'Curiosità e voglia di scoprire',
-        duration: profile.duration,
-        firstStory: true
-      };
-      const preparedStory = E.buildStory(profile, request);
-      localStorage.setItem(F.KEYS.prepared, JSON.stringify(preparedStory));
-      localStorage.setItem('fableaStoryData', JSON.stringify(request));
-
-      summary.innerHTML = `
-        <section class="profile-note">
-          <div class="kicker">Il mondo è pronto</div>
-          <h2>${F.escapeHTML(profile.name)} entra in ${F.escapeHTML(profile.primaryWorld)}</h2>
-          <p>Prima storia proposta: <strong>${F.escapeHTML(preparedStory.title)}</strong></p>
-          <p>${F.escapeHTML(preparedStory.subtitle)}</p>
-          <div class="tags">
-            <span class="tag">${F.escapeHTML(F.ageLabel(profile.age))}</span>
-            <span class="tag">${F.escapeHTML(profile.duration)}</span>
-            <span class="tag">${preparedStory.wordCount} parole</span>
-          </div>
-          <div class="actions">
-            <a class="button primary" href="/story-result.html?prepared=1">Apri la prima storia</a>
-            <a class="button secondary" href="/child-hub.html">Entra nel suo mondo</a>
-          </div>
-        </section>`;
-      summary.scrollIntoView({behavior:'smooth', block:'start'});
-    });
+    })();
   </script>
 </body>
 </html>
