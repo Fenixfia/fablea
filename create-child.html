@@ -3,62 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>FABLEA | Crea il mondo del bambino</title>
+  <title>FABLEA | Crea il suo mondo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/fablea.css">
-  <link rel="stylesheet" href="/assets/css/fablea-shell.css">
   <link rel="stylesheet" href="/assets/css/fablea-unified.css">
-  <link rel="stylesheet" href="/assets/css/fablea-onboarding.css">
-  <link rel="stylesheet" href="/assets/css/fablea-child-home.css">
-  <script src="/assets/js/fablea-ui.js"></script>
+  <link rel="stylesheet" href="/assets/css/fablea-beta.css">
   <script src="/assets/js/fablea-grammar.js"></script>
   <script src="/assets/js/fablea-profile.js"></script>
   <script src="/assets/js/fablea-companion.js"></script>
+  <script src="/assets/js/fablea-world-art.js"></script>
   <script src="/stories-v2/age-2-4.js"></script>
   <script src="/stories-v2/age-5-7.js"></script>
   <script src="/stories-v2/age-8-10.js"></script>
   <script src="/stories-v2/age-11-12.js"></script>
   <script src="/stories-v2/index.js"></script>
   <script src="/assets/js/fablea-story-engine.js"></script>
-  <script defer src="/assets/js/fablea-unified-ui.js"></script>
+  <script src="/assets/js/fablea-beta-state.js"></script>
 </head>
-<body class="fablea-page fablea-product onboarding-page" data-world="FABLEA">
-  <main class="card">
-    <div class="top">
-      <a class="brand" href="/index.html">FABLEA</a>
-      <div class="badge">Il suo mondo</div>
-      <a class="back" href="/profile.html">Profili</a>
-    </div>
+<body class="beta-page">
+  <div class="beta-frame">
+    <header class="beta-top">
+      <a class="beta-brand" href="/index.html">FABLEA</a>
+      <div class="beta-pill">Il primo ingresso</div>
+      <a class="beta-button secondary" href="/profile.html">Profili</a>
+    </header>
 
-    <div class="onboarding-layout">
-      <section class="hero">
-        <div class="kicker">Il primo ingresso</div>
-        <h1>Creiamo la sua Casa FABLEA.</h1>
-        <p class="intro">Un mondo personale nel quale leggere, inventare, giocare e scoprire. Le attività, le storie e i ricordi resteranno separati per ogni bambino.</p>
-      </section>
+    <main class="beta-card beta-onboarding">
+      <div class="beta-eyebrow" id="stepKicker">Passaggio 1 di 3</div>
+      <h1 class="beta-title" id="stepTitle">Conosciamoci.</h1>
+      <p class="beta-lead" id="stepIntro">Bastano poche informazioni per preparare un mondo adatto alla sua età.</p>
+      <div class="beta-stepper" aria-label="Avanzamento creazione profilo"><span class="beta-step active"></span><span class="beta-step"></span><span class="beta-step"></span></div>
 
-      <div class="onboarding-form-panel">
-        <form id="profileForm" novalidate>
-          <div class="form-grid">
-            <div class="field"><label for="name">Nome</label><input id="name" name="name" autocomplete="off" placeholder="Es. Leo" required></div>
-            <div class="field"><label for="age">Fascia d’età</label><select id="age" name="age"><option value="2-4">2–4 anni</option><option value="5-7">5–7 anni</option><option value="8-10">8–10 anni</option><option value="11-12">11–12 anni</option></select></div>
-            <div class="field"><label for="gender">Sesso</label><select id="gender" name="gender" aria-describedby="sexError" required><option value="" selected disabled>Seleziona</option><option value="male">Maschio</option><option value="female">Femmina</option></select><p class="error" id="sexError" hidden>Scegli Maschio o Femmina per continuare.</p></div>
-            <div class="field"><label for="primaryWorld">Mondo principale</label><select id="primaryWorld" name="primaryWorld"></select><p class="note">Questo diventa il suo mondo di casa.</p></div>
-            <div class="field field-wide"><label>Interessi secondari</label><div class="grid" id="interests" aria-label="Interessi secondari"></div></div>
-            <div class="field field-wide">
-              <label for="favoriteCompanion">Compagno preferito <span class="muted">facoltativo</span></label>
-              <input id="favoriteCompanion" name="favoriteCompanion" placeholder="Per esempio: Orso con uno zaino rosso">
-              <div class="companion-preview-box" aria-live="polite"><div class="companion-preview-art" id="companionPreview"></div><div class="companion-preview-copy"><strong id="companionPreviewName">Il suo compagno</strong><span>Scrivi una creatura o un personaggio. FABLEA gli darà un aspetto stabile da ritrovare nelle esperienze.</span></div></div>
-            </div>
-            <div class="field field-wide"><label for="support">Che cosa dovrebbe sostenere FABLEA?</label><select id="support" name="support"></select></div>
-            <div class="field"><label for="duration">Durata abituale delle storie</label><select id="duration" name="duration"><option>Breve</option><option selected>Media</option><option>Lunga</option></select></div>
-            <div class="field"><label for="storyStyle">Stile narrativo preferito</label><select id="storyStyle" name="storyStyle"><option value="calm">Calmo</option><option value="adventurous" selected>Avventuroso</option><option value="funny">Divertente</option><option value="mysterious">Misterioso</option><option value="emotional">Emotivo</option></select></div>
-            <div class="field field-wide"><button class="button primary" id="submitProfile" type="submit">Crea la sua Casa FABLEA</button></div>
+      <form id="profileForm" novalidate>
+        <section class="beta-form-stage active" data-stage="1">
+          <div class="beta-form-grid">
+            <div class="beta-field"><label for="name">Nome</label><input id="name" name="name" autocomplete="off" required></div>
+            <div class="beta-field"><label for="age">Fascia d’età</label><select id="age" name="age"><option value="2-4">2–4 anni</option><option value="5-7">5–7 anni</option><option value="8-10">8–10 anni</option><option value="11-12">11–12 anni</option></select></div>
+            <div class="beta-field"><label for="gender">Sesso</label><select id="gender" name="gender" required><option value="" selected disabled>Seleziona</option><option value="male">Maschio</option><option value="female">Femmina</option></select><span class="beta-error" id="genderError" hidden>Scegli Maschio o Femmina per continuare.</span></div>
           </div>
-        </form>
-        <div id="summary" aria-live="polite"></div>
-      </div>
-    </div>
-  </main>
+        </section>
+
+        <section class="beta-form-stage" data-stage="2">
+          <div class="beta-world-picker" id="worldPicker" aria-label="Scegli il mondo principale"></div>
+          <p class="beta-note">Questo sarà il mondo di casa. Altri ambienti potranno entrare naturalmente nelle storie future.</p>
+        </section>
+
+        <section class="beta-form-stage" data-stage="3">
+          <div class="beta-companion-builder">
+            <div>
+              <div class="beta-field">
+                <label for="favoriteCompanion">Chi lo accompagnerà? <span class="beta-note">Facoltativo</span></label>
+                <input id="favoriteCompanion" name="favoriteCompanion" placeholder="Per esempio: un orso con uno zaino rosso">
+              </div>
+              <p class="beta-lead" style="font-size:1rem;margin-top:20px">Può essere un animale, una creatura, un robot, una principessa o un personaggio inventato. Avrà un aspetto stabile da ritrovare nella Casa.</p>
+              <div class="beta-trace-strip"><span class="beta-trace" id="summaryAge"></span><span class="beta-trace" id="summaryWorld"></span></div>
+            </div>
+            <div class="beta-companion-preview" id="companionPreview" aria-live="polite"></div>
+          </div>
+        </section>
+
+        <div class="beta-form-actions">
+          <button class="beta-button secondary" id="previousButton" type="button" hidden>Indietro</button>
+          <button class="beta-button primary" id="nextButton" type="button">Continua</button>
+          <button class="beta-button primary" id="submitButton" type="submit" hidden>Crea la sua Casa</button>
+        </div>
+        <div id="formStatus" class="beta-note" aria-live="polite"></div>
+      </form>
+    </main>
+  </div>
 
   <script>
     (() => {
@@ -66,90 +80,120 @@
       const F = window.FableaProfile;
       const E = window.FableaStoryEngine;
       const C = window.FableaCompanion;
-      const formEl = document.getElementById('profileForm');
+      const A = window.FableaWorldArt;
+      const B = window.FableaBetaState;
+      const form = document.getElementById('profileForm');
       const nameInput = document.getElementById('name');
       const ageSelect = document.getElementById('age');
       const genderSelect = document.getElementById('gender');
-      const sexErrorEl = document.getElementById('sexError');
-      const primaryWorldSelect = document.getElementById('primaryWorld');
-      const interestsContainer = document.getElementById('interests');
       const companionInput = document.getElementById('favoriteCompanion');
       const companionPreview = document.getElementById('companionPreview');
-      const companionPreviewName = document.getElementById('companionPreviewName');
-      const supportSelect = document.getElementById('support');
-      const durationSelect = document.getElementById('duration');
-      const storyStyleSelect = document.getElementById('storyStyle');
-      const summaryEl = document.getElementById('summary');
-      const submitButton = document.getElementById('submitProfile');
-      const selectedInterests = new Set();
+      const worldPicker = document.getElementById('worldPicker');
+      const previousButton = document.getElementById('previousButton');
+      const nextButton = document.getElementById('nextButton');
+      const submitButton = document.getElementById('submitButton');
+      const status = document.getElementById('formStatus');
+      const genderError = document.getElementById('genderError');
+      let stage = 1;
+      let primaryWorld = F.WORLDS[0];
 
-      if(!F || !E || !C || !formEl){
-        summaryEl.innerHTML = '<div class="error-box">FABLEA non è riuscita a caricare il modulo del profilo. Ricarica la pagina e riprova.</div>';
-        return;
+      const copy = {
+        1:['Passaggio 1 di 3','Conosciamoci.','Bastano poche informazioni per preparare un mondo adatto alla sua età.'],
+        2:['Passaggio 2 di 3','Apriamo il suo mondo.','Scegli il luogo nel quale nasceranno la Casa, il compagno e la prima avventura.'],
+        3:['Passaggio 3 di 3','Incontriamo il compagno.','Una presenza familiare che tornerà nelle storie, nei giochi e nelle scoperte.']
+      };
+
+      function renderWorlds(){
+        worldPicker.innerHTML = F.WORLDS.map(world => `<button class="beta-world-choice" type="button" data-world="${F.escapeHTML(world)}" aria-pressed="${world === primaryWorld}">${A.render(world,{label:world})}<strong>${F.escapeHTML(world)}</strong></button>`).join('');
+        worldPicker.querySelectorAll('[data-world]').forEach(button => button.addEventListener('click',() => {
+          primaryWorld = button.dataset.world;
+          renderWorlds();
+          renderCompanion();
+        }));
       }
 
-      primaryWorldSelect.innerHTML = F.WORLDS.map(world => `<option>${F.escapeHTML(world)}</option>`).join('');
-      supportSelect.innerHTML = F.SUPPORTS.map(item => `<option>${F.escapeHTML(item)}</option>`).join('');
-
-      function currentVisual(){
-        return C.resolve(companionInput.value.trim(),primaryWorldSelect.value,`${nameInput.value.trim()}:${primaryWorldSelect.value}`);
+      function companionVisual(){
+        return C.resolve(companionInput.value.trim(),primaryWorld,`${nameInput.value.trim() || 'profilo'}:${primaryWorld}`);
       }
 
       function renderCompanion(){
-        const visual = currentVisual();
-        C.mount(companionPreview,{favoriteCompanion:companionInput.value.trim(),primaryWorld:primaryWorldSelect.value,id:nameInput.value.trim() || 'preview'},{visual});
-        companionPreviewName.textContent = companionInput.value.trim() || visual.label;
+        const visual = companionVisual();
+        C.mount(companionPreview,{favoriteCompanion:companionInput.value.trim(),primaryWorld,id:nameInput.value.trim() || 'preview'},{visual});
+        document.getElementById('summaryAge').textContent = F.ageLabel(ageSelect.value);
+        document.getElementById('summaryWorld').textContent = primaryWorld;
       }
 
-      genderSelect.addEventListener('change',() => {genderSelect.removeAttribute('aria-invalid');sexErrorEl.hidden = true;});
+      function showStage(nextStage){
+        stage = nextStage;
+        document.querySelectorAll('.beta-form-stage').forEach(item => item.classList.toggle('active',Number(item.dataset.stage) === stage));
+        document.querySelectorAll('.beta-step').forEach((item,index) => item.classList.toggle('active',index < stage));
+        document.getElementById('stepKicker').textContent = copy[stage][0];
+        document.getElementById('stepTitle').textContent = copy[stage][1];
+        document.getElementById('stepIntro').textContent = copy[stage][2];
+        previousButton.hidden = stage === 1;
+        nextButton.hidden = stage === 3;
+        submitButton.hidden = stage !== 3;
+        status.textContent = '';
+        if(stage === 3) renderCompanion();
+        scrollTo({top:0,behavior:'smooth'});
+      }
+
+      function validateIdentity(){
+        const name = nameInput.value.trim();
+        if(!name){nameInput.setAttribute('aria-invalid','true');nameInput.focus();return false;}
+        nameInput.removeAttribute('aria-invalid');
+        if(!['male','female'].includes(genderSelect.value)){
+          genderSelect.setAttribute('aria-invalid','true');
+          genderError.hidden = false;
+          genderSelect.focus();
+          return false;
+        }
+        genderSelect.removeAttribute('aria-invalid');
+        genderError.hidden = true;
+        return true;
+      }
+
+      nextButton.addEventListener('click',() => {
+        if(stage === 1 && !validateIdentity()) return;
+        showStage(Math.min(3,stage + 1));
+      });
+      previousButton.addEventListener('click',() => showStage(Math.max(1,stage - 1)));
+      genderSelect.addEventListener('change',() => {genderSelect.removeAttribute('aria-invalid');genderError.hidden = true;});
       companionInput.addEventListener('input',renderCompanion);
       nameInput.addEventListener('input',renderCompanion);
+      ageSelect.addEventListener('change',renderCompanion);
 
-      function renderInterests(){
-        const primary = primaryWorldSelect.value;
-        selectedInterests.delete(primary);
-        interestsContainer.innerHTML = F.WORLDS.filter(world => world !== primary).map(world => `<button class="choice ${selectedInterests.has(world) ? 'active' : ''}" type="button" data-value="${F.escapeHTML(world)}" aria-pressed="${selectedInterests.has(world)}">${F.escapeHTML(world)}</button>`).join('');
-        interestsContainer.querySelectorAll('.choice').forEach(button => button.addEventListener('click',() => {const value = button.dataset.value;if(selectedInterests.has(value)) selectedInterests.delete(value);else selectedInterests.add(value);renderInterests();}));
-        renderCompanion();
-      }
-
-      primaryWorldSelect.addEventListener('change',renderInterests);
-      renderInterests();
-
-      formEl.addEventListener('submit',event => {
+      form.addEventListener('submit',event => {
         event.preventDefault();
-        const childName = nameInput.value.trim();
-        if(!childName){nameInput.focus();nameInput.setAttribute('aria-invalid','true');return;}
-        if(!['male','female'].includes(genderSelect.value)){genderSelect.setAttribute('aria-invalid','true');sexErrorEl.hidden = false;genderSelect.focus();return;}
-
-        nameInput.removeAttribute('aria-invalid');
-        genderSelect.removeAttribute('aria-invalid');
+        if(!validateIdentity()) {showStage(1);return;}
         submitButton.disabled = true;
-        submitButton.textContent = 'Sto costruendo la sua Casa…';
-        summaryEl.innerHTML = '';
-
+        submitButton.textContent = 'Sto costruendo la Casa…';
         try{
-          const companionVisual = currentVisual();
+          const visual = companionVisual();
           const profile = F.saveProfile({
             id:`child-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,
-            name:childName,age:ageSelect.value,gender:genderSelect.value,primaryWorld:primaryWorldSelect.value,
-            interests:[...selectedInterests],favoriteCompanion:companionInput.value.trim() || companionVisual.label,companionVisual,
-            support:supportSelect.value,duration:durationSelect.value,storyStyle:storyStyleSelect.value,
+            name:nameInput.value.trim(),age:ageSelect.value,gender:genderSelect.value,
+            primaryWorld,interests:[],favoriteCompanion:companionInput.value.trim() || visual.label,
+            companionVisual:visual,support:F.SUPPORTS[0],duration:'Media',storyStyle:'adventurous',
             createdAt:new Date().toISOString(),schemaVersion:3
           });
-
           const request = {profileId:profile.id,scenario:profile.primaryWorld,family:'avventura',mood:'Curiosità e voglia di scoprire',duration:profile.duration,firstStory:true};
           const preparedStory = E.buildStory(profile,request);
           localStorage.setItem(F.KEYS.prepared,JSON.stringify(preparedStory));
           localStorage.setItem('fableaStoryData',JSON.stringify(request));
-          summaryEl.innerHTML = '<div class="profile-note"><strong>La sua Casa è pronta.</strong><br>Stiamo aprendo il mondo…</div>';
-          setTimeout(() => location.assign('/child-hub.html?welcome=1'),180);
+          if(B) B.reconcile(profile);
+          status.textContent = 'La sua Casa è pronta. Stiamo aprendo il mondo…';
+          setTimeout(() => location.assign('/child-hub.html?welcome=1'),220);
         }catch(error){
-          summaryEl.innerHTML = `<div class="error-box"><strong>Il profilo non è stato creato.</strong><br>${F.escapeHTML(error && error.message ? error.message : 'Riprova tra poco.')}</div>`;
+          status.textContent = error && error.message ? error.message : 'Non è stato possibile creare il profilo. Riprova.';
           submitButton.disabled = false;
-          submitButton.textContent = 'Crea la sua Casa FABLEA';
+          submitButton.textContent = 'Crea la sua Casa';
         }
       });
+
+      renderWorlds();
+      renderCompanion();
+      if(B) B.migrate();
     })();
   </script>
 </body>
