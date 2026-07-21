@@ -1,0 +1,198 @@
+/* FABLEA onboarding — neutral sage threshold and responsive desktop composition */
+body.fablea-product.onboarding-page{
+  --onboarding-paper:#fff9ef;
+  --onboarding-ink:#f8f4ed;
+  --onboarding-muted:#d8ddd9;
+  --onboarding-sage:#68746f;
+  --onboarding-sage-deep:#46534f;
+  --onboarding-mauve:#8b7f91;
+  --onboarding-gold:#ead7a3;
+  --accent:var(--onboarding-gold);
+  --accent-2:#c7b7d1;
+  --sky-1:var(--onboarding-sage);
+  --sky-2:var(--onboarding-sage-deep);
+  --land-1:#625b66;
+  --land-2:#3d4141;
+  background:
+    radial-gradient(circle at 82% 11%,rgba(234,215,163,.31),transparent 22%),
+    radial-gradient(circle at 12% 82%,rgba(169,151,177,.25),transparent 34%),
+    linear-gradient(145deg,#78847f 0%,#5e6c67 42%,#4c5855 70%,#5d5660 100%);
+}
+body.fablea-product.onboarding-page::before{
+  background:
+    radial-gradient(circle at 19% 27%,rgba(255,249,239,.10),transparent 21%),
+    radial-gradient(circle at 84% 86%,rgba(169,151,177,.22),transparent 38%);
+  opacity:.85;
+}
+.onboarding-page main.card{
+  width:min(1480px,calc(100% - 40px));
+  max-width:none;
+  margin:20px auto;
+  padding:22px clamp(22px,3vw,42px) 42px;
+  border:1px solid rgba(255,249,239,.17);
+  border-radius:34px;
+  background:linear-gradient(145deg,rgba(36,47,44,.52),rgba(43,43,49,.34));
+  box-shadow:0 34px 100px rgba(36,39,40,.22);
+  backdrop-filter:blur(20px);
+}
+.onboarding-page .top{
+  margin-bottom:clamp(30px,5vw,66px);
+  border-color:rgba(255,249,239,.18);
+  background:rgba(46,57,53,.52);
+  box-shadow:0 14px 42px rgba(42,43,47,.15);
+}
+.onboarding-page .badge,
+.onboarding-page .kicker{color:var(--onboarding-gold)}
+.onboarding-page .onboarding-layout{
+  display:grid;
+  grid-template-columns:minmax(300px,.72fr) minmax(620px,1.28fr);
+  gap:clamp(46px,6vw,96px);
+  align-items:start;
+}
+.onboarding-page .hero{
+  position:sticky;
+  top:34px;
+  max-width:520px;
+  padding:clamp(12px,2vw,26px) 0;
+}
+.onboarding-page .hero h1{
+  max-width:520px;
+  color:var(--onboarding-paper);
+  font-size:clamp(4.4rem,6.8vw,7.5rem);
+  line-height:.87;
+  letter-spacing:-.055em;
+}
+.onboarding-page .hero .intro{
+  max-width:470px;
+  margin-top:26px;
+  color:var(--onboarding-muted);
+  font-size:clamp(1rem,1.35vw,1.18rem);
+  line-height:1.68;
+}
+.onboarding-page .onboarding-form-panel{min-width:0}
+.onboarding-page form{
+  margin:0;
+  padding:clamp(24px,3vw,38px);
+  border:1px solid rgba(255,249,239,.20);
+  border-radius:30px;
+  background:linear-gradient(145deg,rgba(255,249,239,.135),rgba(255,249,239,.055));
+  box-shadow:0 30px 80px rgba(40,40,46,.19);
+}
+.onboarding-page .form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:22px 18px;
+}
+.onboarding-page .field{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+.onboarding-page .field-wide{grid-column:1/-1}
+.onboarding-page label{
+  color:#fff9ef;
+  font-size:.82rem;
+  font-weight:850;
+  letter-spacing:.025em;
+}
+.onboarding-page input,
+.onboarding-page select,
+.onboarding-page textarea{
+  width:100%;
+  min-height:58px;
+  padding:13px 16px;
+  border:1px solid rgba(255,249,239,.22);
+  border-radius:17px;
+  background:rgba(42,52,49,.60);
+  color:#fffaf3;
+  font-size:1rem;
+  outline:none;
+  color-scheme:dark;
+}
+.onboarding-page select option{background:#34403c;color:#fffaf3}
+.onboarding-page input::placeholder,
+.onboarding-page textarea::placeholder{color:#c7ccc8}
+.onboarding-page input:focus,
+.onboarding-page select:focus,
+.onboarding-page textarea:focus{
+  border-color:var(--onboarding-gold);
+  box-shadow:0 0 0 4px rgba(234,215,163,.14);
+}
+.onboarding-page select[aria-invalid="true"]{
+  border-color:#f0b4a7;
+  box-shadow:0 0 0 4px rgba(240,180,167,.12);
+}
+.onboarding-page .note{margin:0;color:var(--onboarding-muted);font-size:.79rem;line-height:1.45}
+.onboarding-page .grid#interests{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:9px;
+}
+.onboarding-page .choice{
+  min-height:48px;
+  padding:10px 12px;
+  border-color:rgba(255,249,239,.20);
+  border-radius:15px;
+  background:rgba(255,249,239,.065);
+  color:#f2eee8;
+  text-align:center;
+}
+.onboarding-page .choice.active{
+  border-color:transparent;
+  color:#493f45;
+  background:linear-gradient(135deg,#f1dfae,#d8c092);
+  box-shadow:0 10px 24px rgba(57,48,55,.12);
+}
+.onboarding-page .error{
+  margin:0;
+  padding:9px 11px;
+  border:1px solid rgba(255,211,199,.34);
+  border-radius:12px;
+  color:#fff1eb;
+  background:rgba(119,57,58,.24);
+  font-size:.79rem;
+  font-weight:750;
+}
+.onboarding-page #submitProfile{
+  width:100%;
+  min-height:58px;
+  margin-top:4px;
+  color:#493f45;
+  background:linear-gradient(135deg,#f2dfa9,#d8c295);
+  box-shadow:0 14px 34px rgba(57,48,55,.18);
+}
+.onboarding-page #summary{margin-top:22px}
+
+@media(max-width:1100px){
+  .onboarding-page .onboarding-layout{grid-template-columns:minmax(260px,.65fr) minmax(520px,1.35fr);gap:38px}
+  .onboarding-page .grid#interests{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:900px){
+  .onboarding-page main.card{width:min(860px,calc(100% - 24px));margin:12px auto;padding:18px 20px 36px}
+  .onboarding-page .onboarding-layout{grid-template-columns:1fr;gap:24px}
+  .onboarding-page .hero{position:static;max-width:720px;padding:0}
+  .onboarding-page .hero h1{max-width:760px;font-size:clamp(3.8rem,10vw,6.2rem)}
+  .onboarding-page .hero .intro{max-width:680px}
+}
+@media(max-width:700px){
+  body.fablea-product.onboarding-page{
+    background:
+      radial-gradient(circle at 80% 8%,rgba(234,215,163,.27),transparent 25%),
+      radial-gradient(circle at 12% 84%,rgba(169,151,177,.24),transparent 36%),
+      linear-gradient(160deg,#74807b 0%,#596762 48%,#58525b 100%);
+  }
+  .onboarding-page main.card{width:100%;margin:0;padding:82px 14px calc(34px + env(safe-area-inset-bottom));border:0;border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none}
+  .onboarding-page .top{margin:0}
+  .onboarding-page .hero{padding:8px 4px 0}
+  .onboarding-page .hero h1{font-size:clamp(3.35rem,16vw,4.65rem)}
+  .onboarding-page .hero .intro{margin-top:18px;font-size:.94rem;line-height:1.58}
+  .onboarding-page form{padding:20px 15px;border-radius:25px}
+  .onboarding-page .form-grid{grid-template-columns:1fr;gap:18px}
+  .onboarding-page .field-wide{grid-column:auto}
+  .onboarding-page input,.onboarding-page select,.onboarding-page textarea{min-height:56px}
+  .onboarding-page .grid#interests{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:390px){
+  .onboarding-page .grid#interests{grid-template-columns:1fr}
+}
