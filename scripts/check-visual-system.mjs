@@ -48,7 +48,7 @@ if(unifiedIndex < 0 || emotionIndex < 0 || emotionIndex < unifiedIndex){
 const onboarding = read('onboarding.html');
 const createChild = read('create-child.html');
 if(onboarding !== createChild) errors.push('onboarding.html e create-child.html non sono più identici');
-if(/placeholder=["'][^"']*(Cesare|Lavinia)/i.test(onboarding)) errors.push('onboarding: placeholder personale non consentito');
+if(!onboarding.includes('placeholder="Es. Leo"')) errors.push('onboarding: placeholder fittizio standard mancante');
 
 const oldOnly = [...productPages,...publicPages].filter(file => {
   const html = read(file);
