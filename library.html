@@ -20,6 +20,8 @@
   <script src="/stories-v2/age-11-12.js"></script>
   <script src="/stories-v2/index.js"></script>
   <script src="/stories-classics/catalog.js"></script>
+  <script src="/stories-classics/catalog-expansion.js"></script>
+  <script src="/assets/js/fablea-classic-art.js"></script>
   <script src="/assets/js/fablea-story-engine.js"></script>
   <script src="/assets/js/fablea-shell.js"></script>
   <script defer src="/assets/js/fablea-unified-ui.js"></script>
@@ -40,6 +42,7 @@
       const F = window.FableaProfile;
       const E = window.FableaStoryEngine;
       const S = window.FableaShell;
+      const A = window.FableaClassicArt;
       const profile = F.getSelectedProfile();
       const root = document.getElementById('root');
       let activeCollection = 'all';
@@ -63,6 +66,11 @@
         return `<div class="editorial-source"><strong>Classico rinarrato${source.author ? ` · ${S.escapeHTML(source.author)}` : ''}</strong>${source.originalTitle ? S.escapeHTML(source.originalTitle) : 'Opera nel pubblico dominio'} · versione FABLEA.</div>`;
       }
 
+      function coverMarkup(story){
+        if(A && typeof A.render === 'function' && story.collection === 'classic') return A.render(story);
+        return `<span class="editorial-cover-icon">${S.escapeHTML(story.icon || '📖')}</span>`;
+      }
+
       function render(){
         const saved = stories();
         const visible = saved.filter(story => activeCollection === 'all' || (story.collection || 'original') === activeCollection);
@@ -84,7 +92,7 @@
             const resumePage = Math.min((Number(story.resumePage) || 0) + 1,pageCount || 1);
             const collection = story.collection || 'original';
             return `<article class="editorial-card" data-collection="${S.escapeHTML(collection)}">
-              <div class="editorial-cover" aria-hidden="true"><span class="editorial-cover-icon">${S.escapeHTML(story.icon || '📖')}</span></div>
+              <div class="editorial-cover" aria-hidden="true">${coverMarkup(story)}</div>
               <div class="editorial-body">
                 <div class="editorial-kicker">${S.escapeHTML(S.collectionLabel(collection))} · ${S.escapeHTML(S.familyLabel(story.family))}</div>
                 <h2>${S.escapeHTML(story.title)}</h2>
@@ -96,7 +104,7 @@
             </article>`;
           }).join('')}</section>` : `<section class="empty-state"><div class="eyebrow">La prima pagina è ancora bianca</div><h2>Nessuna storia in questa sezione.</h2><p>Apri un originale FABLEA, scegli un classico rinarrato oppure inventane una nuova insieme al compagno.</p></section>`}
 
-          <aside class="personal-library-shortcut"><div><strong>La Biblioteca ha nuove collane.</strong><br><span>Esplora gli originali FABLEA oppure entra nei primi classici rinarrati.</span></div><a href="/discover.html?collection=classic">Scopri i classici</a></aside>`;
+          <aside class="personal-library-shortcut"><div><strong>La Biblioteca continua a crescere.</strong><br><span>Ora contiene sedici classici rinarrati, oltre agli originali e alle storie create.</span></div><a href="/discover.html?collection=classic">Scopri i classici</a></aside>`;
 
         document.querySelectorAll('[data-saved-collection]').forEach(button => button.addEventListener('click',() => {
           activeCollection = button.dataset.savedCollection;
