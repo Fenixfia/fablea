@@ -3,11 +3,14 @@ import fs from 'node:fs';
 const html = fs.readFileSync('story.html','utf8');
 const js = fs.readFileSync('assets/js/fablea-guided-creator.js','utf8');
 const css = fs.readFileSync('assets/css/fablea-guided-creator.css','utf8');
+const mobileCss = fs.readFileSync('assets/css/fablea-guided-creator-mobile.css','utf8');
 const errors = [];
 
 function expect(condition,message){ if(!condition) errors.push(message); }
 
 expect(html.includes('/assets/css/fablea-guided-creator.css'),'story.html non carica il livello visivo del creator guidato');
+expect(html.includes('/assets/css/fablea-guided-creator-mobile.css'),'story.html non carica il livello mobile del creator guidato');
+expect(html.indexOf('/assets/css/fablea-guided-creator-mobile.css') > html.indexOf('/assets/css/fablea-guided-creator.css'),'il livello mobile deve essere caricato dopo la base del creator');
 expect(html.includes('/assets/js/fablea-guided-creator.js'),'story.html non carica il controller del creator guidato');
 expect(html.includes('id="guidedCreator"'),'contenitore creator guidato mancante');
 expect(html.includes('creator-world-art'),'atlante visivo dei mondi mancante');
@@ -33,6 +36,8 @@ for(const world of ['Dinosauri','Mare','Animali','Spazio','Magia','Foresta','Reg
 expect(css.includes('min-height:52px'),'touch target principale inferiore alla soglia prevista');
 expect(css.includes('@media(max-width:840px)'),'layout mobile dedicato mancante');
 expect(css.includes('prefers-reduced-motion'),'riduzione movimento non rispettata');
+expect(mobileCss.includes('env(safe-area-inset-bottom'),'safe area iPhone non considerata');
+expect(mobileCss.includes('82px'),'controlli mobile non sollevati sopra il dock');
 
 if(errors.length){
   console.error('Guided creator check failed:');
@@ -40,4 +45,4 @@ if(errors.length){
   process.exit(1);
 }
 
-console.log('Guided creator check passed: percorso adattivo V3 e otto scene mondo presenti.');
+console.log('Guided creator check passed: percorso adattivo V3, otto scene mondo e safe area mobile presenti.');
