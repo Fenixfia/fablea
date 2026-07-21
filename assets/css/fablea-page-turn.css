@@ -1,6 +1,8 @@
 /* FABLEA Live Book — tactile, illustrated page turning */
+.fablea-product.live-book .book,
 .live-book .book{
   position:relative;
+  display:block;
   max-width:1180px;
   margin:0 auto;
   padding:12px;
