@@ -1,86 +1,11 @@
 <!doctype html>
 <html lang="it">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>FABLEA — Direzione visiva ufficiale</title>
-  <style>
-    :root{--bg:#f4f1e9;--ink:#21302b;--muted:#65716a;--line:#d3ccbd;--green:#345d4d;--night:#142124;--mint:#9cd6ba;--gold:#c2934e}
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,sans-serif;line-height:1.5}
-    main{max-width:1160px;margin:auto;padding:52px 24px 80px}
-    .eyebrow{text-transform:uppercase;letter-spacing:.15em;font-size:.74rem;color:var(--green);font-weight:800}
-    h1,h2{font-family:Georgia,"Times New Roman",serif;font-weight:500;line-height:1.03}
-    h1{font-size:clamp(2.8rem,7vw,5.5rem);max-width:930px;margin:14px 0 22px}
-    .lead{font-size:1.15rem;color:var(--muted);max-width:790px;margin-bottom:38px}
-    .official{display:grid;grid-template-columns:1.04fr .96fr;min-height:510px;border-radius:32px;overflow:hidden;background:white;border:1px solid var(--line);box-shadow:0 24px 75px rgba(55,45,30,.16);margin-bottom:34px}
-    .official-copy{padding:clamp(30px,5vw,58px);display:flex;flex-direction:column;justify-content:center}
-    .official h2{font-size:clamp(2.5rem,5vw,4.5rem);margin:14px 0}
-    .official p{color:var(--muted);font-size:1.06rem;max-width:590px}
-    .official ul{color:var(--muted);padding-left:20px}.official li{margin-bottom:8px}
-    .official a{display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;min-height:50px;padding:13px 20px;border-radius:999px;background:var(--green);color:white;text-decoration:none;font-weight:800;margin-top:12px}
-    .mix-visual{position:relative;overflow:hidden;background:var(--night);min-height:510px}
-    .mix-visual:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,rgba(194,147,78,.4),transparent 12%),radial-gradient(circle at 50% 47%,rgba(133,184,208,.32),transparent 28%),radial-gradient(circle at 30% 80%,rgba(52,93,77,.5),transparent 35%)}
-    .mix-visual:after{content:"";position:absolute;width:190px;height:275px;border-radius:50% 50% 43% 43%;left:50%;top:44%;transform:translate(-50%,-50%);background:radial-gradient(ellipse at 50% 45%,#e8c77a 0 7%,#85b8d0 25%,#426257 48%,transparent 72%);box-shadow:0 0 65px rgba(133,184,208,.32)}
-    .paper{position:absolute;width:200px;height:135px;background:#fff8e9;border:1px solid #cbbda4;border-radius:9px;left:28px;bottom:34px;transform:rotate(-6deg);box-shadow:0 18px 45px rgba(0,0,0,.2);z-index:2}
-    .paper:after{content:"Storie Fablea  ·  Crea una storia";position:absolute;inset:28px 22px;color:#345d4d;font-family:Georgia,"Times New Roman",serif;font-size:1.15rem;line-height:1.35}
-    .sources-title{margin:52px 0 18px}.sources-title h2{font-size:2.4rem;margin:8px 0}.sources-title p{color:var(--muted);max-width:740px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-    article.source{border:1px solid var(--line);border-radius:26px;overflow:hidden;background:white;display:flex;flex-direction:column;min-height:470px}
-    .visual{height:215px;position:relative;overflow:hidden}
-    .atlas .visual{background:#e9dfcc}
-    .atlas .visual:before{content:"";position:absolute;inset:26px;background:#fff8e9;border:1px solid #cabda5;border-radius:10px;transform:rotate(2deg);box-shadow:0 18px 40px rgba(60,45,25,.15)}
-    .atlas .visual:after{content:"";position:absolute;width:180px;height:120px;border:2px dashed #567161;border-color:#567161 transparent transparent transparent;border-radius:50%;left:110px;top:80px;transform:rotate(14deg)}
-    .portale .visual{background:radial-gradient(circle at 50% 45%,rgba(232,199,122,.35),transparent 16%),radial-gradient(circle at 50% 47%,rgba(133,184,208,.35),transparent 32%),var(--night)}
-    .portale .visual:before{content:"";position:absolute;width:135px;height:190px;border-radius:50% 50% 44% 44%;left:50%;top:18px;transform:translateX(-50%);background:radial-gradient(ellipse at 50% 45%,#e8c77a 0 7%,#85b8d0 26%,#426257 48%,transparent 72%);box-shadow:0 0 55px rgba(133,184,208,.3)}
-    .content{padding:26px;display:flex;flex-direction:column;flex:1}.content h2{font-size:2rem;margin:12px 0 10px}.content p{color:var(--muted)}
-    .tag{display:inline-flex;align-self:flex-start;padding:6px 9px;border-radius:999px;border:1px solid var(--line);font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em}
-    .content a{margin-top:auto;display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:11px 16px;border-radius:999px;text-decoration:none;font-weight:800;border:1px solid var(--line);color:var(--green)}
-    .portale{background:var(--night);color:#f4f6ef;border-color:#2d4144}.portale .content p{color:#acbbb3}.portale .tag{border-color:#3d5558;color:var(--mint)}.portale .content a{border-color:#3d5558;color:var(--mint)}
-    .note{margin-top:30px;padding:22px 24px;border-left:4px solid var(--green);background:#fffaf0;color:var(--muted)}
-    @media(max-width:800px){.official,.grid{grid-template-columns:1fr}.mix-visual{min-height:410px}.official-copy{order:2}main{padding-top:36px}.paper{width:170px;height:115px}.paper:after{font-size:1rem;inset:22px 18px}}
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FABLEA — Architettura visiva</title>
+<style>
+:root{--paper:#f4efe5;--soft:#fbf8f1;--ink:#24332d;--muted:#68736d;--line:#d4c9b8;--forest:#31594a;--night:#111b1d;--mint:#a7d6be;--shadow:0 22px 65px rgba(49,40,27,.12)}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}main{width:min(1140px,calc(100% - 40px));margin:auto;padding:56px 0 82px}.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:900;color:var(--forest)}h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:500;line-height:1.04}h1{font-size:clamp(3.2rem,7vw,6rem);max-width:940px;margin:14px 0 22px;letter-spacing:-.04em}.lead{font-size:1.15rem;color:var(--muted);max-width:800px;margin:0 0 42px}.split{display:grid;grid-template-columns:1fr 1fr;gap:20px}.card{min-height:560px;border-radius:32px;overflow:hidden;border:1px solid var(--line);background:var(--soft);display:flex;flex-direction:column;box-shadow:var(--shadow)}.visual{height:270px;position:relative;overflow:hidden}.public .visual{background:linear-gradient(145deg,#eee4d2,#d9cbb4)}.public .visual:before{content:"FABLEA";position:absolute;left:32px;top:34px;font:2.2rem Georgia,serif;letter-spacing:.12em;color:var(--forest)}.public .visual:after{content:"Un mondo che cresce con ogni bambino.";position:absolute;left:32px;right:32px;bottom:34px;font:2rem/1.08 Georgia,serif;color:var(--ink)}.internal .visual{background:radial-gradient(circle at 50% 38%,rgba(195,148,82,.42),transparent 14%),radial-gradient(circle at 50% 45%,rgba(136,184,205,.3),transparent 32%),var(--night)}.internal .visual:before{content:"";position:absolute;width:145px;height:210px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50% 50% 43% 43%;background:radial-gradient(ellipse at 50% 43%,#efd37c 0 6%,#8dbbd1 23%,#41675a 47%,transparent 73%)}.content{padding:30px;display:flex;flex-direction:column;flex:1}.tag{align-self:flex-start;padding:7px 10px;border:1px solid var(--line);border-radius:999px;text-transform:uppercase;letter-spacing:.1em;font-size:.69rem;font-weight:900}.content h2{font-size:clamp(2.3rem,4vw,3.5rem);margin:15px 0 12px}.content p{color:var(--muted);margin:0 0 18px}.content ul{padding-left:20px;color:var(--muted);margin:0 0 24px}.content li{margin-bottom:8px}.content a{margin-top:auto;display:inline-flex;align-items:center;justify-content:center;min-height:48px;border-radius:999px;text-decoration:none;font-weight:900}.public a{background:var(--forest);color:white}.internal{background:var(--night);color:white;border-color:#2c4144}.internal .content p,.internal li{color:#b5c4bd}.internal .tag{color:var(--mint);border-color:#3a5551}.internal a{background:var(--mint);color:#14251e}.rule{margin-top:34px;padding:24px 26px;border-left:4px solid var(--forest);background:var(--soft);color:var(--muted)}.references{margin-top:54px;padding-top:38px;border-top:1px solid var(--line)}.references h3{font-size:2rem;margin:10px 0}.references p{color:var(--muted)}.links{display:flex;gap:10px;flex-wrap:wrap}.links a{padding:9px 13px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--forest);font-weight:800}@media(max-width:800px){.split{grid-template-columns:1fr}main{padding-top:38px}.card{min-height:520px}}
+</style>
 </head>
-<body>
-  <main>
-    <div class="eyebrow">Sprint 2D-A · Direzione scelta</div>
-    <h1>FABLEA sarà una casa editoriale che apre portali.</h1>
-    <p class="lead">La direzione ibrida unisce la memoria calda e ordinata dell’Atlante con l’immersione del Portale. Offre sia racconti originali già curati sia storie nuove costruite con la famiglia.</p>
-
-    <section class="official">
-      <div class="official-copy">
-        <span class="tag">Direzione ufficiale · Mix</span>
-        <h2>La casa dei mondi</h2>
-        <p>Fuori dalla lettura FABLEA è editoriale, familiare e rassicurante. Quando si apre il Libro vivo, il mondo diventa profondo, luminoso e immersivo.</p>
-        <ul>
-          <li><strong>Storie Fablea:</strong> racconti già scritti e curati;</li>
-          <li><strong>Crea una storia:</strong> esperienza nuova e guidata;</li>
-          <li>un’unica memoria per luoghi, personaggi e tesori;</li>
-          <li>nessuna gerarchia di qualità tra le due modalità.</li>
-        </ul>
-        <a href="mix.html">Apri il prototipo ibrido</a>
-      </div>
-      <div class="mix-visual" aria-hidden="true"><div class="paper"></div></div>
-    </section>
-
-    <section class="sources-title">
-      <div class="eyebrow">Origine del linguaggio</div>
-      <h2>Le due direzioni restano consultabili.</h2>
-      <p>Non sono più alternative da scegliere, ma riferimenti chiari: Atlante governa casa, memoria e libreria; Portale governa Libro vivo e immersione.</p>
-    </section>
-
-    <div class="grid">
-      <article class="source atlas">
-        <div class="visual" aria-hidden="true"></div>
-        <div class="content"><span class="tag">Linguaggio esterno</span><h2>Atlante delle meraviglie</h2><p>Calore editoriale, mappe, tracce, oggetti narrativi e memoria familiare.</p><a href="atlante.html">Rivedi Atlante</a></div>
-      </article>
-      <article class="source portale">
-        <div class="visual" aria-hidden="true"></div>
-        <div class="content"><span class="tag">Linguaggio immersivo</span><h2>Portale dei mondi</h2><p>Profondità, luce, scene stratificate e interfaccia ridotta durante la lettura.</p><a href="portale.html">Rivedi Portale</a></div>
-      </article>
-    </div>
-
-    <div class="note"><strong>Principio definitivo:</strong> FABLEA non offre soltanto la libertà di creare. Offre anche la sicurezza di trovare storie belle già pronte.</div>
-  </main>
-</body>
+<body><main><div class="eyebrow">Sprint 2D-A · Architettura corretta</div><h1>Due Home diverse per due momenti diversi.</h1><p class="lead">La homepage pubblica spiega il valore di FABLEA al genitore. La casa narrativa interna non deve più vendere o descrivere: deve soltanto accompagnare la famiglia nell’esperienza di oggi.</p><section class="split"><article class="card public"><div class="visual"></div><div class="content"><span class="tag">Prima dell’accesso</span><h2>Homepage pubblica</h2><p>Elegante, descrittiva e credibile. Racconta FABLEA senza sembrare un listino o una landing commerciale aggressiva.</p><ul><li>visione e differenza;</li><li>Storie Fablea e creazione guidata;</li><li>World Engine e ruolo della famiglia;</li><li>prova di 15 giorni e prezzo trasparente.</li></ul><a href="homepage.html">Apri la homepage</a></div></article><article class="card internal"><div class="visual"></div><div class="content"><span class="tag">Dopo l’accesso</span><h2>Casa narrativa</h2><p>Corta, ordinata e operativa. Una priorità, due ingressi e pochissime proposte pertinenti.</p><ul><li>riprendi la storia;</li><li>Storie Fablea oppure Crea una storia;</li><li>massimo tre suggerimenti;</li><li>mondo e libreria in secondo livello.</li></ul><a href="mix.html">Apri la casa narrativa</a></div></article></section><div class="rule"><strong>Regola definitiva:</strong> la homepage pubblica può raccontare. La Home interna deve far agire. Non devono mai essere la stessa pagina.</div><section class="references"><div class="eyebrow">Riferimenti visivi</div><h3>Le origini del mix restano consultabili.</h3><p>Atlante governa ordine, memoria e famiglia. Portale governa immersione e Libro vivo.</p><div class="links"><a href="atlante.html">Atlante delle meraviglie</a><a href="portale.html">Portale dei mondi</a></div></section></main></body>
 </html>
