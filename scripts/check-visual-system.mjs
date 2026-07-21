@@ -1,28 +1,12 @@
 import fs from 'node:fs';
 
 const productPages = [
-  'onboarding.html',
-  'create-child.html',
-  'profile.html',
-  'family-settings.html',
-  'child-hub.html',
-  'discover.html',
-  'story.html',
-  'story-result.html',
-  'world.html',
-  'library.html',
-  'manualita.html'
+  'onboarding.html','create-child.html','profile.html','family-settings.html','child-hub.html','discover.html',
+  'story.html','story-result.html','world.html','library.html','manualita.html','play.html','learn.html'
 ];
 const publicPages = ['index.html','about.html'];
 const errors = [];
-
-function read(file){
-  if(!fs.existsSync(file)){
-    errors.push(`${file}: file mancante`);
-    return '';
-  }
-  return fs.readFileSync(file,'utf8');
-}
+const read = file => fs.existsSync(file) ? fs.readFileSync(file,'utf8') : (errors.push(`${file}: file mancante`),'');
 
 for(const file of productPages){
   const html = read(file);
@@ -40,11 +24,11 @@ for(const file of publicPages){
 }
 
 const childHub = read('child-hub.html');
-const unifiedIndex = childHub.indexOf('/assets/css/fablea-unified.css');
-const emotionIndex = childHub.indexOf('/assets/css/fablea-mobile-emotion.css');
-if(unifiedIndex < 0 || emotionIndex < 0 || emotionIndex < unifiedIndex){
-  errors.push('child-hub.html: il livello mobile emozionale deve essere caricato dopo la base unificata');
-}
+const childHomeCss = read('assets/css/fablea-child-home.css');
+if(!childHub.includes('/assets/css/fablea-child-home.css')) errors.push('child-hub.html: livello visivo della Casa FABLEA non caricato');
+if(!childHub.includes('class="home-welcome"') || !childHub.includes('class="home-doors"')) errors.push('child-hub.html: struttura Casa FABLEA mancante');
+if(!childHomeCss.includes('grid-template-columns:repeat(4')) errors.push('Casa FABLEA: quattro porte desktop non impaginate');
+if(!childHomeCss.includes('@media(max-width:640px)')) errors.push('Casa FABLEA: layout smartphone mancante');
 
 const onboarding = read('onboarding.html');
 const createChild = read('create-child.html');
@@ -58,7 +42,8 @@ if(!onboarding.includes('<option value="male">Maschio</option>') || !onboarding.
 if(onboarding.includes('Forma neutra') || onboarding.includes('Preferisco non specificarlo') || onboarding.includes('Genere grammaticale')) errors.push('onboarding: vecchie opzioni o diciture ancora presenti');
 if(!onboarding.includes("!['male','female'].includes(genderSelect.value)")) errors.push('onboarding: validazione Maschio/Femmina mancante');
 if(!onboarding.includes('data-world="FABLEA"')) errors.push('onboarding: palette neutra iniziale mancante');
-if(onboarding.includes('document.body.dataset.world = primary')) errors.push('onboarding: il mondo scelto altera ancora lo sfondo durante la compilazione');
+if(!onboarding.includes('id="companionPreview"')) errors.push('onboarding: anteprima compagno mancante');
+if(!onboarding.includes("location.assign('/child-hub.html?welcome=1')")) errors.push('onboarding: ingresso nella Casa FABLEA mancante');
 if(!onboardingCss.includes('grid-template-columns:minmax(300px,.72fr) minmax(620px,1.28fr)')) errors.push('onboarding: layout desktop a due colonne mancante');
 if(!onboardingCss.includes('@media(max-width:900px)')) errors.push('onboarding: breakpoint tablet/mobile mancante');
 
@@ -77,16 +62,17 @@ if(!familySettings.includes('class="settings-layout"')) errors.push('family-sett
 if(!familySettingsCss.includes('grid-template-columns:minmax(280px,.72fr) minmax(0,1.28fr)')) errors.push('family settings: impaginazione desktop a due colonne mancante');
 if(!familySettingsCss.includes('@media(max-width:900px)')) errors.push('family settings: adattamento tablet/mobile mancante');
 
-const oldOnly = [...productPages,...publicPages].filter(file => {
+for(const file of ['play.html','learn.html']){
   const html = read(file);
-  return html.includes('/assets/css/fablea.css') && !html.includes('/assets/css/fablea-unified.css');
-});
+  if(!html.includes('/assets/css/fablea-activities.css')) errors.push(`${file}: ambiente attività non caricato`);
+  if(!html.includes('class="activity-main"')) errors.push(`${file}: layout attività mancante`);
+}
+const activityCss = read('assets/css/fablea-activities.css');
+if(!activityCss.includes('grid-template-columns:minmax(280px,.72fr) minmax(520px,1.28fr)')) errors.push('attività: layout desktop separato mancante');
+if(!activityCss.includes('@media(max-width:920px)')) errors.push('attività: adattamento mobile mancante');
+
+const oldOnly = [...productPages,...publicPages].filter(file => {const html = read(file);return html.includes('/assets/css/fablea.css') && !html.includes('/assets/css/fablea-unified.css');});
 if(oldOnly.length) errors.push(`pagine rimaste sul solo stile storico: ${oldOnly.join(', ')}`);
 
-if(errors.length){
-  console.error('Visual system check failed:');
-  for(const error of errors) console.error(`- ${error}`);
-  process.exit(1);
-}
-
+if(errors.length){console.error('Visual system check failed:');for(const error of errors) console.error(`- ${error}`);process.exit(1);}
 console.log(`Visual system check passed: ${productPages.length} pagine prodotto e ${publicPages.length} pagine pubbliche condividono lo stesso sistema.`);
