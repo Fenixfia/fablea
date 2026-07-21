@@ -13,7 +13,8 @@
   const SUPPORTS = ['Calmare la sera','Accendere l’immaginazione','Aiutare con le emozioni','Stimolare curiosità','Favorire piccoli rituali'];
   const DURATIONS = ['Breve','Media','Lunga'];
   const STYLES = ['calm','adventurous','funny','mysterious','emotional'];
-  const GENDERS = ['male','female','neutral','unspecified'];
+  const SEXES = ['male','female'];
+  const LEGACY_GENDERS = [...SEXES,'neutral','unspecified'];
 
   function escapeHTML(value){
     return String(value ?? '').replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
@@ -86,7 +87,7 @@
       id: stableLegacyId(profile, index),
       name: String(profile.name || 'Bambino').trim() || 'Bambino',
       age: ['2-4','5-7','8-10','11-12'].includes(profile.age) ? profile.age : '5-7',
-      gender: GENDERS.includes(profile.gender) ? profile.gender : 'unspecified',
+      gender: LEGACY_GENDERS.includes(profile.gender) ? profile.gender : 'unspecified',
       primaryWorld,
       interests: interests.filter(item => normalizeWorld(item) !== primaryWorld),
       favoriteCompanion: String(profile.favoriteCompanion || '').trim(),
@@ -213,9 +214,9 @@
 
   function genderLabel(gender){
     return ({
-      male: 'Maschile',
-      female: 'Femminile',
-      neutral: 'Forma neutra',
+      male: 'Maschio',
+      female: 'Femmina',
+      neutral: 'Profilo precedente',
       unspecified: 'Non specificato'
     }[gender] || 'Non specificato');
   }
@@ -226,7 +227,8 @@
     SUPPORTS,
     DURATIONS,
     STYLES,
-    GENDERS,
+    SEXES,
+    GENDERS: LEGACY_GENDERS,
     escapeHTML,
     readJSON,
     writeJSON,

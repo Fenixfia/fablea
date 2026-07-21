@@ -1,58 +1,118 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FABLEA</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="/assets/css/fablea.css">
-<script src="/assets/js/fablea-ui.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>FABLEA | Un mondo che cresce</title>
+  <link rel="stylesheet" href="/assets/css/fablea.css">
+  <link rel="stylesheet" href="/assets/css/fablea-unified.css">
+  <link rel="stylesheet" href="/assets/css/fablea-public.css">
+  <script src="/assets/js/fablea-ui.js"></script>
 </head>
+<body class="fablea-public">
+  <main class="home-shell">
+    <section class="home-copy">
+      <div class="badge">Storie, pensiero e tempo condiviso</div>
 
-<body class="fablea-page">
+      <div class="cast-wordmark" role="img" aria-label="FABLEA, un mondo abitato da personaggi e storie">
+        <span class="cast-letter">F</span>
+        <span class="cast-letter">A</span>
+        <span class="cast-letter">B</span>
+        <span class="cast-letter">L</span>
+        <span class="cast-letter">E</span>
+        <span class="cast-letter">A</span>
 
-<main class="home-shell">
-<section class="home-copy">
-<div class="badge">The quiet imagination project</div>
-<h1 class="wordmark">FABLEA</h1>
-<div class="subtitle">Un mondo personale che ricorda e cresce con ogni bambino.</div>
-<div class="description">FABLEA accompagna immaginazione calma, scoperta ed emozioni con storie pensate per il ritmo familiare: voce, memoria locale e piccoli rituali senza iperstimolazione.</div>
-<div class="actions">
-<a class="button" id="primaryCta" href="/create-child.html">Crea il primo mondo</a>
-<a class="button secondary" id="switchExplorer" href="/onboarding.html" hidden>Cambia esploratore</a>
-</div>
-<div class="menu" aria-label="Navigazione principale">
-<a href="/onboarding.html">Profili</a>
-<a href="/library.html">Libreria</a>
-<a href="/about.html">Manifesto</a>
-</div>
-</section>
-<section class="home-visual scene-night" aria-label="Piccolo mondo narrativo FABLEA">
-<div class="moon-orbit"></div>
-<div class="story-thread"></div>
-<p>Un filo di storie, tesori e rituali resta acceso per domani.</p>
-</section>
-<div class="footer">Audio-first • Low stimulation • Immaginazione evolutiva • Esperienze 2–12 anni</div>
-</main>
+        <span class="cast-character cast-princess" aria-hidden="true">
+          <svg viewBox="0 0 90 110" focusable="false">
+            <path class="character-shadow" d="M17 96c14-8 42-8 56 0"/>
+            <path class="dress" d="M45 48c-12 12-20 27-23 46h46c-3-19-11-34-23-46Z"/>
+            <circle class="skin" cx="45" cy="34" r="15"/>
+            <path class="hair" d="M29 34c0-19 33-24 34 1-7-3-10-10-12-16-4 8-12 13-22 15Z"/>
+            <path class="crown" d="M32 17l6-10 7 9 8-10 6 12Z"/>
+            <path class="detail" d="M38 34h1m12 0h1M41 42c3 2 6 2 9 0"/>
+            <path class="wand" d="M66 49l13-18m-5-2 10 4m-3-8-4 11"/>
+          </svg>
+        </span>
 
-<script>
-function getProfiles(){
-try{return JSON.parse(localStorage.getItem('fableaChildProfiles') || '[]');}catch(_){return [];}
-}
-const profiles = getProfiles();
-const selectedId = localStorage.getItem('fableaSelectedChildId');
-const selected = profiles.find(profile => profile.id === selectedId) || profiles[0];
-const cta = document.getElementById('primaryCta');
-const switcher = document.getElementById('switchExplorer');
-if(selected){
-localStorage.setItem('fableaSelectedChildId', selected.id);
-cta.href = '/child-hub.html';
-cta.innerText = `Continua con ${selected.name || 'il mondo scelto'}`;
-switcher.hidden = false;
-}
-</script>
+        <span class="cast-character cast-dino" aria-hidden="true">
+          <svg viewBox="0 0 110 90" focusable="false">
+            <path class="character-shadow" d="M17 77c23-7 57-6 78 1"/>
+            <path class="dino-body" d="M31 62c0-24 18-39 41-31 13 5 17 17 11 27-8 14-36 16-52 4Z"/>
+            <path class="dino-body" d="M75 37c9-16 26-17 29-7 3 9-7 18-23 20"/>
+            <path class="dino-body" d="M33 55 10 69c12 1 22-1 31-7"/>
+            <path class="dino-spike" d="M43 31l5-10 7 9 7-10 6 11"/>
+            <circle class="dino-spot" cx="48" cy="48" r="4"/>
+            <circle class="dino-spot" cx="62" cy="57" r="3"/>
+            <circle class="eye" cx="91" cy="31" r="2.5"/>
+            <path class="detail" d="M92 40c4 2 7 2 10 0"/>
+          </svg>
+        </span>
 
+        <span class="cast-character cast-robot" aria-hidden="true">
+          <svg viewBox="0 0 88 108" focusable="false">
+            <path class="character-shadow" d="M14 97c17-7 44-7 61 0"/>
+            <path class="robot-head" d="M20 20h48v37H20z"/>
+            <path class="robot-body" d="M27 61h34v31H27z"/>
+            <path class="robot-limb" d="M20 67 8 81m60-14 12 14M35 92l-5 10m23-10 5 10"/>
+            <path class="antenna" d="M44 20V9"/>
+            <circle class="robot-light" cx="44" cy="6" r="4"/>
+            <circle class="robot-eye" cx="33" cy="38" r="4"/>
+            <circle class="robot-eye" cx="55" cy="38" r="4"/>
+            <path class="detail" d="M35 48h18M37 70h14v10H37z"/>
+          </svg>
+        </span>
+
+        <span class="cast-character cast-fairy" aria-hidden="true">
+          <svg viewBox="0 0 100 112" focusable="false">
+            <path class="fairy-wing" d="M42 46C19 25 10 51 34 65M58 46c23-21 32 5 8 19"/>
+            <circle class="skin" cx="50" cy="32" r="13"/>
+            <path class="hair" d="M37 32c1-18 29-20 29 2-9-4-13-10-15-16-3 8-7 12-14 14Z"/>
+            <path class="fairy-dress" d="M50 45 35 82h30Z"/>
+            <path class="detail" d="M45 32h1m8 0h1M46 39c3 2 5 2 8 0"/>
+            <path class="fairy-wand" d="M66 59 83 40m-2-6v12m-6-6h12"/>
+            <circle class="fairy-light" cx="84" cy="39" r="7"/>
+          </svg>
+        </span>
+      </div>
+
+      <h1 class="hero-question">Che storia facciamo oggi?</h1>
+      <div class="subtitle">Una già pronta, una tutta nuova o la continuazione di ieri.</div>
+      <div class="description">In FABLEA personaggi, luoghi e avventure crescono insieme al bambino. Il mondo ricorda ciò che è successo e domani può ripartire proprio da lì.</div>
+      <div class="actions">
+        <a class="button" id="primaryCta" href="/create-child.html">Entra nel suo mondo</a>
+        <a class="button secondary" id="switchExplorer" href="/profile.html" hidden>Cambia profilo</a>
+      </div>
+      <div class="menu" aria-label="Navigazione principale">
+        <a href="/profile.html">Profili</a>
+        <a href="/library.html">Libreria</a>
+        <a href="/about.html">Manifesto</a>
+      </div>
+    </section>
+
+    <section class="home-visual" aria-label="Il libro-mondo FABLEA">
+      <div class="moon-orbit"></div>
+      <div class="story-thread"></div>
+      <p>Qui vivono le storie già raccontate. E quelle che devono ancora nascere.</p>
+    </section>
+
+    <div class="footer">Per bambini da 2 a 12 anni · Una sola qualità completa · Nessuna pubblicità</div>
+  </main>
+
+  <script>
+    function getProfiles(){
+      try{return JSON.parse(localStorage.getItem('fableaChildProfiles') || '[]');}catch(_error){return [];}
+    }
+    const profiles = getProfiles();
+    const selectedId = localStorage.getItem('fableaSelectedChildId');
+    const selected = profiles.find(profile => profile.id === selectedId) || profiles[0];
+    const cta = document.getElementById('primaryCta');
+    const switcher = document.getElementById('switchExplorer');
+    if(selected){
+      localStorage.setItem('fableaSelectedChildId',selected.id);
+      cta.href = '/child-hub.html';
+      cta.textContent = `Continua con ${selected.name || 'il mondo scelto'}`;
+      switcher.hidden = false;
+    }
+  </script>
 </body>
 </html>

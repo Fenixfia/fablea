@@ -2,9 +2,11 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>FABLEA | Nuova esperienza</title>
   <link rel="stylesheet" href="/assets/css/fablea.css">
+  <link rel="stylesheet" href="/assets/css/fablea-shell.css">
+  <link rel="stylesheet" href="/assets/css/fablea-unified.css">
   <script src="/assets/js/fablea-ui.js"></script>
   <script src="/assets/js/fablea-grammar.js"></script>
   <script src="/assets/js/fablea-profile.js"></script>
@@ -16,26 +18,35 @@
   <script src="/assets/js/fablea-story-engine.js"></script>
   <script src="/assets/js/fablea-world-state-v3.js"></script>
   <script src="/assets/js/fablea-story-variables-v3.js"></script>
+  <script src="/assets/js/fablea-shell.js"></script>
+  <script defer src="/assets/js/fablea-unified-ui.js"></script>
 </head>
-<body class="fablea-page">
+<body class="fablea-page fablea-product" data-world="Magia">
   <main class="card">
     <div class="top">
-      <a class="back" href="/child-hub.html">← Torna al mondo</a>
+      <a class="brand" href="/child-hub.html">FABLEA</a>
       <div class="badge">Esperienza di oggi</div>
-      <a class="back" href="/profile.html">Cambia profilo</a>
+      <a class="back" href="/profile.html">Profili</a>
     </div>
     <div id="content"></div>
   </main>
+  <div id="dock"></div>
 
   <script>
-    const F = FableaProfile;
+    const F = window.FableaProfile;
+    const S = window.FableaShell;
     const profile = F.getSelectedProfile();
-    const preset = F.readJSON('fableaStoryData', {});
+    const preset = F.readJSON('fableaStoryData',{});
+    const contentEl = document.getElementById('content');
+    const dockEl = document.getElementById('dock');
 
     if(!profile){
-      content.innerHTML = '<div class="empty"><h2>Nessun profilo selezionato</h2><p>Crea o seleziona prima il mondo di un bambino.</p><a class="button" href="/onboarding.html">Crea profilo</a></div>';
+      contentEl.innerHTML = '<div class="empty"><h2>Nessun profilo selezionato</h2><p>Crea o seleziona prima il mondo di un bambino.</p><a class="button primary" href="/onboarding.html">Crea profilo</a></div>';
     }else{
-      if(window.FableaUI) window.FableaUI.applyAge(document.body, profile.age);
+      if(S){
+        S.applyProfile(profile);
+        dockEl.innerHTML = S.renderDock('create');
+      }
       const moods = [
         'Curiosità e voglia di scoprire',
         'Momento tranquillo',
@@ -60,60 +71,78 @@
         emotional:'emotivo'
       };
 
-      content.innerHTML = `
+      contentEl.innerHTML = `
         <section class="hero">
-          <div class="kicker">${F.escapeHTML(profile.name)} • ${F.escapeHTML(F.ageLabel(profile.age))}</div>
+          <div class="kicker">${F.escapeHTML(profile.name)} · ${F.escapeHTML(F.ageLabel(profile.age))}</div>
           <h1>Che cosa cambia oggi?</h1>
-          <p class="intro">FABLEA sa già che il suo mondo è <strong>${F.escapeHTML(profile.primaryWorld)}</strong>, con uno stile ${F.escapeHTML(styleLabels[profile.storyStyle] || profile.storyStyle)}. Scegliamo soltanto il momento di oggi.</p>
+          <p class="intro">FABLEA conosce già il suo mondo, il compagno e il ritmo abituale. Scegliamo soltanto ciò che rende diversa la storia di oggi.</p>
         </section>
 
         <div class="profile-note">
-          <strong>Identità già attiva:</strong> ${F.escapeHTML(profile.name)} · ${F.escapeHTML(profile.primaryWorld)} · ${F.escapeHTML(profile.duration)}
+          <strong>Identità attiva:</strong> ${F.escapeHTML(profile.primaryWorld)} · stile ${F.escapeHTML(styleLabels[profile.storyStyle] || profile.storyStyle)} · ${F.escapeHTML(profile.duration)}
           ${profile.favoriteCompanion ? ` · compagno: ${F.escapeHTML(profile.favoriteCompanion)}` : ''}
         </div>
 
-        <label for="family">Tipo di esperienza</label>
-        <select id="family">
-          ${Object.entries(familyLabels).map(([value,label]) => `<option value="${value}" ${preset.family === value ? 'selected' : ''}>${label}</option>`).join('')}
-        </select>
-
-        <label for="mood">Stato del momento</label>
-        <select id="mood">
-          ${moods.map(item => `<option ${preset.mood === item ? 'selected' : ''}>${F.escapeHTML(item)}</option>`).join('')}
-        </select>
-
-        <label for="duration">Durata di questa storia</label>
-        <select id="duration">
-          ${F.DURATIONS.map(item => `<option ${item === (preset.duration || profile.duration) ? 'selected' : ''}>${item}</option>`).join('')}
-        </select>
-
-        <label for="scenarioMode">Scenario</label>
-        <select id="scenarioMode">
-          <option value="own">Usa il suo mondo: ${F.escapeHTML(profile.primaryWorld)}</option>
-          <option value="other">Apriamo un mondo diverso per questa storia</option>
-        </select>
-
-        <div id="alternativeWorld" hidden>
-          <label for="alternativeSelect">Mondo alternativo</label>
-          <select id="alternativeSelect">
-            ${F.WORLDS.filter(world => world !== profile.primaryWorld).map(world => `<option>${F.escapeHTML(world)}</option>`).join('')}
+        <form id="storyForm">
+          <label for="family">Tipo di esperienza</label>
+          <select id="family">
+            ${Object.entries(familyLabels).map(([value,label]) => `<option value="${value}" ${preset.family === value ? 'selected' : ''}>${label}</option>`).join('')}
           </select>
-        </div>
 
-        <button class="main" id="openStory" type="button">Apri la storia</button>
+          <label for="mood">Stato del momento</label>
+          <select id="mood">
+            ${moods.map(item => `<option ${preset.mood === item ? 'selected' : ''}>${F.escapeHTML(item)}</option>`).join('')}
+          </select>
+
+          <label for="duration">Durata di questa storia</label>
+          <select id="duration">
+            ${F.DURATIONS.map(item => `<option ${item === (preset.duration || profile.duration) ? 'selected' : ''}>${item}</option>`).join('')}
+          </select>
+
+          <label for="scenarioMode">Scenario</label>
+          <select id="scenarioMode">
+            <option value="own">Usa il suo mondo: ${F.escapeHTML(profile.primaryWorld)}</option>
+            <option value="other">Apriamo un mondo diverso per questa storia</option>
+          </select>
+
+          <div id="alternativeWorld" hidden>
+            <label for="alternativeSelect">Mondo alternativo</label>
+            <select id="alternativeSelect">
+              ${F.WORLDS.filter(world => world !== profile.primaryWorld).map(world => `<option>${F.escapeHTML(world)}</option>`).join('')}
+            </select>
+          </div>
+
+          <button class="main" id="openStory" type="submit">Apri la storia</button>
+        </form>
       `;
 
-      scenarioMode.addEventListener('change', () => {
-        alternativeWorld.hidden = scenarioMode.value !== 'other';
+      const storyFormEl = document.getElementById('storyForm');
+      const familyEl = document.getElementById('family');
+      const moodEl = document.getElementById('mood');
+      const durationEl = document.getElementById('duration');
+      const scenarioModeEl = document.getElementById('scenarioMode');
+      const alternativeWorldEl = document.getElementById('alternativeWorld');
+      const alternativeSelectEl = document.getElementById('alternativeSelect');
+      const openStoryEl = document.getElementById('openStory');
+
+      scenarioModeEl.addEventListener('change',() => {
+        alternativeWorldEl.hidden = scenarioModeEl.value !== 'other';
+        document.body.dataset.world = scenarioModeEl.value === 'other' ? alternativeSelectEl.value : profile.primaryWorld;
+      });
+      alternativeSelectEl.addEventListener('change',() => {
+        if(scenarioModeEl.value === 'other') document.body.dataset.world = alternativeSelectEl.value;
       });
 
-      openStory.addEventListener('click', () => {
-        const scenario = scenarioMode.value === 'other' ? alternativeSelect.value : profile.primaryWorld;
+      storyFormEl.addEventListener('submit',event => {
+        event.preventDefault();
+        openStoryEl.disabled = true;
+        openStoryEl.textContent = 'Sto aprendo il mondo…';
+        const scenario = scenarioModeEl.value === 'other' ? alternativeSelectEl.value : profile.primaryWorld;
         let request = {
           profileId:profile.id,
-          family:family.value,
-          mood:mood.value,
-          duration:duration.value,
+          family:familyEl.value,
+          mood:moodEl.value,
+          duration:durationEl.value,
           scenario,
           firstStory:false
         };
@@ -121,9 +150,9 @@
         try{
           if(window.FableaStoryVariablesV3){
             const requestV3 = window.FableaStoryVariablesV3.buildAndSave(profile,{
-              family:family.value,
-              mood:mood.value,
-              duration:duration.value,
+              family:familyEl.value,
+              mood:moodEl.value,
+              duration:durationEl.value,
               scenario,
               source:'guided-creator'
             });
@@ -134,7 +163,7 @@
         }
 
         localStorage.removeItem(F.KEYS.prepared);
-        localStorage.setItem('fableaStoryData', JSON.stringify(request));
+        localStorage.setItem('fableaStoryData',JSON.stringify(request));
         localStorage.removeItem('fableaReopenStory');
         location.href = '/story-result.html';
       });

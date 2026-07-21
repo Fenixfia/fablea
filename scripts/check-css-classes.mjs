@@ -18,12 +18,14 @@ const coreFiles = [
 const cssFiles = [
   'assets/css/fablea.css',
   'assets/css/fablea-shell.css',
+  'assets/css/fablea-unified.css',
+  'assets/css/fablea-public.css',
+  'assets/css/fablea-onboarding.css',
   'assets/css/fablea-mobile-emotion.css'
 ].filter(file => fs.existsSync(file));
 const css = cssFiles.map(file => fs.readFileSync(file,'utf8')).join('\n');
 const defined = new Set([...css.matchAll(/\.([A-Za-z_][\w-]*)/g)].map(match => match[1]));
 
-// Runtime modifiers represented by shared base selectors.
 const allowedDynamic = new Set([
   'active',
   'primary',
@@ -31,13 +33,13 @@ const allowedDynamic = new Set([
   'selected',
   'theme-night',
   'scene-night',
+  'live-book',
   'age-2-4',
   'age-5-7',
   'age-8-10',
   'age-11-12'
 ]);
 
-// JavaScript hooks receive their visual treatment from another class on the same node.
 const behaviorHooks = new Set([
   'delete-child',
   'delete-story',
@@ -47,7 +49,6 @@ const behaviorHooks = new Set([
   'select-child'
 ]);
 
-// Semantic text marker intentionally inherits the surrounding label typography.
 const inheritedSemantic = new Set(['muted']);
 
 const used = new Map();
