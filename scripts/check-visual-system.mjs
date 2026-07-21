@@ -49,6 +49,11 @@ const onboarding = read('onboarding.html');
 const createChild = read('create-child.html');
 if(onboarding !== createChild) errors.push('onboarding.html e create-child.html non sono più identici');
 if(!onboarding.includes('placeholder="Es. Leo"')) errors.push('onboarding: placeholder fittizio standard mancante');
+if(!onboarding.includes('/assets/css/fablea-onboarding.css')) errors.push('onboarding: livello cromatico dedicato non caricato');
+if(!onboarding.includes('onboarding-page')) errors.push('onboarding: classe visiva dedicata mancante');
+if(!onboarding.includes('data-sex="male"') || !onboarding.includes('data-sex="female"')) errors.push('onboarding: scelte Maschio/Femmina incomplete');
+if(onboarding.includes('data-sex="neutral"') || onboarding.includes('data-sex="unspecified"')) errors.push('onboarding: opzioni aggiuntive non previste');
+if(!onboarding.includes("!['male','female'].includes(genderInput.value)")) errors.push('onboarding: validazione binaria mancante');
 
 const oldOnly = [...productPages,...publicPages].filter(file => {
   const html = read(file);
