@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FABLEA — Direzione ibrida</title>
+  <style>
+    :root{
+      --paper:#f2ecdf;
+      --paper-soft:#fbf7ed;
+      --ink:#23322c;
+      --muted:#68736d;
+      --line:#d2c6b2;
+      --forest:#31594a;
+      --forest-dark:#1f3b32;
+      --gold:#c2934e;
+      --berry:#935e67;
+      --night:#10191b;
+      --night-2:#172528;
+      --panel:#1d3032;
+      --mint:#a2d7bd;
+      --sky:#8dbbd1;
+      --cream:#fffaf0;
+      --shadow:0 24px 70px rgba(55,45,30,.15);
+      --radius:28px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}
+    button,a{font:inherit}
+    button{cursor:pointer}
+    .shell{max-width:1220px;margin:auto;padding:24px 24px 90px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 0 28px}
+    .brand{font-family:Georgia,"Times New Roman",serif;font-size:1.5rem;letter-spacing:.08em}
+    .adult{display:inline-flex;align-items:center;min-height:44px;padding:9px 15px;border:1px solid var(--line);border-radius:999px;color:var(--ink);background:rgba(255,255,255,.3);text-decoration:none;font-weight:750}
+    .hero{display:grid;grid-template-columns:1.08fr .92fr;min-height:620px;border:1px solid var(--line);border-radius:36px;overflow:hidden;background:var(--paper-soft);box-shadow:var(--shadow)}
+    .hero-copy{padding:clamp(34px,6vw,76px);display:flex;flex-direction:column;justify-content:center;position:relative}
+    .eyebrow{text-transform:uppercase;letter-spacing:.15em;font-size:.72rem;font-weight:850;color:var(--forest)}
+    h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:500;line-height:1.05}
+    h1{font-size:clamp(3rem,7vw,6.4rem);margin:14px 0 20px;max-width:760px}
+    .lead{font-size:clamp(1.05rem,2vw,1.3rem);color:var(--muted);max-width:650px;margin:0 0 28px}
+    .continue{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:16px 18px;border:1px solid var(--line);border-radius:20px;background:#fffaf0;margin-top:18px}
+    .continue-icon{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:var(--forest);color:white;font-size:1.25rem}
+    .continue strong{display:block}.continue small{color:var(--muted)}
+    .continue button{border:0;background:transparent;color:var(--forest);font-weight:850;min-height:44px}
+    .hero-world{position:relative;overflow:hidden;background:var(--night);min-height:620px}
+    .hero-world:before{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at 50% 39%,rgba(194,147,78,.42),transparent 12%),radial-gradient(circle at 50% 45%,rgba(141,187,209,.32),transparent 28%),radial-gradient(circle at 55% 70%,rgba(49,89,74,.48),transparent 34%)}
+    .portal{position:absolute;width:min(56%,310px);aspect-ratio:.72;left:50%;top:48%;transform:translate(-50%,-50%);border-radius:50% 50% 43% 43%;background:radial-gradient(ellipse at 50% 45%,#f2d787 0 7%,#9ac6d8 22%,#476a5d 46%,transparent 72%);box-shadow:0 0 90px rgba(141,187,209,.38)}
+    .portal:after{content:"";position:absolute;inset:-24%;border:1px solid rgba(162,215,189,.22);border-radius:50%}
+    .map-line{position:absolute;border:1px dashed rgba(255,255,255,.24);border-color:rgba(255,255,255,.24) transparent transparent transparent;border-radius:50%;width:70%;height:45%;left:8%;top:18%;transform:rotate(-14deg)}
+    .world-caption{position:absolute;left:30px;right:30px;bottom:28px;padding:18px 20px;border:1px solid rgba(255,255,255,.13);border-radius:18px;background:rgba(13,24,26,.68);backdrop-filter:blur(14px);color:white}
+    .world-caption small{color:#adc1b8}
+    .section{padding:82px 0 0}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:28px}
+    .section h2{font-size:clamp(2.4rem,5vw,4.4rem);margin:8px 0 0}
+    .section-note{max-width:490px;color:var(--muted);margin:0}
+    .doors{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .door{position:relative;min-height:430px;border-radius:30px;overflow:hidden;padding:34px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid var(--line);box-shadow:var(--shadow)}
+    .door h3{font-size:clamp(2rem,4vw,3.2rem);margin:8px 0 12px}
+    .door p{max-width:520px;margin:0 0 22px}
+    .door .tag{display:inline-flex;align-self:flex-start;padding:7px 10px;border-radius:999px;font-size:.73rem;font-weight:850;text-transform:uppercase;letter-spacing:.1em}
+    .door button{align-self:flex-start;min-height:48px;border-radius:999px;padding:12px 20px;font-weight:850}
+    .curated{background:linear-gradient(135deg,#fffaf0 0 58%,#e5d8bf 100%)}
+    .curated:before{content:"";position:absolute;width:280px;height:210px;right:-36px;top:35px;border:1px solid #baaa8f;background:#f7efdf;border-radius:12px;transform:rotate(6deg);box-shadow:0 18px 45px rgba(70,55,30,.12)}
+    .curated:after{content:"";position:absolute;width:170px;height:120px;right:80px;top:92px;border:2px dashed #567161;border-color:#567161 transparent transparent transparent;border-radius:50%;transform:rotate(12deg)}
+    .curated .tag{border:1px solid var(--line);color:var(--forest)}
+    .curated p{color:var(--muted)}
+    .curated button{border:0;background:var(--forest);color:white}
+    .create{background:radial-gradient(circle at 72% 18%,rgba(194,147,78,.3),transparent 19%),radial-gradient(circle at 76% 24%,rgba(141,187,209,.25),transparent 38%),var(--night);color:white;border-color:#2c4144}
+    .create:before{content:"";position:absolute;width:210px;height:300px;right:8%;top:-32px;border-radius:50%;border:1px solid rgba(162,215,189,.18);box-shadow:0 0 50px rgba(141,187,209,.13)}
+    .create .tag{border:1px solid rgba(162,215,189,.32);color:var(--mint)}
+    .create p{color:#b3c1bb}
+    .create button{border:0;background:var(--mint);color:#14251e}
+    .catalog{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .story-card{border:1px solid var(--line);border-radius:24px;overflow:hidden;background:var(--paper-soft);min-height:390px;display:flex;flex-direction:column;transition:transform .25s ease,box-shadow .25s ease}
+    .story-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+    .cover{height:190px;position:relative;overflow:hidden}
+    .cover.one{background:radial-gradient(circle at 68% 28%,#f1d487 0 8%,transparent 9%),linear-gradient(155deg,#94bba9,#31594a)}
+    .cover.two{background:radial-gradient(circle at 34% 30%,#eef2e6 0 6%,transparent 7%),linear-gradient(155deg,#779eb5,#243e51)}
+    .cover.three{background:radial-gradient(circle at 68% 28%,#f4d09a 0 8%,transparent 9%),linear-gradient(155deg,#b9897d,#754c5a)}
+    .cover:after{content:"";position:absolute;left:12%;right:12%;bottom:-34%;height:68%;border-radius:50% 50% 0 0;background:rgba(15,29,25,.36)}
+    .story-copy{padding:22px;display:flex;flex-direction:column;flex:1}
+    .meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.meta span{padding:5px 8px;border:1px solid var(--line);border-radius:999px;font-size:.72rem;font-weight:750;color:var(--muted)}
+    .story-card h3{font-size:1.7rem;margin:0 0 10px}.story-card p{margin:0 0 18px;color:var(--muted)}
+    .story-card button{margin-top:auto;min-height:44px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--forest);font-weight:850}
+    .creator{display:grid;grid-template-columns:.9fr 1.1fr;gap:22px;border:1px solid var(--line);border-radius:30px;overflow:hidden;background:var(--paper-soft);box-shadow:var(--shadow)}
+    .creator-form{padding:34px}.creator-preview{padding:34px;background:var(--night);color:white;position:relative;overflow:hidden}
+    .creator-preview:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 75% 18%,rgba(141,187,209,.22),transparent 30%),radial-gradient(circle at 20% 85%,rgba(49,89,74,.45),transparent 34%)}
+    .field{margin-bottom:24px}.field strong{display:block;margin-bottom:10px}.chips{display:flex;flex-wrap:wrap;gap:9px}
+    .chip{min-height:42px;padding:9px 13px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);font-weight:750}
+    .chip.active{background:var(--forest);border-color:var(--forest);color:white}
+    .make{min-height:50px;padding:13px 20px;border:0;border-radius:999px;background:var(--forest);color:white;font-weight:850;width:100%}
+    .preview-inner{position:relative;z-index:1;min-height:100%;display:flex;flex-direction:column;justify-content:center}
+    .preview-inner h3{font-size:clamp(2rem,4vw,3.5rem);margin:12px 0}.preview-inner p{color:#b5c5bd;max-width:520px}
+    .preview-badge{display:inline-flex;align-self:flex-start;padding:7px 10px;border-radius:999px;border:1px solid rgba(162,215,189,.28);color:var(--mint);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;font-weight:850}
+    .book-wrap{border-radius:34px;overflow:hidden;background:var(--night);box-shadow:0 34px 100px rgba(5,14,16,.32);color:white}
+    .book-top{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.1)}
+    .book-top small{color:#a9b9b2}.book-actions{display:flex;gap:8px}.book-actions button{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.13);background:transparent;color:white}
+    .book{display:grid;grid-template-columns:1fr 1fr;min-height:650px}
+    .scene{position:relative;overflow:hidden;background:radial-gradient(circle at 58% 32%,rgba(232,199,122,.34),transparent 12%),radial-gradient(circle at 58% 40%,rgba(133,184,208,.28),transparent 30%),linear-gradient(155deg,#1a3032,#0d1517)}
+    .scene:before{content:"";position:absolute;width:55%;height:70%;left:26%;top:15%;border-radius:50% 50% 40% 40%;background:radial-gradient(ellipse at 50% 40%,#e8c77a 0 6%,#85b8d0 24%,#3f6357 47%,transparent 73%);filter:saturate(.9)}
+    .scene:after{content:"";position:absolute;left:-10%;right:-10%;bottom:-15%;height:42%;border-radius:50% 50% 0 0;background:#18362e}
+    .page{padding:clamp(34px,6vw,78px);display:flex;flex-direction:column;justify-content:center;background:#f8f1e4;color:var(--ink)}
+    .page-label{text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--forest);font-weight:850}
+    .page h3{font-size:clamp(2rem,4vw,3.5rem);margin:12px 0 20px}.page p{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.14rem,2vw,1.4rem);line-height:1.72;margin:0;color:#38463f}
+    .page-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:30px}.page-nav button{min-height:44px;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--forest);font-weight:850}.dots{display:flex;gap:6px}.dots i{width:7px;height:7px;border-radius:50%;background:#c9bda8}.dots i.active{background:var(--forest);width:20px;border-radius:999px}
+    .principle{margin-top:24px;padding:22px 24px;border-left:4px solid var(--forest);background:var(--paper-soft);color:var(--muted)}
+    footer{padding-top:56px;text-align:center;color:var(--muted)}
+    .hidden{display:none!important}
+    @media(max-width:900px){.hero,.creator,.book{grid-template-columns:1fr}.hero-world{min-height:480px}.doors{grid-template-columns:1fr}.catalog{grid-template-columns:1fr 1fr}.book .scene{min-height:430px}}
+    @media(max-width:620px){.shell{padding:14px 14px 64px}header{padding-bottom:18px}.hero{border-radius:26px}.hero-copy{padding:34px 24px}.hero-world{min-height:420px}.continue{grid-template-columns:auto 1fr}.continue button{grid-column:1/-1;width:100%;border-top:1px solid var(--line)}.section{padding-top:62px}.section-head{display:block}.section-note{margin-top:12px}.catalog{grid-template-columns:1fr}.door{padding:26px;min-height:390px}.creator-form,.creator-preview{padding:26px}.book-top{align-items:flex-start}.book .scene{min-height:350px}.page{padding:36px 26px}.adult{font-size:.86rem}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.story-card{transition:none}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div class="brand">FABLEA</div>
+      <a class="adult" href="#">Spazio genitore</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">La casa del tuo mondo</div>
+          <h1>Ogni storia lascia una traccia.</h1>
+          <p class="lead">Scegli una storia scritta e curata da Fablea oppure costruiscine una nuova. In entrambi i casi, il mondo ricorda e continua a crescere.</p>
+          <div class="continue">
+            <div class="continue-icon">↗</div>
+            <div><strong>Continua il viaggio</strong><small>Il sentiero del vulcano quieto · pagina 6</small></div>
+            <button type="button" data-go="book">Riprendi</button>
+          </div>
+        </div>
+        <div class="hero-world" aria-hidden="true">
+          <div class="map-line"></div>
+          <div class="portal"></div>
+          <div class="world-caption"><strong>Il mondo è cambiato.</strong><br><small>Un nuovo sentiero è comparso vicino alla Valle delle Felci.</small></div>
+        </div>
+      </section>
+
+      <section class="section" id="choose">
+        <div class="section-head">
+          <div><div class="eyebrow">Due modi di entrare</div><h2>Oggi scegliete voi.</h2></div>
+          <p class="section-note">Nessun percorso è minore dell’altro: le storie editoriali garantiscono qualità immediata; la creazione guidata rende il racconto unico.</p>
+        </div>
+        <div class="doors">
+          <article class="door curated">
+            <span class="tag">Catalogo editoriale</span>
+            <h3>Storie Fablea</h3>
+            <p>Racconti originali già scritti e curati, scelti per età, atmosfera e momento. Pronti da leggere o ascoltare subito.</p>
+            <button type="button" data-go="catalog">Scopri le storie</button>
+          </article>
+          <article class="door create">
+            <span class="tag">Creazione guidata</span>
+            <h3>Crea una storia</h3>
+            <p>Fablea parte dal mondo, dagli interessi e da ciò che serve oggi per costruire una nuova esperienza coerente.</p>
+            <button type="button" data-go="creator">Inizia a creare</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="catalog">
+        <div class="section-head">
+          <div><div class="eyebrow">Storie Fablea</div><h2>Pronte, ma mai impersonali.</h2></div>
+          <p class="section-note">Ogni storia mantiene la propria qualità editoriale e può riconoscere il profilo, il compagno e la memoria del bambino senza deformare la trama.</p>
+        </div>
+        <div class="catalog">
+          <article class="story-card">
+            <div class="cover one"></div>
+            <div class="story-copy"><div class="meta"><span>Avventura</span><span>8 min</span></div><h3>La valle che respirava piano</h3><p>Una valle antica ha bisogno di qualcuno capace di ascoltare prima di agire.</p><button type="button" data-open-title="La valle che respirava piano">Apri la storia</button></div>
+          </article>
+          <article class="story-card">
+            <div class="cover two"></div>
+            <div class="story-copy"><div class="meta"><span>Buonanotte</span><span>6 min</span></div><h3>Il faro dei respiri</h3><p>Una luce lontana insegna al mare come rallentare senza spegnersi.</p><button type="button" data-open-title="Il faro dei respiri">Apri la storia</button></div>
+          </article>
+          <article class="story-card">
+            <div class="cover three"></div>
+            <div class="story-copy"><div class="meta"><span>Emozioni</span><span>10 min</span></div><h3>Il nodo delle parole</h3><p>Le parole rimaste dentro diventano un sentiero quando trovano il tempo giusto.</p><button type="button" data-open-title="Il nodo delle parole">Apri la storia</button></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="creator">
+        <div class="section-head">
+          <div><div class="eyebrow">Crea con Fablea</div><h2>Solo ciò che cambia oggi.</h2></div>
+          <p class="section-note">Il mondo principale, l’età e gli interessi sono già conosciuti. Il genitore o il bambino scelgono soltanto esperienza, atmosfera e durata.</p>
+        </div>
+        <div class="creator">
+          <div class="creator-form">
+            <div class="field"><strong>Che esperienza serve?</strong><div class="chips" data-group="experience"><button class="chip active">Avventura</button><button class="chip">Calma</button><button class="chip">Scoperta</button><button class="chip">Un momento difficile</button></div></div>
+            <div class="field"><strong>Che atmosfera ha oggi?</strong><div class="chips" data-group="mood"><button class="chip active">Curiosa</button><button class="chip">Energica</button><button class="chip">Pensierosa</button><button class="chip">Stanca</button></div></div>
+            <div class="field"><strong>Quanto tempo avete?</strong><div class="chips" data-group="duration"><button class="chip">Breve</button><button class="chip active">Media</button><button class="chip">Lunga</button></div></div>
+            <button class="make" type="button" id="makeStory">Costruisci questa storia</button>
+          </div>
+          <div class="creator-preview">
+            <div class="preview-inner"><span class="preview-badge">Anteprima narrativa</span><h3 id="previewTitle">Il sentiero delle tre impronte</h3><p id="previewText">Un’avventura curiosa di durata media, ambientata nel mondo principale e collegata alle tracce già lasciate nelle storie precedenti.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="book">
+        <div class="section-head">
+          <div><div class="eyebrow">Libro vivo</div><h2>Quando si legge, il resto scompare.</h2></div>
+          <p class="section-note">Il guscio editoriale resta fuori. Dentro il racconto, l’esperienza diventa immersiva, silenziosa e concentrata.</p>
+        </div>
+        <div class="book-wrap">
+          <div class="book-top"><div><strong id="bookTitle">La valle che respirava piano</strong><br><small>Pagina 3 di 11</small></div><div class="book-actions"><button aria-label="Modalità notte">◐</button><button aria-label="Ascolta">▶</button></div></div>
+          <div class="book">
+            <div class="scene" aria-label="Scena immersiva astratta"></div>
+            <article class="page"><span class="page-label">Capitolo II · La prima traccia</span><h3>La valle non era silenziosa.</h3><p>Respirava piano, come fanno le cose molto antiche quando vogliono essere ascoltate. Sul terreno apparve una prima impronta, poi una seconda. La terza non indicava avanti: sembrava aspettare una domanda.</p><div class="page-nav"><button type="button">Indietro</button><div class="dots"><i></i><i class="active"></i><i></i></div><button type="button">Continua</button></div></article>
+          </div>
+        </div>
+        <div class="principle"><strong>Un’unica memoria.</strong> Che la storia venga scelta dal catalogo o creata in quel momento, può lasciare luoghi, personaggi, domande e oggetti nel mondo personale. La differenza riguarda l’origine del racconto, non la sua dignità.</div>
+      </section>
+    </main>
+
+    <footer>Prototipo concettuale · Sprint 2D-A · nessun dato viene salvato</footer>
+  </div>
+  <script>
+    const scrollToId = id => document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});
+    document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>scrollToId(btn.dataset.go)));
+    document.querySelectorAll('.chips').forEach(group=>group.addEventListener('click',event=>{
+      const chip=event.target.closest('.chip'); if(!chip)return;
+      group.querySelectorAll('.chip').forEach(item=>item.classList.remove('active')); chip.classList.add('active');
+    }));
+    document.getElementById('makeStory').addEventListener('click',()=>{
+      const experience=document.querySelector('[data-group="experience"] .active')?.textContent || 'Avventura';
+      const mood=document.querySelector('[data-group="mood"] .active')?.textContent || 'Curiosa';
+      const duration=document.querySelector('[data-group="duration"] .active')?.textContent || 'Media';
+      const titles={Avventura:'Il sentiero delle tre impronte',Calma:'Il giardino che abbassava la voce',Scoperta:'La mappa delle domande',"Un momento difficile":'La stanza dove le parole aspettavano'};
+      document.getElementById('previewTitle').textContent=titles[experience] || 'Una nuova storia';
+      document.getElementById('previewText').textContent=`Un’esperienza ${experience.toLowerCase()}, dall’atmosfera ${mood.toLowerCase()}, di durata ${duration.toLowerCase()}, collegata al mondo e ai ricordi già costruiti.`;
+    });
+    document.querySelectorAll('[data-open-title]').forEach(btn=>btn.addEventListener('click',()=>{
+      document.getElementById('bookTitle').textContent=btn.dataset.openTitle;
+      scrollToId('book');
+    }));
+  </script>
+</body>
+</html>
