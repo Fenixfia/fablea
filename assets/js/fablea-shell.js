@@ -82,15 +82,34 @@
 
   function openCatalogStory(profile, story, duration){
     if(!profile || !story || !global.FableaStoryEngine) return false;
-    const built = global.FableaStoryEngine.buildStory(profile,{
+    let built = global.FableaStoryEngine.buildStory(profile,{
       story,
       duration:duration || profile.duration,
       scenario:profile.primaryWorld,
       family:story.family,
       mood:(story.moods && story.moods[0]) || ''
     });
+
+    try{
+      if(global.FableaStoryVariablesV3 && global.FableaStoryEngineV3){
+        const mode = story.family === 'calma-sera' ? 'bedtime' : story.family === 'scoperta' ? 'discovery' : 'world';
+        const requestV3 = global.FableaStoryVariablesV3.buildAndSave(profile,{
+          mode,
+          family:story.family,
+          mood:(story.moods && story.moods[0]) || '',
+          duration:duration || profile.duration,
+          scenario:profile.primaryWorld,
+          editorialStoryId:story.id,
+          source:'editorial-catalog'
+        });
+        built = global.FableaStoryEngineV3.apply(built,requestV3);
+      }
+    }catch(error){
+      console.warn('Personalizzazione V3 editoriale non disponibile, uso la versione v2.',error);
+    }
+
     global.FableaStoryEngine.saveStory(built);
-    localStorage.removeItem('fableaReopenStory');
+    localStorage.setItem('fableaReopenStory','true');
     location.href = '/story-result.html';
     return true;
   }
