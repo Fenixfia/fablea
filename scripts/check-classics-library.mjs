@@ -12,6 +12,7 @@ const discover = read('discover.html');
 const library = read('library.html');
 const shell = read('assets/js/fablea-shell.js');
 const css = read('assets/css/fablea-library.css');
+const betaCss = read('assets/css/fablea-beta.css');
 const policy = read('docs/editorial/PUBLIC_DOMAIN_CLASSICS.md');
 
 const context = {window:{}};
@@ -47,9 +48,11 @@ for(const story of stories){
 
 expect(discover.includes('/stories-classics/catalog.js') && discover.includes('/stories-classics/catalog-expansion.js'),'Biblioteca: cataloghi classici non caricati');
 expect(discover.includes('/assets/js/fablea-classic-art.js'),'Biblioteca: illustratore FABLEA non caricato');
-expect(discover.includes('/assets/css/fablea-library.css'),'Biblioteca: stile editoriale non caricato');
-for(const label of ['Originali FABLEA','Classici rinarrati','Le mie storie']) expect(discover.includes(label),`Biblioteca: sezione ${label} mancante`);
-expect(discover.includes('Rinarrato integralmente da FABLEA'),'Biblioteca: attribuzione pubblica del rinarramento mancante');
+expect(discover.includes('/assets/css/fablea-library.css') && discover.includes('/assets/css/fablea-beta.css'),'Biblioteca: stile editoriale o beta non caricato');
+for(const label of ['Originali','Classici','Storie già vissute']) expect(discover.includes(label),`Biblioteca: sezione ${label} mancante`);
+expect(discover.includes('<details class="beta-card beta-editorial-details">'),'Biblioteca: informazioni editoriali adulto non separate');
+expect(discover.includes('candidate al pubblico dominio') && discover.includes('non vengono copiate traduzioni moderne'),'Biblioteca: nota prudente sul pubblico dominio mancante');
+expect(!discover.includes('editorial-source'),'Biblioteca: attribuzione legale ancora ripetuta nelle schede bambino');
 expect(discover.includes('catalogStoryById'),'Biblioteca: apertura classici non collegata al catalogo completo');
 expect(discover.includes('A.render(story)'),'Biblioteca: copertine illustrate non usate');
 expect(library.includes('Classici rinarrati') && library.includes('story.source'),'Libreria personale: metadati dei classici non mostrati');
@@ -58,7 +61,7 @@ expect(shell.includes("const collection = options.collection || 'original'"),'Sh
 expect(shell.includes("if(collection === 'classic') return classicsFor(profile)"),'Shell: collezione classici non separata');
 expect(shell.includes("source:story.collection === 'classic' ? 'classic-catalog' : 'editorial-catalog'"),'Shell: provenienza V3 dei classici non dichiarata');
 expect(shell.includes("built = {...built,collection:story.collection || 'original',source:story.source || null}"),'Shell: provenienza non conservata nella storia salvata');
-expect(css.includes('.editorial-grid') && css.includes('@media(max-width:660px)'),'Biblioteca: layout editoriale o smartphone mancante');
+expect((css.includes('.editorial-grid') && css.includes('@media(max-width:660px)')) || (betaCss.includes('.beta-story-grid') && betaCss.includes('@media(max-width:640px)')),'Biblioteca: layout editoriale o smartphone mancante');
 expect(css.includes('.fablea-cover-art'),'Biblioteca: stile copertine vettoriali mancante');
 expect(artCode.includes("'classic-5-7-cappuccetto-rosso'") && artCode.includes('FableaClassicArt'),'Illustratore: Cappuccetto Rosso o API art mancanti');
 expect(policy.includes('Non si copiano frasi') && policy.includes('verificato lo status nel territorio'),'Politica pubblico dominio incompleta');
@@ -68,4 +71,4 @@ if(errors.length){
   errors.forEach(error => console.error(`- ${error}`));
   process.exit(1);
 }
-console.log('Classics library check passed: 16 rinarramenti, Cappuccetto Rosso, attribuzione, illustrazioni, metadata e responsive coperti.');
+console.log('Classics library check passed: 16 rinarramenti, Cappuccetto Rosso, dettagli adulto separati, illustrazioni, metadata e responsive coperti.');
