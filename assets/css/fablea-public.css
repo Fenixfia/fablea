@@ -1,0 +1,9 @@
+body.fablea-public .subtitle,body.fablea-public .lead{color:#edf2ef}
+body.fablea-public .description,body.fablea-public p{color:#bdcbc5}
+body.fablea-public .menu{display:flex;gap:18px;flex-wrap:wrap;margin-top:24px}
+body.fablea-public .menu a{min-height:44px;display:inline-flex;align-items:center;color:#d4dfda;text-decoration:none;font-weight:800}
+body.fablea-public .badge{color:#e2c47e}
+body.fablea-public .home-copy .actions{justify-content:flex-start}
+body.fablea-public .home-copy .menu{justify-content:flex-start}
+body.fablea-public .section h2{font-size:clamp(2.1rem,4vw,3.4rem)}
+@media(max-width:700px){body.fablea-public .home-copy .actions,body.fablea-public .home-copy .menu{justify-content:center}body.fablea-public .home-copy{text-align:center}}
