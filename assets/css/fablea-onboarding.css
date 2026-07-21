@@ -94,6 +94,16 @@ body.fablea-product.onboarding-page::before{
   box-shadow:0 14px 34px rgba(57,48,55,.16);
 }
 .onboarding-page .sex-choice .sex-symbol{font-size:1.2rem}
+.onboarding-page .error{
+  margin:8px 0 0;
+  padding:10px 12px;
+  border:1px solid rgba(255,211,199,.34);
+  border-radius:14px;
+  color:#fff1eb;
+  background:rgba(119,57,58,.24);
+  font-size:.82rem;
+  font-weight:750;
+}
 .onboarding-page .button.primary{
   color:#4d4149;
   background:linear-gradient(135deg,#f2dfa9,#d8c295);
