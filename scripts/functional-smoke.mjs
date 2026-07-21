@@ -21,7 +21,8 @@ for(const file of [
   'stories-v2/index.js',
   'stories-v2/supplements.js',
   'stories-v2/final-scenes.js',
-  'assets/js/fablea-story-engine.js'
+  'assets/js/fablea-story-engine.js',
+  'assets/js/fablea-shell.js'
 ]){
   vm.runInContext(fs.readFileSync(file,'utf8'), context, {filename:file});
 }
@@ -29,6 +30,7 @@ for(const file of [
 const F = window.FableaProfile;
 const E = window.FableaStoryEngine;
 const G = window.FableaGrammar;
+const S = window.FableaShell;
 function assert(condition, message){ if(!condition) throw new Error(message); }
 
 localStorage.setItem(F.KEYS.profiles, JSON.stringify([{
@@ -92,10 +94,20 @@ F.updateMemory(profile,{treasures:['ambra']});
 F.updateMemory(other,{treasures:['conchiglia']});
 assert(F.getMemory(profile).treasures[0] !== F.getMemory(other).treasures[0], 'memoria condivisa tra bambini');
 
+assert(Object.keys(S.WORLD_PRESENTATION).length === 8, 'la shell non copre gli otto mondi');
+assert(S.storiesFor(profile).length === 4, 'Scopri non restituisce le quattro storie della fascia');
+assert(S.previewTemplate('{{name}} attraversa {{world}}',profile) === 'Marco attraversa Dinosauri', 'anteprima editoriale non personalizzata');
+assert(S.savedFor(profile).some(story => story.id === shortStory.id), 'Libreria shell non separa o non legge le storie salvate');
+assert(S.renderDock('discover').includes('discover.html') && S.renderDock('discover').includes('active'), 'dock esplorabile incompleto');
+
 const onboarding = fs.readFileSync('onboarding.html','utf8');
 const createChild = fs.readFileSync('create-child.html','utf8');
 const creator = fs.readFileSync('story.html','utf8');
 const player = fs.readFileSync('story-result.html','utf8');
+const hub = fs.readFileSync('child-hub.html','utf8');
+const discover = fs.readFileSync('discover.html','utf8');
+const worldPage = fs.readFileSync('world.html','utf8');
+const library = fs.readFileSync('library.html','utf8');
 assert(onboarding.includes('F.KEYS.prepared') && onboarding.includes('Prima storia proposta'), 'prima storia non preparata nell’onboarding');
 assert(createChild.includes('F.KEYS.prepared') && createChild.includes('Prima storia proposta'), 'prima storia non preparata in create-child');
 for(const [fileName, html] of [['onboarding.html',onboarding],['create-child.html',createChild]]){
@@ -107,5 +119,16 @@ for(const [fileName, html] of [['onboarding.html',onboarding],['create-child.htm
 assert(creator.includes('Usa il suo mondo') && creator.includes('Curiosità e voglia di scoprire'), 'story creator duplica o perde il profilo');
 assert(player.includes("fetch('/api/tts'") && player.includes('fableaReopenStory'), 'contratto TTS o riapertura mancanti');
 assert(player.includes('resumePage') && player.includes('Conserva nel suo mondo'), 'ripresa o memoria rituale mancanti');
+for(const [fileName,html,active] of [
+  ['child-hub.html',hub,'continue'],
+  ['discover.html',discover,'discover'],
+  ['world.html',worldPage,'world'],
+  ['library.html',library,'library']
+]){
+  assert(html.includes('/assets/js/fablea-shell.js'), `${fileName}: helper shell mancante`);
+  assert(html.includes(`S.renderDock('${active}')`), `${fileName}: destinazione dock errata`);
+}
+assert(discover.includes('S.openCatalogStory') && discover.includes('data-story-id'), 'Scopri non apre storie editoriali reali');
+assert(worldPage.includes('F.getMemory(profile)') && worldPage.includes('S.savedFor(profile)'), 'Mondo non legge memoria e storie reali');
 
-console.log('Smoke completato: migrazione, grammatica, mondo, durate, scene, rotazione, form profilo DOM-safe, prepared story, ripresa, memoria separata e TTS non invocato.');
+console.log('Smoke completato: profili, grammatica, storie, durate, rotazione, memoria, TTS e Product Shell con Home, Scopri, Mondo e Libreria.');
