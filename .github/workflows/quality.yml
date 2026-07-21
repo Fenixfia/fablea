@@ -2,7 +2,6 @@ name: FABLEA quality
 
 on:
   pull_request:
-    branches: [main]
   push:
     branches:
       - codex/implementa-issue-#9-in-fablea
