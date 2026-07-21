@@ -93,11 +93,19 @@ F.updateMemory(other,{treasures:['conchiglia']});
 assert(F.getMemory(profile).treasures[0] !== F.getMemory(other).treasures[0], 'memoria condivisa tra bambini');
 
 const onboarding = fs.readFileSync('onboarding.html','utf8');
+const createChild = fs.readFileSync('create-child.html','utf8');
 const creator = fs.readFileSync('story.html','utf8');
 const player = fs.readFileSync('story-result.html','utf8');
 assert(onboarding.includes('F.KEYS.prepared') && onboarding.includes('Prima storia proposta'), 'prima storia non preparata nell’onboarding');
+assert(createChild.includes('F.KEYS.prepared') && createChild.includes('Prima storia proposta'), 'prima storia non preparata in create-child');
+for(const [fileName, html] of [['onboarding.html',onboarding],['create-child.html',createChild]]){
+  assert(html.includes("const nameInput = document.getElementById('name')"), `${fileName}: riferimento esplicito al campo nome mancante`);
+  assert(html.includes("const formEl = document.getElementById('profileForm')"), `${fileName}: riferimento esplicito al form mancante`);
+  assert(!/\bname\.value\b/.test(html), `${fileName}: collisione con window.name reintrodotta`);
+  assert(html.includes("formEl.addEventListener('submit'"), `${fileName}: submit handler non collegato al form reale`);
+}
 assert(creator.includes('Usa il suo mondo') && creator.includes('Curiosità e voglia di scoprire'), 'story creator duplica o perde il profilo');
 assert(player.includes("fetch('/api/tts'") && player.includes('fableaReopenStory'), 'contratto TTS o riapertura mancanti');
 assert(player.includes('resumePage') && player.includes('Conserva nel suo mondo'), 'ripresa o memoria rituale mancanti');
 
-console.log('Smoke completato: migrazione, grammatica, mondo, durate, scene, rotazione, prepared story, ripresa, memoria separata e TTS non invocato.');
+console.log('Smoke completato: migrazione, grammatica, mondo, durate, scene, rotazione, form profilo DOM-safe, prepared story, ripresa, memoria separata e TTS non invocato.');
