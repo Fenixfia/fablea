@@ -22,6 +22,7 @@ if(!css.includes('@media(prefers-reduced-motion:reduce)')) errors.push('fablea-p
 if(!css.includes('.page-edge-button')) errors.push('fablea-page-turn.css: pulsanti laterali mancanti');
 if(!css.includes('env(safe-area-inset-bottom)')) errors.push('fablea-page-turn.css: safe area mobile non gestita');
 if(!css.includes('data-density="dense"') || !html.includes('densityFor')) errors.push('Live Book: adattamento alla lunghezza del testo mancante');
+if(!css.includes('.fablea-product.live-book .book') || !css.includes('display:block')) errors.push('Live Book: vecchia griglia a due colonne non neutralizzata');
 if(!css.includes('perspective:')) errors.push('fablea-page-turn.css: profondità della pagina mancante');
 
 if(errors.length){
