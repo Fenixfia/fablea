@@ -60,7 +60,8 @@
 
       root.innerHTML = `
         <section class="beta-child-hero">
-          <article class="beta-card beta-today">
+          <article class="beta-today beta-journey-gate">
+            <div class="beta-sky-trail" aria-hidden="true"></div>
             <div class="beta-today-content">
               <div class="beta-eyebrow">Continua il tuo viaggio</div>
               <div class="beta-today-icon" aria-hidden="true">${F.escapeHTML(recommendation.icon)}</div>
@@ -71,7 +72,7 @@
             </div>
           </article>
 
-          <aside class="beta-card beta-companion-panel">
+          <aside class="beta-companion-panel">
             <div>
               <div class="beta-eyebrow" style="color:#f1d596">${welcome ? 'La Casa è pronta' : `Nel mondo di ${F.escapeHTML(profile.name)}`}</div>
               <h2 style="font:700 2.8rem/1 'Cormorant Garamond',serif;margin:10px 0">${F.escapeHTML(profile.favoriteCompanion || 'Il suo compagno')}</h2>
@@ -82,10 +83,10 @@
         </section>
 
         <nav class="beta-room-grid" aria-label="Esperienze FABLEA">
-          <a class="beta-card beta-room" href="/discover.html"><span class="beta-room-icon">📖</span><div><h2>Leggiamo</h2><p>Storie originali, classici e racconti già iniziati.</p><small>Entra nella Biblioteca →</small></div></a>
-          <a class="beta-card beta-room" href="/story.html"><span class="beta-room-icon">✨</span><div><h2>Inventiamo</h2><p>Una nuova avventura dal mondo, da un momento o da un’idea.</p><small>Entra nell’Officina →</small></div></a>
-          <a class="beta-card beta-room" href="/play.html"><span class="beta-room-icon">🧩</span><div><h2>Giochiamo</h2><p>Parole, memoria e logica senza voti né classifiche.</p><small>Segui il Sentiero →</small></div></a>
-          <a class="beta-card beta-room" href="/learn.html"><span class="beta-room-icon">🔭</span><div><h2>Scopriamo</h2><p>Natura, numeri, linguaggio e domande da esplorare.</p><small>Apri il Laboratorio →</small></div></a>
+          <a class="beta-card beta-room beta-room--stories" href="/discover.html"><span class="beta-room-icon">01</span><div><h2>Leggiamo</h2><p>Storie originali, classici e racconti già iniziati.</p><small>Entra nella Biblioteca →</small></div></a>
+          <a class="beta-card beta-room beta-room--create" href="/story.html"><span class="beta-room-icon">02</span><div><h2>Inventiamo</h2><p>Una nuova avventura dal mondo, da un momento o da un’idea.</p><small>Entra nell’Officina →</small></div></a>
+          <a class="beta-card beta-room beta-room--play" href="/play.html"><span class="beta-room-icon">03</span><div><h2>Giochiamo</h2><p>Parole, memoria e logica senza voti né classifiche.</p><small>Segui il Sentiero →</small></div></a>
+          <a class="beta-card beta-room beta-room--learn" href="/learn.html"><span class="beta-room-icon">04</span><div><h2>Scopriamo</h2><p>Natura, numeri, linguaggio e domande da esplorare.</p><small>Apri il Laboratorio →</small></div></a>
                   <div class="beta-card beta-room beta-room--future" aria-disabled="true"><span class="beta-room-icon">✎</span><div><span class="beta-pill">In sviluppo</span><h2>Scuola</h2><p>Spiegazioni ed esercizi guidati per il lavoro a casa.</p><small>Il genitore mantiene il controllo</small></div></div>
         </nav>
 
