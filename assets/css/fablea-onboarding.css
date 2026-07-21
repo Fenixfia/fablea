@@ -1,0 +1,110 @@
+/* FABLEA onboarding — calm threshold before entering a personal world */
+body.fablea-product.onboarding-page{
+  --onboarding-paper:#fff9ef;
+  --onboarding-ink:#f8f4ed;
+  --onboarding-muted:#ddd8d2;
+  --onboarding-sage:#71807a;
+  --onboarding-sage-deep:#465653;
+  --onboarding-lilac:#a997b1;
+  --onboarding-gold:#ead7a3;
+  --accent:var(--onboarding-gold);
+  --accent-2:#c7b7d1;
+  --sky-1:#71807a;
+  --sky-2:#4a5655;
+  --land-1:#655d69;
+  --land-2:#403f48;
+  background:
+    radial-gradient(circle at 80% 12%,rgba(234,215,163,.32),transparent 23%),
+    radial-gradient(circle at 14% 78%,rgba(169,151,177,.30),transparent 34%),
+    radial-gradient(circle at 64% 64%,rgba(255,249,239,.09),transparent 28%),
+    linear-gradient(145deg,#71807a 0%,#53615e 43%,#4a5053 68%,#5d5261 100%);
+}
+body.fablea-product.onboarding-page::before{
+  background:
+    radial-gradient(circle at 18% 28%,rgba(255,249,239,.11),transparent 21%),
+    radial-gradient(circle at 82% 86%,rgba(169,151,177,.26),transparent 38%);
+  opacity:.85;
+}
+.onboarding-page .top{
+  border-color:rgba(255,249,239,.20);
+  background:rgba(57,66,65,.55);
+  box-shadow:0 14px 42px rgba(42,43,47,.16);
+}
+.onboarding-page .hero{max-width:880px}
+.onboarding-page .hero h1{color:var(--onboarding-paper)}
+.onboarding-page .hero .intro,
+.onboarding-page .note{color:var(--onboarding-muted)}
+.onboarding-page .kicker,
+.onboarding-page .badge{color:var(--onboarding-gold)}
+.onboarding-page form{
+  border-color:rgba(255,249,239,.22);
+  background:linear-gradient(145deg,rgba(255,249,239,.14),rgba(255,249,239,.065));
+  box-shadow:0 30px 80px rgba(40,40,46,.20);
+}
+.onboarding-page label{color:#fff9ef}
+.onboarding-page input,
+.onboarding-page select,
+.onboarding-page textarea{
+  border-color:rgba(255,249,239,.23);
+  background:rgba(53,61,61,.44);
+  color:#fffaf3;
+}
+.onboarding-page input::placeholder,
+.onboarding-page textarea::placeholder{color:#c9c4c0}
+.onboarding-page input:focus,
+.onboarding-page select:focus,
+.onboarding-page textarea:focus{
+  border-color:var(--onboarding-gold);
+  box-shadow:0 0 0 4px rgba(234,215,163,.15);
+}
+.onboarding-page .choice{
+  border-color:rgba(255,249,239,.21);
+  background:rgba(255,249,239,.075);
+  color:#f2eee8;
+}
+.onboarding-page .choice.active{
+  color:#493f45;
+  background:linear-gradient(135deg,#f1dfae,#d8c092);
+}
+.onboarding-page .sex-choice-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  margin:0 0 8px;
+}
+.onboarding-page .sex-choice{
+  min-height:62px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  border:1px solid rgba(255,249,239,.22);
+  border-radius:18px;
+  background:rgba(255,249,239,.075);
+  color:#fffaf3;
+  font:800 .94rem var(--font-ui);
+  cursor:pointer;
+  transition:transform .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease;
+}
+.onboarding-page .sex-choice:hover{transform:translateY(-2px)}
+.onboarding-page .sex-choice[aria-pressed="true"]{
+  border-color:transparent;
+  color:#4d4149;
+  background:linear-gradient(135deg,#f2dfa9,#d8c295);
+  box-shadow:0 14px 34px rgba(57,48,55,.16);
+}
+.onboarding-page .sex-choice .sex-symbol{font-size:1.2rem}
+.onboarding-page .button.primary{
+  color:#4d4149;
+  background:linear-gradient(135deg,#f2dfa9,#d8c295);
+  box-shadow:0 14px 34px rgba(57,48,55,.18);
+}
+@media(max-width:700px){
+  body.fablea-product.onboarding-page{
+    background:
+      radial-gradient(circle at 80% 8%,rgba(234,215,163,.28),transparent 25%),
+      radial-gradient(circle at 12% 84%,rgba(169,151,177,.28),transparent 36%),
+      linear-gradient(160deg,#71807a 0%,#53605e 48%,#584f5b 100%);
+  }
+  .onboarding-page .sex-choice{min-height:58px}
+}
