@@ -1,305 +1,133 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FABLEA | Mondo bambino</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="/assets/css/fablea.css">
-<script src="/assets/js/fablea-ui.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FABLEA | Mondo bambino</title>
+  <link rel="stylesheet" href="/assets/css/fablea.css">
+  <script src="/assets/js/fablea-ui.js"></script>
+  <script src="/assets/js/fablea-grammar.js"></script>
+  <script src="/assets/js/fablea-profile.js"></script>
+  <script src="/stories-v2/age-2-4.js"></script>
+  <script src="/stories-v2/age-5-7.js"></script>
+  <script src="/stories-v2/age-8-10.js"></script>
+  <script src="/stories-v2/age-11-12.js"></script>
+  <script src="/stories-v2/index.js"></script>
+  <script src="/assets/js/fablea-story-engine.js"></script>
 </head>
-
 <body class="fablea-page">
+  <main class="page"><div id="content"></div></main>
 
-<main class="page">
-<div id="content"></div>
-</main>
+  <script>
+    const F = FableaProfile;
+    const E = FableaStoryEngine;
+    const profile = F.getSelectedProfile();
 
-<script>
-if(window.FableaUI){ window.FableaUI.applyAgeFromStorage(document.body); }
-function getProfiles(){
-return JSON.parse(localStorage.getItem('fableaChildProfiles') || '[]');
-}
+    if(!profile){
+      content.innerHTML = '<div class="empty"><div class="empty-icon">✨</div><h1>Nessun profilo selezionato</h1><p>Crea o seleziona il mondo di un bambino.</p><a class="button" href="/onboarding.html">Crea profilo</a></div>';
+    }else{
+      if(window.FableaUI) window.FableaUI.applyAge(document.body, profile.age);
+      const memory = F.getMemory(profile);
+      const prepared = F.readJSON(F.KEYS.prepared, null);
+      const savedStories = E.savedStories().filter(story => story.childId === profile.id || (!story.childId && story.child === profile.name));
+      const lastStory = savedStories.find(story => story.id === memory.lastStoryId) || savedStories[savedStories.length - 1] || null;
+      const companion = memory.lastCompanion || profile.favoriteCompanion || E.WORLD_LORE[profile.primaryWorld].companion;
+      const styleLabels = {calm:'calmo',adventurous:'avventuroso',funny:'divertente',mysterious:'misterioso',emotional:'emotivo'};
 
-function getSelectedProfile(){
-const profiles = getProfiles();
-const selectedId = localStorage.getItem('fableaSelectedChildId');
+      content.innerHTML = `
+        <div class="top">
+          <a class="back" href="/profile.html">← Profili</a>
+          <div class="badge">Casa narrativa</div>
+          <a class="back" href="/library.html">Libreria</a>
+        </div>
 
-if(!profiles.length) return null;
+        <section class="hero">
+          <div class="avatar-card">
+            <div class="glow"></div>
+            <div class="avatar">${F.escapeHTML(lastStory && lastStory.icon || '✨')}</div>
+            <h2>${F.escapeHTML(profile.name)}</h2>
+            <div class="meta">${F.escapeHTML(F.ageLabel(profile.age))} • ${F.escapeHTML(profile.primaryWorld)}</div>
+          </div>
+          <div class="hero-copy">
+            <div class="kicker">Il mondo ricorda chi lo attraversa</div>
+            <h1>Questa è la casa narrativa di ${F.escapeHTML(profile.name)}.</h1>
+            <p>Stile ${F.escapeHTML(styleLabels[profile.storyStyle] || profile.storyStyle)}, durata abituale ${F.escapeHTML(profile.duration)} e supporto dedicato a “${F.escapeHTML(profile.support)}”.</p>
+            <div class="tags">
+              <span class="tag">${F.escapeHTML(F.genderLabel(profile.gender))}</span>
+              <span class="tag">Compagno: ${F.escapeHTML(companion)}</span>
+              ${(profile.interests || []).map(item => `<span class="tag">${F.escapeHTML(item)}</span>`).join('')}
+            </div>
+          </div>
+        </section>
 
-return profiles.find(profile => profile.id === selectedId) || profiles[0];
-}
+        <section class="continue">
+          <div class="continue-icon">${prepared && prepared.childId === profile.id ? '🌟' : '📖'}</div>
+          <div>
+            <div class="kicker">${prepared && prepared.childId === profile.id ? 'Prima storia pronta' : lastStory ? 'Continua da dove eri' : 'Inizia il primo viaggio'}</div>
+            <h2>${F.escapeHTML(prepared && prepared.childId === profile.id ? prepared.title : lastStory ? lastStory.title : `Il mondo di ${profile.primaryWorld} aspetta`)}</h2>
+            <p>${F.escapeHTML(prepared && prepared.childId === profile.id ? prepared.subtitle : lastStory ? `Pagina ${(lastStory.resumePage || 0) + 1} di ${lastStory.pages.length}` : 'La prima esperienza userà automaticamente il mondo e le preferenze già scelte.')}</p>
+            <div class="actions">
+              ${prepared && prepared.childId === profile.id ? '<a class="button primary" href="/story-result.html?prepared=1">Apri la prima storia</a>' : lastStory ? '<button class="button primary" id="resumeStory" type="button">Riprendi la storia</button>' : '<a class="button primary" href="/story.html">Crea la prima storia</a>'}
+              <a class="button secondary" href="/story.html">Nuova esperienza</a>
+            </div>
+          </div>
+        </section>
 
-function getSavedStories(){
-return JSON.parse(localStorage.getItem('fableaSavedStories') || '[]');
-}
+        <section class="section">
+          <div class="kicker">Modalità rapide</div>
+          <h2>Un gesto semplice per il momento di oggi</h2>
+          <div class="grid">
+            <button class="choice quick-mode" type="button" data-family="calma-sera" data-mood="Stanchezza">🌙 Calma della sera</button>
+            <button class="choice quick-mode" type="button" data-family="emozioni" data-mood="Una giornata difficile">💛 Mettere ordine nelle emozioni</button>
+            <button class="choice quick-mode" type="button" data-family="scoperta" data-mood="Curiosità e voglia di scoprire">🔎 Una scoperta</button>
+            <button class="choice quick-mode" type="button" data-family="avventura" data-mood="Tanta energia">🧭 Un’avventura</button>
+          </div>
+        </section>
 
-function getWorldState(){
-return JSON.parse(localStorage.getItem('fableaWorldState') || '{}');
-}
+        <section class="grid">
+          <article class="card">
+            <div class="card-icon">💎</div>
+            <h3>Tesori</h3>
+            <div class="treasures">${(memory.treasures || []).length ? memory.treasures.map(item => `<span class="treasure">${F.escapeHTML(item)}</span>`).join('') : '<span class="treasure">Il primo tesoro deve ancora arrivare</span>'}</div>
+          </article>
+          <article class="card">
+            <div class="card-icon">🕯️</div>
+            <h3>Rituali</h3>
+            <p>${(memory.rituals || []).length ? `${memory.rituals.length} rituali custoditi per ${F.escapeHTML(profile.name)}.` : 'I rituali finali appariranno qui dopo essere stati conservati.'}</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">🗺️</div>
+            <h3>Mondi visitati</h3>
+            <p>${F.escapeHTML([...new Set(savedStories.map(story => story.world).filter(Boolean))].join(', ') || profile.primaryWorld)}</p>
+          </article>
+        </section>
+      `;
 
-function saveWorldState(state){
-localStorage.setItem('fableaWorldState', JSON.stringify(state));
-}
+      const resumeButton = document.getElementById('resumeStory');
+      if(resumeButton && lastStory){
+        resumeButton.addEventListener('click', () => {
+          localStorage.setItem('fableaCurrentStory', JSON.stringify(lastStory));
+          localStorage.setItem('fableaReopenStory', 'true');
+          location.href = '/story-result.html';
+        });
+      }
 
-function escapeHTML(value){
-return window.FableaUI ? window.FableaUI.escapeHTML(value) : String(value ?? '');
-}
-
-function ageLabel(value){
-if(value === '2-4') return '2–4 anni • Meraviglia';
-if(value === '5-7') return '5–7 anni • Esplorazione';
-if(value === '8-10') return '8–10 anni • Identità';
-if(value === '11-12') return '11–12 anni • Direzione';
-return 'Fascia FABLEA';
-}
-
-function avatarFor(age){
-if(age === '2-4') return '🌙';
-if(age === '5-7') return '🦊';
-if(age === '8-10') return '💛';
-if(age === '11-12') return '🧭';
-return '✨';
-}
-
-function toneFor(profile){
-if(profile.age === '2-4') return 'immagini grandi, parole semplici, ritmo morbido e piccole luci rassicuranti.';
-if(profile.age === '5-7') return 'avventure leggibili, scelte chiare, curiosità e mondi da esplorare.';
-if(profile.age === '8-10') return 'storie emotive, fiducia, relazioni, coraggio e crescita personale.';
-if(profile.age === '11-12') return 'racconti più maturi, identità, direzione, domande e possibilità.';
-return 'storie personalizzate e immaginazione.';
-}
-
-function interestsText(profile){
-if(profile.interests && profile.interests.length){
-return profile.interests.join(', ');
-}
-return 'immaginazione, scoperta e meraviglia';
-}
-
-function recentForChild(name){
-return getSavedStories().filter(story => story.child === name).slice(-1)[0] || null;
-}
-
-function storiesCountForChild(name){
-return getSavedStories().filter(story => story.child === name).length;
-}
-
-function memoriesForChild(name){
-const state = getWorldState();
-const childState = state[name] || {};
-return {
-treasures:Array.isArray(childState.treasures) ? childState.treasures : [],
-rituals:Array.isArray(childState.rituals) ? childState.rituals : [],
-lastStory:childState.lastStory || null
-};
-}
-
-function startExperience(type){
-const profile = getSelectedProfile();
-
-if(!profile){
-window.location.href = '/onboarding.html';
-return;
-}
-
-localStorage.setItem('fableaSelectedChildId', profile.id);
-
-let baseTheme = profile.interests && profile.interests.length
-? profile.interests[0].replace(/[^\p{L}\p{N}\s]/gu,'').trim()
-: 'Foresta magica';
-
-let data = {
-name:profile.name,
-age:profile.age,
-experience:type,
-mood:'Curiosa',
-theme:baseTheme || 'Foresta magica',
-interests:profile.interests || [],
-support:profile.support || '',
-duration:profile.duration || '',
-quickStart:true
-};
-
-if(type === 'Continua il viaggio'){
-const last = recentForChild(profile.name);
-if(last){
-data.theme = last.theme || data.theme;
-data.experience = 'Continua il viaggio';
-}
-}
-
-if(type === 'Momento calma'){
-data.mood = 'Tranquilla';
-data.theme = 'Luna e calma';
-data.experience = 'Mini racconto rilassante';
-}
-
-if(type === 'Missione creativa'){
-data.mood = 'Piena di energia';
-data.theme = 'Manualità e fantasia';
-data.experience = 'Missione creativa';
-}
-
-if(type === 'Scoperta del giorno'){
-data.mood = 'Curiosa';
-data.theme = 'Mondo da scoprire';
-data.experience = 'Scoperta del giorno';
-}
-
-localStorage.setItem('fableaStoryData', JSON.stringify(data));
-
-window.location.href = '/story-result.html';
-}
-
-function render(){
-const profile = getSelectedProfile();
-const content = document.getElementById('content');
-
-if(!profile){
-content.innerHTML = `
-<div class="empty">
-<h1>Nessun esploratore selezionato.</h1>
-<p>Crea o scegli un profilo bambino per entrare nel mondo FABLEA.</p>
-<a class="button" href="/onboarding.html">Scegli profilo</a>
-</div>
-`;
-return;
-}
-
-localStorage.setItem('fableaSelectedChildId', profile.id);
-
-const lastStory = recentForChild(profile.name);
-const storyCount = storiesCountForChild(profile.name);
-const memories = memoriesForChild(profile.name);
-const treasures = memories.treasures;
-
-const tags = profile.interests && profile.interests.length
-? profile.interests.map(item => `<span class="tag">${escapeHTML(item)}</span>`).join('')
-: `<span class="tag">✨ Immaginazione</span>`;
-
-const continueTitle = lastStory ? escapeHTML(lastStory.title) : 'Il primo viaggio è pronto';
-const continueText = lastStory
-? `L’ultimo viaggio ha lasciato una traccia nel mondo di ${escapeHTML(profile.name)}. ${escapeHTML(lastStory.subtitle || 'Una piccola luce è rimasta accesa e può guidare la prossima esperienza.')}`
-: `Il mondo di ${escapeHTML(profile.name)} è ancora tutto da aprire. La prima storia creerà la prima luce, il primo luogo e il primo ricordo.`;
-
-const continueIcon = lastStory ? (lastStory.icon || avatarFor(profile.age)) : avatarFor(profile.age);
-
-content.innerHTML = `
-<div class="top">
-<a class="back" href="/onboarding.html">← Cambia esploratore</a>
-<div class="badge">Casa narrativa FABLEA</div>
-<a class="back" href="/index.html">Home</a>
-</div>
-
-<section class="hero">
-<div class="glow"></div>
-
-<div class="avatar-card">
-<div class="avatar">${avatarFor(profile.age)}</div>
-<h2>${escapeHTML(profile.name)}</h2>
-<div class="meta">${escapeHTML(ageLabel(profile.age))}</div>
-</div>
-
-<div class="hero-copy">
-<h1>Bentornato nel mondo di ${escapeHTML(profile.name)}</h1>
-<p>
-Questo è il suo spazio narrativo personale: storie, oggetti simbolici, viaggi, rituali e piccole esperienze che crescono nel tempo.  
-FABLEA userà ${escapeHTML(toneFor(profile))}
-</p>
-<div class="tags">${tags}</div>
-</div>
-</section>
-
-<section class="continue">
-<div class="continue-icon">${continueIcon}</div>
-<div>
-<h2>${continueTitle}</h2>
-<p>${continueText}</p>
-<div class="actions" style="justify-content:flex-start;margin-top:24px;">
-${lastStory ? `<button class="button secondary" onclick="startExperience('Continua il viaggio')">Continua il viaggio</button>` : ''}
-<a class="button" href="/story.html">Nuova storia</a>
-</div>
-</div>
-</section>
-
-<h2 class="section-title">Il mondo ricorda</h2>
-
-<section class="grid">
-
-<div class="card">
-<div class="card-icon">⭐</div>
-<h3>Tesori trovati</h3>
-<p>Piccoli oggetti simbolici che rendono il mondo familiare e danno continuità alle esperienze.</p>
-<div class="treasures">
-${treasures.length ? treasures.map(item => `<span class="treasure">${escapeHTML(item)}</span>`).join('') : '<span class="treasure">Nessun tesoro ancora conquistato</span>'}
-</div>
-</div>
-
-<div class="card">
-<div class="card-icon">📖</div>
-<h3>Storie vissute</h3>
-<p>${escapeHTML(profile.name)} ha già vissuto <strong>${storyCount}</strong> esperienze FABLEA su questo dispositivo.</p>
-<div class="treasures">
-<span class="treasure">${storyCount ? '✨ Mondo attivo' : '🌱 Mondo nuovo'}</span>
-<span class="treasure">${lastStory ? '📌 Ultimo viaggio salvato' : '📖 Prima storia da creare'}</span>
-</div>
-</div>
-
-<div class="card">
-<div class="card-icon">🕯️</div>
-<h3>Rituale attivo</h3>
-<p>
-${memories.rituals.length ? `Ultimo rituale salvato: ${escapeHTML(memories.rituals[memories.rituals.length - 1].treasure || 'luce gentile')}.` : 'Nessun rituale salvato: nascerà quando una storia verrà conclusa.'}
-</p>
-</div>
-
-</section>
-
-<h2 class="section-title">Cosa facciamo oggi?</h2>
-
-<section class="grid">
-
-<div class="card">
-<div class="card-icon">📖</div>
-<h3>Nuova storia</h3>
-<p>Crea una storia più lunga, immersiva e adatta al momento della giornata.</p>
-<div class="actions" style="justify-content:flex-start;margin-top:20px;">
-<a class="button" href="/story.html">Nuova storia</a>
-</div>
-</div>
-
-<div class="card">
-<div class="card-icon">🌙</div>
-<h3>Momento calma</h3>
-<p>Un’esperienza lenta per respirare, abbassare il ritmo e ritrovare presenza.</p>
-<div class="actions" style="justify-content:flex-start;margin-top:20px;">
-<button class="button secondary" onclick="startExperience('Momento calma')">Inizia</button>
-</div>
-</div>
-
-<div class="card">
-<div class="card-icon">👐</div>
-<h3>Missione creativa</h3>
-<p>Una piccola idea per portare la storia fuori dallo schermo, con mani e fantasia.</p>
-<div class="actions" style="justify-content:flex-start;margin-top:20px;">
-<button class="button secondary" onclick="startExperience('Missione creativa')">Inizia</button>
-</div>
-</div>
-
-</section>
-
-
-<div class="footer">
-FABLEA non è solo una favola: è un mondo lento, personale e persistente che accompagna immaginazione, calma e scoperta.
-</div>
-`;
-}
-
-render();
-</script>
-
+      document.querySelectorAll('.quick-mode').forEach(button => {
+        button.addEventListener('click', () => {
+          localStorage.removeItem(F.KEYS.prepared);
+          localStorage.setItem('fableaStoryData', JSON.stringify({
+            profileId:profile.id,
+            family:button.dataset.family,
+            mood:button.dataset.mood,
+            duration:profile.duration,
+            scenario:profile.primaryWorld,
+            firstStory:false
+          }));
+          localStorage.removeItem('fableaReopenStory');
+          location.href = '/story-result.html';
+        });
+      });
+    }
+  </script>
 </body>
 </html>

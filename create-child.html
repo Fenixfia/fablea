@@ -1,169 +1,203 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FABLEA | Onboarding</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="/assets/css/fablea.css">
-<script src="/assets/js/fablea-ui.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FABLEA | Crea il mondo del bambino</title>
+  <link rel="stylesheet" href="/assets/css/fablea.css">
+  <script src="/assets/js/fablea-ui.js"></script>
+  <script src="/assets/js/fablea-grammar.js"></script>
+  <script src="/assets/js/fablea-profile.js"></script>
+  <script src="/stories-v2/age-2-4.js"></script>
+  <script src="/stories-v2/age-5-7.js"></script>
+  <script src="/stories-v2/age-8-10.js"></script>
+  <script src="/stories-v2/age-11-12.js"></script>
+  <script src="/stories-v2/index.js"></script>
+  <script src="/assets/js/fablea-story-engine.js"></script>
 </head>
-
 <body class="fablea-page">
+  <main class="card">
+    <div class="top">
+      <a class="back" href="/profile.html">← Profili</a>
+      <div class="badge">Identità narrativa</div>
+    </div>
 
-<main class="card">
+    <section class="hero">
+      <h1>Creiamo il suo mondo una volta sola.</h1>
+      <p class="intro">Queste informazioni guideranno storie, grammatica, ritmo e memoria. Nella creazione quotidiana chiederemo soltanto ciò che cambia.</p>
+    </section>
 
-<div class="badge">Onboarding genitore</div>
+    <form id="profileForm" novalidate>
+      <label for="name">Nome</label>
+      <input id="name" name="name" autocomplete="off" placeholder="Es. Cesare" required>
 
-<h1>Crea il suo piccolo mondo.</h1>
+      <label for="age">Fascia d’età</label>
+      <select id="age" name="age">
+        <option value="2-4">2–4 anni</option>
+        <option value="5-7">5–7 anni</option>
+        <option value="8-10">8–10 anni</option>
+        <option value="11-12">11–12 anni</option>
+      </select>
 
-<div class="intro">
-Aggiungi uno o più bambini. FABLEA userà ogni profilo per adattare storie, immagini, voce, ritmo e attività.
-</div>
+      <label for="gender">Genere grammaticale</label>
+      <select id="gender" name="gender">
+        <option value="male">Maschile</option>
+        <option value="female">Femminile</option>
+        <option value="neutral">Forma neutra</option>
+        <option value="unspecified">Preferisco non specificarlo</option>
+      </select>
+      <p class="note">Serve esclusivamente per accordi naturali nel testo. Non associa temi, colori o attività a un genere.</p>
 
-<label>Nome del bambino</label>
-<input id="childName" type="text" placeholder="Es. Cesare">
+      <label for="primaryWorld">Mondo principale</label>
+      <select id="primaryWorld" name="primaryWorld"></select>
+      <p class="note">Questo diventa il mondo di casa. La prima storia partirà automaticamente da qui.</p>
 
-<label>Fascia evolutiva</label>
-<select id="childAge">
-<option value="2-4">2–4 anni • Meraviglia</option>
-<option value="5-7">5–7 anni • Esplorazione</option>
-<option value="8-10">8–10 anni • Identità</option>
-<option value="11-12">11–12 anni • Direzione</option>
-</select>
+      <label>Interessi secondari</label>
+      <div class="grid" id="interests" aria-label="Interessi secondari"></div>
 
-<label>Cosa ama di più?</label>
-<div class="grid" id="interests">
-<div class="choice">🌙 Luna</div>
-<div class="choice">🦊 Animali</div>
-<div class="choice">🌊 Mare</div>
-<div class="choice">🦖 Dinosauri</div>
-<div class="choice">🚀 Spazio</div>
-<div class="choice">✨ Magia</div>
-<div class="choice">👑 Principesse</div>
-<div class="choice">🐺 Lupo gentile</div>
-<div class="choice">👐 Manualità</div>
-</div>
+      <label for="favoriteCompanion">Compagno preferito <span class="muted">(facoltativo)</span></label>
+      <input id="favoriteCompanion" name="favoriteCompanion" placeholder="Es. una volpe, un robot, un piccolo drago">
 
-<label>Che tipo di supporto vuoi da FABLEA?</label>
-<select id="support">
-<option>Calmare la sera</option>
-<option>Accendere l’immaginazione</option>
-<option>Aiutare con le emozioni</option>
-<option>Stimolare curiosità</option>
-<option>Favorire piccoli rituali</option>
-</select>
+      <label for="support">Che cosa dovrebbe sostenere FABLEA?</label>
+      <select id="support" name="support"></select>
 
-<label>Durata ideale delle storie</label>
-<select id="duration">
-<option>Breve • 2–4 minuti</option>
-<option>Media • 5–8 minuti</option>
-<option>Lunga • 8–12 minuti</option>
-</select>
+      <label for="duration">Durata abituale</label>
+      <select id="duration" name="duration">
+        <option>Breve</option>
+        <option selected>Media</option>
+        <option>Lunga</option>
+      </select>
 
-<button class="button" onclick="saveProfile()">Salva profilo bambino</button>
+      <label for="storyStyle">Stile narrativo preferito</label>
+      <select id="storyStyle" name="storyStyle">
+        <option value="calm">Calmo</option>
+        <option value="adventurous" selected>Avventuroso</option>
+        <option value="funny">Divertente</option>
+        <option value="mysterious">Misterioso</option>
+        <option value="emotional">Emotivo</option>
+      </select>
 
-<div class="saved">
-<h2>Profili già creati</h2>
-<div class="profile-list" id="savedProfiles"></div>
-</div>
+      <button class="button primary" id="submitProfile" type="submit">Salva e prepara la prima storia</button>
+    </form>
 
-<div class="note">
-Per ora profili e preferenze restano salvati su questo dispositivo. Se scegli di generare l’audio, il testo della storia può essere inviato al servizio vocale ElevenLabs per creare la narrazione. Nessun account reale o pagamento viene creato da questo prototipo.
-</div>
+    <div id="summary" aria-live="polite"></div>
+  </main>
 
-<div class="nav">
-<a href="/index.html">Home</a>
-<a href="/profile.html">Profili</a>
-<a href="/story.html">Crea storia</a>
-<a href="/library.html">Libreria</a>
-</div>
+  <script>
+    (() => {
+      'use strict';
 
-</main>
+      const F = window.FableaProfile;
+      const E = window.FableaStoryEngine;
+      const formEl = document.getElementById('profileForm');
+      const nameInput = document.getElementById('name');
+      const ageSelect = document.getElementById('age');
+      const genderSelect = document.getElementById('gender');
+      const primaryWorldSelect = document.getElementById('primaryWorld');
+      const interestsContainer = document.getElementById('interests');
+      const companionInput = document.getElementById('favoriteCompanion');
+      const supportSelect = document.getElementById('support');
+      const durationSelect = document.getElementById('duration');
+      const storyStyleSelect = document.getElementById('storyStyle');
+      const summaryEl = document.getElementById('summary');
+      const submitButton = document.getElementById('submitProfile');
+      const selectedInterests = new Set();
 
-<script>
-let selectedInterests = [];
+      if(!F || !E || !formEl){
+        summaryEl.innerHTML = '<div class="error-box">FABLEA non è riuscita a caricare il modulo del profilo. Ricarica la pagina e riprova.</div>';
+        return;
+      }
 
-document.querySelectorAll('.choice').forEach(choice=>{
-choice.addEventListener('click',()=>{
-choice.classList.toggle('active');
+      primaryWorldSelect.innerHTML = F.WORLDS.map(world => `<option>${F.escapeHTML(world)}</option>`).join('');
+      supportSelect.innerHTML = F.SUPPORTS.map(item => `<option>${F.escapeHTML(item)}</option>`).join('');
 
-const value = choice.innerText;
+      function renderInterests(){
+        const primary = primaryWorldSelect.value;
+        selectedInterests.delete(primary);
+        interestsContainer.innerHTML = F.WORLDS
+          .filter(world => world !== primary)
+          .map(world => `<button class="choice ${selectedInterests.has(world) ? 'active' : ''}" type="button" data-value="${F.escapeHTML(world)}" aria-pressed="${selectedInterests.has(world)}">${F.escapeHTML(world)}</button>`)
+          .join('');
+        interestsContainer.querySelectorAll('.choice').forEach(button => {
+          button.addEventListener('click', () => {
+            const value = button.dataset.value;
+            if(selectedInterests.has(value)) selectedInterests.delete(value);
+            else selectedInterests.add(value);
+            renderInterests();
+          });
+        });
+      }
 
-if(selectedInterests.includes(value)){
-selectedInterests = selectedInterests.filter(item => item !== value);
-}else{
-selectedInterests.push(value);
-}
-});
-});
+      primaryWorldSelect.addEventListener('change', renderInterests);
+      renderInterests();
 
-function getProfiles(){
-return JSON.parse(localStorage.getItem('fableaChildProfiles') || '[]');
-}
+      formEl.addEventListener('submit', event => {
+        event.preventDefault();
+        const childName = nameInput.value.trim();
+        if(!childName){
+          nameInput.focus();
+          alert('Inserisci il nome del bambino.');
+          return;
+        }
 
-function saveProfiles(profiles){
-localStorage.setItem('fableaChildProfiles', JSON.stringify(profiles));
-}
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sto preparando il suo mondo…';
+        summaryEl.innerHTML = '';
 
-function ageLabel(value){
-if(value === '2-4') return 'Meraviglia';
-if(value === '5-7') return 'Esplorazione';
-if(value === '8-10') return 'Identità';
-if(value === '11-12') return 'Direzione';
-return 'FABLEA';
-}
+        try{
+          const profile = F.saveProfile({
+            id: `child-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,
+            name: childName,
+            age: ageSelect.value,
+            gender: genderSelect.value,
+            primaryWorld: primaryWorldSelect.value,
+            interests: [...selectedInterests],
+            favoriteCompanion: companionInput.value.trim(),
+            support: supportSelect.value,
+            duration: durationSelect.value,
+            storyStyle: storyStyleSelect.value,
+            createdAt: new Date().toISOString(),
+            schemaVersion: 2
+          });
 
-function renderProfiles(){
-const container = document.getElementById('savedProfiles');
-const profiles = getProfiles();
+          const request = {
+            profileId: profile.id,
+            scenario: profile.primaryWorld,
+            family: 'avventura',
+            mood: 'Curiosità e voglia di scoprire',
+            duration: profile.duration,
+            firstStory: true
+          };
+          const preparedStory = E.buildStory(profile, request);
+          localStorage.setItem(F.KEYS.prepared, JSON.stringify(preparedStory));
+          localStorage.setItem('fableaStoryData', JSON.stringify(request));
 
-if(!profiles.length){
-container.innerHTML = '<span class="profile-pill">Nessun profilo ancora</span>';
-return;
-}
-
-container.replaceChildren(...profiles.map(profile => {
-const pill = document.createElement('span');
-pill.className = 'profile-pill';
-pill.textContent = `${profile.name} • ${ageLabel(profile.age)}`;
-return pill;
-}));
-}
-
-function saveProfile(){
-
-const name = document.getElementById('childName').value.trim();
-
-if(!name){
-alert('Inserisci il nome del bambino.');
-return;
-}
-
-const profile = {
-id: Date.now().toString(),
-name:name,
-age:document.getElementById('childAge').value,
-interests:selectedInterests,
-support:document.getElementById('support').value,
-duration:document.getElementById('duration').value,
-createdAt:new Date().toISOString()
-};
-
-const profiles = getProfiles();
-profiles.push(profile);
-
-saveProfiles(profiles);
-
-localStorage.setItem('fableaSelectedChildId', profile.id);
-
-window.location.href = '/profile.html';
-}
-
-renderProfiles();
-</script>
-
+          summaryEl.innerHTML = `
+            <section class="profile-note">
+              <div class="kicker">Il mondo è pronto</div>
+              <h2>${F.escapeHTML(profile.name)} entra in ${F.escapeHTML(profile.primaryWorld)}</h2>
+              <p>Prima storia proposta: <strong>${F.escapeHTML(preparedStory.title)}</strong></p>
+              <p>${F.escapeHTML(preparedStory.subtitle)}</p>
+              <div class="tags">
+                <span class="tag">${F.escapeHTML(F.ageLabel(profile.age))}</span>
+                <span class="tag">${F.escapeHTML(profile.duration)}</span>
+                <span class="tag">${preparedStory.wordCount} parole</span>
+              </div>
+              <div class="actions">
+                <a class="button primary" href="/story-result.html?prepared=1">Apri la prima storia</a>
+                <a class="button secondary" href="/child-hub.html">Entra nel suo mondo</a>
+              </div>
+            </section>`;
+          summaryEl.scrollIntoView({behavior:'smooth', block:'start'});
+        }catch(error){
+          console.error('Profile creation failed', error);
+          summaryEl.innerHTML = `<div class="error-box"><strong>Il profilo non è stato creato.</strong><br>${F.escapeHTML(error && error.message ? error.message : 'Riprova tra poco.')}</div>`;
+        }finally{
+          submitButton.disabled = false;
+          submitButton.textContent = 'Salva e prepara la prima storia';
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

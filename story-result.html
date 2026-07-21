@@ -1,530 +1,215 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FABLEA | Libro vivo</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<script src="/stories.js"></script>
-
-<link rel="stylesheet" href="/assets/css/fablea.css">
-<script src="/assets/js/fablea-ui.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FABLEA | Libro vivo</title>
+  <link rel="stylesheet" href="/assets/css/fablea.css">
+  <script src="/assets/js/fablea-ui.js"></script>
+  <script src="/assets/js/fablea-grammar.js"></script>
+  <script src="/assets/js/fablea-profile.js"></script>
+  <script src="/stories-v2/age-2-4.js"></script>
+  <script src="/stories-v2/age-5-7.js"></script>
+  <script src="/stories-v2/age-8-10.js"></script>
+  <script src="/stories-v2/age-11-12.js"></script>
+  <script src="/stories-v2/index.js"></script>
+  <script src="/assets/js/fablea-story-engine.js"></script>
 </head>
-
 <body class="fablea-page theme-night" data-theme="night">
-
-<main class="stage">
-
-<div class="top">
-<a class="back" href="/story.html">← Modifica esperienza</a>
-<div class="badge">Libro vivo FABLEA</div>
-<a class="back" href="/child-hub.html">⌂ Mondo bambino</a>
-</div>
-
-<section class="hero">
-<h1 id="mainTitle">La storia è pronta.</h1>
-<div class="subtitle">
-Leggi, sfoglia o ascolta la voce narrante. <span class="child-pill" id="childName">Bambino</span>
-</div>
-</section>
-
-<section class="book" id="bookSection">
-
-<div class="illustration" id="illustration">
-<div class="scene-art" id="sceneArt">🌙 ✨ 🧸</div>
-</div>
-
-<div class="page-card">
-<div>
-<div class="kicker">Pagina della storia</div>
-<h2 class="story-title" id="storyTitle">Storia FABLEA</h2>
-
-<div class="meta">
-<span id="ageMeta">Fascia</span>
-<span id="moodMeta">Mondo narrativo</span>
-<span id="worldMeta">Mondo FABLEA</span>
-</div>
-
-<div class="text" id="pageText">La storia sta arrivando...</div>
-
-<div class="counter" id="counter">Pagina 1 di 1</div>
-<div class="progress"><div class="progress-fill" id="progressFill"></div></div>
-</div>
-
-<div class="controls">
-<button class="button" id="prevBtn">← Pagina prima</button>
-<button class="button primary" id="nextBtn">Pagina dopo →</button>
-</div>
-</div>
-
-</section>
-
-<section class="audio-zone">
-<div class="audio-status" id="audioStatus" role="status" aria-live="polite">
-Voce opzionale: puoi leggere da solo o avviare la narrazione automatica.
-</div>
-
-<div class="audio-buttons">
-<button class="small-btn primary" id="voiceBtn">▶ Ascolta e sfoglia</button>
-<button class="small-btn" id="pauseBtn">Pausa</button>
-<button class="small-btn" id="restartBtn">Ricomincia</button>
-</div>
-
-<audio id="storyAudio"></audio>
-</section>
-
-<section class="ritual" id="ritualBox">
-<h2>Prima di chiudere il mondo...</h2>
-<p id="ritualText">
-Scegli quale luce lasciare accesa per domani. FABLEA la ricorderà nel mondo del bambino.
-</p>
-<div class="ritual-options">
-<button class="button primary" id="ritualPrimary">⭐ Lascia la luce</button>
-<button class="button" onclick="saveRitual('🕯️ Lanterna gentile')">🕯️ Lanterna gentile</button>
-<button class="button" onclick="saveRitual('🌙 Luna silenziosa')">🌙 Luna silenziosa</button>
-</div>
-</section>
-
-<div class="footer-actions">
-<a class="button" href="/story.html">＋ Nuova esperienza</a>
-<a class="button" href="/child-hub.html">🪐 Torna al mondo</a>
-<a class="button" href="/library.html">📖 Libreria</a>
-</div>
-
-<div class="footer">
-FABLEA • puoi leggere • puoi ascoltare • puoi immaginare con calma ✨
-</div>
-
-</main>
-
-<script>
-const saved = JSON.parse(localStorage.getItem('fableaStoryData') || '{}');
-const existingStory = JSON.parse(localStorage.getItem('fableaCurrentStory') || '{}');
-const reopenMode = localStorage.getItem('fableaReopenStory') === 'true';
-
-const name = reopenMode && existingStory.child ? existingStory.child : (saved.name || 'piccolo esploratore');
-const age = reopenMode && existingStory.age ? existingStory.age : (saved.age || '5-7');
-if(window.FableaUI){ window.FableaUI.applyAge(document.body, age); }
-const theme = reopenMode && existingStory.theme ? existingStory.theme : (saved.theme || 'Foresta magica');
-const mood = saved.mood || 'Curiosa';
-const experience = reopenMode && existingStory.experience ? existingStory.experience : (saved.experience || 'Avventura immaginativa');
-const interests = Array.isArray(saved.interests) ? saved.interests : [];
-const support = saved.support || '';
-const duration = saved.duration || '';
-const safeArtClasses = new Set(['forest','sky','ocean','bridge','space','castle']);
-function safeArt(value){ return safeArtClasses.has(value) ? value : 'space'; }
-
-const STORIES = window.FABLEA_STORIES;
-
-if(!STORIES){
-document.getElementById('bookSection').innerHTML = `
-<div class="error-box">
-<strong>Errore:</strong> il file <code>stories.js</code> non è stato caricato.
-</div>
-`;
-throw new Error('stories.js non caricato');
-}
-
-function personalizeText(text){
-return String(text || '').replaceAll('{{name}}', name).replaceAll('{{mood}}', mood.toLowerCase());
-}
-
-function personalizeParagraphs(paragraphs){
-return (paragraphs || []).map(personalizeText);
-}
-
-function scoreStory(story){
-const haystack = (theme + ' ' + experience + ' ' + interests.join(' ') + ' ' + support + ' ' + duration + ' ' + mood).toLowerCase();
-let score = 0;
-
-(story.keywords || []).forEach(keyword => {
-if(haystack.includes(String(keyword).toLowerCase())) score += 3;
-});
-
-if(haystack.includes('lupo') && personalizeText(story.title).toLowerCase().includes('lupo')) score += 6;
-if(haystack.includes('principesse') && personalizeText(story.title).toLowerCase().includes('principessa')) score += 6;
-if(haystack.includes('mare') && story.art === 'ocean') score += 5;
-if(haystack.includes('spazio') && story.art === 'space') score += 5;
-if(haystack.includes('luna') && (story.keywords || []).includes('luna')) score += 4;
-if(haystack.includes('animali') && (story.keywords || []).some(k => ['lupo','balena','coniglio','orsetto','pesce','volpe'].includes(k))) score += 3;
-if((haystack.includes('calma') || haystack.includes('sera') || haystack.includes('tranquilla')) && (story.keywords || []).some(k => ['luna','sera','calma','silenzio'].includes(k))) score += 5;
-if((haystack.includes('emozioni') || haystack.includes('difficile') || haystack.includes('paura') || haystack.includes('arrabbiata')) && (story.keywords || []).some(k => ['emozioni','coraggio','fiducia','paura','rabbia'].includes(k))) score += 5;
-if((haystack.includes('manualità') || haystack.includes('creativa')) && story.activity) score += 4;
-if(haystack.includes('breve') && (story.paragraphs || []).length <= 4) score += 3;
-if(haystack.includes('lunga') && (story.paragraphs || []).length >= 5) score += 3;
-
-return score;
-}
-
-function getRotationKey(){
-return `${name}|${age}|${theme}|${experience}`;
-}
-
-function getRotationStore(){
-return JSON.parse(localStorage.getItem('fableaStoryRotation') || '{}');
-}
-
-function saveRotationStore(store){
-localStorage.setItem('fableaStoryRotation', JSON.stringify(store));
-}
-
-function pickStory(){
-const list = STORIES[age] && STORIES[age].length ? STORIES[age] : STORIES['5-7'];
-
-if(!list || !list.length){
-throw new Error('Nessuna storia disponibile per questa fascia');
-}
-
-const scored = list
-.map(item => ({item, score:scoreStory(item), title:personalizeText(item.title)}))
-.sort((a,b) => b.score - a.score);
-
-let eligible = scored.filter(entry => entry.score > 0);
-
-if(eligible.length < 2){
-eligible = scored;
-}
-
-const rotationKey = getRotationKey();
-const rotationStore = getRotationStore();
-const recentTitles = rotationStore[rotationKey] || [];
-
-let available = eligible.filter(entry => !recentTitles.includes(entry.title));
-
-if(!available.length){
-rotationStore[rotationKey] = [];
-available = eligible;
-}
-
-const randomIndex = Math.floor(Math.random() * available.length);
-const chosen = available[randomIndex];
-
-const maxMemory = Math.max(1, Math.min(eligible.length - 1, 6));
-const updatedRecent = [chosen.title, ...(rotationStore[rotationKey] || [])]
-.filter((title, index, array) => array.indexOf(title) === index)
-.slice(0, maxMemory);
-
-rotationStore[rotationKey] = updatedRecent;
-saveRotationStore(rotationStore);
-
-return chosen.item;
-}
-
-function ageText(){
-if(age === '2-4') return '2–4 anni';
-if(age === '5-7') return '5–7 anni';
-if(age === '8-10') return '8–10 anni';
-if(age === '11-12') return '11–12 anni';
-return 'FABLEA';
-}
-
-function moodText(){
-if(mood) return mood;
-if(age === '5-7') return 'Esplorazione e meraviglia';
-if(age === '8-10') return 'Identità ed emozioni';
-if(age === '11-12') return 'Direzione';
-return 'Mondo narrativo';
-}
-
-let title = '';
-let paragraphs = [];
-let storyObject = null;
-
-if(reopenMode && existingStory && existingStory.text){
-
-title = existingStory.title || 'Storia FABLEA';
-paragraphs = existingStory.text.split(/\n\n+/).map(p => p.trim()).filter(Boolean);
-
-storyObject = {
-id: existingStory.id || Date.now().toString(),
-child: existingStory.child || name,
-age: existingStory.age || age,
-theme: existingStory.theme || theme,
-experience: existingStory.experience || experience,
-title:title,
-subtitle:existingStory.subtitle || '',
-icon:existingStory.icon || '✨',
-art:safeArt(existingStory.art),
-scene:existingStory.scene || existingStory.icon || '✨',
-ritual:existingStory.ritual || '⭐ Stella luminosa',
-activity:existingStory.activity || '',
-text:existingStory.text,
-date:existingStory.date || new Date().toLocaleDateString('it-IT')
-};
-
-localStorage.removeItem('fableaReopenStory');
-
-} else {
-
-const selected = pickStory();
-title = personalizeText(selected.title);
-paragraphs = personalizeParagraphs(selected.paragraphs);
-if(duration.toLowerCase().includes('breve')){
-paragraphs = paragraphs.slice(0, Math.max(2, Math.min(3, paragraphs.length)));
-}
-if(duration.toLowerCase().includes('lunga') && paragraphs.length){
-paragraphs = [...paragraphs, `E ${name} poté restare ancora un momento in quel mondo, scegliendo con calma quale piccola luce portare con sé.`];
-}
-
-if(!paragraphs.length){
-paragraphs = ['Questa storia è ancora in costruzione nel mondo FABLEA.'];
-}
-
-const fullText = paragraphs.join('\n\n');
-
-storyObject = {
-id:Date.now().toString(),
-child:name,
-age:age,
-theme:theme,
-experience:experience,
-title:title,
-subtitle:selected.subtitle || '',
-icon:selected.icon || '✨',
-art:safeArt(selected.art),
-scene:selected.scene || selected.icon || '✨',
-ritual:selected.ritual || '⭐ Stella luminosa',
-activity:selected.activity || '',
-text:fullText,
-date:new Date().toLocaleDateString('it-IT')
-};
-
-localStorage.setItem('fableaCurrentStory', JSON.stringify(storyObject));
-
-const savedStories = JSON.parse(localStorage.getItem('fableaSavedStories') || '[]');
-const exists = savedStories.some(item => item.title === storyObject.title && item.child === storyObject.child && item.theme === storyObject.theme);
-
-if(!exists){
-savedStories.push(storyObject);
-localStorage.setItem('fableaSavedStories', JSON.stringify(savedStories.slice(-100)));
-}
-
-}
-
-let currentPage = 0;
-let autoTimer = null;
-let audioUrl = null;
-let isGeneratingAudio = false;
-let manualPageChangeAt = 0;
-
-function renderPage(){
-const pageText = document.getElementById('pageText');
-const sceneArt = document.getElementById('sceneArt');
-const illustration = document.getElementById('illustration');
-
-pageText.classList.add('fade');
-sceneArt.style.opacity = '0.2';
-sceneArt.style.transform = 'translateY(10px) scale(.96)';
-
-setTimeout(() => {
-pageText.innerText = paragraphs[currentPage];
-pageText.classList.remove('fade');
-
-sceneArt.innerText = storyObject.scene;
-sceneArt.style.opacity = '1';
-sceneArt.style.transform = '';
-
-illustration.className = 'illustration ' + safeArt(storyObject.art);
-
-document.getElementById('counter').innerText = `Pagina ${currentPage + 1} di ${paragraphs.length}`;
-document.getElementById('progressFill').style.width = `${((currentPage + 1) / paragraphs.length) * 100}%`;
-
-document.getElementById('prevBtn').disabled = currentPage === 0;
-document.getElementById('nextBtn').innerText = currentPage === paragraphs.length - 1 ? 'Rituale finale ✨' : 'Pagina dopo →';
-
-if(currentPage === paragraphs.length - 1){
-document.getElementById('ritualBox').style.display = 'block';
-}
-},180);
-}
-
-function nextPage(){
-manualPageChangeAt = Date.now();
-if(currentPage < paragraphs.length - 1){
-currentPage++;
-renderPage();
-}else{
-document.getElementById('ritualBox').style.display = 'block';
-document.getElementById('ritualBox').scrollIntoView({behavior:'smooth',block:'center'});
-}
-}
-
-function prevPage(){
-manualPageChangeAt = Date.now();
-if(currentPage > 0){
-currentPage--;
-renderPage();
-}
-}
-
-document.getElementById('childName').innerText = name;
-document.getElementById('storyTitle').innerText = title;
-document.getElementById('ageMeta').innerText = ageText();
-document.getElementById('moodMeta').innerText = moodText();
-document.getElementById('worldMeta').innerText = theme || 'Mondo FABLEA';
-document.getElementById('sceneArt').innerText = storyObject.scene;
-document.getElementById('illustration').className = 'illustration ' + safeArt(storyObject.art);
-document.getElementById('ritualPrimary').innerText = storyObject.ritual;
-document.getElementById('ritualPrimary').onclick = function(){ saveRitual(storyObject.ritual); };
-
-document.getElementById('prevBtn').onclick = prevPage;
-document.getElementById('nextBtn').onclick = nextPage;
-
-renderPage();
-
-const audio = document.getElementById('storyAudio');
-const voiceBtn = document.getElementById('voiceBtn');
-const pauseBtn = document.getElementById('pauseBtn');
-const restartBtn = document.getElementById('restartBtn');
-const audioStatus = document.getElementById('audioStatus');
-
-voiceBtn.onclick = async function(){
-if(isGeneratingAudio) return;
-try{
-isGeneratingAudio = true;
-voiceBtn.disabled = true;
-voiceBtn.innerText = 'Genero voce...';
-audioStatus.innerText = 'Sto creando la voce narrante. Puoi continuare a leggere mentre preparo l’audio.';
-
-const response = await fetch('/api/tts',{
-method:'POST',
-headers:{'Content-Type':'application/json'},
-body:JSON.stringify({text:storyObject.text})
-});
-
-if(!response.ok){
-let message = 'Voce non disponibile in questo momento.';
-try { message = (await response.json()).error || message; } catch (_) {}
-throw new Error('La voce non è disponibile adesso. Puoi continuare a leggere e riprovare tra poco.');
-}
-
-const blob = await response.blob();
-
-if(audioUrl){
-URL.revokeObjectURL(audioUrl);
-}
-
-audioUrl = URL.createObjectURL(blob);
-audio.src = audioUrl;
-
-currentPage = 0;
-renderPage();
-
-await audio.play();
-
-voiceBtn.innerText = 'Voce attiva';
-audioStatus.innerText = 'La voce sta narrando. Le pagine avanzano automaticamente.';
-
-startAutoFlip();
-
-}catch(error){
-audioStatus.innerText = error.message || 'La voce non è disponibile adesso. Puoi continuare a leggere.';
-voiceBtn.innerText = 'Riprova voce';
-}finally{
-isGeneratingAudio = false;
-voiceBtn.disabled = false;
-}
-};
-
-pauseBtn.onclick = function(){
-if(!audio.src){
-audioStatus.innerText = 'Prima avvia la voce narrante.';
-return;
-}
-
-if(audio.paused){
-audio.play();
-pauseBtn.innerText = 'Pausa';
-audioStatus.innerText = 'La voce riprende con calma.';
-startAutoFlip();
-}else{
-audio.pause();
-pauseBtn.innerText = 'Riprendi';
-audioStatus.innerText = 'Voce in pausa.';
-stopAutoFlip();
-}
-};
-
-restartBtn.onclick = function(){
-stopAutoFlip();
-currentPage = 0;
-renderPage();
-
-if(audio.src){
-audio.currentTime = 0;
-audio.play();
-startAutoFlip();
-}
-};
-
-function startAutoFlip(){
-stopAutoFlip();
-
-const estimatedSeconds = paragraphs.length * 13;
-const total = Math.max(audio.duration || estimatedSeconds, estimatedSeconds);
-const interval = Math.max(5500, (total * 1000) / paragraphs.length);
-
-autoTimer = setInterval(() => {
-if(Date.now() - manualPageChangeAt < interval) return;
-if(currentPage < paragraphs.length - 1){
-currentPage++;
-renderPage();
-}else{
-stopAutoFlip();
-}
-}, interval);
-}
-
-function stopAutoFlip(){
-if(autoTimer){
-clearInterval(autoTimer);
-autoTimer = null;
-}
-}
-
-audio.addEventListener('loadedmetadata', () => {
-if(!audio.paused){
-startAutoFlip();
-}
-});
-
-audio.addEventListener('ended', () => {
-stopAutoFlip();
-currentPage = paragraphs.length - 1;
-renderPage();
-document.getElementById('ritualBox').style.display = 'block';
-audioStatus.innerText = 'La storia è finita. Ora puoi lasciare una piccola luce nel mondo FABLEA.';
-});
-
-function saveRitual(treasure){
-const child = name;
-const state = JSON.parse(localStorage.getItem("fableaWorldState") || "{}");
-
-if(!state[child]){
-state[child] = {treasures:[],rituals:[],lastStory:null,lastActivity:null,updatedAt:null};
-}
-
-if(!state[child].treasures.includes(treasure)){
-state[child].treasures.push(treasure);
-}
-
-state[child].rituals.push({
-treasure:treasure,
-story:title,
-activity:storyObject.activity || '',
-date:new Date().toLocaleDateString("it-IT")
-});
-
-state[child].lastStory = title;
-state[child].lastActivity = storyObject.activity || '';
-state[child].updatedAt = new Date().toISOString();
-
-localStorage.setItem("fableaWorldState", JSON.stringify(state));
-
-document.getElementById('ritualText').innerText = 'La luce è stata lasciata accesa. Domani il mondo la ricorderà.';
-}
-</script>
-
+  <main class="stage">
+    <div class="top">
+      <a class="back" href="/story.html">← Modifica esperienza</a>
+      <div class="badge">Libro vivo FABLEA</div>
+      <a class="back" href="/child-hub.html">⌂ Mondo bambino</a>
+    </div>
+
+    <section class="hero">
+      <div class="kicker" id="mainKicker">La storia di oggi</div>
+      <h1 id="mainTitle">La storia è pronta.</h1>
+      <div class="subtitle" id="mainSubtitle"></div>
+      <div class="meta" id="storyMeta"></div>
+    </section>
+
+    <section class="book">
+      <div class="illustration" id="illustration" aria-hidden="true">
+        <div class="scene-art" id="sceneArt">✨</div>
+      </div>
+      <article class="page-card" aria-live="polite">
+        <div>
+          <div class="kicker" id="kicker">Scena narrativa</div>
+          <h2 class="story-title" id="title"></h2>
+          <div class="text" id="text"></div>
+          <div class="counter" id="counter"></div>
+          <div class="progress" aria-label="Avanzamento storia"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+        <div class="controls">
+          <button class="button" id="prev" type="button">← Pagina precedente</button>
+          <button class="button primary" id="next" type="button">Pagina successiva →</button>
+        </div>
+      </article>
+    </section>
+
+    <section class="audio-zone">
+      <div class="audio-status" id="audioStatus" aria-live="polite">Puoi ascoltare la pagina corrente oppure l’intera storia.</div>
+      <div class="audio-buttons">
+        <button class="small-btn primary" id="voicePageBtn" type="button">▶ Ascolta pagina</button>
+        <button class="small-btn" id="voiceAllBtn" type="button">Ascolta tutta</button>
+        <button class="small-btn" id="pauseBtn" type="button">Pausa</button>
+      </div>
+      <audio id="storyAudio"></audio>
+    </section>
+
+    <section class="ritual" id="ritualBox">
+      <div class="kicker">La storia si chiude, il ricordo resta</div>
+      <h2>Rituale finale</h2>
+      <p id="ritualText"></p>
+      <p><strong>Tesoro:</strong> <span id="treasureText"></span></p>
+      <p><strong>Attività:</strong> <span id="activity"></span></p>
+      <button class="button primary" id="saveRitualBtn" type="button">Conserva nel suo mondo</button>
+    </section>
+
+    <div class="footer-actions">
+      <a class="button" href="/story.html">＋ Nuova esperienza</a>
+      <a class="button" href="/library.html">📖 Libreria</a>
+    </div>
+  </main>
+
+  <script>
+    const F = FableaProfile;
+    const E = FableaStoryEngine;
+    const params = new URLSearchParams(location.search);
+    let profile = F.getSelectedProfile();
+    const request = F.readJSON('fableaStoryData', {});
+    const current = F.readJSON('fableaCurrentStory', null);
+    const prepared = F.readJSON(F.KEYS.prepared, null);
+    const reopenMode = localStorage.getItem('fableaReopenStory') === 'true';
+    let story;
+
+    if(reopenMode && current){
+      story = current;
+      localStorage.removeItem('fableaReopenStory');
+    }else if(prepared && profile && prepared.childId === profile.id && (params.get('prepared') === '1' || request.firstStory)){
+      story = prepared;
+      localStorage.removeItem(F.KEYS.prepared);
+    }else{
+      if(!profile){
+        location.replace('/onboarding.html');
+        throw new Error('Profilo mancante');
+      }
+      story = E.buildStory(profile, {
+        scenario: request.scenario || profile.primaryWorld,
+        family: request.family || 'avventura',
+        mood: request.mood || 'Curiosità e voglia di scoprire',
+        duration: request.duration || profile.duration,
+        experience: request.family || ''
+      });
+    }
+
+    profile = story.profileSnapshot || profile || {id:story.childId,name:story.child,age:story.age,gender:story.gender};
+    F.setSelectedProfile(profile.id);
+    if(window.FableaUI) window.FableaUI.applyAge(document.body, story.age);
+    story = E.saveStory(story);
+
+    const pages = Array.isArray(story.pages) && story.pages.length
+      ? story.pages
+      : String(story.text || '').split(/\n\n+/).map((pageText,index) => ({id:`legacy-${index}`,scene:`Scena ${index + 1}`,text:pageText}));
+    let pageIndex = Math.min(Math.max(Number(story.resumePage) || 0, 0), pages.length - 1);
+    let audioUrl = null;
+
+    mainTitle.textContent = story.title;
+    mainSubtitle.textContent = story.subtitle || '';
+    mainKicker.textContent = `${story.child} • ${F.ageLabel(story.age)}`;
+    storyMeta.innerHTML = [story.world, story.duration, story.family, `${story.wordCount || E.words(story.text)} parole`, story.companion]
+      .filter(Boolean)
+      .map(item => `<span>${F.escapeHTML(item)}</span>`)
+      .join('');
+    sceneArt.textContent = story.icon || '✨';
+    ritualText.textContent = story.ritual;
+    treasureText.textContent = story.treasure;
+    activity.textContent = story.activity;
+
+    function render({persist=true} = {}){
+      const page = pages[pageIndex];
+      title.textContent = page.scene || `Scena ${pageIndex + 1}`;
+      kicker.textContent = pageIndex === 0 ? 'La storia comincia' : `Scena ${pageIndex + 1}`;
+      text.classList.add('fade');
+      setTimeout(() => {
+        text.textContent = page.text;
+        text.classList.remove('fade');
+      }, 90);
+      counter.textContent = `Pagina ${pageIndex + 1} di ${pages.length}`;
+      progressFill.style.width = `${((pageIndex + 1) / pages.length) * 100}%`;
+      prev.disabled = pageIndex === 0;
+      next.textContent = pageIndex === pages.length - 1 ? 'Vai al rituale ✨' : 'Pagina successiva →';
+      ritualBox.style.display = pageIndex === pages.length - 1 ? 'block' : 'none';
+      if(persist) story = E.updateProgress({...story,pages}, pageIndex);
+    }
+
+    prev.addEventListener('click', () => {
+      if(pageIndex > 0){ pageIndex -= 1; render(); }
+    });
+    next.addEventListener('click', () => {
+      if(pageIndex < pages.length - 1){ pageIndex += 1; render(); }
+      else ritualBox.scrollIntoView({behavior:'smooth',block:'center'});
+    });
+    document.addEventListener('keydown', event => {
+      if(event.key === 'ArrowLeft' && pageIndex > 0){ pageIndex -= 1; render(); }
+      if(event.key === 'ArrowRight' && pageIndex < pages.length - 1){ pageIndex += 1; render(); }
+    });
+
+    async function speak(content){
+      try{
+        audioStatus.textContent = 'Sto preparando la voce…';
+        storyAudio.pause();
+        if(audioUrl) URL.revokeObjectURL(audioUrl);
+        const response = await fetch('/api/tts', {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({text:content})
+        });
+        if(!response.ok){
+          const payload = await response.json().catch(() => ({}));
+          throw new Error(payload.error || 'Voce non disponibile in questo momento.');
+        }
+        audioUrl = URL.createObjectURL(await response.blob());
+        storyAudio.src = audioUrl;
+        await storyAudio.play();
+        audioStatus.textContent = 'Voce attiva.';
+        pauseBtn.textContent = 'Pausa';
+      }catch(error){
+        audioStatus.textContent = error.message || 'Non è stato possibile generare la voce.';
+      }
+    }
+
+    voicePageBtn.addEventListener('click', () => speak(pages[pageIndex].text));
+    voiceAllBtn.addEventListener('click', () => speak(story.text));
+    pauseBtn.addEventListener('click', async () => {
+      if(!storyAudio.src) return;
+      if(storyAudio.paused){ await storyAudio.play(); pauseBtn.textContent = 'Pausa'; }
+      else { storyAudio.pause(); pauseBtn.textContent = 'Riprendi'; }
+    });
+
+    saveRitualBtn.addEventListener('click', () => {
+      const memory = F.getMemory(profile);
+      const treasures = [...(memory.treasures || [])];
+      if(!treasures.includes(story.treasure)) treasures.push(story.treasure);
+      const ritualEntry = {storyId:story.id,story:story.title,treasure:story.treasure,ritual:story.ritual,activity:story.activity,date:new Date().toLocaleDateString('it-IT')};
+      const rituals = [ritualEntry, ...(memory.rituals || []).filter(item => item.storyId !== story.id)];
+      F.updateMemory(profile, {
+        treasures,
+        rituals,
+        lastStory:story.title,
+        lastStoryId:story.id,
+        lastScenario:story.world,
+        lastCompanion:story.companion,
+        lastActivity:story.activity,
+        resume:null
+      });
+      saveRitualBtn.disabled = true;
+      saveRitualBtn.textContent = 'Conservato nel suo mondo ✓';
+    });
+
+    render({persist:false});
+  </script>
 </body>
 </html>
