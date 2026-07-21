@@ -20,6 +20,7 @@ const cssFiles = [
   'assets/css/fablea-shell.css',
   'assets/css/fablea-unified.css',
   'assets/css/fablea-public.css',
+  'assets/css/fablea-onboarding.css',
   'assets/css/fablea-mobile-emotion.css'
 ].filter(file => fs.existsSync(file));
 const css = cssFiles.map(file => fs.readFileSync(file,'utf8')).join('\n');
