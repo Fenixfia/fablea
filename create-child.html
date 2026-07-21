@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/assets/css/fablea.css">
   <link rel="stylesheet" href="/assets/css/fablea-shell.css">
   <link rel="stylesheet" href="/assets/css/fablea-unified.css">
+  <link rel="stylesheet" href="/assets/css/fablea-onboarding.css">
   <script src="/assets/js/fablea-ui.js"></script>
   <script src="/assets/js/fablea-grammar.js"></script>
   <script src="/assets/js/fablea-profile.js"></script>
@@ -18,7 +19,7 @@
   <script src="/assets/js/fablea-story-engine.js"></script>
   <script defer src="/assets/js/fablea-unified-ui.js"></script>
 </head>
-<body class="fablea-page fablea-product" data-world="Magia">
+<body class="fablea-page fablea-product onboarding-page" data-world="FABLEA">
   <main class="card">
     <div class="top">
       <a class="brand" href="/index.html">FABLEA</a>
@@ -26,66 +27,91 @@
       <a class="back" href="/profile.html">Profili</a>
     </div>
 
-    <section class="hero">
-      <div class="kicker">Il primo ingresso</div>
-      <h1>Creiamo il suo mondo una volta sola.</h1>
-      <p class="intro">Queste informazioni guideranno storie, grammatica, ritmo e memoria. Nella creazione quotidiana chiederemo soltanto ciò che cambia davvero.</p>
-    </section>
+    <div class="onboarding-layout">
+      <section class="hero">
+        <div class="kicker">Il primo ingresso</div>
+        <h1>Creiamo il suo mondo una volta sola.</h1>
+        <p class="intro">Queste informazioni guideranno storie, grammatica, ritmo e memoria. Nella creazione quotidiana chiederemo soltanto ciò che cambia davvero.</p>
+      </section>
 
-    <form id="profileForm" novalidate>
-      <label for="name">Nome</label>
-      <input id="name" name="name" autocomplete="off" placeholder="Es. Leo" required>
+      <div class="onboarding-form-panel">
+        <form id="profileForm" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="name">Nome</label>
+              <input id="name" name="name" autocomplete="off" placeholder="Es. Leo" required>
+            </div>
 
-      <label for="age">Fascia d’età</label>
-      <select id="age" name="age">
-        <option value="2-4">2–4 anni</option>
-        <option value="5-7">5–7 anni</option>
-        <option value="8-10">8–10 anni</option>
-        <option value="11-12">11–12 anni</option>
-      </select>
+            <div class="field">
+              <label for="age">Fascia d’età</label>
+              <select id="age" name="age">
+                <option value="2-4">2–4 anni</option>
+                <option value="5-7">5–7 anni</option>
+                <option value="8-10">8–10 anni</option>
+                <option value="11-12">11–12 anni</option>
+              </select>
+            </div>
 
-      <label for="gender">Genere grammaticale</label>
-      <select id="gender" name="gender">
-        <option value="male">Maschile</option>
-        <option value="female">Femminile</option>
-        <option value="neutral">Forma neutra</option>
-        <option value="unspecified">Preferisco non specificarlo</option>
-      </select>
-      <p class="note">Serve esclusivamente per accordi naturali nel testo. Non associa temi, colori o attività a un genere.</p>
+            <div class="field">
+              <label for="gender">Sesso</label>
+              <select id="gender" name="gender" aria-describedby="sexError" required>
+                <option value="" selected disabled>Seleziona</option>
+                <option value="male">Maschio</option>
+                <option value="female">Femmina</option>
+              </select>
+              <p class="error" id="sexError" hidden>Scegli Maschio o Femmina per continuare.</p>
+            </div>
 
-      <label for="primaryWorld">Mondo principale</label>
-      <select id="primaryWorld" name="primaryWorld"></select>
-      <p class="note">Questo diventa il mondo di casa. Anche colori e atmosfera cambiano mentre lo scegli.</p>
+            <div class="field">
+              <label for="primaryWorld">Mondo principale</label>
+              <select id="primaryWorld" name="primaryWorld"></select>
+              <p class="note">Questo diventa il suo mondo di casa.</p>
+            </div>
 
-      <label>Interessi secondari</label>
-      <div class="grid" id="interests" aria-label="Interessi secondari"></div>
+            <div class="field field-wide">
+              <label>Interessi secondari</label>
+              <div class="grid" id="interests" aria-label="Interessi secondari"></div>
+            </div>
 
-      <label for="favoriteCompanion">Compagno preferito <span class="muted">facoltativo</span></label>
-      <input id="favoriteCompanion" name="favoriteCompanion" placeholder="Una principessa, una volpe, un robot, un piccolo drago…">
+            <div class="field field-wide">
+              <label for="favoriteCompanion">Compagno preferito <span class="muted">facoltativo</span></label>
+              <input id="favoriteCompanion" name="favoriteCompanion" placeholder="Una principessa, una volpe, un robot, un piccolo drago…">
+            </div>
 
-      <label for="support">Che cosa dovrebbe sostenere FABLEA?</label>
-      <select id="support" name="support"></select>
+            <div class="field field-wide">
+              <label for="support">Che cosa dovrebbe sostenere FABLEA?</label>
+              <select id="support" name="support"></select>
+            </div>
 
-      <label for="duration">Durata abituale</label>
-      <select id="duration" name="duration">
-        <option>Breve</option>
-        <option selected>Media</option>
-        <option>Lunga</option>
-      </select>
+            <div class="field">
+              <label for="duration">Durata abituale</label>
+              <select id="duration" name="duration">
+                <option>Breve</option>
+                <option selected>Media</option>
+                <option>Lunga</option>
+              </select>
+            </div>
 
-      <label for="storyStyle">Stile narrativo preferito</label>
-      <select id="storyStyle" name="storyStyle">
-        <option value="calm">Calmo</option>
-        <option value="adventurous" selected>Avventuroso</option>
-        <option value="funny">Divertente</option>
-        <option value="mysterious">Misterioso</option>
-        <option value="emotional">Emotivo</option>
-      </select>
+            <div class="field">
+              <label for="storyStyle">Stile narrativo preferito</label>
+              <select id="storyStyle" name="storyStyle">
+                <option value="calm">Calmo</option>
+                <option value="adventurous" selected>Avventuroso</option>
+                <option value="funny">Divertente</option>
+                <option value="mysterious">Misterioso</option>
+                <option value="emotional">Emotivo</option>
+              </select>
+            </div>
 
-      <button class="button primary" id="submitProfile" type="submit">Salva e prepara la prima storia</button>
-    </form>
+            <div class="field field-wide">
+              <button class="button primary" id="submitProfile" type="submit">Salva e prepara la prima storia</button>
+            </div>
+          </div>
+        </form>
 
-    <div id="summary" aria-live="polite"></div>
+        <div id="summary" aria-live="polite"></div>
+      </div>
+    </div>
   </main>
 
   <script>
@@ -97,6 +123,7 @@
       const nameInput = document.getElementById('name');
       const ageSelect = document.getElementById('age');
       const genderSelect = document.getElementById('gender');
+      const sexErrorEl = document.getElementById('sexError');
       const primaryWorldSelect = document.getElementById('primaryWorld');
       const interestsContainer = document.getElementById('interests');
       const companionInput = document.getElementById('favoriteCompanion');
@@ -115,10 +142,14 @@
       primaryWorldSelect.innerHTML = F.WORLDS.map(world => `<option>${F.escapeHTML(world)}</option>`).join('');
       supportSelect.innerHTML = F.SUPPORTS.map(item => `<option>${F.escapeHTML(item)}</option>`).join('');
 
+      genderSelect.addEventListener('change',() => {
+        genderSelect.removeAttribute('aria-invalid');
+        sexErrorEl.hidden = true;
+      });
+
       function renderInterests(){
         const primary = primaryWorldSelect.value;
         selectedInterests.delete(primary);
-        document.body.dataset.world = primary;
         interestsContainer.innerHTML = F.WORLDS
           .filter(world => world !== primary)
           .map(world => `<button class="choice ${selectedInterests.has(world) ? 'active' : ''}" type="button" data-value="${F.escapeHTML(world)}" aria-pressed="${selectedInterests.has(world)}">${F.escapeHTML(world)}</button>`)
@@ -144,8 +175,15 @@
           nameInput.setAttribute('aria-invalid','true');
           return;
         }
+        if(!['male','female'].includes(genderSelect.value)){
+          genderSelect.setAttribute('aria-invalid','true');
+          sexErrorEl.hidden = false;
+          genderSelect.focus();
+          return;
+        }
 
         nameInput.removeAttribute('aria-invalid');
+        genderSelect.removeAttribute('aria-invalid');
         submitButton.disabled = true;
         submitButton.textContent = 'Sto preparando il suo mondo…';
         summaryEl.innerHTML = '';
