@@ -3,15 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>FABLEA | Il tuo mondo</title>
+  <title>FABLEA | Il suo mondo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/fablea.css">
-  <link rel="stylesheet" href="/assets/css/fablea-shell.css">
   <link rel="stylesheet" href="/assets/css/fablea-unified.css">
-  <script src="/assets/js/fablea-ui.js"></script>
-  <script src="/assets/js/fablea-grammar.js"></script>
+  <link rel="stylesheet" href="/assets/css/fablea-beta.css">
   <script src="/assets/js/fablea-profile.js"></script>
   <script src="/stories-v2/age-2-4.js"></script>
   <script src="/stories-v2/age-5-7.js"></script>
@@ -21,139 +19,82 @@
   <script src="/assets/js/fablea-story-engine.js"></script>
   <script src="/assets/js/fablea-world-state-v3.js"></script>
   <script src="/assets/js/fablea-shell.js"></script>
-  <script defer src="/assets/js/fablea-unified-ui.js"></script>
+  <script src="/assets/js/fablea-world-art.js"></script>
+  <script src="/assets/js/fablea-beta-state.js"></script>
 </head>
-<body class="fablea-product" data-world="FABLEA">
-  <div class="shell-page">
-    <header class="shell-top">
-      <a class="brand" href="/child-hub.html">FABLEA</a>
-      <div class="shell-meta"><span id="worldName"></span><a class="profile-link" href="/profile.html">Profili</a></div>
+<body class="beta-page">
+  <div class="beta-frame">
+    <header class="beta-top">
+      <a class="beta-brand" href="/child-hub.html">FABLEA</a>
+      <div class="beta-pill" id="worldLabel">Il suo mondo</div>
+      <nav class="beta-nav"><a href="/child-hub.html">Casa</a><a href="/discover.html">Biblioteca</a><a class="always" href="/profile.html">Profili</a></nav>
     </header>
-    <main class="shell-main" id="root"></main>
-    <div id="dock"></div>
+    <main id="root"></main>
   </div>
 
   <script>
-    (function(){
+    (() => {
       'use strict';
       const F = window.FableaProfile;
       const S = window.FableaShell;
       const W3 = window.FableaWorldStateV3;
+      const A = window.FableaWorldArt;
+      const B = window.FableaBetaState;
       const profile = F.getSelectedProfile();
       const root = document.getElementById('root');
-
       if(!profile){
-        root.innerHTML = `<section class="empty-state"><h1>Questo mondo non è ancora nato.</h1><p>Crea o seleziona un profilo bambino.</p><a class="profile-link" href="/profile.html">Vai ai profili</a></section>`;
+        root.innerHTML = `<section class="beta-card beta-today"><h1>Questo mondo non è ancora nato.</h1><p class="beta-lead">Crea o seleziona un profilo.</p><div class="beta-actions"><a class="beta-button primary" href="/profile.html">Vai ai profili</a></div></section>`;
         return;
       }
 
-      const presentation = S.applyProfile(profile);
-      const memory = F.getMemory(profile);
-      const stories = S.savedFor(profile);
-      const companion = S.companionName(profile);
+      document.body.dataset.world = profile.primaryWorld || 'FABLEA';
+      document.getElementById('worldLabel').textContent = profile.primaryWorld;
+      const summary = B.summary(profile);
+      const continuity = B.reconcile(profile);
+      const memory = B.memory(profile);
+      const stories = B.savedStories(profile);
+      const latestStory = summary.lastStory;
+      const progress = B.activity(profile);
+      const artifact = summary.artifact;
+      const recommendation = continuity.recommendation;
       const worldState = W3 ? W3.get(profile) : null;
-      const visitedWorlds = worldState ? worldState.visitedWorlds : [...new Set(stories.map(story => story.world).filter(Boolean))];
-      const openThreads = worldState ? (worldState.openThreads || []).filter(thread => thread.status !== 'closed') : [];
-      const decisions = worldState ? (worldState.decisions || []).slice(0,4) : [];
-      const relationships = worldState ? (worldState.relationships || []).slice(0,3) : [];
-      const recent = stories.slice(-4).reverse();
-      const allActivityProgress = F.readJSON('fableaActivityProgress',{});
-      const activityProgress = allActivityProgress[profile.id] || {};
-      const activityJourneys = Array.isArray(activityProgress.journeys) ? activityProgress.journeys : [];
-      const activitySkills = [...new Set(activityJourneys.flatMap(journey => Array.isArray(journey.skills) ? journey.skills : []))].slice(-8).reverse();
-      const lastActivityJourney = activityJourneys[activityJourneys.length - 1] || null;
-      const playJourneys = activityJourneys.filter(journey => journey.mode === 'play').length;
-      const learnJourneys = activityJourneys.filter(journey => journey.mode === 'learn').length;
-      document.getElementById('worldName').textContent = presentation.place;
-      document.getElementById('dock').innerHTML = S.renderDock('world');
+      const openThreads = worldState ? (worldState.openThreads || []).filter(item => item.status !== 'closed') : [];
+      const decisions = worldState ? (worldState.decisions || []).slice(0,5) : [];
+      const recent = stories.slice().reverse().slice(0,3);
 
       root.innerHTML = `
-        <header class="content-head">
-          <div class="eyebrow">Il mondo di ${S.escapeHTML(profile.name)}</div>
-          <h1>${S.escapeHTML(presentation.place)}</h1>
-          <p>${S.escapeHTML(presentation.promise)} Qui restano le tracce che possono rendere più vive le storie e le attività future.</p>
-          ${worldState && worldState.lastConsequence ? `<p><strong>L’ultima storia ha lasciato questo segno:</strong> ${S.escapeHTML(worldState.lastConsequence)}</p>` : ''}
-        </header>
-
-        <section class="world-grid">
-          <article class="world-panel">
-            <div class="eyebrow">Compagno principale</div>
-            <h2>${S.escapeHTML(companion)}</h2>
-            <p>È la presenza che accompagna ${S.escapeHTML(profile.name)} nelle scelte e torna nelle storie e nei percorsi senza ricominciare ogni volta da zero.</p>
-            <div class="trace-list"><span class="trace">${S.escapeHTML(presentation.companionIcon)} Compagno</span><span class="trace">${S.escapeHTML(F.ageLabel(profile.age))}</span><span class="trace">${S.escapeHTML(profile.duration)}</span></div>
-          </article>
-
-          <article class="world-panel">
-            <div class="eyebrow">Mondi attraversati</div>
-            <h2>${visitedWorlds.length || 1} luoghi narrativi</h2>
-            <div class="trace-list">${(visitedWorlds.length ? visitedWorlds : [profile.primaryWorld]).map(world => `<span class="trace">${S.escapeHTML(world)}</span>`).join('')}</div>
-          </article>
-
-          <article class="world-panel">
-            <div class="eyebrow">Tesori custoditi</div>
-            <h2>${(memory.treasures || []).length} tracce</h2>
-            ${(memory.treasures || []).length ? `<div class="trace-list">${memory.treasures.map(item => `<span class="trace">${S.escapeHTML(item)}</span>`).join('')}</div>` : '<p>Il primo tesoro apparirà quando una storia lascerà qualcosa di importante nel mondo.</p>'}
-          </article>
-
-          <article class="world-panel">
-            <div class="eyebrow">Rituali condivisi</div>
-            <h2>${(memory.rituals || []).length} ricordi attivi</h2>
-            <p>${(memory.rituals || []).length ? 'Questi gesti possono tornare alla fine di nuove storie quando sono davvero pertinenti.' : 'I rituali conservati appariranno qui, senza classifiche o premi.'}</p>
-          </article>
-
-          <article class="world-panel">
-            <div class="eyebrow">Percorsi esplorati</div>
-            <h2>${activityJourneys.length} esperienze</h2>
-            ${activityJourneys.length
-              ? `<p>${playJourneys} nel Sentiero dei giochi e ${learnJourneys} nel Laboratorio delle scoperte.</p><div class="trace-list">${activitySkills.map(skill => `<span class="trace">${S.escapeHTML(skill)}</span>`).join('')}</div>`
-              : '<p>Giochiamo e Scopriamo lasceranno qui capacità, domande e piccole missioni, senza voti né confronto.</p>'}
-          </article>
-
-          <article class="world-panel">
-            <div class="eyebrow">FABLEA fuori dallo schermo</div>
-            <h2>${lastActivityJourney && lastActivityJourney.mission ? 'Una missione da provare' : 'Il mondo reale aspetta'}</h2>
-            <p>${lastActivityJourney && lastActivityJourney.mission ? S.escapeHTML(lastActivityJourney.mission) : 'Dopo un percorso apparirà una proposta breve da fare, osservare o raccontare lontano dal telefono.'}</p>
-          </article>
-
-          <article class="world-panel">
-            <div class="eyebrow">Fili ancora aperti</div>
-            <h2>${openThreads.length} domande in attesa</h2>
-            ${openThreads.length ? `<div class="trace-list">${openThreads.slice(0,5).map(thread => `<span class="trace">${S.escapeHTML(thread.text)}</span>`).join('')}</div>` : '<p>In questo momento il mondo non ha misteri urgenti. Le nuove storie potranno aprirne uno con naturalezza.</p>'}
-          </article>
-
-          <article class="world-panel">
-            <div class="eyebrow">Cose che il mondo ricorda</div>
-            <h2>${decisions.length} scelte importanti</h2>
-            ${decisions.length ? `<div class="trace-list">${decisions.map(item => `<span class="trace">${S.escapeHTML(item.text)}</span>`).join('')}</div>` : '<p>Le soluzioni scelte nelle storie future lasceranno qui una traccia, senza diventare punteggi o giudizi.</p>'}
-          </article>
-
-          ${relationships.length ? `<article class="world-panel">
-            <div class="eyebrow">Legami cresciuti</div>
-            <h2>${relationships.length} ricordi condivisi</h2>
-            <p>${S.escapeHTML(relationships[0].note)}</p>
-          </article>` : ''}
+        <section class="beta-world-header">
+          <div class="beta-card beta-world-header-copy">
+            <div class="beta-eyebrow">Il mondo di ${F.escapeHTML(profile.name)}</div>
+            <h1 class="beta-title">${F.escapeHTML(profile.primaryWorld)}</h1>
+            <p class="beta-lead">Qui storie, oggetti, attività e domande restano collegate. Non è una raccolta di risultati: è la memoria di ciò che è stato vissuto.</p>
+            <div class="beta-trace-strip"><span class="beta-trace">${summary.storyCount} storie</span><span class="beta-trace">${summary.activityCount} percorsi</span><span class="beta-trace">${summary.treasures.length} tesori</span></div>
+          </div>
+          <div class="beta-card beta-world-header-art">${A.render(profile.primaryWorld,{label:`Il mondo di ${profile.name}`})}</div>
         </section>
 
-        <section class="content-head" style="padding-top:52px">
-          <div class="eyebrow">Ultime tracce</div>
-          <h2 style="font-size:clamp(2.7rem,5vw,4.7rem);margin-top:10px">Le storie che hanno cambiato il mondo.</h2>
+        <section class="beta-continuity" aria-label="Come il mondo sta continuando">
+          <article class="beta-card beta-continuity-step"><span>📖</span><b>Ultima storia</b><p>${latestStory ? F.escapeHTML(latestStory.title) : 'La prima storia deve ancora iniziare.'}</p></article>
+          <article class="beta-card beta-continuity-step"><span>${artifact ? F.escapeHTML(artifact.icon) : '⌂'}</span><b>Ciò che è rimasto</b><p>${artifact ? F.escapeHTML(artifact.title) : 'Il primo oggetto apparirà dopo una storia.'}</p></article>
+          <article class="beta-card beta-continuity-step"><span>🧩</span><b>Ultima scoperta</b><p>${progress.last ? F.escapeHTML((progress.last.skills || []).join(', ') || 'Un percorso completato') : 'Nessun percorso ancora esplorato.'}</p></article>
+          <article class="beta-card beta-continuity-step"><span>${F.escapeHTML(recommendation.icon)}</span><b>Prossima porta</b><p>${F.escapeHTML(recommendation.title)}</p></article>
         </section>
 
-        ${recent.length ? `<section class="story-grid">${recent.map(story => `
-          <article class="story-card">
-            <div class="story-cover" aria-hidden="true">${S.escapeHTML(story.icon || presentation.icon)}</div>
-            <div class="story-body">
-              <div class="story-meta">${S.escapeHTML(S.familyLabel(story.family))} · ${S.escapeHTML(story.duration)}</div>
-              <h2>${S.escapeHTML(story.title)}</h2>
-              <p>${S.escapeHTML(story.v3Consequences && story.v3Consequences.summary || story.subtitle || 'Una traccia conservata nel mondo personale.')}</p>
-              <div class="story-actions"><button class="open-story" type="button" data-saved-id="${S.escapeHTML(story.id)}">Riapri</button></div>
-            </div>
-          </article>`).join('')}</section>` : `<section class="empty-state"><div class="eyebrow">Ancora nessuna traccia</div><h2>Il mondo aspetta la prima storia.</h2><p>Apri una Storia Fablea oppure creane una nuova insieme al compagno.</p><a class="profile-link" href="/discover.html">Scopri le storie</a></section>`}
+        <section class="beta-world-grid">
+          <article class="beta-card beta-world-panel featured"><div class="beta-eyebrow">Stanza dei ricordi</div><h2>${artifact ? F.escapeHTML(artifact.title) : 'La stanza è ancora vuota'}</h2><p>${artifact ? F.escapeHTML(artifact.consequence) : 'La prima esperienza importante lascerà qui un oggetto, una frase o un segno.'}</p>${artifact && artifact.storyTitle ? `<span class="beta-trace">Da ${F.escapeHTML(artifact.storyTitle)}</span>` : ''}</article>
+          <article class="beta-card beta-world-panel"><div class="beta-eyebrow">Capacità incontrate</div><h2>${summary.skills.length} tracce</h2><div class="beta-trace-strip">${summary.skills.length ? summary.skills.map(skill => `<span class="beta-trace">${F.escapeHTML(skill)}</span>`).join('') : '<span class="beta-note">Giochiamo e Scopriamo aggiungeranno qui nuove tracce.</span>'}</div></article>
+          <article class="beta-card beta-world-panel"><div class="beta-eyebrow">Fuori dallo schermo</div><h2>${summary.lastMission ? 'Una missione aperta' : 'Il mondo reale aspetta'}</h2><p>${F.escapeHTML(summary.lastMission || 'Dopo un percorso apparirà una proposta da fare, osservare o raccontare lontano dal telefono.')}</p></article>
+          <article class="beta-card beta-world-panel"><div class="beta-eyebrow">Fili ancora aperti</div><h2>${openThreads.length} domande</h2><div class="beta-trace-strip">${openThreads.length ? openThreads.slice(0,5).map(item => `<span class="beta-trace">${F.escapeHTML(item.text)}</span>`).join('') : '<span class="beta-note">Le nuove storie potranno aprire un mistero con naturalezza.</span>'}</div></article>
+          <article class="beta-card beta-world-panel"><div class="beta-eyebrow">Scelte ricordate</div><h2>${decisions.length} decisioni</h2><div class="beta-trace-strip">${decisions.length ? decisions.map(item => `<span class="beta-trace">${F.escapeHTML(item.text)}</span>`).join('') : '<span class="beta-note">Le decisioni importanti compariranno qui senza diventare voti.</span>'}</div></article>
+          <article class="beta-card beta-world-panel"><div class="beta-eyebrow">Adesso</div><h2>${F.escapeHTML(recommendation.title)}</h2><p>${F.escapeHTML(recommendation.description)}</p><a class="beta-button primary" href="${F.escapeHTML(recommendation.href)}">${F.escapeHTML(recommendation.action)}</a></article>
+        </section>
+
+        ${recent.length ? `<section class="beta-section"><div class="beta-section-head"><div class="beta-eyebrow">Ultime storie</div><h2 class="beta-title">Le porte che hanno cambiato il mondo.</h2></div><div class="beta-story-grid">${recent.map(story => `<article class="beta-card beta-story-card"><div class="beta-story-body"><div class="beta-story-kicker">${F.escapeHTML(story.world || profile.primaryWorld)}</div><h2>${F.escapeHTML(story.title)}</h2><p>${F.escapeHTML(story.v3Consequences && story.v3Consequences.summary || story.subtitle || 'Una traccia conservata nel mondo.')}</p><button class="beta-button secondary" type="button" data-saved-id="${F.escapeHTML(story.id)}">Riapri</button></div></article>`).join('')}</div></section>` : ''}
       `;
 
-      document.querySelectorAll('[data-saved-id]').forEach(button => button.addEventListener('click',() => {
+      root.querySelectorAll('[data-saved-id]').forEach(button => button.addEventListener('click',() => {
         const story = stories.find(item => item.id === button.dataset.savedId);
-        S.openSavedStory(story);
+        if(story) S.openSavedStory(story);
       }));
     })();
   </script>
