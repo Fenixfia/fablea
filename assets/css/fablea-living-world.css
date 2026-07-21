@@ -1,0 +1,68 @@
+/* FABLEA living world — Casa, companion moods, journeys and Live Book polish */
+
+.companion-with-mood{position:relative;isolation:isolate}
+.companion-with-mood .fablea-companion-svg{transform-origin:50% 92%;transition:transform .28s ease,filter .28s ease}
+.companion-mood-ornament{position:absolute;z-index:6;right:10%;top:8%;width:38px;height:38px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.38);border-radius:50%;background:rgba(255,248,229,.92);color:#604e42;font:800 1rem Manrope,system-ui,sans-serif;box-shadow:0 12px 26px rgba(17,25,22,.18);pointer-events:none}
+.companion-mood-happy .fablea-companion-svg{transform:translateY(-5px) rotate(1.5deg);filter:drop-shadow(0 24px 24px rgba(30,42,36,.28)) saturate(1.08)}
+.companion-mood-happy .companion-mood-ornament{color:#a17b20;animation:moodSpark 1.8s ease-in-out infinite}
+.companion-mood-curious .fablea-companion-svg{transform:rotate(-2deg) translateX(-2px)}
+.companion-mood-curious .companion-mood-ornament{background:#eef0dc;color:#536255}
+.companion-mood-encouraging .fablea-companion-svg{transform:translateY(2px) scale(.985)}
+.companion-mood-encouraging .companion-mood-ornament{background:#f0d9d4;color:#8a5850}
+.companion-mood-calm .companion-mood-ornament{opacity:.72;font-size:1.25rem}
+
+/* Casa as a living illustrated path */
+.living-home-map{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:30px;padding:26px;border:1px solid rgba(255,255,255,.18);border-radius:34px;background:linear-gradient(145deg,rgba(255,255,255,.11),rgba(255,255,255,.045));overflow:hidden;isolation:isolate}
+.living-home-map::before{content:"";position:absolute;z-index:-2;inset:0;background:radial-gradient(circle at 50% 48%,color-mix(in srgb,var(--accent) 24%,transparent),transparent 20%),linear-gradient(160deg,color-mix(in srgb,var(--sky-1) 74%,white 5%),var(--sky-2))}
+.living-home-map::after{content:"";position:absolute;z-index:-1;left:5%;right:5%;top:48%;height:4px;border-radius:999px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--accent) 62%,white),color-mix(in srgb,var(--accent-2) 62%,white),transparent);opacity:.44}
+.home-room{position:relative;min-height:220px;padding:22px 20px 18px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid rgba(255,255,255,.22);border-radius:28px;color:inherit;text-decoration:none;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(8,22,23,.48));overflow:hidden;transition:transform .2s ease,border-color .2s ease,background .2s ease}
+.home-room::before{content:"";position:absolute;left:50%;top:25px;width:88px;height:82px;transform:translateX(-50%);border-radius:46% 46% 18% 18%;background:linear-gradient(145deg,color-mix(in srgb,var(--room-color,var(--accent)) 74%,white),color-mix(in srgb,var(--room-color,var(--accent)) 66%,var(--land-2)));box-shadow:0 18px 35px rgba(0,0,0,.2)}
+.home-room::after{content:"";position:absolute;left:50%;top:84px;width:28px;height:35px;transform:translateX(-50%);border-radius:50% 50% 5px 5px;background:rgba(8,18,19,.64);box-shadow:-38px -22px 0 -9px rgba(255,244,203,.7),38px -22px 0 -9px rgba(255,244,203,.7)}
+.home-room:hover,.home-room:focus-visible{transform:translateY(-5px);border-color:color-mix(in srgb,var(--room-color,var(--accent)) 72%,white);background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(8,22,23,.45));outline:none}
+.home-room.read{--room-color:#dfbd72}.home-room.create{--room-color:#c9a8d7}.home-room.play{--room-color:#8fb79d}.home-room.learn{--room-color:#83adc0}
+.home-room-icon{position:absolute;top:49px;left:50%;z-index:2;transform:translateX(-50%);font-size:1.8rem;filter:drop-shadow(0 6px 8px rgba(0,0,0,.2))}
+.home-room strong{font-family:"Cormorant Garamond",Georgia,serif;font-size:2rem;line-height:1;margin:0 0 8px}
+.home-room span{font-size:.86rem;line-height:1.45;color:var(--unified-muted,#dce2df)}
+.home-room small{margin-top:12px;color:color-mix(in srgb,var(--room-color,var(--accent)) 76%,white);font-size:.68rem;font-weight:850;letter-spacing:.12em;text-transform:uppercase}
+.home-traces{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+.home-trace{padding:9px 12px;border:1px solid rgba(255,255,255,.15);border-radius:999px;background:rgba(255,255,255,.055);font-size:.78rem;color:#dce5df}
+.home-trace strong{color:var(--accent);font-weight:850}
+
+/* Activity journeys */
+.activity-session-note{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:-8px 0 24px;padding:14px 16px;border:1px solid rgba(255,255,255,.14);border-radius:18px;background:rgba(255,255,255,.045);color:var(--unified-muted)}
+.activity-session-note strong{color:white}
+.activity-skill-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:22px auto 0;max-width:650px}
+.activity-skill{padding:9px 13px;border:1px solid color-mix(in srgb,var(--accent) 38%,rgba(255,255,255,.15));border-radius:999px;background:color-mix(in srgb,var(--accent) 10%,transparent);color:#f1eee6;font-size:.8rem;font-weight:800}
+.activity-feedback{transition:background .2s ease,border-color .2s ease}
+.activity-feedback[data-result="correct"]{border:1px solid rgba(158,207,166,.42);background:rgba(137,184,145,.16)}
+.activity-feedback[data-result="retry"]{border:1px solid rgba(223,172,154,.38);background:rgba(190,112,105,.12)}
+.activity-next{box-shadow:0 14px 30px rgba(240,202,103,.16)}
+
+/* Live Book opening cover and integrated companion */
+.live-book-cover{position:relative;min-height:min(74svh,720px);margin:0 0 22px;padding:clamp(28px,6vw,72px);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(240px,.7fr);gap:30px;align-items:center;border:1px solid var(--unified-line);border-radius:38px;background:radial-gradient(circle at 78% 22%,var(--portal-1),transparent 11%),radial-gradient(circle at 68% 36%,color-mix(in srgb,var(--portal-2) 60%,transparent),transparent 28%),linear-gradient(150deg,var(--sky-1),var(--land-2));box-shadow:var(--unified-shadow);overflow:hidden}
+.live-book-cover[hidden]{display:none}
+.live-book-cover::after{content:"";position:absolute;left:-10%;right:-10%;bottom:-21%;height:48%;border-radius:50% 50% 0 0;background:linear-gradient(180deg,var(--land-1),var(--land-2));opacity:.88}
+.live-book-cover-copy{position:relative;z-index:2}
+.live-book-cover .eyebrow{margin-bottom:14px}
+.live-book-cover h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(3.4rem,7vw,7.2rem);line-height:.82;letter-spacing:-.055em;margin:0 0 18px;max-width:900px}
+.live-book-cover p{max-width:660px;font-size:1rem}
+.live-book-cover-action{min-height:54px;margin-top:20px;padding:0 24px;border:0;border-radius:999px;background:var(--accent);color:#17261f;font-weight:900}
+.live-book-cover-companion{position:relative;z-index:2;display:grid;place-items:center;min-height:360px}
+.live-book-cover-companion .fablea-companion-svg{width:min(310px,92%);max-height:390px}
+.live-book .illustration .story-companion-visual{right:5%;bottom:3%;width:clamp(96px,18vw,170px);padding:8px;border-radius:42% 46% 30% 34%;background:radial-gradient(circle at 50% 42%,rgba(255,249,225,.18),transparent 70%)}
+.live-book .page-sheet[data-scene-role="turning-point"] .illustration{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 48%,transparent),inset 0 0 100px color-mix(in srgb,var(--accent) 15%,transparent)}
+.live-book .page-sheet[data-scene-role="consequence"] .illustration{filter:saturate(.9) brightness(.97)}
+
+@keyframes moodSpark{50%{transform:translateY(-3px) rotate(8deg);box-shadow:0 15px 32px rgba(161,123,32,.22)}}
+
+@media(max-width:980px){
+  .living-home-map{grid-template-columns:repeat(2,minmax(0,1fr))}.living-home-map::after{display:none}
+  .live-book-cover{grid-template-columns:1fr}.live-book-cover-companion{min-height:250px}.live-book-cover-companion .fablea-companion-svg{max-height:270px}
+}
+@media(max-width:640px){
+  .living-home-map{gap:10px;padding:12px;border-radius:26px}.home-room{min-height:180px;padding:16px 14px;border-radius:21px}.home-room::before{top:20px;width:72px;height:68px}.home-room::after{top:68px;width:24px;height:30px;box-shadow:-30px -18px 0 -8px rgba(255,244,203,.7),30px -18px 0 -8px rgba(255,244,203,.7)}.home-room-icon{top:40px;font-size:1.45rem}.home-room strong{font-size:1.55rem}.home-room span{font-size:.76rem}.home-room small{font-size:.6rem}
+  .companion-mood-ornament{width:32px;height:32px;right:5%;top:5%}
+  .activity-session-note{display:block;font-size:.82rem}.activity-session-note span{display:block;margin-top:5px}
+  .live-book-cover{min-height:auto;padding:28px 20px;border-radius:28px}.live-book-cover h2{font-size:clamp(3.2rem,16vw,4.8rem)}.live-book-cover-companion{min-height:210px}.live-book-cover-companion .fablea-companion-svg{max-height:220px}.live-book-cover-action{width:100%}
+}
+@media(prefers-reduced-motion:reduce){.companion-with-mood .fablea-companion-svg,.companion-mood-ornament,.home-room{animation:none!important;transition:none!important}}
