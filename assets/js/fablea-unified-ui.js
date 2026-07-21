@@ -52,17 +52,20 @@
   }
 
   function ensureStyle(href,attribute){
-    if(document.querySelector(`link[${attribute}]`)) return;
+    const existing = document.querySelector(`link[${attribute}],link[href="${href}"]`);
+    if(existing){existing.setAttribute(attribute,'true');return existing;}
     const stylesheet = document.createElement('link');
     stylesheet.rel = 'stylesheet';
     stylesheet.href = href;
     stylesheet.setAttribute(attribute,'true');
     document.head.appendChild(stylesheet);
+    return stylesheet;
   }
 
   function ensureScript(src,attribute,onload){
-    const existing = document.querySelector(`script[${attribute}]`);
+    const existing = document.querySelector(`script[${attribute}],script[src="${src}"]`);
     if(existing){
+      existing.setAttribute(attribute,'true');
       if(onload && existing.dataset.loaded === 'true') onload();
       else if(onload) existing.addEventListener('load',onload,{once:true});
       return existing;
