@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>FABLEA | Nuova esperienza</title>
+  <title>FABLEA | Crea una storia</title>
   <link rel="stylesheet" href="/assets/css/fablea.css">
   <link rel="stylesheet" href="/assets/css/fablea-shell.css">
   <link rel="stylesheet" href="/assets/css/fablea-unified.css">
+  <link rel="stylesheet" href="/assets/css/fablea-guided-creator.css">
+  <link rel="stylesheet" href="/assets/css/fablea-guided-creator-mobile.css">
   <script src="/assets/js/fablea-ui.js"></script>
   <script src="/assets/js/fablea-grammar.js"></script>
   <script src="/assets/js/fablea-profile.js"></script>
@@ -20,154 +22,44 @@
   <script src="/assets/js/fablea-story-variables-v3.js"></script>
   <script src="/assets/js/fablea-shell.js"></script>
   <script defer src="/assets/js/fablea-unified-ui.js"></script>
+  <script defer src="/assets/js/fablea-guided-creator.js"></script>
 </head>
-<body class="fablea-page fablea-product" data-world="Magia">
-  <main class="card">
+<body class="fablea-page fablea-product guided-creator-page" data-world="FABLEA">
+  <main class="creator-page">
     <div class="top">
       <a class="brand" href="/child-hub.html">FABLEA</a>
-      <div class="badge">Esperienza di oggi</div>
+      <div class="badge">Crea una storia</div>
       <a class="back" href="/profile.html">Profili</a>
     </div>
-    <div id="content"></div>
-  </main>
-  <div id="dock"></div>
 
-  <script>
-    const F = window.FableaProfile;
-    const S = window.FableaShell;
-    const profile = F.getSelectedProfile();
-    const preset = F.readJSON('fableaStoryData',{});
-    const contentEl = document.getElementById('content');
-    const dockEl = document.getElementById('dock');
-
-    if(!profile){
-      contentEl.innerHTML = '<div class="empty"><h2>Nessun profilo selezionato</h2><p>Crea o seleziona prima il mondo di un bambino.</p><a class="button primary" href="/onboarding.html">Crea profilo</a></div>';
-    }else{
-      if(S){
-        S.applyProfile(profile);
-        dockEl.innerHTML = S.renderDock('create');
-      }
-      const moods = [
-        'Curiosità e voglia di scoprire',
-        'Momento tranquillo',
-        'Tanta energia',
-        'Una giornata difficile',
-        'Un po’ di rabbia',
-        'Una piccola paura',
-        'Stanchezza',
-        'Allegria'
-      ];
-      const familyLabels = {
-        avventura:'Avventura',
-        'calma-sera':'Calma e sera',
-        emozioni:'Emozioni',
-        scoperta:'Scoperta'
-      };
-      const styleLabels = {
-        calm:'calmo',
-        adventurous:'avventuroso',
-        funny:'divertente',
-        mysterious:'misterioso',
-        emotional:'emotivo'
-      };
-
-      contentEl.innerHTML = `
-        <section class="hero">
-          <div class="kicker">${F.escapeHTML(profile.name)} · ${F.escapeHTML(F.ageLabel(profile.age))}</div>
-          <h1>Che cosa cambia oggi?</h1>
-          <p class="intro">FABLEA conosce già il suo mondo, il compagno e il ritmo abituale. Scegliamo soltanto ciò che rende diversa la storia di oggi.</p>
-        </section>
-
-        <div class="profile-note">
-          <strong>Identità attiva:</strong> ${F.escapeHTML(profile.primaryWorld)} · stile ${F.escapeHTML(styleLabels[profile.storyStyle] || profile.storyStyle)} · ${F.escapeHTML(profile.duration)}
-          ${profile.favoriteCompanion ? ` · compagno: ${F.escapeHTML(profile.favoriteCompanion)}` : ''}
+    <div class="creator-layout">
+      <aside class="creator-stage" aria-label="Compagno e mondo della storia">
+        <div class="creator-progress" aria-label="Avanzamento creazione storia">
+          <div class="creator-progress-track" aria-hidden="true"><span class="creator-progress-bar" id="creatorProgressBar"></span></div>
+          <div class="creator-progress-label" id="creatorProgressLabel">Inizio</div>
         </div>
 
-        <form id="storyForm">
-          <label for="family">Tipo di esperienza</label>
-          <select id="family">
-            ${Object.entries(familyLabels).map(([value,label]) => `<option value="${value}" ${preset.family === value ? 'selected' : ''}>${label}</option>`).join('')}
-          </select>
+        <div class="creator-world-art" aria-hidden="true">
+          <span class="creator-sun"></span>
+          <span class="creator-planet"></span>
+          <span class="creator-sparkles"></span>
+          <span class="creator-horizon"></span>
+          <span class="creator-landmark"></span>
+        </div>
 
-          <label for="mood">Stato del momento</label>
-          <select id="mood">
-            ${moods.map(item => `<option ${preset.mood === item ? 'selected' : ''}>${F.escapeHTML(item)}</option>`).join('')}
-          </select>
-
-          <label for="duration">Durata di questa storia</label>
-          <select id="duration">
-            ${F.DURATIONS.map(item => `<option ${item === (preset.duration || profile.duration) ? 'selected' : ''}>${item}</option>`).join('')}
-          </select>
-
-          <label for="scenarioMode">Scenario</label>
-          <select id="scenarioMode">
-            <option value="own">Usa il suo mondo: ${F.escapeHTML(profile.primaryWorld)}</option>
-            <option value="other">Apriamo un mondo diverso per questa storia</option>
-          </select>
-
-          <div id="alternativeWorld" hidden>
-            <label for="alternativeSelect">Mondo alternativo</label>
-            <select id="alternativeSelect">
-              ${F.WORLDS.filter(world => world !== profile.primaryWorld).map(world => `<option>${F.escapeHTML(world)}</option>`).join('')}
-            </select>
+        <div class="creator-companion-wrap" aria-live="polite">
+          <div class="creator-companion" id="creatorCompanionIcon" aria-hidden="true">✨</div>
+          <div class="creator-speech">
+            <strong id="creatorCompanionLine">Che storia facciamo oggi?</strong>
+            <span id="creatorCompanionHint">Il compagno FABLEA è pronto.</span>
           </div>
+        </div>
+      </aside>
 
-          <button class="main" id="openStory" type="submit">Apri la storia</button>
-        </form>
-      `;
+      <section class="creator-panel" id="guidedCreator" aria-live="polite"></section>
+    </div>
+  </main>
 
-      const storyFormEl = document.getElementById('storyForm');
-      const familyEl = document.getElementById('family');
-      const moodEl = document.getElementById('mood');
-      const durationEl = document.getElementById('duration');
-      const scenarioModeEl = document.getElementById('scenarioMode');
-      const alternativeWorldEl = document.getElementById('alternativeWorld');
-      const alternativeSelectEl = document.getElementById('alternativeSelect');
-      const openStoryEl = document.getElementById('openStory');
-
-      scenarioModeEl.addEventListener('change',() => {
-        alternativeWorldEl.hidden = scenarioModeEl.value !== 'other';
-        document.body.dataset.world = scenarioModeEl.value === 'other' ? alternativeSelectEl.value : profile.primaryWorld;
-      });
-      alternativeSelectEl.addEventListener('change',() => {
-        if(scenarioModeEl.value === 'other') document.body.dataset.world = alternativeSelectEl.value;
-      });
-
-      storyFormEl.addEventListener('submit',event => {
-        event.preventDefault();
-        openStoryEl.disabled = true;
-        openStoryEl.textContent = 'Sto aprendo il mondo…';
-        const scenario = scenarioModeEl.value === 'other' ? alternativeSelectEl.value : profile.primaryWorld;
-        let request = {
-          profileId:profile.id,
-          family:familyEl.value,
-          mood:moodEl.value,
-          duration:durationEl.value,
-          scenario,
-          firstStory:false
-        };
-
-        try{
-          if(window.FableaStoryVariablesV3){
-            const requestV3 = window.FableaStoryVariablesV3.buildAndSave(profile,{
-              family:familyEl.value,
-              mood:moodEl.value,
-              duration:durationEl.value,
-              scenario,
-              source:'guided-creator'
-            });
-            request = window.FableaStoryVariablesV3.toLegacy(requestV3);
-          }
-        }catch(error){
-          console.warn('Richiesta V3 non disponibile, uso il motore editoriale v2.',error);
-        }
-
-        localStorage.removeItem(F.KEYS.prepared);
-        localStorage.setItem('fableaStoryData',JSON.stringify(request));
-        localStorage.removeItem('fableaReopenStory');
-        location.href = '/story-result.html';
-      });
-    }
-  </script>
+  <div id="dock"></div>
 </body>
 </html>

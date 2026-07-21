@@ -153,3 +153,21 @@ jobs:
       - name: Stop on security failure
         if: steps.security.outcome == 'failure'
         run: exit 1
+
+      - name: Guided creator and world atlas
+        id: creator
+        continue-on-error: true
+        run: npm run check:creator > guided-creator.log 2>&1
+
+      - name: Upload guided creator diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: guided-creator-report
+          path: guided-creator.log
+          if-no-files-found: error
+          retention-days: 3
+
+      - name: Stop on guided creator failure
+        if: steps.creator.outcome == 'failure'
+        run: exit 1

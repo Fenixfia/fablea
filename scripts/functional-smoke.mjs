@@ -103,6 +103,7 @@ assert(S.renderDock('discover').includes('discover.html') && S.renderDock('disco
 const onboarding = fs.readFileSync('onboarding.html','utf8');
 const createChild = fs.readFileSync('create-child.html','utf8');
 const creator = fs.readFileSync('story.html','utf8');
+const guidedCreator = fs.readFileSync('assets/js/fablea-guided-creator.js','utf8');
 const player = fs.readFileSync('story-result.html','utf8');
 const hub = fs.readFileSync('child-hub.html','utf8');
 const discover = fs.readFileSync('discover.html','utf8');
@@ -116,7 +117,9 @@ for(const [fileName, html] of [['onboarding.html',onboarding],['create-child.htm
   assert(!/\bname\.value\b/.test(html), `${fileName}: collisione con window.name reintrodotta`);
   assert(html.includes("formEl.addEventListener('submit'"), `${fileName}: submit handler non collegato al form reale`);
 }
-assert(creator.includes('Usa il suo mondo') && creator.includes('Curiosità e voglia di scoprire'), 'story creator duplica o perde il profilo');
+assert(creator.includes('id="guidedCreator"') && creator.includes('/assets/js/fablea-guided-creator.js'), 'story creator guidato non caricato');
+assert(guidedCreator.includes('Da questo momento') && guidedCreator.includes('Dal mio mondo') && guidedCreator.includes('Da una mia idea'), 'tre porte principali del creator mancanti');
+assert(guidedCreator.includes('V3.buildAndSave(profile,input)'), 'creator guidato non collegato al V3');
 assert(player.includes("fetch('/api/tts'") && player.includes('fableaReopenStory'), 'contratto TTS o riapertura mancanti');
 assert(player.includes('resumePage') && player.includes('Conserva nel suo mondo'), 'ripresa o memoria rituale mancanti');
 for(const [fileName,html,active] of [
@@ -131,4 +134,4 @@ for(const [fileName,html,active] of [
 assert(discover.includes('S.openCatalogStory') && discover.includes('data-story-id'), 'Scopri non apre storie editoriali reali');
 assert(worldPage.includes('F.getMemory(profile)') && worldPage.includes('S.savedFor(profile)'), 'Mondo non legge memoria e storie reali');
 
-console.log('Smoke completato: profili, grammatica, storie, durate, rotazione, memoria, TTS e Product Shell con Home, Scopri, Mondo e Libreria.');
+console.log('Smoke completato: profili, grammatica, storie, durate, creator guidato, memoria, TTS e Product Shell.');

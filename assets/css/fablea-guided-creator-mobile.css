@@ -1,0 +1,6 @@
+/* Mobile interaction layer loaded after the guided creator base. */
+@media(max-width:560px){
+  .guided-creator-page .creator-nav{
+    bottom:calc(82px + env(safe-area-inset-bottom,0px));
+  }
+}
